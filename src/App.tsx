@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Navbar from "./components/Navbar";
+import NumberList from "./components/NumberList";
 
 function LaptopsPage() {
   return <h2>Laptops Page</h2>;
@@ -22,7 +23,7 @@ function App() {
     {
       label: "Products",
       submenu: [
-        { label: "Laptops", content: LaptopsPage },
+        { label: "Laptops", content: () => <NumberList numbers={[1]}/>},
         { label: "Phones", content: PhonesPage }
       ]
     },
