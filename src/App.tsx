@@ -1,60 +1,67 @@
-import { useState } from "react";
-import Navbar from "./components/Navbar";
-import NumberList from "./components/NumberList";
+import { Col, Container, Row } from 'react-bootstrap'
+import './App.css'
+import SideBarMenu from './components/SideBarMenu'
+import {BrowserRouter, Route, Routes, Outlet, useNavigate } from 'react-router-dom'
+import HomeGrownTomatoesPage from './pages/HomeGrownTomatoesPage'
+import AnotherPage from './pages/AnotherPage'
+import type { MenuItem } from './components/SideBarMenu'
+import ErrorPage from './pages/ErrorPage'
 
-function LaptopsPage() {
-  return <h2>Laptops Page</h2>;
-}
-
-function PhonesPage() {
-  return <h2>Phones Page</h2>;
-}
-
-function SupportPage() {
-  return <h2>Support Page</h2>;
-}
-
-function TrainingPage() {
-  return <h2>Training Page</h2>;
-}
-
-function App() {
-  const menuItems = [
-    {
-      label: "Products",
-      submenu: [
-        { label: "Laptops", content: () => <NumberList numbers={[1]}/>},
-        { label: "Phones", content: PhonesPage }
+ let items : MenuItem[] = [
+          {label: 'New York', subItems: [{id: '1', comp: HomeGrownTomatoesPage}, {id: '2', comp: AnotherPage}]},
+          {label: 'San Francisco', subItems: [{id: '1'}, {id: '2'}, {id: '3'}]}
       ]
-    },
-    {
-      label: "Services",
-      submenu: [
-        { label: "Support", content: SupportPage },
-        { label: "Training", content: TrainingPage }
-      ]
-    }
-  ];
 
-  const [ActivePage, setActivePage] =
-    useState<React.ComponentType>(() => LaptopsPage);
 
+function Layout() {
+  const navigate = useNavigate()
+
+  const handleSelectItem = (item: string) => {
+    navigate(`/${item}`)
+  }
+  // const [ActivePage, setActivePage] =
+  //   useState<React.ComponentType>(() => HomegrownTomatoesPage);
+ 
   return (
-    <div className="d-flex">
-      <div style={{ width: "280px" }}>
-        <Navbar
-          items={menuItems}
-          onSelectSubmenu={(component) =>
-            setActivePage(() => component)
-          }
-        />
-      </div>
-
-      <div className="flex-grow-1 p-4">
-        <ActivePage />
-      </div>
-    </div>
-  );
+    <>
+    <Container fluid>
+      <Row>
+          <Col>
+          <SideBarMenu items={items} onSelectItem={handleSelectItem}/>
+          </Col>
+          
+          <Col>
+          <Outlet />
+          </Col>
+      </Row>
+    </Container>
+    </>
+  )
 }
 
-export default App;
+export default function App() {
+  const subRoutes = items.flatMap(item => item.subItems)
+  
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+        {subRoutes.map((sub, index) => {
+          const Component = sub.comp ?? ErrorPage
+
+          return (
+            <Route
+              key={`${sub.id}-${index}`}
+              path={sub.id}
+              element={<Component />}
+            />
+  )
+})}
+          {/* <Route index element={<HomeGrownTomatoesPage />} />
+          <Route path="1" element={<HomeGrownTomatoesPage />} />
+          <Route path="2" element={<AnotherPage />} /> */}
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  )
+}
