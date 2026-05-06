@@ -13,8 +13,8 @@ const NumberList = ({ numbers, activeIndex, compareIndex, sortedIndex }: NumberL
       {numbers.map((num, index) => {
         let variant;
 
-        if (index === activeIndex) variant = "danger";   //  current key
-        else if (index === compareIndex) variant = "warning"; // being compared
+        if (index === activeIndex) variant = "warning";   //  current key
+        else if (index === compareIndex) variant = "danger"; // being compared
         else if (sortedIndex !== undefined && index <= sortedIndex)
           variant = "success"; // sorted portion
 
