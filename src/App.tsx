@@ -2,13 +2,13 @@ import { Col, Container, Row } from 'react-bootstrap'
 import './App.css'
 import SideBarMenu from './components/SideBarMenu'
 import {BrowserRouter, Route, Routes, Outlet, useNavigate } from 'react-router-dom'
-import HomeGrownTomatoesPage from './pages/HomeGrownTomatoesPage'
 import AnotherPage from './pages/AnotherPage'
 import type { MenuItem } from './components/SideBarMenu'
 import ErrorPage from './pages/ErrorPage'
+import InsertionSortPage from './pages/InsertionSortPage'
 
  let items : MenuItem[] = [
-          {label: 'New York', subItems: [{id: '1', comp: HomeGrownTomatoesPage}, {id: '2', comp: AnotherPage}]},
+          {label: 'Brute force algorithms', subItems: [{id: 'Insertion sort', comp: InsertionSortPage}, {id: '2', comp: AnotherPage}]},
           {label: 'San Francisco', subItems: [{id: '1'}, {id: '2'}, {id: '3'}]}
       ]
 

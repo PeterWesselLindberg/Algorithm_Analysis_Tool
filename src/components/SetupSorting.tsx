@@ -1,10 +1,14 @@
-import NumberList from "../components/NumberList"
+import NumberList from "./NumberList"
 import { useState } from "react"
 import insertionSort from "../algorithms/insertionSort"
 import { Button } from "react-bootstrap"
 
-const HomeGrownTomatoesPage = () => {
-  const [numbers, setNumbers] = useState([64, 34, 25, 12, 22, 11, 90])
+interface SetupSortingProps {
+  unsortedNumbers: number[],
+}
+
+const SetupSorting = ({unsortedNumbers} : SetupSortingProps) => {
+  const [numbers, setNumbers] = useState(unsortedNumbers)
   const [isSorting, setIsSorting] = useState(false)
   const [activeIndex, setActiveIndex] = useState<number | undefined>();
   const [compareIndex, setCompareIndex] = useState<number | undefined>();
@@ -32,7 +36,6 @@ const HomeGrownTomatoesPage = () => {
   }
   return (
     <div>
-      <h2>HomeGrownTomatoesPage</h2>
       <NumberList 
         numbers={numbers}
         activeIndex={activeIndex}
@@ -45,4 +48,4 @@ const HomeGrownTomatoesPage = () => {
   )
 }
 
-export default HomeGrownTomatoesPage
+export default SetupSorting
