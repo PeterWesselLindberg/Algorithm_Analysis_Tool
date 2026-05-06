@@ -1,16 +1,33 @@
-const insertionSort = (arr :number[]) : void => {
-    const n: number = arr.length;
+import type { SortStep } from "./SortStep";
+
+const insertionSort = (arr :number[]) : SortStep[] => {
+    const localArr = [...arr]
+    const steps : SortStep[] = []
+    const n: number = localArr.length;
+
     for (let i = 1; i < n; i++ ) {
-        let key : number = arr[i];
+        let key : number = localArr[i];
         let j = i - 1;
-        while (j >= 0 && arr[j] > key) {
-            arr[j+1] = arr[j];
+        while (j >= 0 && localArr[j] > key) {
+            localArr[j+1] = localArr[j];
             j = j - 1;
+            steps.push({
+                array: [...localArr],
+                activeIndex: i,
+                compareIndex: j,
+            })
         }
-        arr[j+1] = key;
+        localArr[j+1] = key;
+        steps.push({
+                array: [...localArr],
+                activeIndex: i,
+                compareIndex: j,
+            })
     }
+    return steps
 }
 
-// const arr = [64, 34, 25, 12, 22, 11, 90];
+export default insertionSort
+//const arr = [5,2,8,1];
 // insertionSort(arr);
-// console.log(arr)
+//console.log(insertionSort(arr))

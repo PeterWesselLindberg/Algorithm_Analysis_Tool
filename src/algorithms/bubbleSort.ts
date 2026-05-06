@@ -1,4 +1,5 @@
-const bubbleSort = (arr :number[]) : void  => {
+const bubbleSort = (inputArr :number[]) : number[]  => {
+    const arr = [...inputArr]
     const n: number = arr.length;
     let swapped : Boolean;
     for (let i = 0; i < n-1; i++ ) {
@@ -14,6 +15,7 @@ const bubbleSort = (arr :number[]) : void  => {
             break;
         }
     }
+    return arr
 }
 
 // const arr = [64, 34, 25, 12, 22, 11, 90];
