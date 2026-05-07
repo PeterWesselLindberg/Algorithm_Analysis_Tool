@@ -3,21 +3,30 @@ import { useState, useEffect } from "react"
 import insertionSort from "../algorithms/insertionSort"
 import { Button } from "react-bootstrap"
 import type { SortStep } from "../algorithms/SortStep"
+import BarsList from "./BarsList"
+import type { AlgorithmTypes } from "../algorithms/algorithmtypes"
+import algorithmTypes from "../algorithms/algorithmtypes"
 
 interface SetupSortingProps {
   unsortedNumbers: number[],
+  algorithm: AlgorithmTypes
 }
 
-const SetupSorting = ({unsortedNumbers} : SetupSortingProps) => {
+const SetupSorting = ({unsortedNumbers, algorithm} : SetupSortingProps) => {
   const clonedUnsortedNumbers = unsortedNumbers.slice()
+  
+  const selectedAlgorithm = algorithmTypes[algorithm]
+
+  const initialisSteps = selectedAlgorithm(unsortedNumbers)
 
   const [numbers, setNumbers] = useState(unsortedNumbers)
+  const [speed, setSpeed] = useState(5)
   
   const [isSorting, setIsSorting] = useState(false)
   const [isPaused, setIsPaused] = useState(false)
   const [isFinished, setIsFinished] = useState(false)
 
-  const [steps, setSteps] = useState<SortStep[]>([])
+  const [steps, setSteps] = useState<SortStep[]>(initialisSteps)
   const [currentStep, setCurrentStep] = useState(0)
 
   const [activeIndex, setActiveIndex] = useState<number | undefined>()
@@ -26,6 +35,7 @@ const SetupSorting = ({unsortedNumbers} : SetupSortingProps) => {
   const [btnText, setBtnText] = useState("Start")
   const [btnValue, setBtnvalue] = useState("start")
   
+  const animationDelay = 1100 - speed * 100
 
 
   useEffect(() => {
@@ -50,10 +60,10 @@ const SetupSorting = ({unsortedNumbers} : SetupSortingProps) => {
     setCompareIndex(step.compareIndex)
 
     setCurrentStep((prev) => prev + 1)
-    }, 500) // speed in ms
+    }, animationDelay) // speed in ms
 
     return () => clearTimeout(timeout)
-}, [currentStep, isSorting, isPaused, steps])
+}, [currentStep, isSorting, isPaused, steps, speed])
 
 
   const initialiseSteps = (startState: "pause" | "run") => {
@@ -121,7 +131,17 @@ const SetupSorting = ({unsortedNumbers} : SetupSortingProps) => {
   // const resumeSort = () => {
     
   // }
+  const goToStep = (stepIndex: number) => {
+    if (stepIndex < 0 || stepIndex >= steps.length) return
 
+    const step = steps[stepIndex]
+
+    setNumbers(step.array)
+    setActiveIndex(step.activeIndex)
+    setCompareIndex(step.compareIndex)
+
+    setCurrentStep(stepIndex)
+  }
   const stepSort = (direction: "prev" | "next") => {
     //if (direction === "prev" && !isFinished) return
 
@@ -158,24 +178,30 @@ const SetupSorting = ({unsortedNumbers} : SetupSortingProps) => {
         break
     }
     
-    const step = steps[newStep]
-
-    setNumbers(step.array)
-    setActiveIndex(step.activeIndex)
-    setCompareIndex(step.compareIndex)
-
-    setCurrentStep(newStep)
+      goToStep(newStep)
     
   }
-
+  
+  const progress =
+  steps.length > 1
+    ? Math.round((currentStep / (steps.length - 1)) * 100)
+    : 0
 
   return (
+    
     <div>
-      <NumberList 
+      <BarsList 
         numbers={numbers}
         activeIndex={activeIndex}
         compareIndex={compareIndex}
       />
+      <hr></hr>
+      <NumberList
+        numbers={numbers}
+        activeIndex={activeIndex}
+        compareIndex={compareIndex}
+      />
+      <br></br>
       <Button onClick={() => restartSort()}>
         Restart
       </Button>
@@ -201,6 +227,41 @@ const SetupSorting = ({unsortedNumbers} : SetupSortingProps) => {
         disabled={currentStep === 0}>
         Prev step
       </Button>
+      <div style={{ marginTop: "1rem" }}>
+        <label>
+          Speed: {speed}ms
+        </label>
+
+        <input
+          type="range"
+          min="1"
+          max="10"
+          value={speed}
+          onChange={(e) => setSpeed(Number(e.target.value))}
+          />
+      </div>
+      <div style={{ marginTop: "1rem" }}>
+        <label>
+          Step {currentStep} / {Math.max(steps.length - 1, 0)}
+          {" "}({progress}%)
+        </label>
+
+        <input
+          type="range"
+          min="0"
+          max={Math.max(steps.length - 1, 0)}
+          value={currentStep}
+          onChange={(e) => {
+            const stepIndex = Number(e.target.value)
+
+            setIsPaused(true)
+            setIsSorting(false) 
+
+            goToStep(stepIndex)
+          }}
+          style={{ width: "400px" }}
+        />
+      </div>
     </div>
   )
 }
