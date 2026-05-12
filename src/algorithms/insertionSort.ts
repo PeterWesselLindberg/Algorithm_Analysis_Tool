@@ -1,33 +1,51 @@
-import type { SortStep } from "./SortStep";
+import type { SortStep } from "../types/SortStep";
 
-const insertionSort = (arr :number[]) : SortStep[] => {
-    const localArr = [...arr]
-    const steps : SortStep[] = []
-    const n: number = localArr.length;
+const insertionSort = (arr: number[]): SortStep[] => {
 
-    for (let i = 1; i < n; i++ ) {
-        let key : number = localArr[i];
+    const localArr = [...arr];
+    const steps: SortStep[] = [];
+
+    const n = localArr.length;
+
+    for (let i = 1; i < n; i++) {
+
+        const key = localArr[i];
         let j = i - 1;
+
+        //SHOW INITIAL COMPARISON
+        steps.push({
+            array: [...localArr],
+            activeIndex: j,
+            compareIndex: i,
+        });
+
         while (j >= 0 && localArr[j] > key) {
-            localArr[j+1] = localArr[j];
-            j = j - 1;
+
+            //SHIFT ELEMENT
+            localArr[j + 1] = localArr[j];
+
+            //RECORD SHIFTED ARRAY
             steps.push({
                 array: [...localArr],
-                activeIndex: i,
-                compareIndex: j,
-            })
-        }
-        localArr[j+1] = key;
-        steps.push({
-                array: [...localArr],
-                activeIndex: i,
-                compareIndex: j,
-            })
-    }
-    return steps
-}
+                activeIndex: j,
+                compareIndex: j + 1,
+            });
 
-export default insertionSort
-//const arr = [5,2,8,1];
-// insertionSort(arr);
-//console.log(insertionSort(arr))
+            j--;
+        }
+
+        //INSERT KEY
+        localArr[j + 1] = key;
+
+        // RECORD INSERTION
+        steps.push({
+            array: [...localArr],
+            activeIndex: j + 1,
+            compareIndex: i,
+        });
+    }
+
+    return steps;
+};
+
+export default insertionSort;

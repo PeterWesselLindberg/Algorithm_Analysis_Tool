@@ -1,23 +1,23 @@
-import NumberList from "./NumberList"
 import { useState, useEffect } from "react"
-import insertionSort from "../algorithms/insertionSort"
 import { Button } from "react-bootstrap"
-import type { SortStep } from "../algorithms/SortStep"
-import BarsList from "./BarsList"
-import type { AlgorithmTypes } from "../algorithms/algorithmtypes"
-import algorithmTypes from "../algorithms/algorithmtypes"
+import type { SortStep } from "../types/SortStep"
+import type { AlgorithmTypes } from "../types/algorithmtypes"
+import algorithmTypes from "../types/algorithmtypes"
+import type { sortingType } from "../types/sortingType"
+import SortingGraphics from "./SortingGraphics"
 
 interface SetupSortingProps {
   unsortedNumbers: number[],
-  algorithm: AlgorithmTypes
+  algorithm: AlgorithmTypes,
+  sortingGraphics: sortingType
 }
 
-const SetupSorting = ({unsortedNumbers, algorithm} : SetupSortingProps) => {
+const SetupSorting = ({unsortedNumbers, algorithm, sortingGraphics} : SetupSortingProps) => {
   const clonedUnsortedNumbers = unsortedNumbers.slice()
   
   const selectedAlgorithm = algorithmTypes[algorithm]
 
-  const initialisSteps = selectedAlgorithm(unsortedNumbers)
+  const initialSteps = selectedAlgorithm(unsortedNumbers)
 
   const [numbers, setNumbers] = useState(unsortedNumbers)
   const [speed, setSpeed] = useState(5)
@@ -26,7 +26,7 @@ const SetupSorting = ({unsortedNumbers, algorithm} : SetupSortingProps) => {
   const [isPaused, setIsPaused] = useState(false)
   const [isFinished, setIsFinished] = useState(false)
 
-  const [steps, setSteps] = useState<SortStep[]>(initialisSteps)
+  const [steps, setSteps] = useState<SortStep[]>(initialSteps)
   const [currentStep, setCurrentStep] = useState(0)
 
   const [activeIndex, setActiveIndex] = useState<number | undefined>()
@@ -67,9 +67,8 @@ const SetupSorting = ({unsortedNumbers, algorithm} : SetupSortingProps) => {
 
 
   const initialiseSteps = (startState: "pause" | "run") => {
-    const generatedSteps = insertionSort(numbers)
-
-        setSteps(generatedSteps)
+        
+        setSteps(initialSteps)
         setCurrentStep(0)
         
 
@@ -103,6 +102,7 @@ const SetupSorting = ({unsortedNumbers, algorithm} : SetupSortingProps) => {
         break
       
       default:
+        console.log("Error: You shouldn't be here")
         break
     }
     
@@ -190,18 +190,7 @@ const SetupSorting = ({unsortedNumbers, algorithm} : SetupSortingProps) => {
   return (
     
     <div>
-      <BarsList 
-        numbers={numbers}
-        activeIndex={activeIndex}
-        compareIndex={compareIndex}
-      />
-      <hr></hr>
-      <NumberList
-        numbers={numbers}
-        activeIndex={activeIndex}
-        compareIndex={compareIndex}
-      />
-      <br></br>
+      <SortingGraphics numbers={numbers} activeIndex={activeIndex} compareIndex={compareIndex} sortingType={sortingGraphics}/>
       <Button onClick={() => restartSort()}>
         Restart
       </Button>

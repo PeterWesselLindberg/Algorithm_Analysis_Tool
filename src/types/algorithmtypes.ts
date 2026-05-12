@@ -1,4 +1,4 @@
-import insertionSort from "./insertionSort"
+import insertionSort from "../algorithms/insertionSort"
 import type { SortStep } from "./SortStep"
 
 
