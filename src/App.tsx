@@ -19,14 +19,12 @@ function Layout() {
   const handleSelectItem = (item: string) => {
     navigate(`/${item}`)
   }
-  // const [ActivePage, setActivePage] =
-  //   useState<React.ComponentType>(() => HomegrownTomatoesPage);
  
   return (
     <>
     <Container fluid>
       <Row>
-          <Col>
+          <Col xs={3}>
           <SideBarMenu items={items} onSelectItem={handleSelectItem}/>
           </Col>
           
@@ -55,11 +53,8 @@ export default function App() {
               path={sub.id}
               element={<Component />}
             />
-  )
-})}
-          {/* <Route index element={<HomeGrownTomatoesPage />} />
-          <Route path="1" element={<HomeGrownTomatoesPage />} />
-          <Route path="2" element={<AnotherPage />} /> */}
+          )
+        })}
         </Route>
       </Routes>
     </BrowserRouter>

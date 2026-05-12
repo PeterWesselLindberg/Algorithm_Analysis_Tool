@@ -1,7 +1,7 @@
 import insertionSort from "../algorithms/insertionSort"
 import type { SortStep } from "./SortStep"
 
-
+/** Different algorithms for input to AnimationManager  */
 export type AlgorithmTypes =
   | "insertion"
 //   | "bubble"
@@ -10,6 +10,7 @@ export type AlgorithmTypes =
 export type SortingFunction =
   (arr: number[]) => SortStep[]
 
+/**  Translates the algorithm string into an actual function using records*/
 const algorithmTypes : Record<
     AlgorithmTypes,
     SortingFunction

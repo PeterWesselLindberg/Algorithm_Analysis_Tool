@@ -9,7 +9,7 @@ interface SortingGraphicsProps {
   sortingType : sortingType
 }
 
-
+/** Decides, which sorting graphics to use for which algoritm based on limited input strings */
 const SortingGraphics = ( {numbers, activeIndex, compareIndex, sortingType} : SortingGraphicsProps ) => {
   switch(sortingType) {
     case "list/bar": 

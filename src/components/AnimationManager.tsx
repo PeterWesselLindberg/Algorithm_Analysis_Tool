@@ -6,34 +6,36 @@ import algorithmTypes from "../types/algorithmtypes"
 import type { sortingType } from "../types/sortingType"
 import SortingGraphics from "./SortingGraphics"
 
-interface SetupSortingProps {
+interface AnimationManagerProps {
   unsortedNumbers: number[],
   algorithm: AlgorithmTypes,
   sortingGraphics: sortingType
 }
 
-const SetupSorting = ({unsortedNumbers, algorithm, sortingGraphics} : SetupSortingProps) => {
-  const clonedUnsortedNumbers = unsortedNumbers.slice()
+const AnimationManager = ({unsortedNumbers, algorithm, sortingGraphics} : AnimationManagerProps) => {
+  const clonedUnsortedNumbers = unsortedNumbers.slice() // Clones the input list for use with the restartSort function
   
-  const selectedAlgorithm = algorithmTypes[algorithm]
+  const selectedAlgorithm = algorithmTypes[algorithm] // Initialises the given algoritmhtype for the limited types
+  const initialSteps = selectedAlgorithm(unsortedNumbers) // Initialises the the input list with the selected algoritm
 
-  const initialSteps = selectedAlgorithm(unsortedNumbers)
-
-  const [numbers, setNumbers] = useState(unsortedNumbers)
-  const [speed, setSpeed] = useState(5)
+  const [numbers, setNumbers] = useState(unsortedNumbers) 
+  const [speed, setSpeed] = useState(5) // The speed stat used for speeding up and slowing down the algorithm animation
   
-  const [isSorting, setIsSorting] = useState(false)
+  // The booleans used for determining when the animation is starting, stopping or finished 
+  const [isSorting, setIsSorting] = useState(false) 
   const [isPaused, setIsPaused] = useState(false)
   const [isFinished, setIsFinished] = useState(false)
 
+  // The steps used in the algorithm animation
   const [steps, setSteps] = useState<SortStep[]>(initialSteps)
   const [currentStep, setCurrentStep] = useState(0)
 
+  // The current element index and the index of the element it is compared to
   const [activeIndex, setActiveIndex] = useState<number | undefined>()
   const [compareIndex, setCompareIndex] = useState<number | undefined>()
 
-  const [btnText, setBtnText] = useState("Start")
-  const [btnValue, setBtnvalue] = useState("start")
+  const [btnText, setBtnText] = useState("Start") // Changes the text on the buttons
+  const [btnValue, setBtnvalue] = useState("start") // changes the current state of the buttons in order to update the symbols
   
   const animationDelay = 1100 - speed * 100
 
@@ -65,7 +67,7 @@ const SetupSorting = ({unsortedNumbers, algorithm, sortingGraphics} : SetupSorti
     return () => clearTimeout(timeout)
 }, [currentStep, isSorting, isPaused, steps, speed])
 
-
+  /** Intialises the steps of the algorithm and decides if it is starting in a stopped state or a running state */
   const initialiseSteps = (startState: "pause" | "run") => {
         
         setSteps(initialSteps)
@@ -80,6 +82,7 @@ const SetupSorting = ({unsortedNumbers, algorithm, sortingGraphics} : SetupSorti
         }
 
   }
+  /** Start and stops the animations for the sorting algorithm */
   const startStopSort = (btnState: string) => {
 
     switch(btnState) {
@@ -108,6 +111,7 @@ const SetupSorting = ({unsortedNumbers, algorithm, sortingGraphics} : SetupSorti
     
   }
 
+  /** Changes the current state and text of the start/resume button*/
   const handleButtonValue = () => {
     if (!isFinished) {
       if (btnValue === "start") {setBtnvalue("stop")}
@@ -119,6 +123,7 @@ const SetupSorting = ({unsortedNumbers, algorithm, sortingGraphics} : SetupSorti
     else if (isFinished) {}
   }
   
+  /** The function responsible for restarting the algorithm and it's animation when the reset button is pressed */
   const restartSort = () => {
     setBtnText("Start")
     setBtnvalue("start")
@@ -128,9 +133,7 @@ const SetupSorting = ({unsortedNumbers, algorithm, sortingGraphics} : SetupSorti
     initialiseSteps("pause")
   }
 
-  // const resumeSort = () => {
-    
-  // }
+  /** Goes the current step when sliding the steps slider */
   const goToStep = (stepIndex: number) => {
     if (stepIndex < 0 || stepIndex >= steps.length) return
 
@@ -142,10 +145,9 @@ const SetupSorting = ({unsortedNumbers, algorithm, sortingGraphics} : SetupSorti
 
     setCurrentStep(stepIndex)
   }
-  const stepSort = (direction: "prev" | "next") => {
-    //if (direction === "prev" && !isFinished) return
 
-    //if (direction === "next" && !isPaused) return
+  /** Determines what happens when you press the next or previous step buttons */
+  const stepSort = (direction: "prev" | "next") => {
     
     let newStep = currentStep
 
@@ -154,14 +156,10 @@ const SetupSorting = ({unsortedNumbers, algorithm, sortingGraphics} : SetupSorti
         if (currentStep === 0 ) return
 
         startStopSort("stop")
-        // setIsPaused(true)
-        // setBtnText("Resume")
+  
         if (currentStep >= steps.length - 1) {
           setIsFinished(false)
           setIsSorting(true)}
-        // setIsFinished(false)
-        // setIsSorting(true)
-        
         
         newStep = currentStep - 1
         break
@@ -182,6 +180,7 @@ const SetupSorting = ({unsortedNumbers, algorithm, sortingGraphics} : SetupSorti
     
   }
   
+  // Shows the progress of the sorting in percentage
   const progress =
   steps.length > 1
     ? Math.round((currentStep / (steps.length - 1)) * 100)
@@ -199,13 +198,6 @@ const SetupSorting = ({unsortedNumbers, algorithm, sortingGraphics} : SetupSorti
         {btnText}
       </Button>
       
-      {/* <Button onClick={pauseSort} disabled={!isSorting || isPaused}>
-        Pause
-      </Button>
-
-      <Button onClick={resumeSort} disabled={!isPaused}>
-        Resume
-      </Button> */}
 
       <Button onClick={() => stepSort("next")}
         disabled={isFinished}>
@@ -215,8 +207,8 @@ const SetupSorting = ({unsortedNumbers, algorithm, sortingGraphics} : SetupSorti
       <Button onClick={() => stepSort("prev")}
         disabled={currentStep === 0}>
         Prev step
-      </Button>
-      <div style={{ marginTop: "1rem" }}>
+      </Button> 
+      <div style={{ marginTop: "1rem"}}>
         <label>
           Speed: {speed}ms
         </label>
@@ -227,12 +219,13 @@ const SetupSorting = ({unsortedNumbers, algorithm, sortingGraphics} : SetupSorti
           max="10"
           value={speed}
           onChange={(e) => setSpeed(Number(e.target.value))}
+          style={{ marginRight: "1rem"}}
           />
-      </div>
-      <div style={{ marginTop: "1rem" }}>
-        <label>
-          Step {currentStep} / {Math.max(steps.length - 1, 0)}
+
+          <label>
+          Step: {currentStep} / {Math.max(steps.length - 1, 0)}
           {" "}({progress}%)
+          
         </label>
 
         <input
@@ -248,11 +241,12 @@ const SetupSorting = ({unsortedNumbers, algorithm, sortingGraphics} : SetupSorti
 
             goToStep(stepIndex)
           }}
-          style={{ width: "400px" }}
+          style={{ width: "400px"}}
         />
       </div>
+     
     </div>
   )
 }
 
-export default SetupSorting
+export default AnimationManager

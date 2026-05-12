@@ -37,15 +37,8 @@ const SideBarMenu = ({ items, onSelectItem }: SideBarMenuProps) => {
             </AccordionBody>
           </AccordionItem>
         </Accordion>
-        // <NavDropdown title={item.label} id={"link-" + index.toString()} rootCloseEvent="click">
-        //   <NavDropdown.Item eventKey="4.1">Action</NavDropdown.Item>
-        //   <NavDropdown.Item eventKey="4.2">Another action</NavDropdown.Item>
-
-        // </NavDropdown>
 
       ))}
-      {/* <Nav.Link href="/home">Active</Nav.Link>
-      <Nav.Link eventKey="link-1">Link</Nav.Link> */}
     </Nav>
   </Navbar>
   );
