@@ -1,4 +1,4 @@
-import type { sortingType } from "../types/sortingType"
+import type { SortingType } from "../types/SortingType"
 import BarsList from "./BarsList"
 import NumberList from "./NumberList"
 
@@ -6,7 +6,7 @@ interface SortingGraphicsProps {
   numbers: number[],
   activeIndex : number | undefined,
   compareIndex: number | undefined,
-  sortingType : sortingType
+  sortingType : SortingType
 }
 
 /** Decides, which sorting graphics to use for which algoritm based on limited input strings */

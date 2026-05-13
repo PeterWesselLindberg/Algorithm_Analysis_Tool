@@ -3,13 +3,14 @@ import { Button } from "react-bootstrap"
 import type { SortStep } from "../types/SortStep"
 import type { AlgorithmTypes } from "../types/algorithmtypes"
 import algorithmTypes from "../types/algorithmtypes"
-import type { sortingType } from "../types/sortingType"
+import type { SortingType } from "../types/sortingType"
 import SortingGraphics from "./SortingGraphics"
+import { FaSquare, FaChevronLeft, FaChevronRight, FaPlay, FaPause } from "react-icons/fa"
 
 interface AnimationManagerProps {
   unsortedNumbers: number[],
   algorithm: AlgorithmTypes,
-  sortingGraphics: sortingType
+  sortingGraphics: SortingType
 }
 
 const AnimationManager = ({unsortedNumbers, algorithm, sortingGraphics} : AnimationManagerProps) => {
@@ -34,7 +35,7 @@ const AnimationManager = ({unsortedNumbers, algorithm, sortingGraphics} : Animat
   const [activeIndex, setActiveIndex] = useState<number | undefined>()
   const [compareIndex, setCompareIndex] = useState<number | undefined>()
 
-  const [btnText, setBtnText] = useState("Start") // Changes the text on the buttons
+  const [btnText, setBtnText] = useState(<FaPlay/>) // Changes the text on the buttons
   const [btnValue, setBtnvalue] = useState("start") // changes the current state of the buttons in order to update the symbols
   
   const animationDelay = 1100 - speed * 100
@@ -47,7 +48,7 @@ const AnimationManager = ({unsortedNumbers, algorithm, sortingGraphics} : Animat
       setIsSorting(false)
       setIsPaused(false)
       setIsFinished(true)
-      setBtnText("Resume")
+      setBtnText(<FaPlay/>)
 
       setActiveIndex(undefined)
       setCompareIndex(undefined)
@@ -91,17 +92,17 @@ const AnimationManager = ({unsortedNumbers, algorithm, sortingGraphics} : Animat
         initialiseSteps("run")
         setIsSorting(true)
         setIsFinished(false)
-        setBtnText("Pause")
+        setBtnText(<FaPause/>)
         break
 
       case "stop":
         setIsPaused(true)
-        setBtnText("Resume")
+        setBtnText(<FaPlay/>)
         break
       
       case "resume":
         setIsPaused(false)
-        setBtnText("Stop")
+        setBtnText(<FaPause/>)
         break
       
       default:
@@ -125,7 +126,7 @@ const AnimationManager = ({unsortedNumbers, algorithm, sortingGraphics} : Animat
   
   /** The function responsible for restarting the algorithm and it's animation when the reset button is pressed */
   const restartSort = () => {
-    setBtnText("Start")
+    setBtnText(<FaPlay/>)
     setBtnvalue("start")
     setNumbers(clonedUnsortedNumbers)
     setIsFinished(false)
@@ -191,23 +192,23 @@ const AnimationManager = ({unsortedNumbers, algorithm, sortingGraphics} : Animat
     <div>
       <SortingGraphics numbers={numbers} activeIndex={activeIndex} compareIndex={compareIndex} sortingType={sortingGraphics}/>
       <Button onClick={() => restartSort()}>
-        Restart
+        <FaSquare/>
       </Button>
 
       <Button onClick={() => {handleButtonValue(); startStopSort(btnValue)}} disabled={isFinished}>
         {btnText}
       </Button>
       
+      <Button onClick={() => stepSort("prev")}
+        disabled={currentStep === 0}>
+        <FaChevronLeft />
+      </Button>
 
       <Button onClick={() => stepSort("next")}
         disabled={isFinished}>
-        Next step
+        <FaChevronRight />
       </Button>
 
-      <Button onClick={() => stepSort("prev")}
-        disabled={currentStep === 0}>
-        Prev step
-      </Button> 
       <div style={{ marginTop: "1rem"}}>
         <label>
           Speed: {speed}ms

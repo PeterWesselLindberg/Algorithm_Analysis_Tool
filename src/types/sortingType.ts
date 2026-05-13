@@ -1,2 +1,2 @@
-export type sortingType = 
+export type SortingType = 
     | "list/bar"
