@@ -1,4 +1,4 @@
-import type { SortingType } from "../types/SortingType"
+import type { SortingType } from "../types/sortingType"
 import BarsList from "./BarsList"
 import NumberList from "./NumberList"
 
