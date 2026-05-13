@@ -7,12 +7,20 @@ import type { MenuItem } from './components/SideBarMenu'
 import ErrorPage from './pages/ErrorPage'
 import InsertionSortPage from './pages/InsertionSortPage'
 import BubbleSortPage from './pages/BubbleSortPage'
+import SelectionSortPage from './pages/SelectionSortPage'
 
  let items : MenuItem[] = [
-          {label: 'Brute force algorithms', subItems: [{id: 'Insertion sort', comp: InsertionSortPage}, {id: 'Bubble sort', comp: BubbleSortPage}]},
+          {label: 'Brute force algorithms', subItems: [{id: 'Insertion sort', comp: InsertionSortPage}, 
+                                                        {id: 'Bubble sort', comp: BubbleSortPage}, 
+                                                        {id: 'Selection sort', comp: SelectionSortPage}]},
           {label: 'San Francisco', subItems: [{id: '1'}, {id: '2', comp: AnotherPage}, {id: '3'}]}
       ]
 
+items.forEach((item) => {
+  item.subItems.sort((a, b) =>
+    a.id.localeCompare(b.id)
+  )
+})
 
 function Layout() {
   const navigate = useNavigate()

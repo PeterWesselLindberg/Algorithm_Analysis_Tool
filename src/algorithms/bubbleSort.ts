@@ -1,6 +1,6 @@
 import type { SortStep } from "../types/SortStep";
 
-const bubbleSort = (inputArr :number[]) : SortStep[]  => {
+const bubbleSort = (inputArr : number[]) : SortStep[]  => {
     const arr = [...inputArr]
     const steps: SortStep[] = [];
     const n: number = arr.length;
@@ -45,7 +45,7 @@ const bubbleSort = (inputArr :number[]) : SortStep[]  => {
             break;
         }
     }
-    
+
     steps.push({
         array: [...arr],
         sortedIndices:
