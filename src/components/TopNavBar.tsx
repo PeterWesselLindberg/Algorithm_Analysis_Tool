@@ -8,7 +8,7 @@ interface TopNavBarProps {
 const TopNavBar = ({onSelectItem} : TopNavBarProps) => {
     const [isDisabled, setIsDisabled] = useState(false)
     return (
-        <Nav variant="pills" defaultActiveKey="Visualizer">
+        <Nav variant="tabs" defaultActiveKey="Visualizer">
             <Nav.Item>
                 <Nav.Link eventKey="Visualizer" disabled={!isDisabled} onClick={() => {onSelectItem(); setIsDisabled(false)}}>Visualizer</Nav.Link>
             </Nav.Item>
@@ -17,7 +17,7 @@ const TopNavBar = ({onSelectItem} : TopNavBarProps) => {
             </Nav.Item>
 
         </Nav>
-    )
+)
 }
 
 export default TopNavBar
