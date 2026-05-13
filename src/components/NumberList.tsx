@@ -4,19 +4,20 @@ interface NumberListProps {
   numbers: number[],
   activeIndex?: number,     // current element (key)
   compareIndex?: number,    // element being compared
-  sortedIndex?: number,     // boundary of sorted part
+  sortedIndices?: number[],     // boundary of sorted part
 }
 
-const NumberList = ({ numbers, activeIndex, compareIndex, sortedIndex }: NumberListProps) => {
+const NumberList = ({ numbers, activeIndex, compareIndex, sortedIndices }: NumberListProps) => {
     return (
     <ListGroup horizontal>
       {numbers.map((num, index) => {
         let variant;
 
+        if (sortedIndices?.includes(index)) variant = "success"; // sorted portion
         if (index === activeIndex) variant = "warning";   //  current key
-        else if (index === compareIndex) variant = "danger"; // being compared
-        else if (sortedIndex !== undefined && index <= sortedIndex)
-          variant = "success"; // sorted portion
+        if (index === compareIndex) variant = "danger"; // being compared
+        
+          
 
         return (
           <ListGroup.Item key={index} variant={variant}>

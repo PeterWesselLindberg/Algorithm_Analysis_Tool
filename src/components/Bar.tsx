@@ -3,19 +3,22 @@ interface BarProps {
   maxValue: number,
   isActive?: boolean,
   isComparing?: boolean,
+  isSorted?: boolean
 }
 
 const Bar = ({
   value,
   maxValue,
   isActive,
-  isComparing
+  isComparing,
+  isSorted
 }: BarProps) => {
 
   const scaledHeight = (value / maxValue) * 300
 
   let backgroundColor = "#0d6efd"
 
+  if (isSorted) backgroundColor = "#198754"
   if (isActive) backgroundColor = "#ffc107"
   if (isComparing) backgroundColor = "#dc3545"
 

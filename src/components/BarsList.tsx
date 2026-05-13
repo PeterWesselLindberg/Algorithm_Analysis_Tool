@@ -4,12 +4,14 @@ interface BarsListProps {
   numbers: number[]
   activeIndex?: number
   compareIndex?: number
+  sortedIndices?: number[]
 }
 
 const BarsList = ({
   numbers,
   activeIndex,
-  compareIndex
+  compareIndex,
+  sortedIndices
 }: BarsListProps) => {
 
   const maxValue = Math.max(...numbers)
@@ -30,6 +32,7 @@ const BarsList = ({
           maxValue={maxValue}
           isActive={index === activeIndex}
           isComparing={index === compareIndex}
+          isSorted={sortedIndices?.includes(index)}
         />
       ))}
     </div>

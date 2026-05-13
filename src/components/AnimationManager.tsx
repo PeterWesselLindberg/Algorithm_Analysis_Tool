@@ -34,6 +34,7 @@ const AnimationManager = ({unsortedNumbers, algorithm, sortingGraphics} : Animat
   // The current element index and the index of the element it is compared to
   const [activeIndex, setActiveIndex] = useState<number | undefined>()
   const [compareIndex, setCompareIndex] = useState<number | undefined>()
+  const [sortedIndices, setSortedIndices] = useState<number[] | undefined>()
 
   const [btnText, setBtnText] = useState(<FaPlay/>) // Changes the text on the buttons
   const [btnValue, setBtnvalue] = useState("start") // changes the current state of the buttons in order to update the symbols
@@ -52,6 +53,7 @@ const AnimationManager = ({unsortedNumbers, algorithm, sortingGraphics} : Animat
 
       setActiveIndex(undefined)
       setCompareIndex(undefined)
+      setSortedIndices(undefined)
       return
     }
 
@@ -61,6 +63,7 @@ const AnimationManager = ({unsortedNumbers, algorithm, sortingGraphics} : Animat
     setNumbers(step.array)
     setActiveIndex(step.activeIndex)
     setCompareIndex(step.compareIndex)
+    setSortedIndices(step.sortedIndices)
 
     setCurrentStep((prev) => prev + 1)
     }, animationDelay) // speed in ms
@@ -143,6 +146,7 @@ const AnimationManager = ({unsortedNumbers, algorithm, sortingGraphics} : Animat
     setNumbers(step.array)
     setActiveIndex(step.activeIndex)
     setCompareIndex(step.compareIndex)
+    setSortedIndices(step.sortedIndices)
 
     setCurrentStep(stepIndex)
   }
@@ -190,7 +194,7 @@ const AnimationManager = ({unsortedNumbers, algorithm, sortingGraphics} : Animat
   return (
     
     <div>
-      <SortingGraphics numbers={numbers} activeIndex={activeIndex} compareIndex={compareIndex} sortingType={sortingGraphics}/>
+      <SortingGraphics numbers={numbers} activeIndex={activeIndex} compareIndex={compareIndex} sortedIndices={sortedIndices} sortingType={sortingGraphics}/>
       <Button onClick={() => restartSort()}>
         <FaSquare/>
       </Button>

@@ -12,11 +12,19 @@ const insertionSort = (arr: number[]): SortStep[] => {
         const key = localArr[i];
         let j = i - 1;
 
+        //CURRENT SORTED SECTION
+        const sortedIndices =
+            Array.from(
+                { length: i },
+                (_, k) => k
+            );
+
         //SHOW INITIAL COMPARISON
         steps.push({
             array: [...localArr],
             activeIndex: j,
             compareIndex: i,
+            sortedIndices
         });
 
         while (j >= 0 && localArr[j] > key) {
@@ -29,6 +37,7 @@ const insertionSort = (arr: number[]): SortStep[] => {
                 array: [...localArr],
                 activeIndex: j,
                 compareIndex: j + 1,
+                sortedIndices
             });
 
             j--;
@@ -42,8 +51,22 @@ const insertionSort = (arr: number[]): SortStep[] => {
             array: [...localArr],
             activeIndex: j + 1,
             compareIndex: i,
+            sortedIndices: Array.from(
+            { length: i + 1 },
+            (_, index) => index
+            )
         });
     }
+
+     // FINAL ALL-SORTED STEP
+    steps.push({
+        array: [...localArr],
+        sortedIndices:
+            Array.from(
+                { length: n },
+                (_, i) => i
+            )
+    });
 
     return steps;
 };

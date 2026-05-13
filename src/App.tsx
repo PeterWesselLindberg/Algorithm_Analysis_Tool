@@ -6,10 +6,11 @@ import AnotherPage from './pages/AnotherPage'
 import type { MenuItem } from './components/SideBarMenu'
 import ErrorPage from './pages/ErrorPage'
 import InsertionSortPage from './pages/InsertionSortPage'
+import BubbleSortPage from './pages/BubbleSortPage'
 
  let items : MenuItem[] = [
-          {label: 'Brute force algorithms', subItems: [{id: 'Insertion sort', comp: InsertionSortPage}, {id: '2', comp: AnotherPage}]},
-          {label: 'San Francisco', subItems: [{id: '1'}, {id: '2'}, {id: '3'}]}
+          {label: 'Brute force algorithms', subItems: [{id: 'Insertion sort', comp: InsertionSortPage}, {id: 'Bubble sort', comp: BubbleSortPage}]},
+          {label: 'San Francisco', subItems: [{id: '1'}, {id: '2', comp: AnotherPage}, {id: '3'}]}
       ]
 
 
