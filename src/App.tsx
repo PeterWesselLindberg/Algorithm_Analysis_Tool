@@ -1,7 +1,7 @@
 import { Col, Container, Row } from 'react-bootstrap'
 import './App.css'
 import SideBarMenu from './components/SideBarMenu'
-import {BrowserRouter, Route, Routes, Outlet, useNavigate } from 'react-router-dom'
+import {HashRouter, Route, Routes, Outlet, useNavigate } from 'react-router-dom'
 import AnotherPage from './pages/AnotherPage'
 import type { MenuItem } from './components/SideBarMenu'
 import ErrorPage from './pages/ErrorPage'
@@ -53,7 +53,7 @@ export default function App() {
   const subRoutes = items.flatMap(item => item.subItems)
   
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
         {subRoutes.map((sub, index) => {
@@ -69,6 +69,6 @@ export default function App() {
         })}
         </Route>
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
