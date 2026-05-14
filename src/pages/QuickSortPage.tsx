@@ -3,7 +3,7 @@ import TopNavBar from "../components/TopNavBar"
 import { useState } from "react"
 
 
-const InsertionSortPage = () => {
+const QuickSortPage = () => {
   const [isVisible, setIsVisible] = useState(true)
   
   const handleSelectItem = () => {
@@ -13,9 +13,9 @@ const InsertionSortPage = () => {
   return (
     <div>
       <TopNavBar onSelectItem={handleSelectItem}/>
-      <h1>Insertion sort</h1>
+      <h1>Quick sort</h1>
       { isVisible ? (
-      <AnimationManager algorithm="insertion" sortingGraphics="list/bar" />
+      <AnimationManager algorithm="quick" sortingGraphics="list/bar" />
       ) : (
         <p> This text was hidden all along</p>
       )}
@@ -23,4 +23,4 @@ const InsertionSortPage = () => {
   )
 }
 
-export default InsertionSortPage
+export default QuickSortPage

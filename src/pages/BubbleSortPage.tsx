@@ -15,7 +15,7 @@ const BubbleSortPage = () => {
       <TopNavBar onSelectItem={handleSelectItem}/>
       <h1>Bubble sort</h1>
       { isVisible ? (
-      <AnimationManager unsortedNumbers={[5,2,8,1,6,1,2,4,6,7,8,10]} algorithm="bubble" sortingGraphics="list/bar" />
+      <AnimationManager algorithm="bubble" sortingGraphics="list/bar" />
       ) : (
         <p> This text was hidden all along</p>
       )}

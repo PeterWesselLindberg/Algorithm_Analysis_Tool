@@ -8,12 +8,15 @@ import ErrorPage from './pages/ErrorPage'
 import InsertionSortPage from './pages/InsertionSortPage'
 import BubbleSortPage from './pages/BubbleSortPage'
 import SelectionSortPage from './pages/SelectionSortPage'
+import QuickSortPage from './pages/QuickSortPage'
 
  let items : MenuItem[] = [
-          {label: 'Brute force algorithms', subItems: [{id: 'Insertion sort', comp: InsertionSortPage}, 
-                                                        {id: 'Bubble sort', comp: BubbleSortPage}, 
-                                                        {id: 'Selection sort', comp: SelectionSortPage}]},
-          {label: 'San Francisco', subItems: [{id: '1'}, {id: '2', comp: AnotherPage}, {id: '3'}]}
+          {label: 'Brute force', subItems: [{id: 'Insertion sort', comp: InsertionSortPage}, 
+                                              {id: 'Bubble sort', comp: BubbleSortPage}, 
+                                              {id: 'Selection sort', comp: SelectionSortPage}]},
+          {label: 'Divide and Conquer', subItems: [{id: 'Quick sort', comp: QuickSortPage},
+                                                     {id: '2', comp: AnotherPage}, 
+                                                     {id: '3'}]}
       ]
 
 items.forEach((item) => {

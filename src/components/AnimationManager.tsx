@@ -6,14 +6,17 @@ import algorithmTypes from "../types/algorithmtypes"
 import type { SortingType } from "../types/sortingType"
 import SortingGraphics from "./SortingGraphics"
 import { FaSquare, FaChevronLeft, FaChevronRight, FaPlay, FaPause } from "react-icons/fa"
+import generateRandomArray from "../randGen/generateRandomArray"
 
 interface AnimationManagerProps {
-  unsortedNumbers: number[],
+  inputNumbers?: number[],
   algorithm: AlgorithmTypes,
   sortingGraphics: SortingType
 }
 
-const AnimationManager = ({unsortedNumbers, algorithm, sortingGraphics} : AnimationManagerProps) => {
+const AnimationManager = ({inputNumbers = [], algorithm, sortingGraphics} : AnimationManagerProps) => {
+  const unsortedNumbers = !Array.isArray(inputNumbers) || !inputNumbers.length ? generateRandomArray(15) : inputNumbers // Generates an array of random numbers in range 1 to 30
+
   const clonedUnsortedNumbers = unsortedNumbers.slice() // Clones the input list for use with the restartSort function
   
   const selectedAlgorithm = algorithmTypes[algorithm] // Initialises the given algoritmhtype for the limited types

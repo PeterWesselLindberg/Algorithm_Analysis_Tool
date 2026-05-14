@@ -2,12 +2,14 @@ import insertionSort from "../algorithms/insertionSort"
 import type { SortStep } from "./SortStep"
 import bubbleSort from "../algorithms/bubbleSort"
 import selectionSort from "../algorithms/selectionSort"
+import quickSort from "../algorithms/quickSort"
 
 /** Different algorithms for input to AnimationManager  */
 export type AlgorithmTypes =
   | "insertion"
   | "bubble"
   | "selection"
+  | "quick"
 
 export type SortingFunction =
   (arr: number[]) => SortStep[]
@@ -19,7 +21,8 @@ const algorithmTypes : Record<
 > = {
     insertion: insertionSort,
     bubble: bubbleSort,
-    selection: selectionSort
+    selection: selectionSort,
+    quick: quickSort
 }
 
 export default algorithmTypes
