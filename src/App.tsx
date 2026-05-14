@@ -18,6 +18,8 @@ import RandQuickSortPage from './pages/RandQuickSortPage'
           {label: 'Divide and Conquer', subItems: [{id: 'Quick sort', comp: QuickSortPage},
                                                      {id: '2', comp: AnotherPage}, 
                                                      {id: '3'}]},
+          {label: 'Dynamic programming', subItems: [{id: '3'}
+                                                     ]},
           {label: 'Randomized Algorithms', subItems: [{id: 'Randomized quick sort', comp: RandQuickSortPage}
                                                      ]}
       ]
