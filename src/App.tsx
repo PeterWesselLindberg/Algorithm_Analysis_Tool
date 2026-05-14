@@ -10,11 +10,14 @@ import BubbleSortPage from './pages/BubbleSortPage'
 import SelectionSortPage from './pages/SelectionSortPage'
 import QuickSortPage from './pages/QuickSortPage'
 import RandQuickSortPage from './pages/RandQuickSortPage'
+import HeapSortPage from './pages/HeapSortPage'
 
  let items : MenuItem[] = [
           {label: 'Brute force', subItems: [{id: 'Insertion sort', comp: InsertionSortPage}, 
                                               {id: 'Bubble sort', comp: BubbleSortPage}, 
-                                              {id: 'Selection sort', comp: SelectionSortPage}]},
+                                              {id: 'Selection sort', comp: SelectionSortPage},
+                                              {id: 'Heap sort', comp: HeapSortPage}]},
+                                              
           {label: 'Divide and Conquer', subItems: [{id: 'Quick sort', comp: QuickSortPage},
                                                      {id: '2', comp: AnotherPage}, 
                                                      {id: '3'}]},

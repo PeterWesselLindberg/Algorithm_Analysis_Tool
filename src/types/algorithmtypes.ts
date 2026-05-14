@@ -4,6 +4,7 @@ import bubbleSort from "../algorithms/bubbleSort"
 import selectionSort from "../algorithms/selectionSort"
 import quickSort from "../algorithms/quickSort"
 import randQuickSort from "../algorithms/randQuickSort"
+import heapSort from "../algorithms/heapSort"
 
 /** Different algorithms for input to AnimationManager  */
 export type AlgorithmTypes =
@@ -12,6 +13,7 @@ export type AlgorithmTypes =
   | "selection"
   | "quick"
   | "rQuick"
+  | "heap"
 
 export type SortingFunction =
   (arr: number[]) => SortStep[]
@@ -25,7 +27,8 @@ const algorithmTypes : Record<
     bubble: bubbleSort,
     selection: selectionSort,
     quick: quickSort,
-    rQuick: randQuickSort
+    rQuick: randQuickSort,
+    heap: heapSort
 }
 
 export default algorithmTypes
