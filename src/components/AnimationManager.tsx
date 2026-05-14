@@ -6,16 +6,16 @@ import algorithmTypes from "../types/algorithmtypes"
 import type { SortingType } from "../types/sortingType"
 import SortingGraphics from "./SortingGraphics"
 import { FaSquare, FaChevronLeft, FaChevronRight, FaPlay, FaPause } from "react-icons/fa"
-import generateRandomArray from "../randGen/generateRandomArray"
+//import generateRandomArray from "../randGen/generateRandomArray"
 
 interface AnimationManagerProps {
-  inputNumbers?: number[],
+  unsortedNumbers: number[],
   algorithm: AlgorithmTypes,
   sortingGraphics: SortingType
 }
 
-const AnimationManager = ({inputNumbers = [], algorithm, sortingGraphics} : AnimationManagerProps) => {
-  const unsortedNumbers = !Array.isArray(inputNumbers) || !inputNumbers.length ? generateRandomArray(15) : inputNumbers // Generates an array of random numbers in range 1 to 30
+const AnimationManager = ({unsortedNumbers, algorithm, sortingGraphics} : AnimationManagerProps) => {
+  //const unsortedNumbers = !Array.isArray(inputNumbers) || !inputNumbers.length ? generateRandomArray(15) : inputNumbers // Generates an array of random numbers in range 1 to 30
 
   const clonedUnsortedNumbers = unsortedNumbers.slice() // Clones the input list for use with the restartSort function
   
@@ -108,6 +108,7 @@ const AnimationManager = ({inputNumbers = [], algorithm, sortingGraphics} : Anim
       
       case "resume":
         setIsPaused(false)
+        setIsSorting(true)
         setBtnText(<FaPause/>)
         break
       
@@ -146,6 +147,7 @@ const AnimationManager = ({inputNumbers = [], algorithm, sortingGraphics} : Anim
 
     const step = steps[stepIndex]
 
+    setBtnvalue("resume")
     setNumbers(step.array)
     setActiveIndex(step.activeIndex)
     setCompareIndex(step.compareIndex)
@@ -202,7 +204,7 @@ const AnimationManager = ({inputNumbers = [], algorithm, sortingGraphics} : Anim
         <FaSquare/>
       </Button>
 
-      <Button onClick={() => {handleButtonValue(); startStopSort(btnValue)}} disabled={isFinished}>
+      <Button onClick={() => {handleButtonValue(); startStopSort(btnValue)}} disabled={isFinished || currentStep >= steps.length - 1}>
         {btnText}
       </Button>
       
@@ -212,7 +214,7 @@ const AnimationManager = ({inputNumbers = [], algorithm, sortingGraphics} : Anim
       </Button>
 
       <Button onClick={() => stepSort("next")}
-        disabled={isFinished}>
+        disabled={isFinished || currentStep >= steps.length - 1}>
         <FaChevronRight />
       </Button>
 

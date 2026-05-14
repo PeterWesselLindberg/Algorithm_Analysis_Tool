@@ -9,6 +9,7 @@ import InsertionSortPage from './pages/InsertionSortPage'
 import BubbleSortPage from './pages/BubbleSortPage'
 import SelectionSortPage from './pages/SelectionSortPage'
 import QuickSortPage from './pages/QuickSortPage'
+import RandQuickSortPage from './pages/RandQuickSortPage'
 
  let items : MenuItem[] = [
           {label: 'Brute force', subItems: [{id: 'Insertion sort', comp: InsertionSortPage}, 
@@ -16,7 +17,9 @@ import QuickSortPage from './pages/QuickSortPage'
                                               {id: 'Selection sort', comp: SelectionSortPage}]},
           {label: 'Divide and Conquer', subItems: [{id: 'Quick sort', comp: QuickSortPage},
                                                      {id: '2', comp: AnotherPage}, 
-                                                     {id: '3'}]}
+                                                     {id: '3'}]},
+          {label: 'Randomized Algorithms', subItems: [{id: 'Randomized quick sort', comp: RandQuickSortPage}
+                                                     ]}
       ]
 
 items.forEach((item) => {

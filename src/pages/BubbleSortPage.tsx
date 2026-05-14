@@ -1,7 +1,7 @@
 import AnimationManager from "../components/AnimationManager"
 import TopNavBar from "../components/TopNavBar"
 import { useState } from "react"
-
+import generateRandomArray from "../randGen/generateRandomArray"
 
 const BubbleSortPage = () => {
   const [isVisible, setIsVisible] = useState(true)
@@ -15,7 +15,7 @@ const BubbleSortPage = () => {
       <TopNavBar onSelectItem={handleSelectItem}/>
       <h1>Bubble sort</h1>
       { isVisible ? (
-      <AnimationManager algorithm="bubble" sortingGraphics="list/bar" />
+      <AnimationManager unsortedNumbers={generateRandomArray(15)} algorithm="bubble" sortingGraphics="list/bar" />
       ) : (
         <p> This text was hidden all along</p>
       )}

@@ -1,6 +1,7 @@
 import AnimationManager from "../components/AnimationManager"
 import TopNavBar from "../components/TopNavBar"
 import { useState } from "react"
+import generateRandomArray from "../randGen/generateRandomArray"
 
 
 const QuickSortPage = () => {
@@ -15,7 +16,7 @@ const QuickSortPage = () => {
       <TopNavBar onSelectItem={handleSelectItem}/>
       <h1>Quick sort</h1>
       { isVisible ? (
-      <AnimationManager algorithm="quick" sortingGraphics="list/bar" />
+      <AnimationManager unsortedNumbers={generateRandomArray(15)} algorithm="quick" sortingGraphics="list/bar" />
       ) : (
         <p> This text was hidden all along</p>
       )}
