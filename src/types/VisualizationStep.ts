@@ -1,5 +1,3 @@
-//import type { TreeNodeData } from "./treeNodeDataType"
-import buildHeapTree from "../utils/buildHeapTree"
 import type { LinearData } from "../dataStructures/LinearData"
 import type { TreeNodeData } from "../dataStructures/TreeNodedata"
 import type { GraphData } from "../dataStructures/GraphData"
