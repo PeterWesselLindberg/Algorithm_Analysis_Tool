@@ -2,7 +2,6 @@ import { Col, Container, Row } from 'react-bootstrap'
 import './App.css'
 import SideBarMenu from './components/SideBarMenu'
 import {HashRouter, Route, Routes, Outlet, useNavigate } from 'react-router-dom'
-import AnotherPage from './pages/AnotherPage'
 import type { MenuItem } from './components/SideBarMenu'
 import ErrorPage from './pages/ErrorPage'
 import InsertionSortPage from './pages/InsertionSortPage'
@@ -20,7 +19,7 @@ import MergeSortPage from './pages/MergeSortPage'
                                               {id: 'Heap sort', comp: HeapSortPage}]},
                                               
           {label: 'Divide and Conquer', subItems: [{id: 'Quick sort', comp: QuickSortPage},
-                                                     {id: '2', comp: AnotherPage}, 
+                                                     {id: '2'}, 
                                                      {id: 'Merge sort', comp: MergeSortPage}]},
           {label: 'Dynamic programming', subItems: [{id: '3'}
                                                      ]},
