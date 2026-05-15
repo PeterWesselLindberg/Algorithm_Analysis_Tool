@@ -4,8 +4,8 @@ import type { SortStep } from "../types/SortStep"
 import type { AlgorithmTypes } from "../types/algorithmtypes"
 import algorithmTypes from "../types/algorithmtypes"
 import type { SortingType } from "../types/sortingType"
-import SortingGraphics from "./SortingGraphics"
 import { FaSquare, FaChevronLeft, FaChevronRight, FaPlay, FaPause } from "react-icons/fa"
+import Visualizer from "./Visualizer"
 //import generateRandomArray from "../randGen/generateRandomArray"
 
 interface AnimationManagerProps {
@@ -199,7 +199,7 @@ const AnimationManager = ({unsortedNumbers, algorithm, sortingGraphics} : Animat
   return (
     
     <div>
-      <SortingGraphics numbers={numbers} activeIndex={activeIndex} compareIndex={compareIndex} sortedIndices={sortedIndices} sortingType={sortingGraphics}/>
+      <Visualizer numbers={numbers} activeIndex={activeIndex} compareIndex={compareIndex} sortedIndices={sortedIndices} sortingType={sortingGraphics}/>
       <Button onClick={() => restartSort()}>
         <FaSquare/>
       </Button>

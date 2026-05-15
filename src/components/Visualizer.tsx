@@ -2,7 +2,7 @@ import type { SortingType } from "../types/sortingType"
 import BarsList from "./BarsList"
 import NumberList from "./NumberList"
 
-interface SortingGraphicsProps {
+interface VisualizerProps {
   numbers: number[],
   activeIndex : number | undefined,
   compareIndex: number | undefined,
@@ -11,7 +11,7 @@ interface SortingGraphicsProps {
 }
 
 /** Decides, which sorting graphics to use for which algoritm based on limited input strings */
-const SortingGraphics = ( {numbers, activeIndex, compareIndex, sortedIndices, sortingType} : SortingGraphicsProps ) => {
+const Visualizer = ( {numbers, activeIndex, compareIndex, sortedIndices, sortingType} : VisualizerProps ) => {
   switch(sortingType) {
     case "list/bar": 
         return (
@@ -39,4 +39,4 @@ const SortingGraphics = ( {numbers, activeIndex, compareIndex, sortedIndices, so
     
 }
 
-export default SortingGraphics
+export default Visualizer
