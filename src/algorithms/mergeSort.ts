@@ -1,6 +1,8 @@
-import type { SortStep } from "../types/SortStep";
+import type { VisualizationStep } from "../types/VisualizationStep";
+import pushStep from "../utils/pushStep";
+import toId from "../utils/toId";
 
-const merge = (arr: number[], left: number, mid: number, right: number, steps: SortStep[], sortedIndices: number[]) => {
+const merge = (arr: number[], left: number, mid: number, right: number, steps: VisualizationStep[], sortedIds: string[]) => {
 
     const n1 = mid - left + 1;
     const n2 = right - mid;
@@ -24,11 +26,11 @@ const merge = (arr: number[], left: number, mid: number, right: number, steps: S
     while (i < n1 && j < n2) {
 
         //COMPARISON
-        steps.push({
-            array: [...arr],
-            activeIndex: left + i,
-            compareIndex: mid + 1 + j,
-            sortedIndices: [...sortedIndices]
+         pushStep(steps, {
+            linear: { values: [...arr] },
+            activeIds: [toId(left + i)],
+            compareIds: [toId(mid + 1 + j)],
+            sortedIds: [...sortedIds]
         });
 
         if (lTemp[i] <= rTemp[j]) {
@@ -43,10 +45,10 @@ const merge = (arr: number[], left: number, mid: number, right: number, steps: S
         }
 
         // WRITE STEP
-        steps.push({
-            array: [...arr],
-            activeIndex: k,
-            sortedIndices: [...sortedIndices]
+        pushStep(steps, {
+            linear: { values: [...arr] },
+            activeIds: [toId(k)],
+            sortedIds: [...sortedIds]
         });
 
         k++;
@@ -57,10 +59,10 @@ const merge = (arr: number[], left: number, mid: number, right: number, steps: S
 
         arr[k] = lTemp[i];
 
-        steps.push({
-            array: [...arr],
-            activeIndex: k,
-            sortedIndices: [...sortedIndices]
+        pushStep(steps, {
+            linear: { values: [...arr] },
+            activeIds: [toId(k)],
+            sortedIds: [...sortedIds]
         });
 
         i++;
@@ -71,10 +73,10 @@ const merge = (arr: number[], left: number, mid: number, right: number, steps: S
 
         arr[k] = rTemp[j];
 
-        steps.push({
-            array: [...arr],
-            activeIndex: k,
-            sortedIndices: [...sortedIndices]
+        pushStep(steps, {
+            linear: { values: [...arr] },
+            activeIds: [toId(k)],
+            sortedIds: [...sortedIds]
         });
 
         j++;
@@ -84,24 +86,24 @@ const merge = (arr: number[], left: number, mid: number, right: number, steps: S
     //THIS MERGED REGION IS NOW SORTED
     for (let idx = left; idx <= right; idx++) {
 
-        if (!sortedIndices.includes(idx)) {
-            sortedIndices.push(idx);
+        if (!sortedIds.includes(toId(idx))) {
+            sortedIds.push(toId(idx));
         }
     }
 
     //RECORD MERGED REGION
-    steps.push({
-        array: [...arr],
-        sortedIndices: [...sortedIndices]
-    });
+    pushStep(steps, {
+            linear: { values: [...arr] },
+            sortedIds: [...sortedIds]
+        });
 };
 
 const mergeSortRecursive = (
     arr: number[],
     left: number,
     right: number,
-    steps: SortStep[],
-    sortedIndices: number[]
+    steps: VisualizationStep[],
+    sortedIds: string[]
 ) => {
 
     if (left >= right) return;
@@ -116,7 +118,7 @@ const mergeSortRecursive = (
         left,
         mid,
         steps,
-        sortedIndices
+        sortedIds
     );
 
     mergeSortRecursive(
@@ -124,7 +126,7 @@ const mergeSortRecursive = (
         mid + 1,
         right,
         steps,
-        sortedIndices
+        sortedIds
     );
 
     merge(
@@ -133,32 +135,28 @@ const mergeSortRecursive = (
         mid,
         right,
         steps,
-        sortedIndices
+        sortedIds
     );
 };
 
-const mergeSort = (inputArr: number[]): SortStep[] => {
+const mergeSort = (inputArr: number[]): VisualizationStep[] => {
 
     const arr = [...inputArr];
-    const steps: SortStep[] = [];
-    const sortedIndices: number[] = [];
+    const steps: VisualizationStep[] = [];
+    const sortedIds: string[] = [];
 
     mergeSortRecursive(
         arr,
         0,
         arr.length - 1,
         steps,
-        sortedIndices
+        sortedIds
     );
 
     //FINAL STEP
-    steps.push({
-        array: [...arr],
-        sortedIndices:
-            Array.from(
-                { length: arr.length },
-                (_, i) => i
-            )
+    pushStep(steps, {
+    linear: { values: [...arr] },
+    sortedIds: Array.from({ length: arr.length }, (_, i) => i.toString())
     });
 
     return steps;

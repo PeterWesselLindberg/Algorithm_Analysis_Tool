@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react"
 import { Button } from "react-bootstrap"
-import type { SortStep } from "../types/SortStep"
 import type { AlgorithmTypes } from "../types/algorithmtypes"
 import algorithmTypes from "../types/algorithmtypes"
 import type { SortingType } from "../types/sortingType"
 import { FaSquare, FaChevronLeft, FaChevronRight, FaPlay, FaPause } from "react-icons/fa"
 import Visualizer from "./Visualizer"
+import type { VisualizationStep } from "../types/VisualizationStep"
 //import generateRandomArray from "../randGen/generateRandomArray"
 
 interface AnimationManagerProps {
@@ -17,12 +17,11 @@ interface AnimationManagerProps {
 const AnimationManager = ({unsortedNumbers, algorithm, sortingGraphics} : AnimationManagerProps) => {
   //const unsortedNumbers = !Array.isArray(inputNumbers) || !inputNumbers.length ? generateRandomArray(15) : inputNumbers // Generates an array of random numbers in range 1 to 30
 
-  const clonedUnsortedNumbers = unsortedNumbers.slice() // Clones the input list for use with the restartSort function
+  //const clonedUnsortedNumbers = unsortedNumbers.slice() // Clones the input list for use with the restartSort function
   
   const selectedAlgorithm = algorithmTypes[algorithm] // Initialises the given algoritmhtype for the limited types
   const initialSteps = selectedAlgorithm(unsortedNumbers) // Initialises the the input list with the selected algoritm
 
-  const [numbers, setNumbers] = useState(unsortedNumbers) 
   const [speed, setSpeed] = useState(5) // The speed stat used for speeding up and slowing down the algorithm animation
   
   // The booleans used for determining when the animation is starting, stopping or finished 
@@ -31,13 +30,9 @@ const AnimationManager = ({unsortedNumbers, algorithm, sortingGraphics} : Animat
   const [isFinished, setIsFinished] = useState(false)
 
   // The steps used in the algorithm animation
-  const [steps, setSteps] = useState<SortStep[]>(initialSteps)
+  const [step, setStep] = useState<VisualizationStep>(initialSteps[0])
+  const [steps, setSteps] = useState<VisualizationStep[]>(initialSteps)
   const [currentStep, setCurrentStep] = useState(0)
-
-  // The current element index and the index of the element it is compared to
-  const [activeIndex, setActiveIndex] = useState<number | undefined>()
-  const [compareIndex, setCompareIndex] = useState<number | undefined>()
-  const [sortedIndices, setSortedIndices] = useState<number[] | undefined>()
 
   const [btnText, setBtnText] = useState(<FaPlay/>) // Changes the text on the buttons
   const [btnValue, setBtnvalue] = useState("start") // changes the current state of the buttons in order to update the symbols
@@ -46,32 +41,22 @@ const AnimationManager = ({unsortedNumbers, algorithm, sortingGraphics} : Animat
 
 
   useEffect(() => {
-    if (!isSorting || isPaused) return
+  if (!isSorting || isPaused) return
 
-    if (currentStep >= steps.length) {
-      setIsSorting(false)
-      setIsPaused(false)
-      setIsFinished(true)
-      setBtnText(<FaPlay/>)
+  if (currentStep >= steps.length) {
+    setIsSorting(false)
+    setIsPaused(false)
+    setIsFinished(true)
+    setBtnText(<FaPlay />)
+    return
+  }
 
-      setActiveIndex(undefined)
-      setCompareIndex(undefined)
-      setSortedIndices(undefined)
-      return
-    }
-
-    const timeout = setTimeout(() => {
-    const step = steps[currentStep]
-
-    setNumbers(step.array)
-    setActiveIndex(step.activeIndex)
-    setCompareIndex(step.compareIndex)
-    setSortedIndices(step.sortedIndices)
-
+  const timeout = setTimeout(() => {
+    setStep(steps[currentStep])
     setCurrentStep((prev) => prev + 1)
-    }, animationDelay) // speed in ms
+  }, animationDelay)
 
-    return () => clearTimeout(timeout)
+  return () => clearTimeout(timeout)
 }, [currentStep, isSorting, isPaused, steps, speed])
 
   /** Intialises the steps of the algorithm and decides if it is starting in a stopped state or a running state */
@@ -135,7 +120,7 @@ const AnimationManager = ({unsortedNumbers, algorithm, sortingGraphics} : Animat
   const restartSort = () => {
     setBtnText(<FaPlay/>)
     setBtnvalue("start")
-    setNumbers(clonedUnsortedNumbers)
+    // setNumbers(clonedUnsortedNumbers)
     setIsFinished(false)
     setIsSorting(false)
     initialiseSteps("pause")
@@ -143,18 +128,14 @@ const AnimationManager = ({unsortedNumbers, algorithm, sortingGraphics} : Animat
 
   /** Goes the current step when sliding the steps slider */
   const goToStep = (stepIndex: number) => {
-    if (stepIndex < 0 || stepIndex >= steps.length) return
+  if (stepIndex < 0 || stepIndex >= steps.length) return
 
-    const step = steps[stepIndex]
+  setIsPaused(true)
+  setIsSorting(false)
 
-    setBtnvalue("resume")
-    setNumbers(step.array)
-    setActiveIndex(step.activeIndex)
-    setCompareIndex(step.compareIndex)
-    setSortedIndices(step.sortedIndices)
-
-    setCurrentStep(stepIndex)
-  }
+  setCurrentStep(stepIndex)
+  setStep(steps[stepIndex])
+}
 
   /** Determines what happens when you press the next or previous step buttons */
   const stepSort = (direction: "prev" | "next") => {
@@ -199,7 +180,7 @@ const AnimationManager = ({unsortedNumbers, algorithm, sortingGraphics} : Animat
   return (
     
     <div>
-      <Visualizer numbers={numbers} activeIndex={activeIndex} compareIndex={compareIndex} sortedIndices={sortedIndices} sortingType={sortingGraphics}/>
+      <Visualizer step={step} sortingType={sortingGraphics}/>
       <Button onClick={() => restartSort()}>
         <FaSquare/>
       </Button>

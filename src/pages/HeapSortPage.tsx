@@ -16,7 +16,7 @@ const HeapSortPage = () => {
       <TopNavBar onSelectItem={handleSelectItem}/>
       <h1>Heap sort</h1>
       { isVisible ? (
-      <AnimationManager unsortedNumbers={generateRandomArray(15)} algorithm="heap" sortingGraphics="list/bar" />
+      <AnimationManager unsortedNumbers={generateRandomArray(15)} algorithm="heap" sortingGraphics="list/bar/tree" />
       ) : (
         <p> This text was hidden all along</p>
       )}

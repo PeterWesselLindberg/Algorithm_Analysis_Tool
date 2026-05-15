@@ -1,29 +1,31 @@
-import type { SortStep } from "../types/SortStep";
+import type { VisualizationStep } from "../types/VisualizationStep";
+import pushStep from "../utils/pushStep";
+import toId from "../utils/toId";
 
-const bubbleSort = (inputArr : number[]) : SortStep[]  => {
+const bubbleSort = (inputArr : number[]) : VisualizationStep[]  => {
     const arr = [...inputArr]
-    const steps: SortStep[] = [];
+    const steps: VisualizationStep[] = [];
     const n: number = arr.length;
 
     let swapped : Boolean;
     for (let i = 0; i < n-1; i++ ) {
         swapped = false;
         
-        const sortedIndices =
+        const sortedIds =
             Array.from(
                 { length: i },
-                (_, k) => n - 1 - k
+                (_, k) => (n - 1 - k).toString()
             );
 
         for (let j = 0; j < n - i - 1; j++) {
 
             //SHOW INITIAL COMPARISON
-            steps.push({
-                array: [...arr],
-                activeIndex: j,
-                compareIndex: j+1,
-                sortedIndices
-            });
+           pushStep(steps, {
+                linear: { values: [...arr] },
+                activeIds: [toId(j)],
+                compareIds: [toId(j + 1)],
+                sortedIds
+            })
 
             // SWAP
             if ( arr[j] > arr[j+1]) {
@@ -32,12 +34,12 @@ const bubbleSort = (inputArr : number[]) : SortStep[]  => {
                 swapped = true
 
                 //SHOW SWAPPED ARRAY
-                steps.push({
-                    array: [...arr],
-                    activeIndex: j,
-                    compareIndex: j + 1,
-                    sortedIndices
-                });
+                pushStep(steps, {
+                    linear: { values: [...arr] },
+                    activeIds: [toId(j)],
+                    compareIds: [toId(j + 1)],
+                    sortedIds
+                })
             }
         
         }
@@ -46,14 +48,13 @@ const bubbleSort = (inputArr : number[]) : SortStep[]  => {
         }
     }
 
-    steps.push({
-        array: [...arr],
-        sortedIndices:
-            Array.from(
-                { length: n },
-                (_, i) => i
-            )
-    });
+    pushStep(steps, {
+        linear: { values: [...arr] },
+        sortedIds: Array.from(
+        { length: n },
+        (_, i) => i.toString()
+        )
+    })
 
     return steps
 }

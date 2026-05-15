@@ -1,11 +1,11 @@
 import insertionSort from "../algorithms/insertionSort"
-import type { SortStep } from "./SortStep"
 import bubbleSort from "../algorithms/bubbleSort"
 import selectionSort from "../algorithms/selectionSort"
 import quickSort from "../algorithms/quickSort"
 import randQuickSort from "../algorithms/randQuickSort"
 import heapSort from "../algorithms/heapSort"
 import mergeSort from "../algorithms/mergeSort"
+import type { VisualizationStep } from "./VisualizationStep"
 
 /** Different algorithms for input to AnimationManager  */
 export type AlgorithmTypes =
@@ -18,7 +18,7 @@ export type AlgorithmTypes =
   | "merge"
 
 export type SortingFunction =
-  (arr: number[]) => SortStep[]
+  (arr: number[]) => VisualizationStep[]
 
 /**  Translates the algorithm string into an actual function using records*/
 const algorithmTypes : Record<

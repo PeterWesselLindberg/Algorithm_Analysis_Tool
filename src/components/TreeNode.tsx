@@ -59,6 +59,40 @@ const TreeNode = ({node, activeIds = [], compareIds = [], sortedIds = []} : Tree
         {node.value}
       </div>
 
+
+      {/* CONNECTOR LINES */}
+      {node.children && node.children.length > 0 && (
+        <svg
+          width="100%"
+          height="60"
+          style={{
+            display: "block",
+            marginTop: "0.25rem",
+            overflow: "visible"
+          }}
+        >
+          {node.children.map((_, index, arr) => {
+            const spacing = 120 // horizontal distance between children
+            const totalWidth = (arr.length - 1) * spacing
+            const startX = 25 // center of parent node (50px / 2)
+
+            const childX = startX - totalWidth / 2 + index * spacing
+
+            return (
+              <line
+                key={index}
+                x1={startX}
+                y1={0}
+                x2={childX}
+                y2={60}
+                stroke="black"
+                strokeWidth={2}
+              />
+            )
+          })}
+        </svg>
+      )}
+
       {/* CHILDREN */}
       {node.children &&
         node.children.length > 0 && (
@@ -67,7 +101,7 @@ const TreeNode = ({node, activeIds = [], compareIds = [], sortedIds = []} : Tree
           style={{
             display: "flex",
             gap: "4rem",
-            marginTop: "2rem"
+            marginTop: "0.5rem"
           }}
         >
 

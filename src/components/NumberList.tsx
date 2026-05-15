@@ -1,26 +1,38 @@
-import { ListGroup } from "react-bootstrap";
+import { ListGroup } from "react-bootstrap"
+import toId from "../utils/toId"
 
 interface NumberListProps {
-  numbers: number[],
-  activeIndex?: number,     // current element (key)
-  compareIndex?: number,    // element being compared
-  sortedIndices?: number[],     // boundary of sorted part
+  numbers: number[]
+  activeIds?: string[]
+  compareIds?: string[]
+  sortedIds?: string[]
 }
 
-const NumberList = ({ numbers, activeIndex, compareIndex, sortedIndices }: NumberListProps) => {
-    return (
+const NumberList = ({
+  numbers,
+  activeIds = [],
+  compareIds = [],
+  sortedIds = []
+}: NumberListProps) => {
+  return (
     <ListGroup horizontal>
       {numbers.map((num, index) => {
-        let variant;
+        const id = toId(index)
 
-        if (sortedIndices?.includes(index)) variant = "success"; // sorted portion
-        if (index === activeIndex) variant = "warning";   //  current key
-        if (index === compareIndex) variant = "danger"; // being compared
-        
-          
+        let variant: "success" | "warning" | "danger" | undefined
+
+        if (sortedIds.includes(id)) {
+          variant = "success"
+        }
+        if (activeIds.includes(id)) {
+          variant = "warning"
+        }
+        if (compareIds.includes(id)) {
+          variant = "danger"
+        }
 
         return (
-          <ListGroup.Item key={index} variant={variant}>
+          <ListGroup.Item key={id} variant={variant}>
             {num}
           </ListGroup.Item>
         )

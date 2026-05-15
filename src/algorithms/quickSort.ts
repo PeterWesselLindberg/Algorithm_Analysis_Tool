@@ -1,31 +1,34 @@
-import type { SortStep } from "../types/SortStep";
+import type { VisualizationStep } from "../types/VisualizationStep";
+import pushStep from "../utils/pushStep";
+import toId from "../utils/toId";
 
-const partition = (arr: number[], low : number, high : number, steps: SortStep[], sortedIndices: number[]) : number => {
+const partition = (arr: number[], low : number, high : number, steps: VisualizationStep[], sortedIds: string[]) : number => {
 
-    let pivot = arr[high];
+    const pivotId = toId(high);
+    let pivotValue = arr[high];
 
     let i = low - 1;
 
     for (let j = low; j <= high - 1; j++) {
 
         //COMPARISON WITH PIVOT
-        steps.push({
-            array: [...arr],
-            activeIndex: high, // pivot
-            compareIndex: j,
-            sortedIndices: [...sortedIndices]
+        pushStep(steps, {
+            linear: { values: [...arr] },
+            activeIds: [toId(j)],
+            compareIds: [pivotId],
+            sortedIds: [...sortedIds]
         });
 
-        if (arr[j] < pivot) {
+        if (arr[j] < pivotValue) {
             i++;
             swap(arr, i, j);
 
             //RECORD SWAP
-            steps.push({
-                array: [...arr],
-                activeIndex: i,
-                compareIndex: j,
-                sortedIndices: [...sortedIndices]
+            pushStep(steps, {
+                linear: { values: [...arr] },
+                activeIds: [toId(i)],
+                compareIds: [toId(j)],
+                sortedIds: [...sortedIds]
             });
         }
     }
@@ -33,12 +36,13 @@ const partition = (arr: number[], low : number, high : number, steps: SortStep[]
     // PLACE PIVOT
     swap(arr, i + 1, high);
 
-    steps.push({
-        array: [...arr],
-        activeIndex: i + 1,
-        compareIndex: high,
-        sortedIndices: [...sortedIndices]
+    pushStep(steps, {
+        linear: { values: [...arr] },
+        activeIds: [toId(i + 1)],
+        compareIds: [pivotId],
+        sortedIds: [...sortedIds]
     });
+
     return i + 1;
 }
 
@@ -55,73 +59,44 @@ const quickSortRecursive = (
     arr: number[],
     low: number,
     high: number,
-    steps: SortStep[],
-    sortedIndices: number[]
+    steps: VisualizationStep[],
+    sortedIds: string[]
 ) => {
 
     if (low < high) {
 
-        const pIndex =
-            partition(
-                arr,
-                low,
-                high,
-                steps,
-                sortedIndices
-            );
+        const pIndex = partition(arr, low, high, steps, sortedIds);
 
             //PIVOT NOW SORTED
-            sortedIndices.push(pIndex);
+             sortedIds.push(toId(pIndex));
 
             // RECORD SORTED PIVOT
-            steps.push({
-            array: [...arr],
-            sortedIndices: [...sortedIndices]
+            pushStep(steps, {
+                linear: { values: [...arr] },
+                sortedIds: [...sortedIds]
             });
 
-        quickSortRecursive(
-            arr,
-            low,
-            pIndex - 1,
-            steps,
-            sortedIndices
-        );
-
-        quickSortRecursive(
-            arr,
-            pIndex + 1,
-            high,
-            steps,
-            sortedIndices
-        );
+        
+        quickSortRecursive(arr, low, pIndex - 1, steps, sortedIds);
+        quickSortRecursive(arr, pIndex + 1, high, steps, sortedIds);
     }
 };
 
 
-const quickSort = (inputArr : number[], low : number = 0, high : number = 0) : SortStep[] => {
+const quickSort = (inputArr : number[], low : number = 0, high : number = 0) : VisualizationStep[] => {
     const arr = [...inputArr];
-    const steps: SortStep[] = [];
+    const steps: VisualizationStep[] = [];
     const n: number = arr.length;
-    const sortedIndices: number[] = [];
+    const sortedIds: string[] = [];
     
     let localHigh = high > 0 ? high : n - 1;
 
-    quickSortRecursive(
-        arr,
-        low,
-        localHigh,
-        steps,
-        sortedIndices
-    );
+    quickSortRecursive(arr, low, localHigh, steps, sortedIds);
 
     // FINAL ALL-SORTED STEP
-    steps.push({
-        array: [...arr],
-        sortedIndices:
-            Array.from(
-                { length: n },
-                (_, i) => i
-            )
+    pushStep(steps, {
+    linear: { values: [...arr] },
+    sortedIds: Array.from({ length: arr.length }, (_, i) => i.toString())
     });
 
     return steps

@@ -1,74 +1,65 @@
-import type { SortStep } from "../types/SortStep";
+import type { VisualizationStep } from "../types/VisualizationStep"
+import pushStep from "../utils/pushStep"
+import toId from "../utils/toId"
 
-const insertionSort = (arr: number[]): SortStep[] => {
+const insertionSort = (inputArr: number[]): VisualizationStep[] => {
 
-    const localArr = [...arr];
-    const steps: SortStep[] = [];
+  const arr = [...inputArr]
+  const steps: VisualizationStep[] = []
 
-    const n = localArr.length;
+  const n = arr.length
 
-    for (let i = 1; i < n; i++) {
+  for (let i = 1; i < n; i++) {
 
-        const key = localArr[i];
-        let j = i - 1;
+    const key = arr[i]
+    let j = i - 1
 
-        //CURRENT SORTED SECTION
-        const sortedIndices =
-            Array.from(
-                { length: i },
-                (_, k) => k
-            );
+    // sorted portion = left side
+    let sortedIds = Array.from({ length: i }, (_, k) => toId(k))
 
-        //SHOW INITIAL COMPARISON
-        steps.push({
-            array: [...localArr],
-            activeIndex: j,
-            compareIndex: i,
-            sortedIndices
-        });
+    // 🔥 initial comparison
+    pushStep(steps, {
+      linear: { values: [...arr] },
+      activeIds: [toId(j)],
+      compareIds: [toId(i)],
+      sortedIds
+    })
 
-        while (j >= 0 && localArr[j] > key) {
+    while (j >= 0 && arr[j] > key) {
 
-            //SHIFT ELEMENT
-            localArr[j + 1] = localArr[j];
+      // shift right
+      arr[j + 1] = arr[j]
 
-            //RECORD SHIFTED ARRAY
-            steps.push({
-                array: [...localArr],
-                activeIndex: j,
-                compareIndex: j + 1,
-                sortedIndices
-            });
+      // 🔥 shift step
+      pushStep(steps, {
+        linear: { values: [...arr] },
+        activeIds: [toId(j)],
+        compareIds: [toId(j + 1)],
+        sortedIds
+      })
 
-            j--;
-        }
-
-        //INSERT KEY
-        localArr[j + 1] = key;
-
-        // RECORD INSERTION
-        steps.push({
-            array: [...localArr],
-            activeIndex: j + 1,
-            compareIndex: i,
-            sortedIndices: Array.from(
-            { length: i + 1 },
-            (_, index) => index
-            )
-        });
+      j--
     }
 
-     // FINAL ALL-SORTED STEP
-    steps.push({
-        array: [...localArr],
-        sortedIndices:
-            Array.from(
-                { length: n },
-                (_, i) => i
-            )
-    });
+    // insert key
+    arr[j + 1] = key
 
-    return steps;
-};
+    // 🔥 insertion step (important final action of this iteration)
+    pushStep(steps, {
+      linear: { values: [...arr] },
+      activeIds: [toId(j + 1)],
+      compareIds: [toId(i)],
+      sortedIds: Array.from({ length: i + 1 }, (_, k) => toId(k))
+    })
+  }
 
-export default insertionSort;
+  // final fully sorted state
+  pushStep(steps, {
+    linear: { values: [...arr] },
+    sortedIds: Array.from({ length: n }, (_, k) => toId(k))
+  })
+
+  return steps
+}
+
+export default insertionSort

@@ -1,52 +1,79 @@
 
-import type { SortStep } from "../types/SortStep";
+import type { VisualizationStep } from "../types/VisualizationStep";
+import pushStep from "../utils/pushStep";
+import toId from "../utils/toId";
 
-const randPartition = (arr: number[], start : number, stop : number, steps: SortStep[], sortedIndices: number[]) : number => {
+const randPartition = (arr: number[], start : number, stop : number, steps: VisualizationStep[], sortedIds: string[]) : number => {
     
-    let randpivot = Math.floor(Math.random() * (stop - start + 1)) + start;
+    let randPivot = Math.floor(Math.random() * (stop - start + 1)) + start;
 
-    [arr[start], arr[randpivot]] = [arr[randpivot], arr[start]];
-    return partition(arr, start, stop, steps, sortedIndices);
+    // SHOW RANDOMLY CHOSEN PIVOT
+    pushStep(steps, {
+        linear: { values: [...arr] },
+
+        activeIds: [toId(randPivot)],
+
+        sortedIds: [...sortedIds]
+    });
+
+
+    [arr[start], arr[randPivot]] = [arr[randPivot], arr[start]];
+
+    //  SHOW PIVOT AFTER SWAP
+    pushStep(steps, {
+        linear: { values: [...arr] },
+
+        activeIds: [toId(start)],
+
+        compareIds: [toId(randPivot)],
+
+        sortedIds: [...sortedIds]
+    });
+
+
+    return partition(arr, start, stop, steps, sortedIds);
 }
 
-const partition = (arr: number[], start : number, stop : number, steps: SortStep[], sortedIndices: number[]) : number => {
+const partition = (arr: number[], start : number, stop : number, steps: VisualizationStep[], sortedIds: string[]) : number => {
 
-    let pivot = start
+    const pivotId = toId(start);
+    let pivotValue = arr[start];
 
     let i = start + 1;
 
     for (let j = start  + 1; j <= stop; j++) {
 
         //COMPARISON WITH PIVOT
-        steps.push({
-            array: [...arr],
-            activeIndex: pivot, // pivot
-            compareIndex: j,
-            sortedIndices: [...sortedIndices]
+        pushStep(steps, {
+            linear: { values: [...arr] },
+            activeIds: [pivotId],
+            compareIds: [toId(j)],
+            sortedIds: [...sortedIds]
         });
 
-        if (arr[j] < arr[pivot]) {
+        if (arr[j] < pivotValue) {
             [arr[i], arr[j]] = [arr[j], arr[i]]
             i++;
 
             //RECORD SWAP
-            steps.push({
-                array: [...arr],
-                activeIndex: i,
-                compareIndex: j,
-                sortedIndices: [...sortedIndices]
+            pushStep(steps, {
+                linear: { values: [...arr] },
+                activeIds: [toId(i)],
+                compareIds: [toId(j)],
+                sortedIds: [...sortedIds]
             });
         }
     }
-    [arr[pivot], arr[i - 1]] = [arr[i - 1], arr[pivot]];
-    pivot = i - 1;
-    steps.push({
-        array: [...arr],
-        activeIndex: pivot,
-        compareIndex: stop,
-        sortedIndices: [...sortedIndices]
+    [arr[start], arr[i - 1]] = [arr[i - 1], arr[start]];
+    pivotValue = i - 1;
+
+    pushStep(steps, {
+        linear: { values: [...arr] },
+        activeIds: [pivotId],
+        compareIds: [toId(stop)],
+        sortedIds: [...sortedIds]
     });
-    return pivot
+    return pivotValue
 }
 
 // Helper function for tracing
@@ -54,8 +81,8 @@ const quickSortRecursive = (
     arr: number[],
     start: number,
     stop: number,
-    steps: SortStep[],
-    sortedIndices: number[]
+    steps: VisualizationStep[],
+    sortedIds: string[]
 ) => {
 
     if (start < stop) {
@@ -66,16 +93,16 @@ const quickSortRecursive = (
                 start,
                 stop,
                 steps,
-                sortedIndices
+                sortedIds
             );
 
             //PIVOT NOW SORTED
-            sortedIndices.push(pIndex);
+            sortedIds.push(toId(pIndex));
 
             // RECORD SORTED PIVOT
-            steps.push({
-            array: [...arr],
-            sortedIndices: [...sortedIndices]
+            pushStep(steps, {
+                linear: { values: [...arr] },
+                sortedIds: [...sortedIds]
             });
 
         quickSortRecursive(
@@ -83,7 +110,7 @@ const quickSortRecursive = (
             start,
             pIndex - 1,
             steps,
-            sortedIndices
+            sortedIds
         );
 
         quickSortRecursive(
@@ -91,17 +118,17 @@ const quickSortRecursive = (
             pIndex + 1,
             stop,
             steps,
-            sortedIndices
+            sortedIds
         );
     }
 };
 
 
-const randQuickSort = (inputArr : number[], low : number = 0, high : number = 0) : SortStep[] => {
+const randQuickSort = (inputArr : number[], low : number = 0, high : number = 0) : VisualizationStep[] => {
     const arr = [...inputArr];
-    const steps: SortStep[] = [];
+    const steps: VisualizationStep[] = [];
     const n: number = arr.length;
-    const sortedIndices: number[] = [];
+    const sortedIds: string[] = [];
     
     let localHigh = high > 0 ? high : n - 1;
 
@@ -110,17 +137,13 @@ const randQuickSort = (inputArr : number[], low : number = 0, high : number = 0)
         low,
         localHigh,
         steps,
-        sortedIndices
+        sortedIds
     );
 
     // FINAL ALL-SORTED STEP
-    steps.push({
-        array: [...arr],
-        sortedIndices:
-            Array.from(
-                { length: n },
-                (_, i) => i
-            )
+    pushStep(steps, {
+    linear: { values: [...arr] },
+    sortedIds: Array.from({ length: arr.length }, (_, i) => i.toString())
     });
 
     return steps
