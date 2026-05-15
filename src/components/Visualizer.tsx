@@ -41,6 +41,7 @@ const Visualizer = ( {step, sortingType} : VisualizerProps ) => {
          <>
           <TreeVisualizer
             tree={step.tree}
+            numbers={numbers}
             activeIds={step.activeIds}
             compareIds={step.compareIds}
             sortedIds={step.sortedIds}

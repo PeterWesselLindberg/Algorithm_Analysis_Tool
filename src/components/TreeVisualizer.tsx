@@ -1,12 +1,14 @@
 import type { TreeNodeData }
 from "../dataStructures/TreeNodedata"
 
-import TreeNode
-from "./TreeNode"
+import TreeNodes from "./TreeNodes"
+
+import TreeEdges from "./TreeEdges"
 
 interface TreeVisualizerProps {
 
   tree?: TreeNodeData
+  numbers: number[]
 
   activeIds?: string[]
   compareIds?: string[]
@@ -16,7 +18,7 @@ interface TreeVisualizerProps {
 const TreeVisualizer = ({
 
   tree,
-
+  numbers,
   activeIds = [],
   compareIds = [],
   sortedIds = []
@@ -24,23 +26,15 @@ const TreeVisualizer = ({
 }: TreeVisualizerProps) => {
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        marginTop: "2rem"
-      }}
-    >
-
-      <TreeNode
+    <svg width="100%" height="500">
+      <TreeEdges node={tree} />
+      <TreeNodes 
         node={tree}
-
+        numbers={numbers}
         activeIds={activeIds}
         compareIds={compareIds}
-        sortedIds={sortedIds}
-      />
-
-    </div>
+        sortedIds={sortedIds} />
+    </svg>
   )
 }
 

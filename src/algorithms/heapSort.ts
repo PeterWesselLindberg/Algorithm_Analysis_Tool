@@ -1,10 +1,11 @@
+import type { TreeNodeData } from "../dataStructures/TreeNodedata";
 import type { VisualizationStep } from "../types/VisualizationStep";
 import buildHeapTree from "../utils/buildHeapTree";
 import pushStep from "../utils/pushStep";
 import toId from "../utils/toId";
 
 
-const heapify = (arr : number[], n : number , i : number, steps : VisualizationStep[], sortedIds : string[]) => {
+const heapify = (arr : number[], n : number , i : number, steps : VisualizationStep[], sortedIds : string[], tree : TreeNodeData | undefined) => {
 
   let largest = i;
 
@@ -16,7 +17,7 @@ const heapify = (arr : number[], n : number , i : number, steps : VisualizationS
      pushStep(steps, {
       linear: { values: [...arr] },
 
-      tree: buildHeapTree(arr),
+      tree,
 
       activeIds: [toId(largest)],
       compareIds: [toId(leftIndex)],
@@ -34,7 +35,7 @@ const heapify = (arr : number[], n : number , i : number, steps : VisualizationS
      pushStep(steps, {
       linear: { values: [...arr] },
 
-      tree: buildHeapTree(arr),
+      tree,
 
       activeIds: [toId(largest)],
       compareIds: [toId(rightIndex)],
@@ -55,7 +56,7 @@ const heapify = (arr : number[], n : number , i : number, steps : VisualizationS
     pushStep(steps, {
       linear: { values: [...arr] },
 
-      tree: buildHeapTree(arr),
+      tree,
 
       activeIds: [toId(i)],
       compareIds: [toId(largest)],
@@ -68,7 +69,8 @@ const heapify = (arr : number[], n : number , i : number, steps : VisualizationS
         n,
         largest,
         steps,
-        sortedIds
+        sortedIds,
+        tree
     );
   }
 
@@ -78,10 +80,11 @@ const heapSort = (inputArr : number[]) : VisualizationStep[] => {
   const arr = [...inputArr];
   const steps: VisualizationStep[] = [];
   const sortedIds: string[] = [];
+  const tree = buildHeapTree(arr);
   let n: number = arr.length;
 
   for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
-    heapify(arr, n, i, steps, sortedIds);
+    heapify(arr, n, i, steps, sortedIds, tree);
   };
 
   for (let i = n - 1; i > 0; i--) {
@@ -93,7 +96,7 @@ const heapSort = (inputArr : number[]) : VisualizationStep[] => {
     pushStep(steps, {
       linear: { values: [...arr] },
       
-      tree: buildHeapTree(arr),
+      tree,
 
       activeIds: [toId(0)],
       compareIds: [toId(i)],
@@ -101,13 +104,13 @@ const heapSort = (inputArr : number[]) : VisualizationStep[] => {
       sortedIds: [...sortedIds]
     });
 
-    heapify(arr, i, 0, steps, sortedIds);
+    heapify(arr, i, 0, steps, sortedIds, tree);
   }
   
   sortedIds.push(toId(0));
   pushStep(steps, {
     linear: { values: [...arr] },
-    tree: buildHeapTree(arr),
+    tree,
 
     sortedIds: [...sortedIds]
   });
