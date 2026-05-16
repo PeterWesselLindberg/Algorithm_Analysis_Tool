@@ -6,6 +6,7 @@ import randQuickSort from "../algorithms/randQuickSort"
 import heapSort from "../algorithms/heapSort"
 import mergeSort from "../algorithms/mergeSort"
 import type { VisualizationStep } from "./VisualizationStep"
+import countingSort from "../algorithms/countingSort"
 
 /** Different algorithms for input to AnimationManager  */
 export type AlgorithmTypes =
@@ -16,6 +17,7 @@ export type AlgorithmTypes =
   | "rQuick"
   | "heap"
   | "merge"
+  | "counting"
 
 export type SortingFunction =
   (arr: number[]) => VisualizationStep[]
@@ -31,7 +33,8 @@ const algorithmTypes : Record<
     quick: quickSort,
     rQuick: randQuickSort,
     heap: heapSort,
-    merge: mergeSort
+    merge: mergeSort,
+    counting: countingSort
 }
 
 export default algorithmTypes

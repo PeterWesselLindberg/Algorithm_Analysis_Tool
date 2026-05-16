@@ -1,0 +1,26 @@
+import AnimationManager from "../components/AnimationManager"
+import TopNavBar from "../components/TopNavBar"
+import { useState } from "react"
+import generateRandomArray from "../randGen/generateRandomArray"
+
+const CountingSortPage = () => {
+  const [isVisible, setIsVisible] = useState(true)
+  
+  const handleSelectItem = () => {
+    setIsVisible((prev) => !prev)
+  }
+
+  return (
+    <div>
+      <TopNavBar onSelectItem={handleSelectItem}/>
+      <h1>Counting sort</h1>
+      { isVisible ? (
+      <AnimationManager unsortedNumbers={generateRandomArray(15)} algorithm="counting" sortingGraphics="list/list/list" />
+      ) : (
+        <p> This text was hidden all along</p>
+      )}
+    </div>
+  )
+}
+
+export default CountingSortPage

@@ -8,6 +8,8 @@ export type VisualizationStep = {
   // VISUAL STRUCTURES
   linear?: LinearData
 
+  linears?: LinearData[]
+
   tree?: TreeNodeData
 
   graph?: GraphData

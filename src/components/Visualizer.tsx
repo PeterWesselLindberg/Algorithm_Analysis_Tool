@@ -3,6 +3,7 @@ import BarsList from "./BarsList"
 import NumberList from "./NumberList"
 import type { VisualizationStep } from "../types/VisualizationStep"
 import TreeVisualizer from "./TreeVisualizer"
+import ExtendedNumberList from "./ExtendedNumbersList"
 
 interface VisualizerProps {
   step: VisualizationStep
@@ -12,6 +13,7 @@ interface VisualizerProps {
 /** Decides, which sorting graphics to use for which algoritm based on limited input strings */
 const Visualizer = ( {step, sortingType} : VisualizerProps ) => {
   const numbers = step.linear?.values ?? []
+  const linears = step.linears ?? []
   const activeIds = step.activeIds ?? []
   const compareIds = step.compareIds ?? []
   const sortedIds = step.sortedIds ?? []
@@ -42,9 +44,9 @@ const Visualizer = ( {step, sortingType} : VisualizerProps ) => {
           <TreeVisualizer
             tree={step.tree}
             numbers={numbers}
-            activeIds={step.activeIds}
-            compareIds={step.compareIds}
-            sortedIds={step.sortedIds}
+            activeIds={activeIds}
+            compareIds={compareIds}
+            sortedIds={sortedIds}
           />
           <hr />
 
@@ -66,19 +68,29 @@ const Visualizer = ( {step, sortingType} : VisualizerProps ) => {
         </>
       )
 
-    // case "tree":
-    //   return step.tree ? (
-    //     <TreeVisualizer
-    //       tree={step.tree}
-    //       activeIds={activeIds}
-    //       compareIds={compareIds}
-    //       sortedIds={sortedIds}
-    //     />
-    //   ) : null
+    case "list/list/list":
+      return (
+        <>
+          {linears?.map((linear) => (
 
-    // default:
-    //   return null
-  // )
+          <div key={linear.id}>
+            <h5>{linear.label}</h5>
+
+            <ExtendedNumberList
+              idPrefix={linear.id}
+              numbers={linear.values}
+
+              activeIds={activeIds}
+              compareIds={compareIds}
+              sortedIds={sortedIds}
+            />
+
+            <hr />
+          </div>
+
+        ))}
+        </>
+      )
 
   } 
   
