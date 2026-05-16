@@ -12,6 +12,7 @@ import RandQuickSortPage from './pages/RandQuickSortPage'
 import HeapSortPage from './pages/HeapSortPage'
 import MergeSortPage from './pages/MergeSortPage'
 import CountingSortPage from './pages/CountingSortPage'
+import RadixSortPage from './pages/RadixSortPage'
 
  let items : MenuItem[] = [
           {label: 'Brute force', subItems: [{id: 'Insertion sort', comp: InsertionSortPage}, 
@@ -21,7 +22,9 @@ import CountingSortPage from './pages/CountingSortPage'
                                               
           {label: 'Divide and Conquer', subItems: [{id: 'Quick sort', comp: QuickSortPage},
                                                      {id: 'Counting sort', comp: CountingSortPage}, 
-                                                     {id: 'Merge sort', comp: MergeSortPage}]},
+                                                     {id: 'Merge sort', comp: MergeSortPage},
+                                                     {id: 'Radix sort', comp: RadixSortPage}, 
+                                                    ]},
 
           {label: 'Dynamic programming', subItems: [{id: '3'}
                                                      ]},
