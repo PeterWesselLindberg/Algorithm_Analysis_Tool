@@ -14,8 +14,9 @@ const NumberList = ({
   compareIds = [],
   sortedIds = []
 }: NumberListProps) => {
+
   return (
-    <ListGroup horizontal>
+    <ListGroup horizontal className="custom-listgroup">
       {numbers.map((num, index) => {
         const id = toId(index)
 

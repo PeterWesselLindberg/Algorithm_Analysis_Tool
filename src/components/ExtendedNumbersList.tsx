@@ -16,7 +16,7 @@ const ExtendedNumberList = ({
   sortedIds = []
 }: ExtendedNumberListProps) => {
     return (
-        <ListGroup horizontal>
+        <ListGroup horizontal className="custom-listgroup">
 
         {numbers.map((num, index) => {
 

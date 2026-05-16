@@ -16,18 +16,17 @@ interface TreeVisualizerProps {
 }
 
 const TreeVisualizer = ({
-
   tree,
   numbers,
   activeIds = [],
   compareIds = [],
-  sortedIds = []
+  sortedIds = [],
 
 }: TreeVisualizerProps) => {
 
   return (
     <svg width="100%" height="500">
-      <TreeEdges node={tree} />
+      <TreeEdges node={tree}/>
       <TreeNodes 
         node={tree}
         numbers={numbers}

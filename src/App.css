@@ -1,4 +1,19 @@
-.counter {
+body {
+  margin: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark {
+  background-color: #212121;
+  color: white;
+}
+
+body.light {
+  background-color: #ffffff;
+  color: #111;
+}
+
+/* .counter {
   font-size: 16px;
   padding: 5px 10px;
   border-radius: 5px;
@@ -181,4 +196,68 @@
     right: 0;
     border-right-color: var(--border);
   }
+}
+
+.darkmode {
+  background-color: #212121;
+  color: white;
+} */
+
+.dark .sidebar-navbar .accordion-button {
+  background-color: #1e1e2f;
+  color: white !important;
+}
+
+.dark .sidebar-navbar .accordion-button:not(.collapsed) {
+  background-color: #2a2a40;
+  color: white !important;
+}
+
+.dark .sidebar-navbar .accordion-body {
+  background-color: #1e1e2f;
+  color: white;
+}
+
+/* THIS is the key missing piece */
+.dark .sidebar-navbar .accordion-button::after {
+  filter: invert(1); /* makes the dropdown arrow visible on dark bg */
+}
+
+.dark .sidebar-navbar .nav-link {
+  color: white !important;
+}
+
+.dark .sidebar-navbar .nav-link:hover {
+  color: white !important;
+  background-color: #343a40;
+}
+
+.light .sidebar-navbar .nav-link {
+  color: black !important;
+}
+
+.light .sidebar-navbar .nav-link:hover {
+  color: black !important;
+  background-color: #a6b9cc;
+}
+
+.light .sidebar-navbar .nav-link.active {
+  color: black !important;
+  background-color: #a6b9cc;
+}
+
+.light .sidebar-navbar .accordion-button:not(.collapsed) {
+  background-color: #a6b9cc;
+  color: black !important;
+}
+
+.dark .sidebar-navbar .nav-link.active {
+  color: white !important;
+  background-color: #343a40;
+}
+
+.custom-listgroup .list-group-item {
+  background-color: rgb(95, 94, 94);
+  color: white !important;
+  border: 1px solid #444;
 }

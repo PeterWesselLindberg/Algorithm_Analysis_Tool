@@ -1,12 +1,13 @@
 import type { TreeNodeData } from "../dataStructures/TreeNodedata"
 
-interface Props {
+interface TreeEdgesProps {
   node?: TreeNodeData
 }
 
-const TreeEdges = ({ node }: Props) => {
+const TreeEdges = ({ node }: TreeEdgesProps) => {
   if (!node) return null
 
+  
   return (
     <>
       {node.children?.map((child) => (
@@ -16,7 +17,7 @@ const TreeEdges = ({ node }: Props) => {
             y1={node.y}
             x2={child.x}
             y2={child.y}
-            stroke="black"
+            stroke="grey"
             strokeWidth={2}
           />
 

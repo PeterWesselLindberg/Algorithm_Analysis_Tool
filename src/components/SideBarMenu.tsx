@@ -16,12 +16,12 @@ interface SideBarMenuProps {
     onSelectItem: (item: string) => void
 }
 
-const SideBarMenu = ({ items, onSelectItem }: SideBarMenuProps) => {
- return (
-  <Navbar>
-    <Nav variant="pills" className="flex-column">
+const SideBarMenu = ({ items, onSelectItem}: SideBarMenuProps) => {
+  return (
+  <Navbar className="sidebar-navbar">
+    <Nav variant="pills" className="flex-column sidebar-nav">
      {items.map((item, index) => (
-        <Accordion>
+        <Accordion key={item.label}>
           <AccordionItem eventKey={"link-" + index.toString()} >
             <AccordionHeader>
               {item.label}

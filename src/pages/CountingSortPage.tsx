@@ -2,6 +2,7 @@ import AnimationManager from "../components/AnimationManager"
 import TopNavBar from "../components/TopNavBar"
 import { useState } from "react"
 import generateRandomArray from "../randGen/generateRandomArray"
+import visualItems from "../utils/visualItems"
 
 const CountingSortPage = () => {
   const [isVisible, setIsVisible] = useState(true)
@@ -12,7 +13,7 @@ const CountingSortPage = () => {
 
   return (
     <div>
-      <TopNavBar onSelectItem={handleSelectItem}/>
+      <TopNavBar items={visualItems} onSelectItem={handleSelectItem}/>
       <h1>Counting sort</h1>
       { isVisible ? (
       <AnimationManager unsortedNumbers={generateRandomArray(15)} algorithm="counting" sortingGraphics="list/list/list" />

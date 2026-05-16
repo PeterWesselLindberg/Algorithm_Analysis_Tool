@@ -2,7 +2,7 @@ import { Col, Container, Row } from 'react-bootstrap'
 import './App.css'
 import SideBarMenu from './components/SideBarMenu'
 import {HashRouter, Route, Routes, Outlet, useNavigate } from 'react-router-dom'
-import type { MenuItem } from './components/SideBarMenu'
+import type { MenuItem} from './components/SideBarMenu'
 import ErrorPage from './pages/ErrorPage'
 import InsertionSortPage from './pages/InsertionSortPage'
 import BubbleSortPage from './pages/BubbleSortPage'
@@ -13,6 +13,9 @@ import HeapSortPage from './pages/HeapSortPage'
 import MergeSortPage from './pages/MergeSortPage'
 import CountingSortPage from './pages/CountingSortPage'
 import RadixSortPage from './pages/RadixSortPage'
+import { useEffect, useState } from "react";
+import Button from 'react-bootstrap/Button'
+import { FaLightbulb} from 'react-icons/fa'
 
  let items : MenuItem[] = [
           {label: 'Brute force', subItems: [{id: 'Insertion sort', comp: InsertionSortPage}, 
@@ -38,7 +41,9 @@ items.forEach((item) => {
   )
 })
 
-function Layout() {
+
+
+function Layout({theme, toggleTheme} : {theme: "dark" | "light"; toggleTheme: () => void}) {
   const navigate = useNavigate()
 
   const handleSelectItem = (item: string) => {
@@ -46,7 +51,7 @@ function Layout() {
   }
  
   return (
-    <>
+    <div className={theme}>
     <Container fluid>
       <Row>
           <Col xs={3}>
@@ -54,21 +59,45 @@ function Layout() {
           </Col>
           
           <Col>
-          <Outlet />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                marginBottom: "1rem"
+              }}
+            >
+              <Button variant={theme === "dark" ? "outline.light" : "outline.dark"}
+                onClick={toggleTheme}
+                style={{ color: theme === "dark" ? "white" : "black" }}
+              >
+                {theme === "dark" ? <div>Light <FaLightbulb/> </div>: <div> Dark <FaLightbulb/> </div>}
+              </Button>
+            </div>
+            <Outlet />
           </Col>
       </Row>
     </Container>
-    </>
+    </div>
   )
 }
 
 export default function App() {
   const subRoutes = items.flatMap(item => item.subItems)
-  
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
+
+  const toggleTheme = () => {
+    setTheme(prev => (prev === "dark" ? "light" : "dark"));
+  };
+
+  useEffect(() => {
+    document.body.classList.remove("dark", "light");
+    document.body.classList.add(theme);
+  }, [theme]);
+
   return (
     <HashRouter>
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path="/" element={<Layout theme={theme} toggleTheme={toggleTheme} />}>
         {subRoutes.map((sub, index) => {
           const Component = sub.comp ?? ErrorPage
 
