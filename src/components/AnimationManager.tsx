@@ -181,6 +181,7 @@ const AnimationManager = ({unsortedNumbers, algorithm, sortingGraphics} : Animat
     
     <div>
       <Visualizer step={step} sortingType={sortingGraphics}/>
+      <br/>
       <Button onClick={() => restartSort()}>
         <FaSquare/>
       </Button>

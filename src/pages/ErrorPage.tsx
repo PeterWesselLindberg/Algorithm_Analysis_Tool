@@ -1,6 +1,5 @@
 const ErrorPage = () => {
   return (
-    <div className="custom-bg text-dark">
     <div className="d-flex align-items-center justify-content-center min-vh-100 px-2">
         <div className="text-center">
             <h1 className="display-1 fw-bold">404</h1>
@@ -11,7 +10,6 @@ const ErrorPage = () => {
             </a>
         </div>
     </div>
-</div>
   )
 }
 
