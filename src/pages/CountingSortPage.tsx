@@ -5,19 +5,17 @@ import generateRandomArray from "../randGen/generateRandomArray"
 import visualItems from "../utils/visualItems"
 
 const CountingSortPage = () => {
-  const [isVisible, setIsVisible] = useState(true)
-  
-  const handleSelectItem = () => {
-    setIsVisible((prev) => !prev)
-  }
+  const [selectedTab, setSelectedTab] = useState("Visualizer")
 
   return (
     <div>
-      <TopNavBar items={visualItems} onSelectItem={handleSelectItem}/>
+      <TopNavBar items={visualItems} onSelectItem={setSelectedTab}/>
       <h1>Counting sort</h1>
-      { isVisible ? (
+      { selectedTab === "Visualizer" && (
       <AnimationManager unsortedNumbers={generateRandomArray(15)} algorithm="counting" sortingGraphics="list/list/list" />
-      ) : (
+      )}
+    
+      {selectedTab === "Readme.md" && (
         <p> This text was hidden all along</p>
       )}
     </div>

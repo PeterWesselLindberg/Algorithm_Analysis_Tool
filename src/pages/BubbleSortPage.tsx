@@ -5,20 +5,17 @@ import { useState } from "react"
 import visualItems from "../utils/visualItems"
 
 const BubbleSortPage = () => {
-  const [isVisible, setIsVisible] = useState(true)
-
-  const handleSelectItem = () => {
-    setIsVisible((prev) => !prev)
-  }
-
+  const [selectedTab, setSelectedTab] = useState("Visualizer")
 
   return (
     <div>
-      <TopNavBar items={visualItems} onSelectItem={handleSelectItem}/>
+      <TopNavBar items={visualItems} onSelectItem={setSelectedTab}/>
       <h1>Bubble sort</h1>
-      { isVisible ? (
-      <AnimationManager unsortedNumbers={generateRandomArray(15)} algorithm="bubble" sortingGraphics="list/bar" />
-      ) : (
+      
+      {selectedTab === "Visualizer" && (<AnimationManager unsortedNumbers={generateRandomArray(15)} algorithm="bubble" sortingGraphics="list/bar" />
+      )}
+
+      {selectedTab === "Readme.md" && (
         <p> This text was hidden all along</p>
       )}
       

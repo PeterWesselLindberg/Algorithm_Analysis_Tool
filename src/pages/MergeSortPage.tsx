@@ -6,21 +6,20 @@ import visualItems from "../utils/visualItems"
 
 
 const MergeSortPage = () => {
-  const [isVisible, setIsVisible] = useState(true)
-  
-  const handleSelectItem = () => {
-    setIsVisible((prev) => !prev)
-  }
+  const [selectedTab, setSelectedTab] = useState("Visualizer")
 
   return (
     <div>
-      <TopNavBar items={visualItems} onSelectItem={handleSelectItem}/>
-      <h1>Merge Sort</h1>
-      { isVisible ? (
-      <AnimationManager unsortedNumbers={generateRandomArray(15)} algorithm="merge" sortingGraphics="list/bar" />
-      ) : (
+      <TopNavBar items={visualItems} onSelectItem={setSelectedTab}/>
+      <h1>Merge sort</h1>
+      
+      {selectedTab === "Visualizer" && (<AnimationManager unsortedNumbers={generateRandomArray(15)} algorithm="merge" sortingGraphics="list/bar" />
+      )}
+
+      {selectedTab === "Readme.md" && (
         <p> This text was hidden all along</p>
       )}
+      
     </div>
   )
 }

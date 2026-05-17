@@ -3,7 +3,7 @@ import { Nav} from "react-bootstrap"
 
 interface TopNavBarProps {
     items: string[]
-    onSelectItem: () => void
+    onSelectItem: (item: string) => void
 }
 
 const TopNavBar = ({items, onSelectItem} : TopNavBarProps) => {
@@ -15,7 +15,7 @@ const TopNavBar = ({items, onSelectItem} : TopNavBarProps) => {
                     <Nav.Item> 
                         <Nav.Link 
                             eventKey={"Visualizer-" + index.toString()}
-                            onClick={() => {onSelectItem(); setCurrentIndex(index)}}
+                            onClick={() => {onSelectItem(item); setCurrentIndex(index)}}
                             disabled={currentIndex === index}
                         > {item} 
                         </Nav.Link>
