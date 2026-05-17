@@ -181,62 +181,62 @@ const AnimationManager = ({unsortedNumbers, algorithm, sortingGraphics} : Animat
     
     <div>
       <Visualizer step={step} sortingType={sortingGraphics}/>
-      <br/>
-      <Button onClick={() => restartSort()}>
-        <FaSquare/>
-      </Button>
+        <div style={{ marginTop: "1rem" }}>
+          <Button onClick={() => restartSort()}>
+            <FaSquare/>
+          </Button>
 
-      <Button onClick={() => {handleButtonValue(); startStopSort(btnValue)}} disabled={isFinished || currentStep >= steps.length - 1}>
-        {btnText}
-      </Button>
-      
-      <Button onClick={() => stepSort("prev")}
-        disabled={currentStep === 0}>
-        <FaChevronLeft />
-      </Button>
-
-      <Button onClick={() => stepSort("next")}
-        disabled={isFinished || currentStep >= steps.length - 1}>
-        <FaChevronRight />
-      </Button>
-
-      <div style={{ marginTop: "1rem"}}>
-        <label>
-          Speed: {speed}ms
-        </label>
-
-        <input
-          type="range"
-          min="1"
-          max="10"
-          value={speed}
-          onChange={(e) => setSpeed(Number(e.target.value))}
-          style={{ marginRight: "1rem"}}
-          />
-
-          <label>
-          Step: {currentStep} / {Math.max(steps.length - 1, 0)}
-          {" "}({progress}%)
+          <Button onClick={() => {handleButtonValue(); startStopSort(btnValue)}} disabled={isFinished || currentStep >= steps.length - 1}>
+            {btnText}
+          </Button>
           
-        </label>
+          <Button onClick={() => stepSort("prev")}
+            disabled={currentStep === 0}>
+            <FaChevronLeft />
+          </Button>
 
-        <input
-          type="range"
-          min="0"
-          max={Math.max(steps.length - 1, 0)}
-          value={currentStep}
-          onChange={(e) => {
-            const stepIndex = Number(e.target.value)
+          <Button onClick={() => stepSort("next")}
+            disabled={isFinished || currentStep >= steps.length - 1}>
+            <FaChevronRight />
+          </Button>
 
-            setIsPaused(true)
-            setIsSorting(false) 
+          <div style={{ marginTop: "1rem"}}>
+            <label>
+              Speed: {speed}ms
+            </label>
 
-            goToStep(stepIndex)
-          }}
-          style={{ width: "400px"}}
-        />
-      </div>
-     
+            <input
+              type="range"
+              min="1"
+              max="10"
+              value={speed}
+              onChange={(e) => setSpeed(Number(e.target.value))}
+              style={{ marginRight: "1rem"}}
+              />
+
+              <label>
+              Step: {currentStep} / {Math.max(steps.length - 1, 0)}
+              {" "}({progress}%)
+              
+            </label>
+
+            <input
+              type="range"
+              min="0"
+              max={Math.max(steps.length - 1, 0)}
+              value={currentStep}
+              onChange={(e) => {
+                const stepIndex = Number(e.target.value)
+
+                setIsPaused(true)
+                setIsSorting(false) 
+
+                goToStep(stepIndex)
+              }}
+              style={{ width: "400px"}}
+            />
+          </div>
+        </div>
     </div>
   )
 }
