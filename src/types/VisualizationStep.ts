@@ -26,4 +26,7 @@ export type VisualizationStep = {
   visitedIds?: string[]
 
   pathIds?: string[]
+
+  activeEdgeIds?: string[]
+
 }

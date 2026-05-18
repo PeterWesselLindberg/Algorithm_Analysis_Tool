@@ -7,10 +7,10 @@ interface TopNavBarProps {
 }
 
 const TopNavBar = ({items, onSelectItem} : TopNavBarProps) => {
-    const [currentIndex, setCurrentIndex] = useState(0)
+    const [currentIndex, setCurrentIndex] = useState(1)
     return (
         // <Navbar className="sidebar-navbar">
-            <Nav className="sidebar-navbar" variant="tabs" defaultActiveKey={"Visualizer-" + "0"} >
+            <Nav className="sidebar-navbar" variant="tabs" defaultActiveKey={"Visualizer-" + "1"} >
                 {items.map((item, index) => (
                     <Nav.Item> 
                         <Nav.Link 

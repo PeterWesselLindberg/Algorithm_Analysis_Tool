@@ -3,3 +3,4 @@ export type SortingType =
     | "list/bar/tree"
     | "list/list/list"
     | "list"
+    | "list/tree"

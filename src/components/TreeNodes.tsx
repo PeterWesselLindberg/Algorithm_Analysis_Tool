@@ -19,8 +19,8 @@ const TreeNodes = ({
   if (!node) return null
   else if (node?.children === undefined) {return null}
 
-  const index = Number(node.id)
-  const value = numbers[index]
+  // const index = Number(node.id)
+  // const value = numbers[index]
 
   let fill = "#0d6efd"
 
@@ -43,7 +43,7 @@ const TreeNodes = ({
         dy={5}
         fill="white"
       >
-        {value}
+        {node.value}
       </text>
 
       {node.children.map(child => (

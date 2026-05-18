@@ -10,6 +10,7 @@ import countingSort from "../algorithms/countingSort"
 import radixSort from "../algorithms/radixSort"
 import nthFactorial from "../algorithms/factorial"
 import fibonacci from "../algorithms/fibonacci"
+import inorderTrace from "../algorithms/inorderTraversal"
 
 /** Different algorithms for input to AnimationManager  */
 export type AlgorithmTypes =
@@ -24,6 +25,7 @@ export type AlgorithmTypes =
   | "radix"
   | "factorial"
   | "fibonacci"
+  | "inorderTraversal"
 
 export type SortingFunction =
   (arr: number[]) => VisualizationStep[]
@@ -43,7 +45,8 @@ const algorithmTypes : Record<
     counting: countingSort,
     radix: radixSort,
     factorial: nthFactorial,
-    fibonacci: fibonacci
+    fibonacci: fibonacci,
+    inorderTraversal: inorderTrace
 }
 
 export default algorithmTypes

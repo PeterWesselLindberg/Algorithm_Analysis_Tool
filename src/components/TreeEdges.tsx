@@ -2,29 +2,39 @@ import type { TreeNodeData } from "../dataStructures/TreeNodedata"
 
 interface TreeEdgesProps {
   node?: TreeNodeData
+  activeEdgeIds?: string[]
 }
 
-const TreeEdges = ({ node }: TreeEdgesProps) => {
+const TreeEdges = ({ node, activeEdgeIds = [] }: TreeEdgesProps) => {
   if (!node) return null
 
-  
   return (
     <>
-      {node.children?.map((child) => (
-        <g key={`${node.id}-${child.id}`}>
-          <line
-            x1={node.x}
-            y1={node.y}
-            x2={child.x}
-            y2={child.y}
-            stroke="grey"
-            strokeWidth={2}
-          />
+      {node.children?.map((child) => {
+        const edgeId = `${node.id}->${child.id}`
 
-          {/* recurse */}
-          <TreeEdges node={child} />
-        </g>
-      ))}
+        return (
+          <g key={edgeId}>
+            <line
+              x1={node.x}
+              y1={node.y}
+              x2={child.x}
+              y2={child.y}
+              stroke={activeEdgeIds.includes(edgeId) ? "orange" : "grey"}
+              strokeWidth={activeEdgeIds.includes(edgeId) ? 4 : 2}
+              style={{
+                transition: "stroke 0.2s ease"
+              }}
+            />
+
+            {/* recurse */}
+            <TreeEdges
+              node={child}
+              activeEdgeIds={activeEdgeIds}
+            />
+          </g>
+        )
+      })}
     </>
   )
 }

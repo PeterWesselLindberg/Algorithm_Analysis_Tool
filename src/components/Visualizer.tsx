@@ -4,6 +4,7 @@ import NumberList from "./NumberList"
 import type { VisualizationStep } from "../types/VisualizationStep"
 import TreeVisualizer from "./TreeVisualizer"
 import ExtendedNumberList from "./ExtendedNumbersList"
+import VisitedList from "./VisitedList"
 
 interface VisualizerProps {
   step: VisualizationStep
@@ -42,11 +43,9 @@ const Visualizer = ( {step, sortingType} : VisualizerProps ) => {
         return (
          <>
           <TreeVisualizer
+            step={step}
             tree={step.tree}
             numbers={numbers}
-            activeIds={activeIds}
-            compareIds={compareIds}
-            sortedIds={sortedIds}
           />
           <hr />
 
@@ -103,6 +102,22 @@ const Visualizer = ( {step, sortingType} : VisualizerProps ) => {
             />
             
             <hr />
+        </>
+      )
+    
+    case "list/tree":
+      return (
+        <>
+          <TreeVisualizer
+          step={step}
+          tree={step.tree}
+          numbers={numbers}
+          />
+          <hr />
+
+          <VisitedList visitedIds={step.visitedIds ?? []} />
+            
+          
         </>
       )
 

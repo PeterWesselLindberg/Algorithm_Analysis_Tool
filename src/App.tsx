@@ -18,12 +18,16 @@ import Button from 'react-bootstrap/Button'
 import { FaLightbulb} from 'react-icons/fa'
 import FactorialPage from './pages/FactorialPage'
 import FibonacciPage from './pages/FibonacciPage'
+import TreeTraversalPage from './pages/TreeTraversalPage'
 
  let items : MenuItem[] = [
           {label: 'Brute force', subItems: [{id: 'Insertion sort', comp: InsertionSortPage}, 
                                               {id: 'Bubble sort', comp: BubbleSortPage}, 
                                               {id: 'Selection sort', comp: SelectionSortPage},
-                                              {id: 'Heap sort', comp: HeapSortPage}]},
+                                              {id: 'Heap sort', comp: HeapSortPage},
+                                              {id: 'Binary tree traversal', comp: TreeTraversalPage}
+                                            
+                                            ]},
                                               
           {label: 'Divide and Conquer', subItems: [{id: 'Quick sort', comp: QuickSortPage},
                                                      {id: 'Counting sort', comp: CountingSortPage}, 

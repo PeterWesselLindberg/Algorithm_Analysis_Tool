@@ -28,6 +28,7 @@ const buildHeapTree = (
       id: i.toString(),
       x,
       y: TOP_PADDING + depth * NODE_Y_GAP,
+      value: arr[i],
       children: []
     }
 

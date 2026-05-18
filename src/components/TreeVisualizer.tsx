@@ -4,9 +4,10 @@ from "../dataStructures/TreeNodedata"
 import TreeNodes from "./TreeNodes"
 
 import TreeEdges from "./TreeEdges"
+import type { VisualizationStep } from "../types/VisualizationStep"
 
 interface TreeVisualizerProps {
-
+  step: VisualizationStep
   tree?: TreeNodeData
   numbers: number[]
 
@@ -16,23 +17,24 @@ interface TreeVisualizerProps {
 }
 
 const TreeVisualizer = ({
+  step,
   tree,
-  numbers,
-  activeIds = [],
-  compareIds = [],
-  sortedIds = [],
+  numbers
 
 }: TreeVisualizerProps) => {
 
   return (
     <svg width="100%" height="500">
-      <TreeEdges node={tree}/>
+      <TreeEdges 
+        node={tree}
+        activeEdgeIds={step.activeEdgeIds}
+      />
       <TreeNodes 
         node={tree}
         numbers={numbers}
-        activeIds={activeIds}
-        compareIds={compareIds}
-        sortedIds={sortedIds} />
+        activeIds={step.activeIds}
+        compareIds={step.compareIds}
+        sortedIds={step.sortedIds} />
     </svg>
   )
 }
