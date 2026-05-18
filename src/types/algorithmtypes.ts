@@ -8,6 +8,8 @@ import mergeSort from "../algorithms/mergeSort"
 import type { VisualizationStep } from "./VisualizationStep"
 import countingSort from "../algorithms/countingSort"
 import radixSort from "../algorithms/radixSort"
+import nthFactorial from "../algorithms/factorial"
+import fibonacci from "../algorithms/fibonacci"
 
 /** Different algorithms for input to AnimationManager  */
 export type AlgorithmTypes =
@@ -20,6 +22,8 @@ export type AlgorithmTypes =
   | "merge"
   | "counting"
   | "radix"
+  | "factorial"
+  | "fibonacci"
 
 export type SortingFunction =
   (arr: number[]) => VisualizationStep[]
@@ -37,7 +41,9 @@ const algorithmTypes : Record<
     heap: heapSort,
     merge: mergeSort,
     counting: countingSort,
-    radix: radixSort
+    radix: radixSort,
+    factorial: nthFactorial,
+    fibonacci: fibonacci
 }
 
 export default algorithmTypes

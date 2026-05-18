@@ -16,6 +16,7 @@ const NumberList = ({
 }: NumberListProps) => {
 
   return (
+    
     <ListGroup horizontal className="custom-listgroup">
       {numbers.map((num, index) => {
         const id = toId(index)
@@ -32,10 +33,25 @@ const NumberList = ({
           variant = "danger"
         }
 
-        return (
-          <ListGroup.Item key={id} variant={variant}>
-            {num}
-          </ListGroup.Item>
+         return (
+          <div
+            key={id}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center"
+            }}
+          >
+            {/* INDEX LABEL */}
+            <small style={{ marginBottom: "4px", color: "#888" }}>
+              {index}
+            </small>
+
+            {/* VALUE */}
+            <ListGroup.Item variant={variant}>
+              {num}
+            </ListGroup.Item>
+          </div>
         )
       })}
     </ListGroup>

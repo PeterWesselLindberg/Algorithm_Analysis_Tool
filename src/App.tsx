@@ -16,6 +16,8 @@ import RadixSortPage from './pages/RadixSortPage'
 import { useEffect, useState } from "react";
 import Button from 'react-bootstrap/Button'
 import { FaLightbulb} from 'react-icons/fa'
+import FactorialPage from './pages/FactorialPage'
+import FibonacciPage from './pages/FibonacciPage'
 
  let items : MenuItem[] = [
           {label: 'Brute force', subItems: [{id: 'Insertion sort', comp: InsertionSortPage}, 
@@ -29,8 +31,9 @@ import { FaLightbulb} from 'react-icons/fa'
                                                      {id: 'Radix sort', comp: RadixSortPage}, 
                                                     ]},
 
-          {label: 'Dynamic programming', subItems: [{id: '3'}
-                                                     ]},
+          {label: 'Dynamic programming', subItems: [{id: 'Nth factorial', comp: FactorialPage},
+                                                      {id: 'Fibonacci sequence', comp: FibonacciPage}
+                                                    ]},
           {label: 'Randomized Algorithms', subItems: [{id: 'Randomized quick sort', comp: RandQuickSortPage}
                                                      ]}
       ]

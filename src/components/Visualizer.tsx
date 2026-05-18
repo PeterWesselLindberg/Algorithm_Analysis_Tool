@@ -91,6 +91,20 @@ const Visualizer = ( {step, sortingType} : VisualizerProps ) => {
         ))}
         </>
       )
+    
+    case "list":
+      return (
+        <>
+            <NumberList
+              numbers={numbers}
+              activeIds={activeIds}
+              compareIds={compareIds}
+              sortedIds={sortedIds}
+            />
+            
+            <hr />
+        </>
+      )
 
   } 
   

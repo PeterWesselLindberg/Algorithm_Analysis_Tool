@@ -34,14 +34,26 @@ const ExtendedNumberList = ({
             variant = "danger"
             }
 
-            return (
-            <ListGroup.Item
-                key={id}
-                variant={variant}
-            >
-                {num}
-            </ListGroup.Item>
-            )
+             return (
+                <div
+                    key={id}
+                    style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center"
+                    }}
+                >
+                    {/* INDEX LABEL */}
+                    <small style={{ fontSize: "12px", color: "#888" }}>
+                    {index}
+                    </small>
+
+                    {/* VALUE */}
+                    <ListGroup.Item variant={variant}>
+                    {num}
+                    </ListGroup.Item>
+                </div>
+        )
         })}
 
         </ListGroup>
