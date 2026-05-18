@@ -11,6 +11,8 @@ import radixSort from "../algorithms/radixSort"
 import nthFactorial from "../algorithms/factorial"
 import fibonacci from "../algorithms/fibonacci"
 import inorderTrace from "../algorithms/inorderTraversal"
+import postorderTrace from "../algorithms/postorderTraversal"
+import preorderTrace from "../algorithms/preorderTraversal"
 
 /** Different algorithms for input to AnimationManager  */
 export type AlgorithmTypes =
@@ -26,6 +28,8 @@ export type AlgorithmTypes =
   | "factorial"
   | "fibonacci"
   | "inorderTraversal"
+  | "postorderTraversal"
+  | "preorderTraversal"
 
 export type SortingFunction =
   (arr: number[]) => VisualizationStep[]
@@ -46,7 +50,9 @@ const algorithmTypes : Record<
     radix: radixSort,
     factorial: nthFactorial,
     fibonacci: fibonacci,
-    inorderTraversal: inorderTrace
+    inorderTraversal: inorderTrace,
+    postorderTraversal: postorderTrace,
+    preorderTraversal: preorderTrace
 }
 
 export default algorithmTypes

@@ -11,11 +11,25 @@ const TreeTraversalPage = () => {
   return (
     <div>
       <TopNavBar items={items} onSelectItem={setSelectedTab}/>
-      <h1>Tree Traversal</h1>
+      
       { selectedTab === "In order tree traversal" &&  (
         <>
-            <h5>In order tree traversal</h5>
+            <h1>In order tree traversal</h1>
             <AnimationManager unsortedNumbers={generateRandomArray(15)} algorithm="inorderTraversal" sortingGraphics="list/tree" />
+        </>
+      )} 
+
+      { selectedTab === "Post order tree traversal" &&  (
+        <>
+            <h1>Post order tree traversal</h1>
+            <AnimationManager unsortedNumbers={generateRandomArray(15)} algorithm="postorderTraversal" sortingGraphics="list/tree" />
+        </>
+      )} 
+
+      { selectedTab === "Pre order tree traversal" &&  (
+        <>
+            <h1>Pre order tree traversal</h1>
+            <AnimationManager unsortedNumbers={generateRandomArray(15)} algorithm="preorderTraversal" sortingGraphics="list/tree" />
         </>
       )} 
 
