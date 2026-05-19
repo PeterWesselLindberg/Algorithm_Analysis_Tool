@@ -14,6 +14,8 @@ import inorderTrace from "../algorithms/inorderTraversal"
 import postorderTrace from "../algorithms/postorderTraversal"
 import preorderTrace from "../algorithms/preorderTraversal"
 import bfsTreeTraversal from "../algorithms/bfsTreeTraversal"
+// import dfsGraphTrace from "../algorithms/dfsGraphTraversal"
+// import type { GraphData } from "../dataStructures/GraphData"
 
 /** Different algorithms for input to AnimationManager  */
 export type AlgorithmTypes =
@@ -32,9 +34,13 @@ export type AlgorithmTypes =
   | "postorderTraversal"
   | "preorderTraversal"
   | "bfsTreeTraversal"
+ // | "dfsGraphTraversal"
+
+export type AlgorithmInput = number[]
+// | GraphData
 
 export type AlgorithmFunction =
-  (arr: number[]) => VisualizationStep[]
+  (input: AlgorithmInput) => VisualizationStep[]
 
 /**  Translates the algorithm string into an actual function using records*/
 const algorithmTypes : Record<
@@ -55,7 +61,8 @@ const algorithmTypes : Record<
     inorderTraversal: inorderTrace,
     postorderTraversal: postorderTrace,
     preorderTraversal: preorderTrace,
-    bfsTreeTraversal: bfsTreeTraversal
+    bfsTreeTraversal: bfsTreeTraversal,
+//    dfsGraphTraversal: dfsGraphTrace
 }
 
 export default algorithmTypes

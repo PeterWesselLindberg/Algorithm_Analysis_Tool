@@ -10,10 +10,6 @@ interface TreeVisualizerProps {
   step: VisualizationStep
   tree?: TreeNodeData
   numbers: number[]
-
-  activeIds?: string[]
-  compareIds?: string[]
-  sortedIds?: string[]
 }
 
 const TreeVisualizer = ({

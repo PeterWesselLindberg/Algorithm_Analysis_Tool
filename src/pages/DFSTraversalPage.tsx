@@ -4,7 +4,7 @@ import { useState } from "react"
 import generateRandomArray from "../randGen/generateRandomArray"
 
 const DFSTraversalPage = () => {
-    const items = ["Readme.md", "DFS tree traversal"]
+    const items = ["Readme.md", "DFS tree traversal", "DFS graph traversal"]
     const [selectedTab, setSelectedTab] = useState(items[1])
     
     return (
@@ -16,7 +16,14 @@ const DFSTraversalPage = () => {
                 <h1>{items[1]}</h1>
                 <AnimationManager unsortedNumbers={generateRandomArray(15)} algorithm="preorderTraversal" visualizationGraphics="list/tree" />
             </>
-        )} 
+        )}
+
+         { selectedTab === items[2] &&  (
+            <>
+                <h1>{items[2]}</h1>
+                {/* <AnimationManager unsortedNumbers={generateRandomArray(15)} algorithm="dfsGraphTraversal" visualizationGraphics="list/graph" /> */}
+            </>
+        )}  
 
         {selectedTab === items[0] && (
             <p> This text was hidden all along</p>

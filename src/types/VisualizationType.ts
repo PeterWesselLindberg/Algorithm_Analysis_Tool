@@ -4,3 +4,4 @@ export type VisualizationType =
     | "list/list/list"
     | "list"
     | "list/tree"
+    | "list/graph"

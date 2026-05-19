@@ -1,12 +1,11 @@
+import type { GraphNodeData } from "./GraphNodeData"
+
 export type GraphData = {
 
-  nodes: {
-    id: string
-    label: string
-  }[]
+  nodes: GraphNodeData[]
 
-  edges: {
-    from: string
-    to: string
-  }[]
+  // edges: {
+  //   from: string
+  //   to: string
+  // }[]
 }

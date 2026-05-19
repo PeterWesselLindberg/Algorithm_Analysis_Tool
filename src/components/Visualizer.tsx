@@ -5,6 +5,7 @@ import type { VisualizationStep } from "../types/VisualizationStep"
 import TreeVisualizer from "./TreeVisualizer"
 import ExtendedNumberList from "./ExtendedNumbersList"
 import VisitedList from "./VisitedList"
+import GraphVisualizer from "./GraphVisualizer"
 
 interface VisualizerProps {
   step: VisualizationStep
@@ -112,6 +113,21 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
           step={step}
           tree={step.tree}
           numbers={numbers}
+          />
+          <hr />
+
+          <VisitedList visitedIds={step.visitedIds ?? []} />
+            
+          
+        </>
+      )
+
+     case "list/graph":
+      return (
+        <>
+          <GraphVisualizer
+            step={step}
+            graph={step.graph}
           />
           <hr />
 
