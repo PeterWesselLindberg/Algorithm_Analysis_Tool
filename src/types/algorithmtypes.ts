@@ -13,6 +13,7 @@ import fibonacci from "../algorithms/fibonacci"
 import inorderTrace from "../algorithms/inorderTraversal"
 import postorderTrace from "../algorithms/postorderTraversal"
 import preorderTrace from "../algorithms/preorderTraversal"
+import bfsTreeTraversal from "../algorithms/bfsTreeTraversal"
 
 /** Different algorithms for input to AnimationManager  */
 export type AlgorithmTypes =
@@ -30,6 +31,7 @@ export type AlgorithmTypes =
   | "inorderTraversal"
   | "postorderTraversal"
   | "preorderTraversal"
+  | "bfsTreeTraversal"
 
 export type SortingFunction =
   (arr: number[]) => VisualizationStep[]
@@ -52,7 +54,8 @@ const algorithmTypes : Record<
     fibonacci: fibonacci,
     inorderTraversal: inorderTrace,
     postorderTraversal: postorderTrace,
-    preorderTraversal: preorderTrace
+    preorderTraversal: preorderTrace,
+    bfsTreeTraversal: bfsTreeTraversal
 }
 
 export default algorithmTypes
