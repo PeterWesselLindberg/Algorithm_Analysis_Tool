@@ -14,7 +14,7 @@ const BFSTraversalPage = () => {
         { selectedTab === items[1] &&  (
             <>
                 <h1>{items[1]}</h1>
-                <AnimationManager unsortedNumbers={generateRandomArray(15)} algorithm="bfsTreeTraversal" sortingGraphics="list/tree" />
+                <AnimationManager unsortedNumbers={generateRandomArray(15)} algorithm="bfsTreeTraversal" visualizationGraphics="list/tree" />
             </>
         )} 
 

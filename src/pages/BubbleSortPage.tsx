@@ -12,7 +12,7 @@ const BubbleSortPage = () => {
       <TopNavBar items={visualItems} onSelectItem={setSelectedTab}/>
       <h1>Bubble sort</h1>
       
-      {selectedTab === "Visualizer" && (<AnimationManager unsortedNumbers={generateRandomArray(15)} algorithm="bubble" sortingGraphics="list/bar" />
+      {selectedTab === "Visualizer" && (<AnimationManager unsortedNumbers={generateRandomArray(15)} algorithm="bubble" visualizationGraphics="list/bar" />
       )}
 
       {selectedTab === "Readme.md" && (

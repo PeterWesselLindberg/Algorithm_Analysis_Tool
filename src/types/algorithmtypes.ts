@@ -33,13 +33,13 @@ export type AlgorithmTypes =
   | "preorderTraversal"
   | "bfsTreeTraversal"
 
-export type SortingFunction =
+export type AlgorithmFunction =
   (arr: number[]) => VisualizationStep[]
 
 /**  Translates the algorithm string into an actual function using records*/
 const algorithmTypes : Record<
     AlgorithmTypes,
-    SortingFunction
+    AlgorithmFunction
 > = {
     insertion: insertionSort,
     bubble: bubbleSort,

@@ -11,7 +11,7 @@ const FactorialPage = () => {
       <TopNavBar items={visualItems} onSelectItem={setSelectedTab}/>
       <h1>Nth factorial</h1>
       { selectedTab === "Visualizer" && (
-      <AnimationManager unsortedNumbers={[15]} algorithm="factorial" sortingGraphics="list" />
+      <AnimationManager unsortedNumbers={[15]} algorithm="factorial" visualizationGraphics="list" />
       )}
     
       {selectedTab === "Readme.md" && (

@@ -12,7 +12,7 @@ const RadixSortPage = () => {
       <TopNavBar items={visualItems} onSelectItem={setSelectedTab}/>  
       <h1>Radix sort</h1>
       { selectedTab === "Visualizer" &&  (
-      <AnimationManager unsortedNumbers={generateRandomArray(15, 1, 999)} algorithm="radix" sortingGraphics="list/list/list" />
+      <AnimationManager unsortedNumbers={generateRandomArray(15, 1, 999)} algorithm="radix" visualizationGraphics="list/list/list" />
       )}
 
       {selectedTab === "Readme.md" && (

@@ -15,11 +15,11 @@ const HeapSortPage = () => {
       <TopNavBar items={arrCopy} onSelectItem={setSelectedTab}/>
       <h1>Heap sort</h1>
       { selectedTab === "Visualizer" &&  (
-      <AnimationManager unsortedNumbers={generateRandomArray(15)} algorithm="heap" sortingGraphics="list/bar/tree" />
+      <AnimationManager unsortedNumbers={generateRandomArray(15)} algorithm="heap" visualizationGraphics="list/bar/tree" />
       )} 
       
       { selectedTab === "Visualizer without heap" &&  (
-      <AnimationManager unsortedNumbers={generateRandomArray(15)} algorithm="heap" sortingGraphics="list/bar" />
+      <AnimationManager unsortedNumbers={generateRandomArray(15)} algorithm="heap" visualizationGraphics="list/bar" />
       )}
 
       {selectedTab === "Readme.md" && (

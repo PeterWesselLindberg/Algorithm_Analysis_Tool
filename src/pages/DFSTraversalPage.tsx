@@ -14,7 +14,7 @@ const DFSTraversalPage = () => {
         { selectedTab === items[1] &&  (
             <>
                 <h1>{items[1]}</h1>
-                <AnimationManager unsortedNumbers={generateRandomArray(15)} algorithm="preorderTraversal" sortingGraphics="list/tree" />
+                <AnimationManager unsortedNumbers={generateRandomArray(15)} algorithm="preorderTraversal" visualizationGraphics="list/tree" />
             </>
         )} 
 

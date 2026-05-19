@@ -1,4 +1,4 @@
-export type SortingType = 
+export type VisualizationType = 
     | "list/bar"
     | "list/bar/tree"
     | "list/list/list"

@@ -13,7 +13,7 @@ const MergeSortPage = () => {
       <TopNavBar items={visualItems} onSelectItem={setSelectedTab}/>
       <h1>Merge sort</h1>
       
-      {selectedTab === "Visualizer" && (<AnimationManager unsortedNumbers={generateRandomArray(15)} algorithm="merge" sortingGraphics="list/bar" />
+      {selectedTab === "Visualizer" && (<AnimationManager unsortedNumbers={generateRandomArray(15)} algorithm="merge" visualizationGraphics="list/bar" />
       )}
 
       {selectedTab === "Readme.md" && (

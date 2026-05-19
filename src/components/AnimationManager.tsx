@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { Button } from "react-bootstrap"
 import type { AlgorithmTypes } from "../types/algorithmtypes"
 import algorithmTypes from "../types/algorithmtypes"
-import type { SortingType } from "../types/sortingType"
+import type { VisualizationType } from "../types/VisualizationType"
 import { FaSquare, FaChevronLeft, FaChevronRight, FaPlay, FaPause } from "react-icons/fa"
 import Visualizer from "./Visualizer"
 import type { VisualizationStep } from "../types/VisualizationStep"
@@ -11,10 +11,10 @@ import type { VisualizationStep } from "../types/VisualizationStep"
 interface AnimationManagerProps {
   unsortedNumbers: number[],
   algorithm: AlgorithmTypes,
-  sortingGraphics: SortingType
+  visualizationGraphics: VisualizationType
 }
 
-const AnimationManager = ({unsortedNumbers, algorithm, sortingGraphics} : AnimationManagerProps) => {
+const AnimationManager = ({unsortedNumbers, algorithm, visualizationGraphics} : AnimationManagerProps) => {
   //const unsortedNumbers = !Array.isArray(inputNumbers) || !inputNumbers.length ? generateRandomArray(15) : inputNumbers // Generates an array of random numbers in range 1 to 30
 
   //const clonedUnsortedNumbers = unsortedNumbers.slice() // Clones the input list for use with the restartSort function
@@ -180,7 +180,7 @@ const AnimationManager = ({unsortedNumbers, algorithm, sortingGraphics} : Animat
   return (
     
     <div>
-      <Visualizer step={step} sortingType={sortingGraphics}/>
+      <Visualizer step={step} visualizationType={visualizationGraphics}/>
         <div style={{ marginTop: "1rem" }}>
           <Button onClick={() => restartSort()}>
             <FaSquare/>

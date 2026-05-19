@@ -1,4 +1,4 @@
-import type { SortingType } from "../types/sortingType"
+import type {VisualizationType } from "../types/VisualizationType"
 import BarsList from "./BarsList"
 import NumberList from "./NumberList"
 import type { VisualizationStep } from "../types/VisualizationStep"
@@ -8,17 +8,17 @@ import VisitedList from "./VisitedList"
 
 interface VisualizerProps {
   step: VisualizationStep
-  sortingType: SortingType
+  visualizationType: VisualizationType
 }
 
 /** Decides, which sorting graphics to use for which algoritm based on limited input strings */
-const Visualizer = ( {step, sortingType} : VisualizerProps ) => {
+const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
   const numbers = step.linear?.values ?? []
   const linears = step.linears ?? []
   const activeIds = step.activeIds ?? []
   const compareIds = step.compareIds ?? []
   const sortedIds = step.sortedIds ?? []
-  switch(sortingType) {
+  switch(visualizationType) {
     case "list/bar": 
         return (
          <>
