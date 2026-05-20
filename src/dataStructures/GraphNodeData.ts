@@ -1,3 +1,5 @@
+import type { GraphEdge } from "./GraphEdge"
+
 export type GraphNodeData = {
   id: string
   value: number
@@ -5,5 +7,5 @@ export type GraphNodeData = {
   x: number
   y: number
 
-  neighbors: string[]
+  neighbors: GraphEdge[]
 }

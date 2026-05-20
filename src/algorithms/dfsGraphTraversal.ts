@@ -45,11 +45,11 @@ const dfsGraphTraversal = (
   })
 
   // explore neighbors
-  node.neighbors?.forEach(neighborId => {
+  node.neighbors?.forEach(edge => {
 
     const neighbor =
       graph.nodes.find(
-        n => n.id === neighborId
+        n => n.id === edge.to
       )
 
     if (!neighbor) return

@@ -261,3 +261,11 @@ body.light {
   color: white !important;
   border: 1px solid #444;
 }
+
+body.dark .graph-text {
+  fill: white;
+}
+
+body.light .graph-text {
+  fill: black;
+}

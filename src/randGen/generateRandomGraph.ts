@@ -1,7 +1,7 @@
 import type { GraphData }from "../dataStructures/GraphData"
 import type { GraphNodeData } from "../dataStructures/GraphNodeData"
 
-const generateRandomGraph = (nodeCount: number, forceConnectivity: boolean = false): GraphData => {
+const generateRandomGraph = (nodeCount: number, forceConnectivity: boolean = false, weighted: boolean = false, directed: boolean = false): GraphData => {
 
     const nodes : GraphNodeData[] = []
 
@@ -35,15 +35,31 @@ const generateRandomGraph = (nodeCount: number, forceConnectivity: boolean = fal
 
     // GUARANTEE CONNECTED GRAPH
     if (forceConnectivity) {
+
         for (let i = 1; i < nodeCount; i++) {
 
-            nodes[i].neighbors.push(
-            nodes[i - 1].id
-            )
+            const edge = {
+            to: nodes[i - 1].id,
 
-            nodes[i - 1].neighbors.push(
-            nodes[i].id
-            )
+            ...(weighted && {
+                weight:
+                Math.floor(Math.random() * 20) + 1
+            })
+            }
+
+            const reverseEdge = {
+            to: nodes[i].id,
+
+            ...(weighted && {
+                weight: edge.weight
+            })
+            }
+
+            nodes[i].neighbors.push(edge)
+
+            if (!directed) {
+                 nodes[i-1].neighbors.push(reverseEdge)
+            }
         }
     }
 
@@ -52,17 +68,32 @@ const generateRandomGraph = (nodeCount: number, forceConnectivity: boolean = fal
 
         for (let j = i + 1; j < nodeCount; j++) {
 
-        // 30% chance of edge
-        if (Math.random() < 0.3) {
+            // 30% chance of edge
+            if (Math.random() < 0.3) {
 
-            nodes[i].neighbors.push(
-            nodes[j].id
-            )
+                const edge = {
+                    to: nodes[j].id,
 
-            nodes[j].neighbors.push(
-            nodes[i].id
-            )
-        }
+                    ...(weighted && {
+                    weight:
+                        Math.floor(Math.random() * 20) + 1
+                    })
+                }
+
+                const reverseEdge = {
+                    to: nodes[i].id,
+
+                    ...(weighted && {
+                    weight: edge.weight
+                    })
+                }
+
+                nodes[i].neighbors.push(edge)
+
+                if (!directed) {
+                    nodes[j].neighbors.push(reverseEdge)
+                }
+            }
         }
     }
 
@@ -70,25 +101,44 @@ const generateRandomGraph = (nodeCount: number, forceConnectivity: boolean = fal
     const rootNode = nodes[0]
 
     if (
-    rootNode &&
-    rootNode.neighbors.length === 0 &&
-    nodeCount > 1
+        rootNode &&
+        rootNode.neighbors.length === 0 &&
+        nodeCount > 1
     ) {
 
     // random node except itself
     const randomIndex =
         Math.floor(
-        Math.random() * (nodeCount - 1)
+            Math.random() * (nodeCount - 1)
         ) + 1
 
     const target = nodes[randomIndex]
 
-    rootNode.neighbors.push(target.id)
+    const edge = {
+        to: target.id,
 
-    target.neighbors.push(rootNode.id)
+        ...(weighted && {
+            weight:
+            Math.floor(Math.random() * 20) + 1
+        })
+        }
+
+        const reverseEdge = {
+        to: rootNode.id,
+
+        ...(weighted && {
+            weight: edge.weight
+        })
+        }
+
+        rootNode.neighbors.push(edge)
+
+        if (!directed) {
+            target.neighbors.push(reverseEdge)
+        }
     }
 
-    return { nodes }
+    return { nodes, directed }
 }
 
 export default generateRandomGraph
