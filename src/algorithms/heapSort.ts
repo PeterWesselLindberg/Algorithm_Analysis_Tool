@@ -1,3 +1,4 @@
+import type { AlgorithmInput } from "../types/algorithmtypes";
 import type { VisualizationStep } from "../types/VisualizationStep";
 import buildHeapTree from "../utils/buildHeapTree";
 import pushStep from "../utils/pushStep";
@@ -74,7 +75,11 @@ const heapify = (arr : number[], n : number , i : number, steps : VisualizationS
 
 }
 
-const heapSort = (inputArr : number[]) : VisualizationStep[] => {
+const heapSort = (inputArr : AlgorithmInput) : VisualizationStep[] => {
+  // heap sort only supports arrays
+    if (!Array.isArray(inputArr)) {
+        return []
+    }
   const arr = [...inputArr];
   const steps: VisualizationStep[] = [];
   const sortedIds: string[] = [];

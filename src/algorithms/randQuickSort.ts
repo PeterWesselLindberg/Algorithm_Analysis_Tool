@@ -1,4 +1,5 @@
 
+import type { AlgorithmInput } from "../types/algorithmtypes";
 import type { VisualizationStep } from "../types/VisualizationStep";
 import pushStep from "../utils/pushStep";
 import toId from "../utils/toId";
@@ -124,7 +125,12 @@ const quickSortRecursive = (
 };
 
 
-const randQuickSort = (inputArr : number[], low : number = 0, high : number = 0) : VisualizationStep[] => {
+const randQuickSort = (inputArr : AlgorithmInput, low : number = 0, high : number = 0) : VisualizationStep[] => {
+    
+    // random quick sort only supports arrays
+    if (!Array.isArray(inputArr)) {
+        return []
+    }
     const arr = [...inputArr];
     const steps: VisualizationStep[] = [];
     const n: number = arr.length;

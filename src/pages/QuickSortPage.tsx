@@ -13,7 +13,7 @@ const QuickSortPage = () => {
       <TopNavBar items={visualItems} onSelectItem={setSelectedTab}/>
       <h1>Quick sort</h1>
       
-      {selectedTab === "Visualizer" && (<AnimationManager unsortedNumbers={generateRandomArray(15)} algorithm="quick" visualizationGraphics="list/bar" />
+      {selectedTab === "Visualizer" && (<AnimationManager input={generateRandomArray(15)} algorithm="quick" visualizationGraphics="list/bar" />
       )}
 
       {selectedTab === "Readme.md" && (

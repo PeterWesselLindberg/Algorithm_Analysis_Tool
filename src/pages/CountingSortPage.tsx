@@ -12,7 +12,7 @@ const CountingSortPage = () => {
       <TopNavBar items={visualItems} onSelectItem={setSelectedTab}/>
       <h1>Counting sort</h1>
       { selectedTab === "Visualizer" && (
-      <AnimationManager unsortedNumbers={generateRandomArray(15)} algorithm="counting" visualizationGraphics="list/list/list" />
+      <AnimationManager input={generateRandomArray(15)} algorithm="counting" visualizationGraphics="list/list/list" />
       )}
     
       {selectedTab === "Readme.md" && (

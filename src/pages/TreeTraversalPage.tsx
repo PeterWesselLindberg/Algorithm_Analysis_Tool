@@ -5,31 +5,31 @@ import generateRandomArray from "../randGen/generateRandomArray"
 
 
 const TreeTraversalPage = () => {
-  const [selectedTab, setSelectedTab] = useState("In order tree traversal")
-  const items = ["Readme.md", "In order tree traversal", "Post order tree traversal", "Pre order tree traversal"]
-
+  const items = ["Readme.md", "Inorder tree traversal", "Postorder tree traversal", "Preorder tree traversal"]
+  const [selectedTab, setSelectedTab] = useState(items[1])
+  
   return (
     <div>
       <TopNavBar items={items} onSelectItem={setSelectedTab}/>
       
-      { selectedTab === "In order tree traversal" &&  (
+      { selectedTab === items[1] &&  (
         <>
             <h1>In order tree traversal</h1>
-            <AnimationManager unsortedNumbers={generateRandomArray(15)} algorithm="inorderTraversal" visualizationGraphics="list/tree" />
+            <AnimationManager input={generateRandomArray(15)} algorithm="inorderTraversal" visualizationGraphics="list/tree" />
         </>
       )} 
 
-      { selectedTab === "Post order tree traversal" &&  (
+      { selectedTab === items[2] &&  (
         <>
             <h1>Post order tree traversal</h1>
-            <AnimationManager unsortedNumbers={generateRandomArray(15)} algorithm="postorderTraversal" visualizationGraphics="list/tree" />
+            <AnimationManager input={generateRandomArray(15)} algorithm="postorderTraversal" visualizationGraphics="list/tree" />
         </>
       )} 
 
-      { selectedTab === "Pre order tree traversal" &&  (
+      { selectedTab === items[3] &&  (
         <>
             <h1>Pre order tree traversal</h1>
-            <AnimationManager unsortedNumbers={generateRandomArray(15)} algorithm="preorderTraversal" visualizationGraphics="list/tree" />
+            <AnimationManager input={generateRandomArray(15)} algorithm="preorderTraversal" visualizationGraphics="list/tree" />
         </>
       )} 
 

@@ -1,10 +1,15 @@
+import type { AlgorithmInput } from "../types/algorithmtypes"
 import type { VisualizationStep } from "../types/VisualizationStep"
 
 import pushStep from "../utils/pushStep"
 import toId from "../utils/toId"
 
-const nthFactorial = (inputArr: number[]): VisualizationStep[] => {
+const nthFactorial = (inputArr: AlgorithmInput): VisualizationStep[] => {
   
+  // nth factorial only supports arrays
+  if (!Array.isArray(inputArr)) {
+      return []
+  }
   const n = inputArr[0]
   const steps: VisualizationStep[] = []
 

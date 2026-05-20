@@ -3,6 +3,7 @@ import type { TreeNodeData } from "../dataStructures/TreeNodedata"
 import pushStep from "../utils/pushStep"
 import buildHeapTree from "../utils/buildHeapTree"
 import toId from "../utils/toId"
+import type { AlgorithmInput } from "../types/algorithmtypes"
 
 const inorderTraversal = (
     node: TreeNodeData | undefined,
@@ -49,7 +50,12 @@ const inorderTraversal = (
     }
 }
 
-const inorderTrace = (inputArr: number[] = []) => {
+const inorderTrace = (inputArr: AlgorithmInput) => {
+
+    // inorder traversal only supports arrays
+    if (!Array.isArray(inputArr)) {
+        return []
+    }
     const steps: VisualizationStep[] = []
     const tree = buildHeapTree(inputArr);
 

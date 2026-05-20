@@ -1,3 +1,4 @@
+import type { AlgorithmInput } from "../types/algorithmtypes"
 import type { VisualizationStep } from "../types/VisualizationStep"
 
 import pushStep from "../utils/pushStep"
@@ -167,10 +168,12 @@ const countSortByDigit = (
   }
 }
 
-const radixSort = (
-  inputArr: number[]
-): VisualizationStep[] => {
+const radixSort = (inputArr: AlgorithmInput): VisualizationStep[] => {
 
+  // radix sort only supports arrays
+  if (!Array.isArray(inputArr)) {
+      return []
+  }
   const arr = [...inputArr]
 
   const steps: VisualizationStep[] = []

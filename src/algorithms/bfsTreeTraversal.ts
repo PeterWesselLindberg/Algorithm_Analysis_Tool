@@ -3,11 +3,14 @@ import type { TreeNodeData } from "../dataStructures/TreeNodedata"
 import pushStep from "../utils/pushStep"
 import toId from "../utils/toId"
 import buildHeapTree from "../utils/buildHeapTree"
+import type { AlgorithmInput } from "../types/algorithmtypes"
 
-const bfsTreeTraversal = (
-  inputArr: number[]
-): VisualizationStep[] => {
+const bfsTreeTraversal = (inputArr: AlgorithmInput): VisualizationStep[] => {
 
+    // bfs traversal only supports arrays
+    if (!Array.isArray(inputArr)) {
+        return []
+    }
     const steps: VisualizationStep[] = []
     const tree = buildHeapTree(inputArr);
 

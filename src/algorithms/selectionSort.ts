@@ -1,8 +1,13 @@
+import type { AlgorithmInput } from "../types/algorithmtypes"
 import type { VisualizationStep } from "../types/VisualizationStep"
 import pushStep from "../utils/pushStep"
 import toId from "../utils/toId"
 
-const selectionSort = (inputArr : number[]) : VisualizationStep[]  => {
+const selectionSort = (inputArr : AlgorithmInput) : VisualizationStep[]  => {
+    // selection sort only supports arrays
+    if (!Array.isArray(inputArr)) {
+        return []
+    }
     const arr = [...inputArr]
     const steps: VisualizationStep[] = [];
     const n: number = arr.length;

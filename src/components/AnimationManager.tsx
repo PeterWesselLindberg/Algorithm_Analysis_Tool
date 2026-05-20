@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { Button } from "react-bootstrap"
-import type { AlgorithmTypes } from "../types/algorithmtypes"
+import type { AlgorithmInput, AlgorithmTypes } from "../types/algorithmtypes"
 import algorithmTypes from "../types/algorithmtypes"
 import type { VisualizationType } from "../types/VisualizationType"
 import { FaSquare, FaChevronLeft, FaChevronRight, FaPlay, FaPause } from "react-icons/fa"
@@ -9,18 +9,18 @@ import type { VisualizationStep } from "../types/VisualizationStep"
 //import generateRandomArray from "../randGen/generateRandomArray"
 
 interface AnimationManagerProps {
-  unsortedNumbers: number[],
+  input: AlgorithmInput,
   algorithm: AlgorithmTypes,
   visualizationGraphics: VisualizationType
 }
 
-const AnimationManager = ({unsortedNumbers, algorithm, visualizationGraphics} : AnimationManagerProps) => {
-  //const unsortedNumbers = !Array.isArray(inputNumbers) || !inputNumbers.length ? generateRandomArray(15) : inputNumbers // Generates an array of random numbers in range 1 to 30
+const AnimationManager = ({input, algorithm, visualizationGraphics} : AnimationManagerProps) => {
+  //const input = !Array.isArray(inputNumbers) || !inputNumbers.length ? generateRandomArray(15) : inputNumbers // Generates an array of random numbers in range 1 to 30
 
-  //const clonedUnsortedNumbers = unsortedNumbers.slice() // Clones the input list for use with the restartSort function
+  //const clonedUnsortedNumbers = input.slice() // Clones the input list for use with the restartSort function
   
   const selectedAlgorithm = algorithmTypes[algorithm] // Initialises the given algoritmhtype for the limited types
-  const initialSteps = selectedAlgorithm(unsortedNumbers) // Initialises the the input list with the selected algoritm
+  const initialSteps = selectedAlgorithm(input) // Initialises the the input list with the selected algoritm
 
   const [speed, setSpeed] = useState(5) // The speed stat used for speeding up and slowing down the algorithm animation
   

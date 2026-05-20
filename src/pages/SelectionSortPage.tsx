@@ -12,7 +12,7 @@ const SelectionSortPage = () => {
       <TopNavBar items={visualItems} onSelectItem={setSelectedTab}/>
       <h1>Selection sort</h1>
       
-      {selectedTab === "Visualizer" && (<AnimationManager unsortedNumbers={generateRandomArray(15)} algorithm="selection" visualizationGraphics="list/bar" />
+      {selectedTab === "Visualizer" && (<AnimationManager input={generateRandomArray(15)} algorithm="selection" visualizationGraphics="list/bar" />
       )}
 
       {selectedTab === "Readme.md" && (

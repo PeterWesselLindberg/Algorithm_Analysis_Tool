@@ -9,6 +9,7 @@ from "../dataStructures/GraphNodeData"
 
 import pushStep from "../utils/pushStep"
 import toId from "../utils/toId"
+import type { AlgorithmInput } from "../types/algorithmtypes"
 
 const dfsGraphTraversal = (
   node: GraphNodeData,
@@ -78,10 +79,12 @@ const dfsGraphTraversal = (
   })
 }
 
-const dfsGraphTrace = (
-  graph: GraphData
-): VisualizationStep[] => {
+const dfsGraphTrace = (graph: AlgorithmInput): VisualizationStep[] => {
 
+  // DFS only supports graphs
+  if (Array.isArray(graph)) {
+    return []
+  }
   const steps: VisualizationStep[] = []
 
   if (graph.nodes.length === 0) {

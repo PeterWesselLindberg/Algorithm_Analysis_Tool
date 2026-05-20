@@ -1,3 +1,4 @@
+import type { AlgorithmInput } from "../types/algorithmtypes"
 import type { VisualizationStep } from "../types/VisualizationStep"
 
 import pushStep from "../utils/pushStep"
@@ -8,10 +9,12 @@ const countId = (i: number) => `count-${i}`
 
 const outputId = (i: number) => `output-${i}`
 
-const countingSort = (
-  inputArr: number[]
-): VisualizationStep[] => {
+const countingSort = (inputArr: AlgorithmInput): VisualizationStep[] => {
 
+  // counting sort only supports arrays
+  if (!Array.isArray(inputArr)) {
+      return []
+  }
   const arr = [...inputArr]
 
   const steps: VisualizationStep[] = []

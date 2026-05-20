@@ -1,3 +1,4 @@
+import type { AlgorithmInput } from "../types/algorithmtypes";
 import type { VisualizationStep } from "../types/VisualizationStep";
 import pushStep from "../utils/pushStep";
 import toId from "../utils/toId";
@@ -139,8 +140,12 @@ const mergeSortRecursive = (
     );
 };
 
-const mergeSort = (inputArr: number[]): VisualizationStep[] => {
+const mergeSort = (inputArr: AlgorithmInput): VisualizationStep[] => {
 
+    // merge sort only supports arrays
+    if (!Array.isArray(inputArr)) {
+        return []
+    }
     const arr = [...inputArr];
     const steps: VisualizationStep[] = [];
     const sortedIds: string[] = [];
