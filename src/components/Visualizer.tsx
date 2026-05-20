@@ -129,11 +129,20 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
             step={step}
             graph={step.graph}
           />
+          {step.message && (
+          <p
+            style={{
+              marginTop: "1rem",
+              fontWeight: "bold"
+            }}
+          >
+            {step.message}
+          </p>
+          )}
           <hr />
 
           <VisitedList visitedIds={step.visitedIds ?? []} />
-            
-          
+
         </>
       )
 

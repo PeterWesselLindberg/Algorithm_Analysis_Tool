@@ -5,5 +5,5 @@ export type GraphNodeData = {
   x: number
   y: number
 
-  neighbors?: string[]
+  neighbors: string[]
 }

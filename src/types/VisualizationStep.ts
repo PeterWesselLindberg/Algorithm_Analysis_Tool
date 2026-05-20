@@ -29,4 +29,6 @@ export type VisualizationStep = {
 
   activeEdgeIds?: string[]
 
+  message?: string
+
 }
