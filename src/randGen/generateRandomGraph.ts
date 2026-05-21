@@ -1,7 +1,70 @@
 import type { GraphData }from "../dataStructures/GraphData"
 import type { GraphNodeData } from "../dataStructures/GraphNodeData"
 
-const generateRandomGraph = (nodeCount: number, forceConnectivity: boolean = false, weighted: boolean = false, directed: boolean = false): GraphData => {
+const addEdge = (
+  from: GraphNodeData,
+  to: GraphNodeData,
+  weighted: boolean,
+  directed: boolean,
+  negWeights: boolean
+) => {
+
+    // prevent duplicate edge
+    if (
+        from.neighbors.some(
+        edge => edge.to === to.id
+        )
+    ) {
+        return
+    }
+
+    // prevent reverse edge in directed graph
+    if (
+        directed &&
+        to.neighbors.some(
+        edge => edge.to === from.id
+        )
+    ) {
+        return
+    }
+    let weight
+
+    if (negWeights) {
+        weight =
+            weighted
+            ? Math.floor(Math.random() * 21) - 10
+            : undefined
+
+    }
+    else {
+         weight =
+            weighted
+            ? Math.floor(Math.random() * 20) + 1 //? Math.floor(Math.random() * 21) - 10
+            : undefined
+    }    
+
+    from.neighbors.push({
+        to: to.id,
+        weight
+    })
+
+    if (!directed) {
+
+        to.neighbors.push({
+        to: from.id,
+        weight
+        })
+    }
+    }
+
+
+const generateRandomGraph = (
+    nodeCount: number,
+    forceConnectivity: boolean = false,
+    weighted: boolean = false,
+    directed: boolean = false,
+    negWeights: boolean = false
+): GraphData => {
 
     const nodes : GraphNodeData[] = []
 
@@ -38,28 +101,13 @@ const generateRandomGraph = (nodeCount: number, forceConnectivity: boolean = fal
 
         for (let i = 1; i < nodeCount; i++) {
 
-            const edge = {
-            to: nodes[i - 1].id,
-
-            ...(weighted && {
-                weight:
-                Math.floor(Math.random() * 20) + 1
-            })
-            }
-
-            const reverseEdge = {
-            to: nodes[i].id,
-
-            ...(weighted && {
-                weight: edge.weight
-            })
-            }
-
-            nodes[i].neighbors.push(edge)
-
-            if (!directed) {
-                 nodes[i-1].neighbors.push(reverseEdge)
-            }
+            addEdge(
+                nodes[i],
+                nodes[i - 1],
+                weighted,
+                directed,
+                negWeights
+            )
         }
     }
 
@@ -71,28 +119,13 @@ const generateRandomGraph = (nodeCount: number, forceConnectivity: boolean = fal
             // 30% chance of edge
             if (Math.random() < 0.3) {
 
-                const edge = {
-                    to: nodes[j].id,
-
-                    ...(weighted && {
-                    weight:
-                        Math.floor(Math.random() * 20) + 1
-                    })
-                }
-
-                const reverseEdge = {
-                    to: nodes[i].id,
-
-                    ...(weighted && {
-                    weight: edge.weight
-                    })
-                }
-
-                nodes[i].neighbors.push(edge)
-
-                if (!directed) {
-                    nodes[j].neighbors.push(reverseEdge)
-                }
+                addEdge(
+                nodes[i],
+                nodes[j],
+                weighted,
+                directed,
+                negWeights
+                )
             }
         }
     }
@@ -106,36 +139,21 @@ const generateRandomGraph = (nodeCount: number, forceConnectivity: boolean = fal
         nodeCount > 1
     ) {
 
-    // random node except itself
-    const randomIndex =
-        Math.floor(
-            Math.random() * (nodeCount - 1)
-        ) + 1
+        // random node except itself
+        const randomIndex =
+            Math.floor(
+                Math.random() * (nodeCount - 1)
+            ) + 1
 
-    const target = nodes[randomIndex]
+        const target = nodes[randomIndex]
 
-    const edge = {
-        to: target.id,
-
-        ...(weighted && {
-            weight:
-            Math.floor(Math.random() * 20) + 1
-        })
-        }
-
-        const reverseEdge = {
-        to: rootNode.id,
-
-        ...(weighted && {
-            weight: edge.weight
-        })
-        }
-
-        rootNode.neighbors.push(edge)
-
-        if (!directed) {
-            target.neighbors.push(reverseEdge)
-        }
+        addEdge(
+            rootNode,
+            target,
+            weighted,
+            directed,
+            negWeights
+        )
     }
 
     return { nodes, directed }

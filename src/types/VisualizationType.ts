@@ -5,3 +5,4 @@ export type VisualizationType =
     | "list"
     | "list/tree"
     | "list/graph"
+    | "distList/graph"

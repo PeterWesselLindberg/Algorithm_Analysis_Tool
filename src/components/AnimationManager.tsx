@@ -31,7 +31,7 @@ const AnimationManager = ({input, algorithm, visualizationGraphics} : AnimationM
 
   // The steps used in the algorithm animation
   const [step, setStep] = useState<VisualizationStep>(initialSteps[0])
-  const [steps, setSteps] = useState<VisualizationStep[]>(initialSteps)
+  const steps = initialSteps
   const [currentStep, setCurrentStep] = useState(0)
 
   const [btnText, setBtnText] = useState(<FaPlay/>) // Changes the text on the buttons
@@ -59,28 +59,12 @@ const AnimationManager = ({input, algorithm, visualizationGraphics} : AnimationM
   return () => clearTimeout(timeout)
 }, [currentStep, isSorting, isPaused, steps, speed])
 
-  /** Intialises the steps of the algorithm and decides if it is starting in a stopped state or a running state */
-  const initialiseSteps = (startState: "pause" | "run") => {
-        
-        setSteps(initialSteps)
-        setCurrentStep(0)
-        
-
-        if (startState === "pause") {
-          setIsPaused(true)
-        }
-        else if (startState === "run") {
-          setIsPaused(false)
-        }
-
-  }
   /** Start and stops the animations for the sorting algorithm */
   const startStopSort = (btnState: string) => {
 
     switch(btnState) {
       case "start":
-        
-        initialiseSteps("run")
+        setIsPaused(false)
         setIsSorting(true)
         setIsFinished(false)
         setBtnText(<FaPause/>)
@@ -120,10 +104,10 @@ const AnimationManager = ({input, algorithm, visualizationGraphics} : AnimationM
   const restartSort = () => {
     setBtnText(<FaPlay/>)
     setBtnvalue("start")
-    // setNumbers(clonedUnsortedNumbers)
     setIsFinished(false)
     setIsSorting(false)
-    initialiseSteps("pause")
+    startStopSort("stop")
+    goToStep(0)
   }
 
   /** Goes the current step when sliding the steps slider */
@@ -157,7 +141,8 @@ const AnimationManager = ({input, algorithm, visualizationGraphics} : AnimationM
       
       case "next":
         if (currentStep === 0) {
-          initialiseSteps("pause")
+          goToStep(1)
+          startStopSort("stop")
           
         }
         if (currentStep >= steps.length - 1) return
@@ -174,7 +159,7 @@ const AnimationManager = ({input, algorithm, visualizationGraphics} : AnimationM
   // Shows the progress of the sorting in percentage
   const progress =
   steps.length > 1
-    ? Math.round((currentStep / (steps.length - 1)) * 100)
+    ? Math.round((currentStep / (steps.length)) * 100)
     : 0
 
   return (
@@ -215,7 +200,7 @@ const AnimationManager = ({input, algorithm, visualizationGraphics} : AnimationM
               />
 
               <label>
-              Step: {currentStep} / {Math.max(steps.length - 1, 0)}
+              Step: {currentStep >= steps.length ? currentStep-1 : currentStep} / {Math.max(steps.length - 1, 0)}
               {" "}({progress}%)
               
             </label>

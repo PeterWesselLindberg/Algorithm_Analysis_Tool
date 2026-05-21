@@ -16,6 +16,8 @@ import preorderTrace from "../algorithms/preorderTraversal"
 import bfsTreeTraversal from "../algorithms/bfsTreeTraversal"
 import dfsGraphTrace from "../algorithms/dfsGraphTraversal"
 import type { GraphData } from "../dataStructures/GraphData"
+import { dijkstraFull, dijkstraRandom } from "../algorithms/dijkstrasAlgorithm"
+import { bellmanFordFull, bellmanFordRandom } from "../algorithms/bellmanFord"
 
 /** Different algorithms for input to AnimationManager  */
 export type AlgorithmTypes =
@@ -35,9 +37,12 @@ export type AlgorithmTypes =
   | "preorderTraversal"
   | "bfsTreeTraversal"
   | "dfsGraphTraversal"
+  | "dijkstrasFull"
+  | "dijkstrasRandom"
+  | "bellmanFordRandom"
+  | "bellmanFordFull"
 
 export type AlgorithmInput = number[] | GraphData
-
 export type AlgorithmFunction =
   (input: AlgorithmInput) => VisualizationStep[]
 
@@ -61,7 +66,11 @@ const algorithmTypes : Record<
     postorderTraversal: postorderTrace,
     preorderTraversal: preorderTrace,
     bfsTreeTraversal: bfsTreeTraversal,
-    dfsGraphTraversal: dfsGraphTrace
+    dfsGraphTraversal: dfsGraphTrace,
+    dijkstrasFull: dijkstraFull,
+    dijkstrasRandom: dijkstraRandom,
+    bellmanFordRandom: bellmanFordRandom,
+    bellmanFordFull: bellmanFordFull
 }
 
 export default algorithmTypes

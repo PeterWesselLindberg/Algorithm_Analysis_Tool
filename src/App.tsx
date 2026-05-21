@@ -21,6 +21,8 @@ import FibonacciPage from './pages/FibonacciPage'
 import TreeTraversalPage from './pages/TreeTraversalPage'
 import BFSTraversalPage from './pages/BFSTraversalPage'
 import DFSTraversalPage from './pages/DFSTraversalPage'
+import DijkstrasPage from './pages/DijkstrasPage'
+import BellmanFordPage from './pages/BellmanFordPage'
 
  let items : MenuItem[] = [
           {label: 'Brute force', subItems: [{id: 'Insertion sort', comp: InsertionSortPage}, 
@@ -40,8 +42,13 @@ import DFSTraversalPage from './pages/DFSTraversalPage'
                                                     ]},
 
           {label: 'Dynamic programming', subItems: [{id: 'Nth factorial', comp: FactorialPage},
-                                                      {id: 'Fibonacci sequence', comp: FibonacciPage}
+                                                      {id: 'Fibonacci sequence', comp: FibonacciPage},
+                                                      {id: 'Bellman-Ford\'s shortest path', comp: BellmanFordPage}
                                                     ]},
+          
+          {label: 'Greedy algorithms', subItems: [{id: 'Dijkstra\'s shortest path', comp: DijkstrasPage},
+                                                    ]},
+
           {label: 'Randomized Algorithms', subItems: [{id: 'Randomized quick sort', comp: RandQuickSortPage}
                                                      ]}
       ]

@@ -31,4 +31,6 @@ export type VisualizationStep = {
 
   message?: string
 
+  distances?: Record<string, number> 
+
 }

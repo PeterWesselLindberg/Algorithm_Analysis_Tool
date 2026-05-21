@@ -14,21 +14,21 @@ const TreeTraversalPage = () => {
       
       { selectedTab === items[1] &&  (
         <>
-            <h1>In order tree traversal</h1>
+            <h1>Inorder tree traversal</h1>
             <AnimationManager input={generateRandomArray(15)} algorithm="inorderTraversal" visualizationGraphics="list/tree" />
         </>
       )} 
 
       { selectedTab === items[2] &&  (
         <>
-            <h1>Post order tree traversal</h1>
+            <h1>Postorder tree traversal</h1>
             <AnimationManager input={generateRandomArray(15)} algorithm="postorderTraversal" visualizationGraphics="list/tree" />
         </>
       )} 
 
       { selectedTab === items[3] &&  (
         <>
-            <h1>Pre order tree traversal</h1>
+            <h1>Preorder tree traversal</h1>
             <AnimationManager input={generateRandomArray(15)} algorithm="preorderTraversal" visualizationGraphics="list/tree" />
         </>
       )} 

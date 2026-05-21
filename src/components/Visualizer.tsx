@@ -6,6 +6,7 @@ import TreeVisualizer from "./TreeVisualizer"
 import ExtendedNumberList from "./ExtendedNumbersList"
 import VisitedList from "./VisitedList"
 import GraphVisualizer from "./GraphVisualizer"
+import DistanceList from "./DistanceList"
 
 interface VisualizerProps {
   step: VisualizationStep
@@ -142,6 +143,30 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
           <hr />
 
           <VisitedList visitedIds={step.visitedIds ?? []} />
+
+        </>
+      )
+    
+      case "distList/graph":
+      return (
+        <>
+          <GraphVisualizer
+            step={step}
+            graph={step.graph}
+          />
+          {step.message && (
+          <p
+            style={{
+              marginTop: "1rem",
+              fontWeight: "bold"
+            }}
+          >
+            {step.message}
+          </p>
+          )}
+          <hr />
+
+          <DistanceList distances={step.distances }/>
 
         </>
       )
