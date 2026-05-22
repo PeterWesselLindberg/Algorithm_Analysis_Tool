@@ -24,34 +24,42 @@ import DFSTraversalPage from './pages/DFSTraversalPage'
 import DijkstrasPage from './pages/DijkstrasPage'
 import BellmanFordPage from './pages/BellmanFordPage'
 import KruskalsPage from './pages/KruskalsPage'
+import PrimsPage from './pages/PrimsPage'
 
  let items : MenuItem[] = [
-          {label: 'Brute force', subItems: [{id: 'Insertion sort', comp: InsertionSortPage}, 
-                                              {id: 'Bubble sort', comp: BubbleSortPage}, 
-                                              {id: 'Selection sort', comp: SelectionSortPage},
-                                              {id: 'Heap sort', comp: HeapSortPage},
-                                              {id: 'Binary tree traversal', comp: TreeTraversalPage},
-                                              {id: 'Breadth-First search', comp: BFSTraversalPage},
-                                              {id: 'Depth-First search', comp: DFSTraversalPage}
+          {label: 'Branch and Bound', subItems: [{id: 'Binary Search'}, 
+                                              {id: 'Depth-Limited Search'}, 
+                                              {id: 'Binary Search Tree'}
+                                            
+                                            ]},
+
+          {label: 'Brute Force', subItems: [{id: 'Insertion Sort', comp: InsertionSortPage}, 
+                                              {id: 'Bubble Sort', comp: BubbleSortPage}, 
+                                              {id: 'Selection Sort', comp: SelectionSortPage},
+                                              {id: 'Heap Sort', comp: HeapSortPage},
+                                              {id: 'Binary Tree Traversal', comp: TreeTraversalPage},
+                                              {id: 'Breadth-First Search', comp: BFSTraversalPage},
+                                              {id: 'Depth-First Search', comp: DFSTraversalPage}
                                             
                                             ]},
                                               
-          {label: 'Divide and Conquer', subItems: [{id: 'Quick sort', comp: QuickSortPage},
-                                                     {id: 'Counting sort', comp: CountingSortPage}, 
-                                                     {id: 'Merge sort', comp: MergeSortPage},
-                                                     {id: 'Radix sort', comp: RadixSortPage}, 
+          {label: 'Divide and Conquer', subItems: [{id: 'Quick Sort', comp: QuickSortPage},
+                                                     {id: 'Counting Sort', comp: CountingSortPage}, 
+                                                     {id: 'Merge Sort', comp: MergeSortPage},
+                                                     {id: 'Radix Sort', comp: RadixSortPage}, 
                                                     ]},
 
-          {label: 'Dynamic programming', subItems: [{id: 'Nth factorial', comp: FactorialPage},
-                                                      {id: 'Fibonacci sequence', comp: FibonacciPage},
-                                                      {id: 'Bellman-Ford\'s shortest path', comp: BellmanFordPage}
+          {label: 'Dynamic Programming', subItems: [{id: 'Nth Factorial', comp: FactorialPage},
+                                                      {id: 'Fibonacci Sequence', comp: FibonacciPage},
+                                                      {id: 'Bellman-Ford\'s Shortest Path', comp: BellmanFordPage}
                                                     ]},
           
-          {label: 'Greedy algorithms', subItems: [{id: 'Dijkstra\'s shortest path', comp: DijkstrasPage},
-                                                  {id: 'Kruskal\'s minimum spanning tree', comp: KruskalsPage},
+          {label: 'Greedy Algorithms', subItems: [{id: 'Dijkstra\'s Shortest Path', comp: DijkstrasPage},
+                                                  {id: 'Kruskal\'s Minimum Spanning Tree', comp: KruskalsPage},
+                                                  {id: 'Prim\'s Minimum Spanning Tree', comp: PrimsPage},
                                                     ]},
 
-          {label: 'Randomized Algorithms', subItems: [{id: 'Randomized quick sort', comp: RandQuickSortPage}
+          {label: 'Randomized Algorithms', subItems: [{id: 'Randomized Quick Sort', comp: RandQuickSortPage}
                                                      ]}
       ]
 

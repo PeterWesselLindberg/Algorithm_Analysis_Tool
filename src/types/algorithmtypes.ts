@@ -20,6 +20,7 @@ import { dijkstraFull, dijkstraRandom } from "../algorithms/dijkstrasAlgorithm"
 import { bellmanFordFull, bellmanFordRandom } from "../algorithms/bellmanFord"
 import bfsGraphTraversal from "../algorithms/bfsGraphTraversal"
 import kruskalsAlgorithm from "../algorithms/kruskalAlgorithm"
+import primsAlgorithm from "../algorithms/primsAlgorithm"
 
 /** Different algorithms for input to AnimationManager  */
 export type AlgorithmTypes =
@@ -45,6 +46,7 @@ export type AlgorithmTypes =
   | "bellmanFordFull"
   | "bfsGraphTraversal"
   | "kruskals"
+  | "prims"
 
 export type AlgorithmInput = number[] | GraphData
 export type AlgorithmFunction =
@@ -76,7 +78,8 @@ const algorithmTypes : Record<
     bellmanFordRandom: bellmanFordRandom,
     bellmanFordFull: bellmanFordFull,
     bfsGraphTraversal: bfsGraphTraversal,
-    kruskals: kruskalsAlgorithm
+    kruskals: kruskalsAlgorithm,
+    prims: primsAlgorithm
 }
 
 export default algorithmTypes

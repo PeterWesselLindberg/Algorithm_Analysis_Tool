@@ -4,16 +4,16 @@ import TopNavBar from "../components/TopNavBar"
 import AnimationManager from "../components/AnimationManager"
 import generateRandomGraph from "../randGen/generateRandomGraph"
 
-const KruskalsPage = () => {
+const PrimsPage = () => {
     const [selectedTab, setSelectedTab] = useState(visualItems[1])
     
     
     return (
         <div>
             <TopNavBar items={visualItems} onSelectItem={setSelectedTab}/>
-            <h1>Kruskal's minimum spanning tree</h1>
+            <h1>Prim's minimum spanning tree</h1>
             { selectedTab === visualItems[1] && (
-            <AnimationManager input={generateRandomGraph(7, true, true)} algorithm="kruskals" visualizationGraphics="mstList/graph" />
+            <AnimationManager input={generateRandomGraph(7, true, true)} algorithm="prims" visualizationGraphics="mstList/graph" />
             )}
             
             {selectedTab === visualItems[0] && (
@@ -23,4 +23,4 @@ const KruskalsPage = () => {
     )
 }
 
-export default KruskalsPage
+export default PrimsPage
