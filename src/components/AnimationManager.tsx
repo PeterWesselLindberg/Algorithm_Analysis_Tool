@@ -117,6 +117,13 @@ const AnimationManager = ({input, algorithm, visualizationGraphics} : AnimationM
   setIsPaused(true)
   setIsSorting(false)
 
+  if (stepIndex < steps.length - 1) {
+    setIsFinished(false)
+  }
+
+  setBtnText(<FaPlay />)
+  setBtnvalue("resume")
+
   setCurrentStep(stepIndex)
   setStep(steps[stepIndex])
 }
@@ -212,9 +219,6 @@ const AnimationManager = ({input, algorithm, visualizationGraphics} : AnimationM
               value={currentStep}
               onChange={(e) => {
                 const stepIndex = Number(e.target.value)
-
-                setIsPaused(true)
-                setIsSorting(false) 
 
                 goToStep(stepIndex)
               }}

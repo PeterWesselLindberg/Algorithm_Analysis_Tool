@@ -18,6 +18,7 @@ import dfsGraphTrace from "../algorithms/dfsGraphTraversal"
 import type { GraphData } from "../dataStructures/GraphData"
 import { dijkstraFull, dijkstraRandom } from "../algorithms/dijkstrasAlgorithm"
 import { bellmanFordFull, bellmanFordRandom } from "../algorithms/bellmanFord"
+import bfsGraphTraversal from "../algorithms/bfsGraphTraversal"
 
 /** Different algorithms for input to AnimationManager  */
 export type AlgorithmTypes =
@@ -41,6 +42,7 @@ export type AlgorithmTypes =
   | "dijkstrasRandom"
   | "bellmanFordRandom"
   | "bellmanFordFull"
+  | "bfsGraphTraversal"
 
 export type AlgorithmInput = number[] | GraphData
 export type AlgorithmFunction =
@@ -70,7 +72,8 @@ const algorithmTypes : Record<
     dijkstrasFull: dijkstraFull,
     dijkstrasRandom: dijkstraRandom,
     bellmanFordRandom: bellmanFordRandom,
-    bellmanFordFull: bellmanFordFull
+    bellmanFordFull: bellmanFordFull,
+    bfsGraphTraversal: bfsGraphTraversal
 }
 
 export default algorithmTypes
