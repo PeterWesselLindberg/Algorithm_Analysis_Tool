@@ -3,9 +3,10 @@ import type { GraphData } from "../dataStructures/GraphData"
 interface GraphEdgesProps {
   graph?: GraphData
   activeEdgeIds?: string[]
+  mstEdgeIds?: string[]
 }
 
-const GraphEdges = ({graph, activeEdgeIds = []}: GraphEdgesProps) => {
+const GraphEdges = ({graph, activeEdgeIds = [], mstEdgeIds = []}: GraphEdgesProps) => {
 
     if (!graph) return null
     return (
@@ -39,6 +40,8 @@ const GraphEdges = ({graph, activeEdgeIds = []}: GraphEdgesProps) => {
             if (!neighbor) return null
 
             const edgeId = `${node.id}->${neighbor.id}`
+
+            const isMST = mstEdgeIds.includes(edgeId)
             
             // direction
             const dx = neighbor.x - node.x
@@ -70,8 +73,8 @@ const GraphEdges = ({graph, activeEdgeIds = []}: GraphEdgesProps) => {
                     y1={node.y}
                     x2={endX}
                     y2={endY}
-                    stroke={activeEdgeIds.includes(edgeId) ? "orange" : "grey"}
-                    strokeWidth={activeEdgeIds.includes(edgeId) ? 4 : 3}
+                    stroke={activeEdgeIds.includes(edgeId) ? "orange" : isMST ? "lime" : "grey"}
+                    strokeWidth={activeEdgeIds.includes(edgeId) ? 5 : isMST ? 4 : 3}
                     markerEnd={graph.directed ? "url(#arrow)" : undefined}
                 />
 

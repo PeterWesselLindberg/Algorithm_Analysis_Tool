@@ -33,4 +33,10 @@ export type VisualizationStep = {
 
   distances?: Record<string, number> 
 
+  mstEdgeIds?: string[]
+
+  mstEdges?: string[]
+
+  mstWeight?: number
+
 }

@@ -7,6 +7,8 @@ import ExtendedNumberList from "./ExtendedNumbersList"
 import VisitedList from "./VisitedList"
 import GraphVisualizer from "./GraphVisualizer"
 import DistanceList from "./DistanceList"
+import MSTEdgeList from "./MSTEdgeList"
+import { ListGroup } from "react-bootstrap"
 
 interface VisualizerProps {
   step: VisualizationStep
@@ -167,6 +169,100 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
           <hr />
 
           <DistanceList distances={step.distances }/>
+
+        </>
+      )
+
+      case "mstList/graph":
+      return (
+        <>
+          <GraphVisualizer
+            step={step}
+            graph={step.graph}
+          />
+          {step.message && (
+          <p
+            style={{
+              marginTop: "1rem",
+              fontWeight: "bold"
+            }}
+          >
+            {step.message}
+          </p>
+          )}
+          <hr />
+
+          <div
+            style={{
+              display: "flex",
+              alignItems: "flex-start",
+              gap: "2rem",
+              marginTop: "1rem"
+            }}
+          >
+
+            <div
+              style={{
+                minWidth: "180px"
+              }}
+            >
+
+              {step.mstWeight !== undefined && (
+                <>
+                  <h5>Total Weight:</h5>
+
+                  <ListGroup horizontal className="custom-listgroup">
+
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center"
+                      }}
+                    >
+
+                      <small
+                        style={{
+                          marginBottom: "4px",
+                          color: "#888"
+                        }}
+                      >
+                        Total
+                      </small>
+
+                      <ListGroup.Item
+                        style={{
+                          fontWeight: "bold",
+                          minWidth: "100px",
+                          textAlign: "center"
+                        }}
+                      >
+                        {step.mstWeight}
+                      </ListGroup.Item>
+
+                    </div>
+
+                  </ListGroup>
+                </>
+              )}
+
+            </div>
+
+            <div style={{ flex: 1 }}>
+
+              {step.mstEdges && (
+                <>
+                  <h5>MST Edges:</h5>
+
+                  <MSTEdgeList
+                    edges={step.mstEdges}
+                  />
+                </>
+              )}
+
+            </div>
+
+          </div>
 
         </>
       )

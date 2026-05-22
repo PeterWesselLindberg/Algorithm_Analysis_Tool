@@ -23,6 +23,7 @@ import BFSTraversalPage from './pages/BFSTraversalPage'
 import DFSTraversalPage from './pages/DFSTraversalPage'
 import DijkstrasPage from './pages/DijkstrasPage'
 import BellmanFordPage from './pages/BellmanFordPage'
+import KruskalsPage from './pages/KruskalsPage'
 
  let items : MenuItem[] = [
           {label: 'Brute force', subItems: [{id: 'Insertion sort', comp: InsertionSortPage}, 
@@ -47,6 +48,7 @@ import BellmanFordPage from './pages/BellmanFordPage'
                                                     ]},
           
           {label: 'Greedy algorithms', subItems: [{id: 'Dijkstra\'s shortest path', comp: DijkstrasPage},
+                                                  {id: 'Kruskal\'s minimum spanning tree', comp: KruskalsPage},
                                                     ]},
 
           {label: 'Randomized Algorithms', subItems: [{id: 'Randomized quick sort', comp: RandQuickSortPage}
