@@ -1,9 +1,8 @@
 import type { TreeNodeData }
 from "../dataStructures/TreeNodedata"
-
 import TreeNodes from "./TreeNodes"
-
 import TreeEdges from "./TreeEdges"
+import { useMemo } from "react"
 import type { VisualizationStep } from "../types/VisualizationStep"
 
 interface TreeVisualizerProps {
@@ -12,25 +11,45 @@ interface TreeVisualizerProps {
   numbers: number[]
 }
 
+
+
 const TreeVisualizer = ({
   step,
   tree,
   numbers
-
 }: TreeVisualizerProps) => {
 
+  const height = useMemo(() => {
+    const getDepth = (node?: TreeNodeData): number => {
+      if (!node) return 0
+
+      return 1 + Math.max(
+        getDepth(node.children?.[0]),
+        getDepth(node.children?.[1])
+      )
+    }
+
+    const LEVEL_GAP = 100
+    const TOP = 60
+    const BOTTOM = 60
+
+    return TOP + getDepth(tree) * LEVEL_GAP + BOTTOM
+  }, [tree])
+
   return (
-    <svg width="100%" height="500">
-      <TreeEdges 
+    <svg width="100%" height={height}>
+      <TreeEdges
         node={tree}
         activeEdgeIds={step.activeEdgeIds}
       />
-      <TreeNodes 
+
+      <TreeNodes
         node={tree}
         numbers={numbers}
         activeIds={step.activeIds}
         compareIds={step.compareIds}
-        sortedIds={step.sortedIds} />
+        sortedIds={step.sortedIds}
+      />
     </svg>
   )
 }

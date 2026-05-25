@@ -125,7 +125,7 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
         </>
       )
     
-    case "list/exTree":
+    case "exList/tree":
       return (
         <>
           <TreeVisualizer

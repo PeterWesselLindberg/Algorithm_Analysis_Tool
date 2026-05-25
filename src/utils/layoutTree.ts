@@ -1,44 +1,30 @@
 import type { TreeNodeData } from "../dataStructures/TreeNodedata"
 
 const layoutTree = (root: TreeNodeData) => {
-    let xCounter = 0
-    const nodes: TreeNodeData[] = []
 
-    const dfs = (node: TreeNodeData, depth: number) => {
-            if (!node) return
+  const WIDTH = 1200
+  const TOP = 60
+  const LEVEL_GAP = 100
 
-            if (node.children?.[0]) {
-            dfs(node.children[0], depth + 1)
-        }
+  const dfs = (
+    node: TreeNodeData | undefined,
+    depth: number,
+    left: number,
+    right: number
+  ) => {
 
-        node.x = xCounter * 80
-        node.y = depth * 100
+    if (!node) return
 
-        nodes.push(node)
-        xCounter++
+    const mid = (left + right) / 2
 
-        if (node.children?.[1]) {
-            dfs(node.children[1], depth + 1)
-        }
-    }
+    node.x = mid
+    node.y = TOP + depth * LEVEL_GAP
 
-    dfs(root, 0)
+    dfs(node.children?.[0], depth + 1, left, mid)
+    dfs(node.children?.[1], depth + 1, mid, right)
+  }
 
-
-    // CENTERING STEP 
-    const ROOT_X = 500
-
-    const minX = Math.min(...nodes.map(n => n.x))
-    const maxX = Math.max(...nodes.map(n => n.x))
-
-    const treeCenter = (minX + maxX) / 2
-    const offsetX = ROOT_X - treeCenter
-    const offsetY = 80
-
-    for (const node of nodes) {
-        node.x += offsetX
-        node.y += offsetY
-    }
+  dfs(root, 0, 0, WIDTH)
 }
 
 export default layoutTree

@@ -100,57 +100,5 @@ const bfsTreeSearchCore = (
   return null
 }
 
-// const treeSearch = (
-//   root: TreeNodeData,
-//   target: number,
-//   steps: VisualizationStep[]
-// ): TreeNodeData | null => {
-
-//   const stack: TreeNodeData[] = [root]
-
-//   while (stack.length > 0) {
-
-//     const current = stack.pop()!
-
-//     // show visit
-//     pushStep(steps, {
-//       tree: root,
-//       activeIds: [current.id]
-//     })
-
-//     if (current.value === target) {
-//       pushStep(steps, {
-//         tree: root,
-//         activeIds: [current.id],
-//         message: `Found ${target}`
-//       })
-//       return current
-//     }
-
-//     // push children (RIGHT-FIRST OR LEFT-FIRST controls animation order)
-//     if (current.children) {
-//       for (let i = current.children.length - 1; i >= 0; i--) {
-//         const child = current.children[i]
-//         if (child) {
-//           pushStep(steps, {
-//             tree: root,
-//             activeIds: [current.id, child.id],
-//             activeEdgeIds: [`${current.id}->${child.id}`]
-//           })
-
-//           stack.push(child)
-//         }
-//       }
-//     }
-//   }
-
-//   pushStep(steps, {
-//     tree: root,
-//     message: `${target} not found`
-//   })
-
-//   return null
-// }
-
 export default bfsTreeSearch
 
