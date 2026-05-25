@@ -2,7 +2,7 @@ import type { TreeNodeData } from "../dataStructures/TreeNodedata"
 import type { VisualizationStep } from "../types/VisualizationStep"
 import pushStep from "../utils/pushStep"
 import type { AlgorithmFunction } from "../types/algorithmtypes"
-import buildHeapTree from "../utils/buildHeapTree"
+import buildBST from "../utils/buildBST"
 import toId from "../utils/toId"
 
 const dfsTreeSearch: AlgorithmFunction = (input) => {
@@ -16,7 +16,7 @@ const dfsTreeSearch: AlgorithmFunction = (input) => {
   if (values.length === 0) return steps
 
   // BUILD TREE
-  const root = buildHeapTree(values)
+  const root = buildBST(values)
   if (root === undefined) {return []}
 
   pushStep(steps, {

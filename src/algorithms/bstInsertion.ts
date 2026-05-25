@@ -37,97 +37,50 @@ export const bstInsert = (
         ]
     })
 
-    // GO LEFT
-    if (value < current.value) {
+    const direction =
+      value < current.value ? 0 : 1
 
-        if (!current.children?.[0]) {
+    const child =
+      current.children?.[direction]
 
-        const newNode: TreeNodeData = {
-            id: index.toString(),
-            value,
-            x: 0,
-            y: 0,
-            children: []
-        }
+    // INSERT
+    if (!child) {
 
-        current.children = current.children ?? []
-        current.children[0] = newNode
-
-        insertedValues.push(value)
-
-        layoutTree(root)
-
-        pushStep(steps, {
-            tree: structuredClone(root),
-            activeIds: [newNode.id],
-            activeEdgeIds: [`${current.id}->${newNode.id}`],
-            linears: [
-            {
-                id: "inserted",
-                label: "Inserted Values",
-                values: [...insertedValues]
-            }]
-        })
-
-        return
+      const newNode: TreeNodeData = {
+        id: index.toString(),
+        value,
+        x: 0,
+        y: 0,
+        children: []
       }
 
-      const child = current.children[0]
+      current.children =
+        current.children ?? []
 
-        pushStep(steps, {
-            tree: structuredClone(root),
-            activeIds: [current.id],
-            activeEdgeIds: [`${current.id}->${child.id}`],
-            linears: [
-            {
-                id: "inserted",
-                label: "Inserted Values",
-                values: [...insertedValues]
-            }]
-        })
+      current.children[direction] =
+        newNode
 
-        current = child
-    }
+      insertedValues.push(value)
 
-    // GO RIGHT
-    else {
+      layoutTree(root)
 
-        if (!current.children?.[1]) {
+      pushStep(steps, {
+        tree: structuredClone(root),
+        activeIds: [newNode.id],
+        activeEdgeIds: [
+          `${current.id}->${newNode.id}`
+        ],
 
-            const newNode: TreeNodeData = {
-                id: index.toString(),
-                value,
-                x: 0,
-                y: 0,
-                children: []
-            }
-
-            current.children = current.children ?? []
-            current.children[1] = newNode
-
-            insertedValues.push(value)
-
-            layoutTree(root)
-
-            pushStep(steps, {
-                tree: structuredClone(root),
-                activeIds: [newNode.id],
-                activeEdgeIds: [`${current.id}->${newNode.id}`],
-                linears: [
-                {
-                    id: "inserted",
-                    label: "Inserted Values",
-                    values: [...insertedValues]
-                }]
-            })
-
-            return
+        linears: [
+        {
+            id: "inserted",
+            label: "Inserted Values",
+            values: [...insertedValues]
         }
-
-        const child = current.children[1]
-
-        layoutTree(root)
-
+        ]
+      })
+      return
+    }
         pushStep(steps, {
             tree: structuredClone(root),
             activeIds: [current.id],
@@ -143,7 +96,6 @@ export const bstInsert = (
         current = child
     }
   }
-}
 
 const bstInsertion = (
   input: AlgorithmInput
