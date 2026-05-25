@@ -79,12 +79,13 @@ const dfsGraphTraversal = (
   })
 }
 
-const dfsGraphTrace = (graph: AlgorithmInput): VisualizationStep[] => {
+const dfsGraphTrace = (input: AlgorithmInput): VisualizationStep[] => {
 
   // DFS only supports graphs
-  if (Array.isArray(graph)) {
+  if (input.type !== "graph") {
     return []
   }
+  const graph = input.data
   const steps: VisualizationStep[] = []
 
   if (graph.nodes.length === 0) {

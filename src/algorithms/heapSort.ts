@@ -75,11 +75,12 @@ const heapify = (arr : number[], n : number , i : number, steps : VisualizationS
 
 }
 
-const heapSort = (inputArr : AlgorithmInput) : VisualizationStep[] => {
+const heapSort = (input : AlgorithmInput) : VisualizationStep[] => {
   // heap sort only supports arrays
-    if (!Array.isArray(inputArr)) {
+  if (input.type !== "array") {
         return []
-    }
+  }
+  const inputArr = input.data
   const arr = [...inputArr];
   const steps: VisualizationStep[] = [];
   const sortedIds: string[] = [];

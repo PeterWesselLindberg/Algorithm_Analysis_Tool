@@ -125,12 +125,13 @@ const quickSortRecursive = (
 };
 
 
-const randQuickSort = (inputArr : AlgorithmInput, low : number = 0, high : number = 0) : VisualizationStep[] => {
+const randQuickSort = (input : AlgorithmInput, low : number = 0, high : number = 0) : VisualizationStep[] => {
     
     // random quick sort only supports arrays
-    if (!Array.isArray(inputArr)) {
+    if (input.type !== "array") {
         return []
     }
+    const inputArr = input.data
     const arr = [...inputArr];
     const steps: VisualizationStep[] = [];
     const n: number = arr.length;

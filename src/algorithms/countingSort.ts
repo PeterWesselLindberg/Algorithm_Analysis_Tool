@@ -9,12 +9,13 @@ const countId = (i: number) => `count-${i}`
 
 const outputId = (i: number) => `output-${i}`
 
-const countingSort = (inputArr: AlgorithmInput): VisualizationStep[] => {
+const countingSort = (input: AlgorithmInput): VisualizationStep[] => {
 
   // counting sort only supports arrays
-  if (!Array.isArray(inputArr)) {
-      return []
-  }
+  if (input.type !== "array") {
+        return []
+    }
+  const inputArr = input.data
   const arr = [...inputArr]
 
   const steps: VisualizationStep[] = []

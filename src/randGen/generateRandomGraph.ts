@@ -1,5 +1,6 @@
 import type { GraphData }from "../dataStructures/GraphData"
 import type { GraphNodeData } from "../dataStructures/GraphNodeData"
+import type { AlgorithmInput } from "../types/algorithmtypes"
 
 const addEdge = (
   from: GraphNodeData,
@@ -58,12 +59,12 @@ const addEdge = (
     }
 
 
-const generateRandomGraph = (
+const generateRandomGraphCore = (
     nodeCount: number,
-    forceConnectivity: boolean = false,
-    weighted: boolean = false,
-    directed: boolean = false,
-    negWeights: boolean = false
+    forceConnectivity: boolean,
+    weighted: boolean,
+    directed: boolean,
+    negWeights: boolean
 ): GraphData => {
 
     const nodes : GraphNodeData[] = []
@@ -157,6 +158,15 @@ const generateRandomGraph = (
     }
 
     return { nodes, directed }
+}
+
+const generateRandomGraph = (
+    nodeCount: number,
+    forceConnectivity: boolean = false,
+    weighted: boolean = false,
+    directed: boolean = false,
+    negWeights: boolean = false) : AlgorithmInput => {
+    return {type: "graph", data: generateRandomGraphCore(nodeCount, forceConnectivity, weighted, directed, negWeights)}
 }
 
 export default generateRandomGraph

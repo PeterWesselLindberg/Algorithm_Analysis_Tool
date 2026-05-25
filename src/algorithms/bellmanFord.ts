@@ -14,14 +14,16 @@ export const bellmanFordFull: AlgorithmFunction = input => bellmanFord(input, fa
 export const bellmanFordRandom: AlgorithmFunction = input => bellmanFord(input, true)
 
 const bellmanFord = (
-  graph: AlgorithmInput,
+  input: AlgorithmInput,
   limitedDist: boolean = true
 ): VisualizationStep[] => {
 
   // only graphs supported
-  if (Array.isArray(graph)) {
+  if (input.type !== "graph") {
     return []
   }
+
+  const graph = input.data
 
   const steps: VisualizationStep[] = []
 

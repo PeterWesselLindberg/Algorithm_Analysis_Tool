@@ -4,12 +4,13 @@ import type { VisualizationStep } from "../types/VisualizationStep"
 import pushStep from "../utils/pushStep"
 import toId from "../utils/toId"
 
-const fibonacci = (inputArr: AlgorithmInput): VisualizationStep[] => {
+const fibonacci = (input: AlgorithmInput): VisualizationStep[] => {
   
   // the fibonacci sequence only supports arrays
-  if (!Array.isArray(inputArr)) {
-      return []
+  if (input.type !== "array") {
+        return []
   }
+  const inputArr = input.data
   const n = inputArr[0]
   const steps: VisualizationStep[] = []
 

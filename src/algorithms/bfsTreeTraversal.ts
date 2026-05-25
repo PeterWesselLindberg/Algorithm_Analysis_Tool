@@ -5,12 +5,13 @@ import toId from "../utils/toId"
 import buildHeapTree from "../utils/buildHeapTree"
 import type { AlgorithmInput } from "../types/algorithmtypes"
 
-const bfsTreeTraversal = (inputArr: AlgorithmInput): VisualizationStep[] => {
+const bfsTreeTraversal = (input: AlgorithmInput): VisualizationStep[] => {
 
     // bfs traversal only supports arrays
-    if (!Array.isArray(inputArr)) {
+    if (input.type !== "array") {
         return []
     }
+    const inputArr = input.data
     const steps: VisualizationStep[] = []
     const tree = buildHeapTree(inputArr);
 

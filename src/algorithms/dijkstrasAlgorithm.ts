@@ -13,14 +13,15 @@ export const dijkstraFull : AlgorithmFunction = input => dijkstra(input, false)
 export const dijkstraRandom: AlgorithmFunction = input => dijkstra(input, true)
 
 const dijkstra = (
-  graph: AlgorithmInput,
+  input: AlgorithmInput,
   limitedDist: boolean = true
 ): VisualizationStep[] => {
 
   // Dijkstras only supports graphs
-  if (Array.isArray(graph)) {
+ if (input.type !== "graph") {
     return []
   }
+  const graph = input.data
 
   const steps: VisualizationStep[] = []
 

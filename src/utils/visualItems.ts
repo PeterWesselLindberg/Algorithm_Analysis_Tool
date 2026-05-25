@@ -15,6 +15,7 @@ export const addToList = (arr: string[], elms: string[]) : string[] => {
     return arrCopy
 }
 
+export const oneItem: string[] = ["Readme.md"]
 const visualItems : string[] = ["Readme.md", "Visualizer"]
 
 export default visualItems

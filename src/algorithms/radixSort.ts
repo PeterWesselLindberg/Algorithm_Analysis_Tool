@@ -168,12 +168,13 @@ const countSortByDigit = (
   }
 }
 
-const radixSort = (inputArr: AlgorithmInput): VisualizationStep[] => {
+const radixSort = (input: AlgorithmInput): VisualizationStep[] => {
 
   // radix sort only supports arrays
-  if (!Array.isArray(inputArr)) {
-      return []
+  if (input.type !== "array") {
+        return []
   }
+  const inputArr = input.data
   const arr = [...inputArr]
 
   const steps: VisualizationStep[] = []

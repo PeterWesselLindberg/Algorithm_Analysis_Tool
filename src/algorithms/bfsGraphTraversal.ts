@@ -11,14 +11,15 @@ import pushStep
 from "../utils/pushStep"
 
 const bfsGraphTraversal = (
-  graph: AlgorithmInput
+  input: AlgorithmInput
 ): VisualizationStep[] => {
 
   // BFS only supports graphs
-  if (Array.isArray(graph)) {
+  if (input.type !== "graph") {
     return []
   }
 
+  const graph = input.data
   const steps: VisualizationStep[] = []
 
   if (graph.nodes.length === 0) {

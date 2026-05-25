@@ -7,3 +7,5 @@ export type VisualizationType =
     | "list/graph"
     | "distList/graph"
     | "mstList/graph"
+    | "list/exTree"
+    | "TVList/tree"

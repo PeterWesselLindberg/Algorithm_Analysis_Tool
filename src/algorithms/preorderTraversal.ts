@@ -51,12 +51,13 @@ const preorderTraversal = (
 
 }
 
-const preorderTrace = (inputArr: AlgorithmInput) => {
+const preorderTrace = (input: AlgorithmInput) => {
     
     // preorder traversal only supports arrays
-    if (!Array.isArray(inputArr)) {
+    if (input.type !== "array") {
         return []
     }
+    const inputArr = input.data
     const steps: VisualizationStep[] = []
     const tree = buildHeapTree(inputArr);
 

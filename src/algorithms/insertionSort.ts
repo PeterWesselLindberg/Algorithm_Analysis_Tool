@@ -3,13 +3,13 @@ import type { VisualizationStep } from "../types/VisualizationStep"
 import pushStep from "../utils/pushStep"
 import toId from "../utils/toId"
 
-const insertionSort = (inputArr: AlgorithmInput): VisualizationStep[] => {
+const insertionSort = (input: AlgorithmInput): VisualizationStep[] => {
 
   // insertion sort only supports arrays
-  if (!Array.isArray(inputArr)) {
+  if (input.type !== "array") {
     return []
   }
-
+  const inputArr = input.data
   const arr = [...inputArr]
   const steps: VisualizationStep[] = []
 

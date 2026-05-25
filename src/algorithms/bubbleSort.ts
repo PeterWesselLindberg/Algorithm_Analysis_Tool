@@ -3,11 +3,12 @@ import type { VisualizationStep } from "../types/VisualizationStep";
 import pushStep from "../utils/pushStep";
 import toId from "../utils/toId";
 
-const bubbleSort = (inputArr : AlgorithmInput) : VisualizationStep[]  => {
+const bubbleSort = (input : AlgorithmInput) : VisualizationStep[]  => {
     // bubble sort only supports arrays
-    if (!Array.isArray(inputArr)) {
+    if (input.type !== "array") {
         return []
     }
+    const inputArr = input.data
     const arr = [...inputArr]
     const steps: VisualizationStep[] = [];
     const n: number = arr.length;

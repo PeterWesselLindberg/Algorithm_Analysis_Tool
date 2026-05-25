@@ -51,12 +51,13 @@ const postorderTraversal = (
 
 }
 
-const postorderTrace = (inputArr: AlgorithmInput) => {
+const postorderTrace = (input: AlgorithmInput) => {
     
     // postorder traversal only supports arrays
-    if (!Array.isArray(inputArr)) {
+    if (input.type !== "array") {
         return []
     }
+    const inputArr = input.data
     const steps: VisualizationStep[] = []
     const tree = buildHeapTree(inputArr);
 

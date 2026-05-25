@@ -8,12 +8,13 @@ import pushStep
 from "../utils/pushStep"
 
 const primsAlgorithm = (
-  graph: AlgorithmInput
+  input: AlgorithmInput
 ): VisualizationStep[] => {
 
-  if (Array.isArray(graph)) {
+  if (input.type !== "graph") {
     return []
   }
+  const graph = input.data
 
   const steps: VisualizationStep[] = []
 

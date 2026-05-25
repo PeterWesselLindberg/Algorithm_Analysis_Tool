@@ -21,6 +21,9 @@ import { bellmanFordFull, bellmanFordRandom } from "../algorithms/bellmanFord"
 import bfsGraphTraversal from "../algorithms/bfsGraphTraversal"
 import kruskalsAlgorithm from "../algorithms/kruskalAlgorithm"
 import primsAlgorithm from "../algorithms/primsAlgorithm"
+import bstInsertion from "../algorithms/bstInsertion"
+import bfsTreeSearch from "../algorithms/bfsTreeSearch"
+import dfsTreeSearch from "../algorithms/dfsTreeSearch"
 
 /** Different algorithms for input to AnimationManager  */
 export type AlgorithmTypes =
@@ -47,8 +50,15 @@ export type AlgorithmTypes =
   | "bfsGraphTraversal"
   | "kruskals"
   | "prims"
+  | "bstInsertion"
+  | "bfsTreeSearch"
+  | "dfsTreeSearch"
 
-export type AlgorithmInput = number[] | GraphData
+export type AlgorithmInput = 
+  | { type: "array"; data: number[]}
+  | { type: "graph"; data: GraphData}
+  | { type: "bst"; values: number[]; target: number }
+  
 export type AlgorithmFunction =
   (input: AlgorithmInput) => VisualizationStep[]
 
@@ -79,7 +89,10 @@ const algorithmTypes : Record<
     bellmanFordFull: bellmanFordFull,
     bfsGraphTraversal: bfsGraphTraversal,
     kruskals: kruskalsAlgorithm,
-    prims: primsAlgorithm
+    prims: primsAlgorithm,
+    bstInsertion: bstInsertion,
+    bfsTreeSearch: bfsTreeSearch,
+    dfsTreeSearch: dfsTreeSearch
 }
 
 export default algorithmTypes

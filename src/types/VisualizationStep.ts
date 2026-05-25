@@ -39,4 +39,6 @@ export type VisualizationStep = {
 
   mstWeight?: number
 
+  target?: number
+
 }

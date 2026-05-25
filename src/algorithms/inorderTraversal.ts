@@ -50,12 +50,13 @@ const inorderTraversal = (
     }
 }
 
-const inorderTrace = (inputArr: AlgorithmInput) => {
+const inorderTrace = (input: AlgorithmInput) => {
 
     // inorder traversal only supports arrays
-    if (!Array.isArray(inputArr)) {
+    if (input.type !== "array") {
         return []
     }
+    const inputArr = input.data
     const steps: VisualizationStep[] = []
     const tree = buildHeapTree(inputArr);
 

@@ -31,7 +31,7 @@ const AnimationManager = ({input, algorithm, visualizationGraphics} : AnimationM
 
   // The steps used in the algorithm animation
   const [step, setStep] = useState<VisualizationStep>(initialSteps[0])
-  const steps = initialSteps
+  const [steps, setSteps] = useState<VisualizationStep[]>(initialSteps)
   const [currentStep, setCurrentStep] = useState(0)
 
   const [btnText, setBtnText] = useState(<FaPlay/>) // Changes the text on the buttons

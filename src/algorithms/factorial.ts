@@ -4,12 +4,13 @@ import type { VisualizationStep } from "../types/VisualizationStep"
 import pushStep from "../utils/pushStep"
 import toId from "../utils/toId"
 
-const nthFactorial = (inputArr: AlgorithmInput): VisualizationStep[] => {
+const nthFactorial = (input: AlgorithmInput): VisualizationStep[] => {
   
   // nth factorial only supports arrays
-  if (!Array.isArray(inputArr)) {
-      return []
-  }
+  if (input.type !== "array") {
+        return []
+    }
+  const inputArr = input.data
   const n = inputArr[0]
   const steps: VisualizationStep[] = []
 
