@@ -1,5 +1,5 @@
 import AnimationManager from "../components/AnimationManager"
-import generateRandomValue from "../randGen/generateRandomValue"
+//import generateRandomValue from "../randGen/generateRandomValue"
 import generateRandomArray from "../randGen/generateRandomArray"
 import TopNavBar from "../components/TopNavBar"
 import { useState } from "react"

@@ -11,7 +11,7 @@ const FibonacciPage = () => {
       <TopNavBar items={visualItems} onSelectItem={setSelectedTab}/>
       <h1>The fibonacci sequence</h1>
       { selectedTab === "Visualizer" && (
-      <AnimationManager input={[16]} algorithm="fibonacci" visualizationGraphics="list" />
+      <AnimationManager input={{type: "array", data: [16]}} algorithm="fibonacci" visualizationGraphics="list" />
       )}
     
       {selectedTab === "Readme.md" && (
