@@ -6,7 +6,7 @@ import visualItems from "../utils/visualItems"
 
 const DepthLimitedSearchPage = () => {
   const [selectedTab, setSelectedTab] = useState(visualItems[1])
-  const {values , target} = generateRandomBalancedValues(31, false, true)
+  const {values , target} = generateRandomBalancedValues(15, false, true)
 
   return (
     <div>
