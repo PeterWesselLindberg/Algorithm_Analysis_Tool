@@ -26,10 +26,11 @@ import BellmanFordPage from './pages/BellmanFordPage'
 import KruskalsPage from './pages/KruskalsPage'
 import PrimsPage from './pages/PrimsPage'
 import BinarySearchTreePage from './pages/BinarySearchTreePage'
+import DepthLimitedSearchPage from './pages/DepthLimitedSearchPage'
 
  let items : MenuItem[] = [
           {label: 'Branch and Bound', subItems: [{id: 'Binary Search'}, 
-                                              {id: 'Depth-Limited Search'}, 
+                                              {id: 'Depth-Limited Search', comp: DepthLimitedSearchPage}, 
                                               {id: 'Binary Search Tree', comp: BinarySearchTreePage}
                                             
                                             ]},

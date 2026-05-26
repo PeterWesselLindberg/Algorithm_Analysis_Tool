@@ -23,7 +23,7 @@ import kruskalsAlgorithm from "../algorithms/kruskalAlgorithm"
 import primsAlgorithm from "../algorithms/primsAlgorithm"
 import bstInsertion from "../algorithms/bstInsertion"
 import bfsTreeSearch from "../algorithms/bfsTreeSearch"
-import dfsTreeSearch from "../algorithms/dfsTreeSearch"
+import dfsTreeSearch, { depthLimitedSearch } from "../algorithms/dfsTreeSearch"
 
 /** Different algorithms for input to AnimationManager  */
 export type AlgorithmTypes =
@@ -53,6 +53,7 @@ export type AlgorithmTypes =
   | "bstInsertion"
   | "bfsTreeSearch"
   | "dfsTreeSearch"
+  | "depthLimitedSearch"
 
 export type AlgorithmInput = 
   | { type: "array"; data: number[]}
@@ -92,7 +93,8 @@ const algorithmTypes : Record<
     prims: primsAlgorithm,
     bstInsertion: bstInsertion,
     bfsTreeSearch: bfsTreeSearch,
-    dfsTreeSearch: dfsTreeSearch
+    dfsTreeSearch: dfsTreeSearch,
+    depthLimitedSearch: depthLimitedSearch
 }
 
 export default algorithmTypes

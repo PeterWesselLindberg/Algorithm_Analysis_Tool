@@ -4,7 +4,7 @@ const generateRandomBalancedValues = (
   targetExists: boolean = false,
   forceRootValue: boolean = false
 ) => {
-  const min = 1
+  const min = 0
   const max = 30
 
   const used = new Set<number>()

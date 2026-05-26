@@ -1,11 +1,14 @@
 import type { TreeNodeData } from "../dataStructures/TreeNodedata"
 import type { VisualizationStep } from "../types/VisualizationStep"
 import pushStep from "../utils/pushStep"
-import type { AlgorithmFunction } from "../types/algorithmtypes"
+import type { AlgorithmFunction, AlgorithmInput } from "../types/algorithmtypes"
 import buildBST from "../utils/buildBST"
 import toId from "../utils/toId"
 
-const dfsTreeSearch: AlgorithmFunction = (input) => {
+export const depthLimitedSearch: AlgorithmFunction = (input) =>
+  dfsTreeSearch(input, 2)
+
+const dfsTreeSearch = (input: AlgorithmInput, depthLimit: number = -1) => {
   if (input.type !== "bst") return []
 
   const steps: VisualizationStep[] = []
@@ -26,7 +29,7 @@ const dfsTreeSearch: AlgorithmFunction = (input) => {
 
   
   // SEARCH ONLY
-  dfsTreeSearchCore(root, target, steps)
+  dfsTreeSearchCore(root, target, steps, depthLimit)
 
   return steps
 }
@@ -34,15 +37,18 @@ const dfsTreeSearch: AlgorithmFunction = (input) => {
 const dfsTreeSearchCore = (
   root: TreeNodeData,
   target: number,
-  steps: VisualizationStep[]
+  steps: VisualizationStep[],
+  depthLimit: number
 ): TreeNodeData | null => {
 
-  const stack: TreeNodeData[] = [root]
+  const stack: { node: TreeNodeData; depth: number }[] = [
+                { node: root, depth: 0 }]
+
   const visitedIds: string[] = []
 
   while (stack.length > 0) {
 
-    const current = stack.pop()!
+    const { node: current, depth } = stack.pop()!
     visitedIds.push(toId(current.value))
 
     // show visit
@@ -66,25 +72,40 @@ const dfsTreeSearchCore = (
       return current
     }
 
-    // push children (RIGHT-FIRST OR LEFT-FIRST controls animation order)
+    // DEPTH LIMIT CHECK
+    if (depthLimit !== -1 && depth >= depthLimit) {
+      pushStep(steps, {
+        tree: root,
+        activeIds: [current.id],
+        visitedIds: [...visitedIds],
+        message: `Depth limit reached at ${current.value}`,
+        target
+      })
+      continue
+    }
+
+    // push children 
     if (current.children) {
       for (let i = current.children.length - 1; i >= 0; i--) {
         const child = current.children[i]
-        if (child) {
-          pushStep(steps, {
-            tree: root,
-            activeIds: [current.id, child.id],
-            activeEdgeIds: [`${current.id}->${child.id}`],
-            visitedIds: [...visitedIds],
+        if (!child) continue
 
-            target
-          })
+        pushStep(steps, {
+          tree: root,
+          activeIds: [current.id, child.id],
+          activeEdgeIds: [`${current.id}->${child.id}`],
+          visitedIds: [...visitedIds],
+          target
+        })
 
-          stack.push(child)
-        }
+        stack.push({
+          node: child,
+          depth: depth + 1
+        })
       }
     }
   }
+  
 
   pushStep(steps, {
     tree: root,
