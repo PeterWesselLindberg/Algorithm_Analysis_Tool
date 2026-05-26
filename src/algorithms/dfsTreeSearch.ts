@@ -29,12 +29,12 @@ const dfsTreeSearch = (input: AlgorithmInput, depthLimit: number = -1) => {
 
   
   // SEARCH ONLY
-  dfsTreeSearchCore(root, target, steps, depthLimit)
+  dfsTreeSearchMain(root, target, steps, depthLimit)
 
   return steps
 }
 
-const dfsTreeSearchCore = (
+const dfsTreeSearchMain = (
   root: TreeNodeData,
   target: number,
   steps: VisualizationStep[],
