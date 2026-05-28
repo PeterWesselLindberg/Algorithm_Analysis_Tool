@@ -272,6 +272,97 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
 
         </>
       )
+
+    case "TList/bar":
+      return (
+        <>
+          <BarsList
+            numbers={numbers}
+            activeIds={activeIds}
+            compareIds={compareIds}
+            sortedIds={sortedIds}
+          />
+          {step.message && (
+          <p
+            style={{
+              marginTop: "1rem",
+              fontWeight: "bold"
+            }}
+          >
+            {step.message}
+          </p>
+          )}
+          <hr />
+
+          <div
+            style={{
+              display: "flex",
+              alignItems: "flex-start",
+              gap: "2rem",
+              marginTop: "1rem"
+            }}
+          >
+
+            <div
+              style={{
+                minWidth: "180px"
+              }}
+            >
+
+              {step.target !== undefined && (
+                <>
+                  <ListGroup horizontal className="custom-listgroup">
+
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center"
+                      }}
+                    >
+
+                      <small
+                        style={{
+                          marginBottom: "4px",
+                          color: "#888"
+                        }}
+                      >
+                        Target
+                      </small>
+
+                      <ListGroup.Item
+                        style={{
+                          fontWeight: "bold",
+                          minWidth: "100px",
+                          textAlign: "center"
+                        }}
+                      >
+                        {step.target}
+                      </ListGroup.Item>
+
+                    </div>
+
+                  </ListGroup>
+                </>
+              )}
+
+            </div>
+
+            <div style={{ flex: 1 }}>
+
+            <NumberList
+              numbers={numbers}
+              activeIds={activeIds}
+              compareIds={compareIds}
+              sortedIds={sortedIds}
+            />
+
+            </div>
+
+          </div>
+
+        </>
+      )
     
     case "distList/graph":
       return (

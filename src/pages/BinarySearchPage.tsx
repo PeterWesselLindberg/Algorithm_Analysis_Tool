@@ -1,5 +1,5 @@
 import AnimationManager from "../components/AnimationManager"
-import generateRandomArray from "../randGen/generateRandomArray"
+import { generateRandomArrayWithTarget } from "../randGen/generateRandomArray"
 import TopNavBar from "../components/TopNavBar"
 import { useState } from "react"
 import visualItems from "../utils/visualItems"
@@ -12,7 +12,7 @@ const BinarySearchPage = () => {
       <TopNavBar items={visualItems} onSelectItem={setSelectedTab}/>
       <h1>Binary search</h1>
       
-      {selectedTab === visualItems[1] && (<AnimationManager input={generateRandomArray(15)} algorithm="bubble" visualizationGraphics="list/bar" />
+      {selectedTab === visualItems[1] && (<AnimationManager input={generateRandomArrayWithTarget(15)} algorithm="binarySearch" visualizationGraphics="TList/bar" />
       )}
 
       {selectedTab === visualItems[0] && (

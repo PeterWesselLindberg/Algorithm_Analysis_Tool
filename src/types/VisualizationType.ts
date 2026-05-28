@@ -9,3 +9,4 @@ export type VisualizationType =
     | "mstList/graph"
     | "exList/tree"
     | "TVList/tree"
+    | "TList/bar"

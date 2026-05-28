@@ -24,6 +24,7 @@ import primsAlgorithm from "../algorithms/primsAlgorithm"
 import bstInsertion from "../algorithms/bstInsertion"
 import bfsTreeSearch from "../algorithms/bfsTreeSearch"
 import dfsTreeSearch, { depthLimitedSearch } from "../algorithms/dfsTreeSearch"
+import binarySearch from "../algorithms/binarySearch"
 
 /** Different algorithms for input to AnimationManager  */
 export type AlgorithmTypes =
@@ -54,11 +55,13 @@ export type AlgorithmTypes =
   | "bfsTreeSearch"
   | "dfsTreeSearch"
   | "depthLimitedSearch"
+  | "binarySearch"
 
 export type AlgorithmInput = 
   | { type: "array"; data: number[]}
   | { type: "graph"; data: GraphData}
   | { type: "bst"; values: number[]; target: number }
+  | { type: "search"; data: number[]; target: number }
   
 export type AlgorithmFunction =
   (input: AlgorithmInput) => VisualizationStep[]
@@ -94,7 +97,8 @@ const algorithmTypes : Record<
     bstInsertion: bstInsertion,
     bfsTreeSearch: bfsTreeSearch,
     dfsTreeSearch: dfsTreeSearch,
-    depthLimitedSearch: depthLimitedSearch
+    depthLimitedSearch: depthLimitedSearch,
+    binarySearch: binarySearch
 }
 
 export default algorithmTypes
