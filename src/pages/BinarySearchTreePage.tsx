@@ -7,7 +7,7 @@ import {oneItem, addToList} from "../utils/visualItems"
 
 const BinarySearchTreePage = () => {
   
-  const visualItems = addToList(oneItem, ["Insertion", "BFS search", "DFS search"])
+  const visualItems = addToList(oneItem, ["Insertion", "BFS search", "DFS search", "Deletion"])
 
   const [selectedTab, setSelectedTab] = useState(visualItems[1])
 
@@ -40,6 +40,21 @@ const BinarySearchTreePage = () => {
         <AnimationManager input={{type: "bst", values, target}}
           algorithm="dfsTreeSearch" visualizationGraphics="TVList/tree" />
        </>
+      )}
+      {selectedTab === visualItems[4] && (
+        <>
+          <h1>Binary search tree deletion</h1>
+
+          <AnimationManager
+            input={{
+              type: "bst",
+              values,
+              target
+            }}
+            algorithm="bstDeletion"
+            visualizationGraphics="TVList/tree"
+          />
+        </>
       )}
 
       {selectedTab === visualItems[0] && (

@@ -25,6 +25,7 @@ import bstInsertion from "../algorithms/bstInsertion"
 import bfsTreeSearch from "../algorithms/bfsTreeSearch"
 import dfsTreeSearch, { depthLimitedSearch } from "../algorithms/dfsTreeSearch"
 import binarySearch from "../algorithms/binarySearch"
+import bstDelete from "../algorithms/bstDeletion"
 
 /** Different algorithms for input to AnimationManager  */
 export type AlgorithmTypes =
@@ -56,6 +57,7 @@ export type AlgorithmTypes =
   | "dfsTreeSearch"
   | "depthLimitedSearch"
   | "binarySearch"
+  | "bstDeletion"
 
 export type AlgorithmInput = 
   | { type: "array"; data: number[]}
@@ -98,7 +100,8 @@ const algorithmTypes : Record<
     bfsTreeSearch: bfsTreeSearch,
     dfsTreeSearch: dfsTreeSearch,
     depthLimitedSearch: depthLimitedSearch,
-    binarySearch: binarySearch
+    binarySearch: binarySearch,
+    bstDeletion: bstDelete
 }
 
 export default algorithmTypes

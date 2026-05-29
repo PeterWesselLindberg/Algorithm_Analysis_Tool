@@ -29,6 +29,10 @@ export type VisualizationStep = {
 
   activeEdgeIds?: string[]
 
+  deletingIds?: string[]
+
+  replacementIds?: string[]
+
   message?: string
 
   distances?: Record<string, number> 

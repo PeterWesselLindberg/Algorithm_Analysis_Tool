@@ -7,7 +7,7 @@ const layoutTree = (root: TreeNodeData) => {
   const LEVEL_GAP = 100
 
   const dfs = (
-    node: TreeNodeData | undefined,
+    node: TreeNodeData | null | undefined,
     depth: number,
     left: number,
     right: number

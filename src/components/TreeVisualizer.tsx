@@ -49,6 +49,9 @@ const TreeVisualizer = ({
         activeIds={step.activeIds}
         compareIds={step.compareIds}
         sortedIds={step.sortedIds}
+
+        deletingIds={step.deletingIds}
+        replacementIds={step.replacementIds}
       />
     </svg>
   )
