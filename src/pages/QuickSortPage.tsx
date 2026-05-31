@@ -6,17 +6,18 @@ import visualItems from "../utils/visualItems"
 
 
 const QuickSortPage = () => {
- const [selectedTab, setSelectedTab] = useState("Visualizer")
+ const [selectedTab, setSelectedTab] = useState(visualItems[1])
 
   return (
     <div>
       <TopNavBar items={visualItems} onSelectItem={setSelectedTab}/>
       <h1>Quick sort</h1>
       
-      {selectedTab === "Visualizer" && (<AnimationManager input={generateRandomArray(15)} algorithm="quick" visualizationGraphics="list/bar" />
+      {selectedTab === visualItems[1] && (
+        <AnimationManager input={generateRandomArray(15)} algorithm="quick" visualizationGraphics="list/bar" />
       )}
 
-      {selectedTab === "Readme.md" && (
+      {selectedTab === visualItems[0] && (
         <p> This text was hidden all along</p>
       )}
       

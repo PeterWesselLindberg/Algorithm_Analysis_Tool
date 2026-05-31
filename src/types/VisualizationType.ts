@@ -1,3 +1,4 @@
+/** Visualizer types for the case statement */
 export type VisualizationType = 
     | "list/bar"
     | "list/bar/tree"

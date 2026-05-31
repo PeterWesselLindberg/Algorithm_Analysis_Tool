@@ -5,12 +5,12 @@ import type { AlgorithmInput } from "../types/algorithmtypes"
 const addEdge = (
   from: GraphNodeData,
   to: GraphNodeData,
-  weighted: boolean,
-  directed: boolean,
-  negWeights: boolean
+  weighted: boolean, // If the edges are weighted
+  directed: boolean, // If the edges are directed
+  negWeights: boolean // If the negative weights are allowed
 ) => {
 
-    // prevent duplicate edge
+    // Prevent duplicate edge
     if (
         from.neighbors.some(
         edge => edge.to === to.id
@@ -19,7 +19,7 @@ const addEdge = (
         return
     }
 
-    // prevent reverse edge in directed graph
+    // Prevent reverse edge in directed graph
     if (
         directed &&
         to.neighbors.some(
@@ -40,7 +40,7 @@ const addEdge = (
     else {
          weight =
             weighted
-            ? Math.floor(Math.random() * 20) + 1 //? Math.floor(Math.random() * 21) - 10
+            ? Math.floor(Math.random() * 20) + 1
             : undefined
     }    
 
@@ -56,15 +56,16 @@ const addEdge = (
         weight
         })
     }
-    }
+}
 
 
+// Generates random graphs of a given size
 const generateRandomGraphCore = (
-    nodeCount: number,
-    forceConnectivity: boolean,
-    weighted: boolean,
-    directed: boolean,
-    negWeights: boolean
+    nodeCount: number, // Amount of nodes in the graph
+    forceConnectivity: boolean, // If all nodes are connected to at least one other node
+    weighted: boolean, // If edges are weighted
+    directed: boolean, // If edges are directed
+    negWeights: boolean // If negative edge weights are allowed
 ): GraphData => {
 
     const nodes : GraphNodeData[] = []
@@ -74,7 +75,7 @@ const generateRandomGraphCore = (
 
     const radius = 180
     
-    // CREATE NODES
+    // Create nodes
     for (let i = 0; i < nodeCount; i++) {
 
         const angle =  (-Math.PI / 2) + (2 * Math.PI * i) / nodeCount
@@ -97,7 +98,7 @@ const generateRandomGraphCore = (
         })
     }
 
-    // GUARANTEE CONNECTED GRAPH
+    // Guarantee connected graph
     if (forceConnectivity) {
 
         for (let i = 1; i < nodeCount; i++) {
@@ -112,7 +113,7 @@ const generateRandomGraphCore = (
         }
     }
 
-    // CREATE RANDOM EDGES
+    // Create random edges
     for (let i = 0; i < nodeCount; i++) {
 
         for (let j = i + 1; j < nodeCount; j++) {
@@ -131,7 +132,7 @@ const generateRandomGraphCore = (
         }
     }
 
-    // GUARANTEE NODE 0 IS CONNECTED TO ATLEAST 1 OTHER NODE
+    // Guarantee node 0 is connected to at least 1 other node
     const rootNode = nodes[0]
 
     if (
@@ -140,7 +141,7 @@ const generateRandomGraphCore = (
         nodeCount > 1
     ) {
 
-        // random node except itself
+        // Random node except itself
         const randomIndex =
             Math.floor(
                 Math.random() * (nodeCount - 1)
@@ -160,12 +161,14 @@ const generateRandomGraphCore = (
     return { nodes, directed }
 }
 
+/** Wrapper function for generating random graphs */
 const generateRandomGraph = (
-    nodeCount: number,
-    forceConnectivity: boolean = false,
-    weighted: boolean = false,
-    directed: boolean = false,
-    negWeights: boolean = false) : AlgorithmInput => {
+    nodeCount: number, // Amount of nodes in the graph
+    forceConnectivity: boolean = false, // If false node aren't guaranteed to be connected to any nodes
+    weighted: boolean = false, // If false edges do not have weights
+    directed: boolean = false, // If false edges are not directed
+    negWeights: boolean = false // If false negative edge weights do not occur
+) : AlgorithmInput => {
     return {type: "graph", data: generateRandomGraphCore(nodeCount, forceConnectivity, weighted, directed, negWeights)}
 }
 

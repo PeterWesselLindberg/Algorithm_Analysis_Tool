@@ -3,9 +3,10 @@ import type { TreeNodeData } from "../dataStructures/TreeNodedata"
 import type { GraphData } from "../dataStructures/GraphData"
 import type { GridData } from "../dataStructures/GridData"
 
+/** The values used in pushStep for the visualizations */
 export type VisualizationStep = {
 
-  // VISUAL STRUCTURES
+  // Visual structures
   linear?: LinearData
 
   linears?: LinearData[]
@@ -16,29 +17,29 @@ export type VisualizationStep = {
 
   grid?: GridData
 
-  // HIGHLIGHTS
+  message?: string
+
+  // Highlights
   activeIds?: string[]
 
   compareIds?: string[]
 
   sortedIds?: string[]
 
-  visitedIds?: string[]
-
-  pathIds?: string[]
-
-  activeEdgeIds?: string[]
+  mstEdgeIds?: string[]
 
   deletingIds?: string[]
 
+  visitedIds?: string[]
+
   replacementIds?: string[]
 
-  message?: string
+  activeEdgeIds?: string[]
 
+  // Saved values
+  
   distances?: Record<string, number> 
-
-  mstEdgeIds?: string[]
-
+  
   mstEdges?: string[]
 
   mstWeight?: number

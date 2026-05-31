@@ -13,8 +13,9 @@ const DepthLimitedSearchPage = () => {
       <TopNavBar items={visualItems} onSelectItem={setSelectedTab}/>
       <h1>Depth limited search</h1>
       
-      {selectedTab === visualItems[1] && (<AnimationManager input={{type: "bst", values, target}}
-            algorithm="depthLimitedSearch" visualizationGraphics="TVList/tree" />
+      {selectedTab === visualItems[1] && (
+        <AnimationManager input={{type: "bst", values, target}}
+          algorithm="depthLimitedSearch" visualizationGraphics="TVList/tree" />
       )}
 
       {selectedTab === visualItems[0] && (

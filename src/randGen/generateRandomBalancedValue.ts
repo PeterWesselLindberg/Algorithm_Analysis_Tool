@@ -1,8 +1,8 @@
+/** Randomly generates the node values and the target to be used with BST trees of a given length*/
 const generateRandomBalancedValues = (
-  length: number = 10,
-  hasDuplicates: boolean = true,
-  targetExists: boolean = false,
-  forceRootValue: boolean = false
+  length: number = 10, // Length of tree
+  hasDuplicates: boolean = true, // Set to true if duplicates are allowed
+  targetExists: boolean = false // Set to true if target has to exists in the tree
 ) => {
   const min = 0
   const max = 30
@@ -11,7 +11,7 @@ const generateRandomBalancedValues = (
   const values: number[] = []
 
  
-  // Generate base pool
+  // Generates base pool
   while (values.length < length) {
     const value = Math.floor(Math.random() * (max - min + 1)) + min
 
@@ -20,31 +20,24 @@ const generateRandomBalancedValues = (
     values.push(value)
     used.add(value)
   }
-
-  // Force root value
-  if (forceRootValue) {
-    const rootValue = values[0]
-    values.splice(values.indexOf(rootValue), 1)
-    values.unshift(rootValue)
-  }
-
   
   // Handle target existence
   let target = Math.floor(Math.random() * (max - min + 1)) + min
 
   if (targetExists) {
     
-    // ensure target is in list
+    // Ensures target is in list
     if (!values.includes(target)) {
       values[Math.floor(Math.random() * values.length)] = target
     }
   }
 
-  // BALANCED BST ORDER
+  // Balanced BST order
   const sorted = [...values].sort((a, b) => a - b)
 
   const result: number[] = []
 
+  // Builds the balanced order
   const buildBalanced = (left: number, right: number) => {
     if (left > right) return
 

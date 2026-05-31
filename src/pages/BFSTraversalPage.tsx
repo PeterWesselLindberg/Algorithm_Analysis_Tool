@@ -3,32 +3,33 @@ import TopNavBar from "../components/TopNavBar"
 import { useState } from "react"
 import generateRandomArray from "../randGen/generateRandomArray"
 import generateRandomGraph from "../randGen/generateRandomGraph"
+import { addToList, oneItem } from "../utils/visualItems"
 
 const BFSTraversalPage = () => {
-    const items = ["Readme.md", "BFS tree traversal", "BFS graph traversal"]
+    const items: string[] = addToList(oneItem, ["BFS tree traversal", "BFS graph traversal"])
     const [selectedTab, setSelectedTab] = useState(items[1])
     
     return (
         <div>
-        <TopNavBar items={items} onSelectItem={setSelectedTab}/>
-        
-        { selectedTab === items[1] &&  (
-            <>
-                <h1>{items[1]}</h1>
-                <AnimationManager input={generateRandomArray(15)} algorithm="bfsTreeTraversal" visualizationGraphics="list/tree" />
-            </>
-        )} 
+            <TopNavBar items={items} onSelectItem={setSelectedTab}/>
+            
+            { selectedTab === items[1] &&  (
+                <>
+                    <h1>{items[1]}</h1>
+                    <AnimationManager input={generateRandomArray(15)} algorithm="bfsTreeTraversal" visualizationGraphics="list/tree" />
+                </>
+            )} 
 
-        { selectedTab === items[2] &&  (
-            <>
-                <h1>{items[2]}</h1>
-                <AnimationManager input={generateRandomGraph(5, true)} algorithm="bfsGraphTraversal" visualizationGraphics="list/graph" />
-            </>
-        )} 
+            { selectedTab === items[2] &&  (
+                <>
+                    <h1>{items[2]}</h1>
+                    <AnimationManager input={generateRandomGraph(5, true)} algorithm="bfsGraphTraversal" visualizationGraphics="list/graph" />
+                </>
+            )} 
 
-        {selectedTab === items[0] && (
-            <p> This text was hidden all along</p>
-        )}
+            { selectedTab === items[0] && (
+                <p> This text was hidden all along</p>
+            )}
         </div>
     )
 }

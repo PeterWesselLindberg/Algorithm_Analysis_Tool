@@ -59,16 +59,18 @@ export type AlgorithmTypes =
   | "binarySearch"
   | "bstDeletion"
 
+/** The input types that the algorithms can take */
 export type AlgorithmInput = 
   | { type: "array"; data: number[]}
   | { type: "graph"; data: GraphData}
   | { type: "bst"; values: number[]; target: number }
   | { type: "search"; data: number[]; target: number }
   
+/** The type of the algorithms */
 export type AlgorithmFunction =
   (input: AlgorithmInput) => VisualizationStep[]
 
-/**  Translates the algorithm string into an actual function using records*/
+/**  Translates the algorithm string into an actual function using records */
 const algorithmTypes : Record<
     AlgorithmTypes,
     AlgorithmFunction

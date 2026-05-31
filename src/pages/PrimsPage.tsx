@@ -13,7 +13,7 @@ const PrimsPage = () => {
             <TopNavBar items={visualItems} onSelectItem={setSelectedTab}/>
             <h1>Prim's minimum spanning tree</h1>
             { selectedTab === visualItems[1] && (
-            <AnimationManager input={generateRandomGraph(7, true, true)} algorithm="prims" visualizationGraphics="mstList/graph" />
+                <AnimationManager input={generateRandomGraph(7, true, true)} algorithm="prims" visualizationGraphics="mstList/graph" />
             )}
             
             {selectedTab === visualItems[0] && (

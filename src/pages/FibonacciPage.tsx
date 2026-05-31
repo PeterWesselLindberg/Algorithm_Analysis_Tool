@@ -4,17 +4,17 @@ import { useState } from "react"
 import visualItems from "../utils/visualItems"
 
 const FibonacciPage = () => {
-  const [selectedTab, setSelectedTab] = useState("Visualizer")
+  const [selectedTab, setSelectedTab] = useState(visualItems[1])
 
   return (
     <div>
       <TopNavBar items={visualItems} onSelectItem={setSelectedTab}/>
       <h1>The fibonacci sequence</h1>
-      { selectedTab === "Visualizer" && (
-      <AnimationManager input={{type: "array", data: [16]}} algorithm="fibonacci" visualizationGraphics="list" />
+      { selectedTab === visualItems[1] && (
+        <AnimationManager input={{type: "array", data: [16]}} algorithm="fibonacci" visualizationGraphics="list" />
       )}
     
-      {selectedTab === "Readme.md" && (
+      {selectedTab === visualItems[0] && (
         <p> This text was hidden all along</p>
       )}
     </div>

@@ -13,7 +13,7 @@ const KruskalsPage = () => {
             <TopNavBar items={visualItems} onSelectItem={setSelectedTab}/>
             <h1>Kruskal's minimum spanning tree</h1>
             { selectedTab === visualItems[1] && (
-            <AnimationManager input={generateRandomGraph(7, true, true)} algorithm="kruskals" visualizationGraphics="mstList/graph" />
+                <AnimationManager input={generateRandomGraph(7, true, true)} algorithm="kruskals" visualizationGraphics="mstList/graph" />
             )}
             
             {selectedTab === visualItems[0] && (
