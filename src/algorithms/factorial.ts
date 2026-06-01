@@ -6,20 +6,19 @@ import toId from "../utils/toId"
 
 const nthFactorial = (input: AlgorithmInput): VisualizationStep[] => {
   
-  // nth factorial only supports arrays
-  if (input.type !== "array") {
-        return []
-    }
+  // Nth factorial only supports arrays
+  if (input.type !== "array") return []
+  
   const inputArr = input.data
   const n = inputArr[0]
   const steps: VisualizationStep[] = []
 
-  // SAME SIZE AS INPUT
+  // Same size as input
   const values = new Array(n).fill(0)
 
   let factorial = 1
 
-  // INITIAL EMPTY STEP
+  // Initial empty step
   pushStep(steps, {
     linear: {
       values: [...values]
@@ -30,26 +29,23 @@ const nthFactorial = (input: AlgorithmInput): VisualizationStep[] => {
 
     factorial *= i
 
-    // HIGHLIGHT CURRENT INDEX
+    // Highlight current index
     pushStep(steps, {
       linear: {
         values: [...values]
       },
-
       activeIds: [toId(i - 1)]
     })
 
-    // INSERT FACTORIAL
+    // Insert factorial
     values[i - 1] = factorial
 
-    // SHOW UPDATED ARRAY
+    // Show updated array
     pushStep(steps, {
       linear: {
         values: [...values]
       },
-
       activeIds: [toId(i - 1)],
-
       sortedIds: Array.from(
         { length: i },
         (_, k) => toId(k)
@@ -62,7 +58,6 @@ const nthFactorial = (input: AlgorithmInput): VisualizationStep[] => {
     linear: {
       values: [...values]
     },
-
     sortedIds: Array.from(
       { length: n },
       (_, i) => toId(i)

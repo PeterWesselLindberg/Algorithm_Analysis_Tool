@@ -14,8 +14,7 @@ const find = (
 
   if (parent[nodeId] !== nodeId) {
 
-    parent[nodeId] =
-      find(parent, parent[nodeId])
+    parent[nodeId] = find(parent, parent[nodeId])
   }
 
   return parent[nodeId]
@@ -39,18 +38,17 @@ const kruskalsAlgorithm = (
   input: AlgorithmInput
 ): VisualizationStep[] => {
 
+  // Kruskals can only take graphs
   if (input.type !== "graph") {
     return []
   }
   const graph = input.data
-
   const steps: VisualizationStep[] = []
-
   const mstEdgeIds: string[] = []
-
   const mstEdges: string[] = []
+  const connectedNodes = new Set<string>()
 
-  // collect all edges
+  // Collect all edges
   const edges: {
     from: string
     to: string
@@ -61,12 +59,8 @@ const kruskalsAlgorithm = (
 
     node.neighbors.forEach(edge => {
 
-      // avoid duplicates in undirected graph
-      if (
-        graph.directed ||
-        node.id < edge.to
-      ) {
-
+      // Avoid duplicates in undirected graph
+      if ( graph.directed || node.id < edge.to) {
         edges.push({
           from: node.id,
           to: edge.to,
@@ -76,12 +70,12 @@ const kruskalsAlgorithm = (
     })
   })
 
-  // sort by weight
+  // Sort by weight
   edges.sort(
     (a, b) => a.weight - b.weight
   )
 
-  // union-find setup
+  // Union-find setup
   const parent: Record<string, string> = {}
 
   graph.nodes.forEach(node => {
@@ -92,29 +86,32 @@ const kruskalsAlgorithm = (
 
   edges.forEach(edge => {
 
-    const rootA =
-      find(parent, edge.from)
+    const rootA = find(parent, edge.from)
+    const rootB = find(parent, edge.to)
 
-    const rootB =
-      find(parent, edge.to)
-
-    // comparison animation
+    // Comparison animation
     pushStep(steps, {
       graph,
+      activeIds: [
+        edge.from,
+        edge.to
+      ],
 
       activeEdgeIds: [
         `${edge.from}->${edge.to}`
       ],
-
-      mstEdgeIds: [...mstEdgeIds],
       
+      sortedIds: [...connectedNodes],
+      mstEdgeIds: [...mstEdgeIds],
       mstEdges: [...mstEdges],
-
       mstWeight
     })
 
-    // no cycle
+    // No cycle
     if (rootA !== rootB) {
+
+      connectedNodes.add(edge.from)
+      connectedNodes.add(edge.to)
 
       union(
         parent,
@@ -124,28 +121,29 @@ const kruskalsAlgorithm = (
 
       mstWeight += edge.weight
 
-      const edgeId =
-        `${edge.from}->${edge.to}`
+      const edgeId = `${edge.from}->${edge.to}`
 
-        mstEdgeIds.push(edgeId)
+      mstEdgeIds.push(edgeId)
 
-        mstEdges.push(
+      mstEdges.push(
         `${edge.from} → ${edge.to} (${edge.weight})`
-        )
+      )
 
       pushStep(steps, {
         graph,
+        activeIds: [
+          edge.from,
+          edge.to
+        ],
 
         activeEdgeIds: [
           `${edge.from}->${edge.to}`
         ],
 
         mstEdgeIds: [...mstEdgeIds],
-
         mstEdges: [...mstEdges],
-
         mstWeight,
-
+        sortedIds: [...connectedNodes],
         message:
           `Added edge (${edge.from} → ${edge.to}) weight ${edge.weight}`
       })
@@ -154,13 +152,9 @@ const kruskalsAlgorithm = (
 
   pushStep(steps, {
     graph,
-
     mstEdgeIds,
-
     mstEdges,
-
     mstWeight,
-
     message:
       `MST total weight: ${mstWeight}`
   })

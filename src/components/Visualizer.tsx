@@ -15,7 +15,7 @@ interface VisualizerProps {
   visualizationType: VisualizationType
 }
 
-/** Decides, which sorting graphics to use for which algoritm based on limited input strings */
+/** Decides, which sorting graphic to use for which algoritm based on limited input strings */
 const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
   const numbers = step.linear?.values ?? []
   const linears = step.linears ?? []
@@ -24,7 +24,7 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
   const sortedIds = step.sortedIds ?? []
   switch(visualizationType) {
     case "list/bar": 
-        return (
+      return (
          <>
           <BarsList
             numbers={numbers}
@@ -43,6 +43,7 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
           />
         </>
       )
+
     case "list/bar/tree": 
         return (
          <>
@@ -113,15 +114,13 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
       return (
         <>
           <TreeVisualizer
-          step={step}
-          tree={step.tree}
-          numbers={numbers}
+            step={step}
+            tree={step.tree}
+            numbers={numbers}
           />
           <hr />
 
-          <VisitedList visitedIds={step.visitedIds ?? []} />
-            
-          
+          <VisitedList visitedIds={step.visitedIds ?? []} />        
         </>
       )
     
@@ -129,9 +128,9 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
       return (
         <>
           <TreeVisualizer
-          step={step}
-          tree={step.tree}
-          numbers={numbers}
+            step={step}
+            tree={step.tree}
+            numbers={numbers}
           />
           <hr />
 
@@ -158,30 +157,19 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
       return (
         <>
           <TreeVisualizer
-          step={step}
-          tree={step.tree}
-          numbers={numbers}
+            step={step}
+            tree={step.tree}
+            numbers={numbers}
           />
+
           {step.message && (
-          <p
-            style={{
-              marginTop: "1rem",
-              fontWeight: "bold"
-            }}
-          >
+          <p className="custom-msg">
             {step.message}
           </p>
           )}
           <hr />
 
-          <div
-            style={{
-              display: "flex",
-              alignItems: "flex-start",
-              gap: "2rem",
-              marginTop: "1rem"
-            }}
-          >
+          <div className="custom-listlayout">
 
             <div
               style={{
@@ -195,20 +183,9 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
 
                   <ListGroup horizontal className="custom-listgroup">
 
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center"
-                      }}
-                    >
+                    <div className="custom-listelm">
 
-                      <small
-                        style={{
-                          marginBottom: "4px",
-                          color: "#888"
-                        }}
-                      >
+                      <small className="index-label">
                         Target
                       </small>
 
@@ -257,12 +234,7 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
             graph={step.graph}
           />
           {step.message && (
-          <p
-            style={{
-              marginTop: "1rem",
-              fontWeight: "bold"
-            }}
-          >
+          <p className="custom-msg">
             {step.message}
           </p>
           )}
@@ -283,25 +255,13 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
             sortedIds={sortedIds}
           />
           {step.message && (
-          <p
-            style={{
-              marginTop: "1rem",
-              fontWeight: "bold"
-            }}
-          >
+          <p className="custom-msg">
             {step.message}
           </p>
           )}
           <hr />
 
-          <div
-            style={{
-              display: "flex",
-              alignItems: "flex-start",
-              gap: "2rem",
-              marginTop: "1rem"
-            }}
-          >
+          <div className="custom-listlayout">
 
             <div
               style={{
@@ -313,20 +273,9 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
                 <>
                   <ListGroup horizontal className="custom-listgroup">
 
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center"
-                      }}
-                    >
+                    <div className="custom-listelm">
 
-                      <small
-                        style={{
-                          marginBottom: "4px",
-                          color: "#888"
-                        }}
-                      >
+                      <small className="index-label">
                         Target
                       </small>
 
@@ -372,18 +321,90 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
             graph={step.graph}
           />
           {step.message && (
-          <p
-            style={{
-              marginTop: "1rem",
-              fontWeight: "bold"
-            }}
-          >
+          <p className="custom-msg">
             {step.message}
           </p>
           )}
           <hr />
 
-          <DistanceList distances={step.distances }/>
+          <div className="custom-listlayout">
+            <div>
+              {step.distances !== undefined && (
+                <>
+                  <h5>Distance list:</h5>
+
+                  <DistanceList distances={step.distances }/>
+                </>
+              )}
+            </div>
+            
+            <div className="custom-listlayout-without-margin">
+              <div style={{ minWidth: "180px"}}>
+                {step.start !== undefined && (
+                  <>
+                    <h5>Start:</h5>
+
+                    <ListGroup horizontal className="custom-listgroup">
+
+                      <div className="custom-listelm">
+
+                        <small className="index-label">
+                          Start
+                        </small>
+
+                        <ListGroup.Item
+                          style={{
+                            fontWeight: "bold",
+                            minWidth: "100px",
+                            textAlign: "center"
+                          }}
+                        >
+                          {step.start}
+                        </ListGroup.Item>
+
+                      </div>
+
+                    </ListGroup>
+                  </>
+                )}
+              </div>
+            
+
+              <div style={{ minWidth: "180px"}}>
+                {step.target !== undefined && (
+                  <>
+                    <h5>Target:</h5>
+
+                    <ListGroup horizontal className="custom-listgroup">
+
+                      <div className="custom-listelm">
+
+                        <small className="index-label">
+                          Target
+                        </small>
+
+                        <ListGroup.Item
+                          style={{
+                            fontWeight: "bold",
+                            minWidth: "100px",
+                            textAlign: "center"
+                          }}
+                        >
+                          {step.target}
+                        </ListGroup.Item>
+
+                      </div>
+
+                    </ListGroup>
+                  </>
+                )}
+              </div>
+           
+            </div>
+
+          </div>
+
+          {/* <DistanceList distances={step.distances }/> */}
 
         </>
       )
@@ -396,25 +417,13 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
             graph={step.graph}
           />
           {step.message && (
-          <p
-            style={{
-              marginTop: "1rem",
-              fontWeight: "bold"
-            }}
-          >
+          <p className="custom-msg">
             {step.message}
           </p>
           )}
           <hr />
 
-          <div
-            style={{
-              display: "flex",
-              alignItems: "flex-start",
-              gap: "2rem",
-              marginTop: "1rem"
-            }}
-          >
+          <div className="custom-listlayout">
 
             <div
               style={{
@@ -428,20 +437,9 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
 
                   <ListGroup horizontal className="custom-listgroup">
 
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center"
-                      }}
-                    >
+                    <div className="custom-listelm">
 
-                      <small
-                        style={{
-                          marginBottom: "4px",
-                          color: "#888"
-                        }}
-                      >
+                      <small className="index-label">
                         Total
                       </small>
 

@@ -4,7 +4,7 @@ import pushStep from "../utils/pushStep";
 import toId from "../utils/toId";
 
 const bubbleSort = (input : AlgorithmInput) : VisualizationStep[]  => {
-    // bubble sort only supports arrays
+    // Bubble sort only supports arrays
     if (input.type !== "array") {
         return []
     }
@@ -25,7 +25,7 @@ const bubbleSort = (input : AlgorithmInput) : VisualizationStep[]  => {
 
         for (let j = 0; j < n - i - 1; j++) {
 
-            //SHOW INITIAL COMPARISON
+            // Show initial comparison
            pushStep(steps, {
                 linear: { values: [...arr] },
                 activeIds: [toId(j)],
@@ -33,7 +33,7 @@ const bubbleSort = (input : AlgorithmInput) : VisualizationStep[]  => {
                 sortedIds
             })
 
-            // SWAP
+            // Swap
             if ( arr[j] > arr[j+1]) {
                 [arr[j], arr[j+1]] = [arr[j+1], arr[j]]
 
@@ -56,16 +56,14 @@ const bubbleSort = (input : AlgorithmInput) : VisualizationStep[]  => {
 
     pushStep(steps, {
         linear: { values: [...arr] },
+        
         sortedIds: Array.from(
-        { length: n },
-        (_, i) => i.toString()
+            { length: n },
+            (_, i) => i.toString()
         )
     })
 
     return steps
 }
 
-// const arr = [64, 34, 25, 12, 22, 11, 90];
-// bubbleSort(arr)
-// console.log(arr)
 export default bubbleSort;

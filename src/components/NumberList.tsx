@@ -33,17 +33,10 @@ const NumberList = ({
           variant = "danger"
         }
 
-         return (
-          <div
-            key={id}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center"
-            }}
-          >
+        return (
+          <div key={id} className="custom-listelm">
             {/* INDEX LABEL */}
-            <small style={{ marginBottom: "4px", color: "#888" }}>
+            <small className="index-label">
               {index}
             </small>
 

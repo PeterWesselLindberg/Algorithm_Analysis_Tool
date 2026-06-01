@@ -27,7 +27,7 @@ const TreeEdges = ({ node, activeEdgeIds = [] }: TreeEdgesProps) => {
               }}
             />
 
-            {/* recurse */}
+            {/* Recurse */}
             <TreeEdges
               node={child}
               activeEdgeIds={activeEdgeIds}

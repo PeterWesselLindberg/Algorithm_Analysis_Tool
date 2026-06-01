@@ -23,11 +23,11 @@ const merge = (arr: number[], left: number, mid: number, right: number, steps: V
     let j = 0;
     let k = left;
 
-    //MERGING
+    // Merging
     while (i < n1 && j < n2) {
 
-        //COMPARISON
-         pushStep(steps, {
+        // Comparison
+        pushStep(steps, {
             linear: { values: [...arr] },
             activeIds: [toId(left + i)],
             compareIds: [toId(mid + 1 + j)],
@@ -35,17 +35,16 @@ const merge = (arr: number[], left: number, mid: number, right: number, steps: V
         });
 
         if (lTemp[i] <= rTemp[j]) {
-
             arr[k] = lTemp[i];
             i++;
-
-        } else {
-
+        }
+        
+        else {
             arr[k] = rTemp[j];
             j++;
         }
 
-        // WRITE STEP
+        // Write step
         pushStep(steps, {
             linear: { values: [...arr] },
             activeIds: [toId(k)],
@@ -55,7 +54,7 @@ const merge = (arr: number[], left: number, mid: number, right: number, steps: V
         k++;
     }
 
-    //LEFTOVERS
+    // Leftovers
     while (i < n1) {
 
         arr[k] = lTemp[i];
@@ -84,7 +83,7 @@ const merge = (arr: number[], left: number, mid: number, right: number, steps: V
         k++;
     }
 
-    //THIS MERGED REGION IS NOW SORTED
+    // This merged region is now sorted
     for (let idx = left; idx <= right; idx++) {
 
         if (!sortedIds.includes(toId(idx))) {
@@ -92,11 +91,11 @@ const merge = (arr: number[], left: number, mid: number, right: number, steps: V
         }
     }
 
-    //RECORD MERGED REGION
+    // Record merged region
     pushStep(steps, {
-            linear: { values: [...arr] },
-            sortedIds: [...sortedIds]
-        });
+        linear: { values: [...arr] },
+        sortedIds: [...sortedIds]
+    });
 };
 
 const mergeSortRecursive = (
@@ -142,10 +141,11 @@ const mergeSortRecursive = (
 
 const mergeSort = (input: AlgorithmInput): VisualizationStep[] => {
 
-    // merge sort only supports arrays
+    // Merge sort only supports arrays
     if (input.type !== "array") {
         return []
     }
+
     const inputArr = input.data
     const arr = [...inputArr];
     const steps: VisualizationStep[] = [];
@@ -159,10 +159,10 @@ const mergeSort = (input: AlgorithmInput): VisualizationStep[] => {
         sortedIds
     );
 
-    //FINAL STEP
+    // Final step
     pushStep(steps, {
-    linear: { values: [...arr] },
-    sortedIds: Array.from({ length: arr.length }, (_, i) => i.toString())
+        linear: { values: [...arr] },
+        sortedIds: Array.from({ length: arr.length }, (_, i) => i.toString())
     });
 
     return steps;

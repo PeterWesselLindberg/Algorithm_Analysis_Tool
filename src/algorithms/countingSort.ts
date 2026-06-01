@@ -11,10 +11,10 @@ const outputId = (i: number) => `output-${i}`
 
 const countingSort = (input: AlgorithmInput): VisualizationStep[] => {
 
-  // counting sort only supports arrays
+  // Counting sort only supports arrays
   if (input.type !== "array") {
-        return []
-    }
+    return []
+  }
   const inputArr = input.data
   const arr = [...inputArr]
 
@@ -50,12 +50,12 @@ const countingSort = (input: AlgorithmInput): VisualizationStep[] => {
     }
   ]
 
-  // COUNT OCCURRENCES
+  // Count occurrences
   for (let i = 0; i < n; i++) {
 
     const v = arr[i]
 
-    // SHOW INPUT + COUNT SLOT
+    // Show input + count slot
     pushStep(steps, {
       linears: buildLinears(),
 
@@ -65,10 +65,10 @@ const countingSort = (input: AlgorithmInput): VisualizationStep[] => {
       ]
     })
 
-    // INCREMENT COUNT
+    // Increment count
     cntArr[v]++
 
-    // SHOW UPDATED COUNT
+    // Show updated count
     pushStep(steps, {
       linears: buildLinears(),
 
@@ -78,10 +78,10 @@ const countingSort = (input: AlgorithmInput): VisualizationStep[] => {
     })
   }
 
-  // PREFIX SUM
+  // Prefix sum
   for (let i = 1; i <= maxVal; i++) {
 
-    // SHOW PREFIX OPERATION
+    // Show prefix operation
     pushStep(steps, {
       linears: buildLinears(),
 
@@ -96,7 +96,7 @@ const countingSort = (input: AlgorithmInput): VisualizationStep[] => {
 
     cntArr[i] += cntArr[i - 1]
 
-    // SHOW UPDATED PREFIX VALUE
+    // Show updated prefix value
     pushStep(steps, {
       linears: buildLinears(),
 
@@ -106,14 +106,14 @@ const countingSort = (input: AlgorithmInput): VisualizationStep[] => {
     })
   }
 
-  // BUILD OUTPUT
+  // Build otput
   for (let i = n - 1; i >= 0; i--) {
 
     const v = arr[i]
 
     const pos = cntArr[v] - 1
 
-    // SHOW TARGET POSITION
+    // Show target position
     pushStep(steps, {
       linears: buildLinears(),
 
@@ -124,12 +124,12 @@ const countingSort = (input: AlgorithmInput): VisualizationStep[] => {
       ]
     })
 
-    // PLACE VALUE
+    // Place value
     ans[pos] = v
 
     cntArr[v]--
 
-    // SHOW PLACED VALUE
+    // Show placed value
     pushStep(steps, {
       linears: buildLinears(),
 
@@ -143,7 +143,7 @@ const countingSort = (input: AlgorithmInput): VisualizationStep[] => {
     })
   }
 
-  // FINAL STEP
+  // Final step
   pushStep(steps, {
     linears: buildLinears(),
 

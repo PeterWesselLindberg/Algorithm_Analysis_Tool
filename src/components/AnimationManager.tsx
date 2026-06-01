@@ -6,7 +6,7 @@ import type { VisualizationType } from "../types/VisualizationType"
 import { FaSquare, FaChevronLeft, FaChevronRight, FaPlay, FaPause } from "react-icons/fa"
 import Visualizer from "./Visualizer"
 import type { VisualizationStep } from "../types/VisualizationStep"
-//import generateRandomArray from "../randGen/generateRandomArray"
+import { useNavigate } from "react-router-dom"
 
 interface AnimationManagerProps {
   input: AlgorithmInput,
@@ -15,10 +15,6 @@ interface AnimationManagerProps {
 }
 
 const AnimationManager = ({input, algorithm, visualizationGraphics} : AnimationManagerProps) => {
-  //const input = !Array.isArray(inputNumbers) || !inputNumbers.length ? generateRandomArray(15) : inputNumbers // Generates an array of random numbers in range 1 to 30
-
-  //const clonedUnsortedNumbers = input.slice() // Clones the input list for use with the restartSort function
-  
   const selectedAlgorithm = algorithmTypes[algorithm] // Initialises the given algoritmhtype for the limited types
   const initialSteps = selectedAlgorithm(input) // Initialises the the input list with the selected algoritm
 
@@ -38,7 +34,7 @@ const AnimationManager = ({input, algorithm, visualizationGraphics} : AnimationM
   const [btnValue, setBtnvalue] = useState("start") // changes the current state of the buttons in order to update the symbols
   
   const animationDelay = 1100 - speed * 100
-
+  const navigate = useNavigate()
 
   useEffect(() => {
   if (!isSorting || isPaused) return
@@ -58,6 +54,15 @@ const AnimationManager = ({input, algorithm, visualizationGraphics} : AnimationM
 
   return () => clearTimeout(timeout)
 }, [currentStep, isSorting, isPaused, steps, speed])
+
+  /** Reroutes the page momentarily to reset it*/
+  const generateNewData = () => {
+    navigate("/blank")
+
+    setTimeout(() => {
+      navigate(-1)
+    }, 10)
+}
 
   /** Start and stops the animations for the sorting algorithm */
   const startStopSort = (btnState: string) => {
@@ -97,6 +102,7 @@ const AnimationManager = ({input, algorithm, visualizationGraphics} : AnimationM
 
       else if (btnValue === "resume") {setBtnvalue("stop")}
     }
+
     else if (isFinished) {}
   }
   
@@ -141,7 +147,8 @@ const AnimationManager = ({input, algorithm, visualizationGraphics} : AnimationM
   
         if (currentStep >= steps.length - 1) {
           setIsFinished(false)
-          setIsSorting(true)}
+          setIsSorting(true)
+        }
         
         newStep = currentStep - 1
         break
@@ -150,8 +157,8 @@ const AnimationManager = ({input, algorithm, visualizationGraphics} : AnimationM
         if (currentStep === 0) {
           goToStep(1)
           startStopSort("stop")
-          
         }
+
         if (currentStep >= steps.length - 1) return
         startStopSort("stop")
         
@@ -192,6 +199,10 @@ const AnimationManager = ({input, algorithm, visualizationGraphics} : AnimationM
             <FaChevronRight />
           </Button>
 
+          <Button onClick={generateNewData} style={{ marginLeft: "10rem" }}>
+            Generate new data
+          </Button>
+
           <div style={{ marginTop: "1rem"}}>
             <label>
               Speed: {speed}ms
@@ -204,9 +215,9 @@ const AnimationManager = ({input, algorithm, visualizationGraphics} : AnimationM
               value={speed}
               onChange={(e) => setSpeed(Number(e.target.value))}
               style={{ marginRight: "1rem"}}
-              />
+            />
 
-              <label>
+            <label>
               Step: {currentStep >= steps.length ? currentStep-1 : currentStep} / {Math.max(steps.length - 1, 0)}
               {" "}({progress}%)
               

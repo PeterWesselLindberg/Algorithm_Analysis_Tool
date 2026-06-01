@@ -1,8 +1,7 @@
 import type { VisualizationStep }
 from "../types/VisualizationStep"
 
-import pushStep
-from "../utils/pushStep"
+import pushStep from "../utils/pushStep"
 
 import layoutTree from "../utils/layoutTree"
 import type { AlgorithmInput } from "../types/algorithmtypes"
@@ -10,31 +9,29 @@ import type { AlgorithmInput } from "../types/algorithmtypes"
 import type { TreeNodeData } from "../dataStructures/TreeNodedata"
 
 export const bstInsert = (
-    root: TreeNodeData,
-    value: number,
-    steps: VisualizationStep[],
-    index: number = 1,
-    insertedValues: number[] = []
+  root: TreeNodeData,
+  value: number,
+  steps: VisualizationStep[],
+  index: number = 1,
+  insertedValues: number[] = []
 ) => {
 
   let current = root
 
   while (true) {
 
-    // VISIT NODE
+    // Visit node
     layoutTree(root)
 
     pushStep(steps, {
-        tree: structuredClone(root),
-        activeIds: [current.id],
+      tree: structuredClone(root),
+      activeIds: [current.id],
 
-        linears: [
-        {
-            id: "inserted",
-            label: "Inserted Values",
-            values: [...insertedValues]
-        }
-        ]
+      linears: [{
+        id: "inserted",
+        label: "Inserted Values",
+        values: [...insertedValues]
+      }]
     })
 
     const direction =
@@ -43,7 +40,7 @@ export const bstInsert = (
     const child =
       current.children?.[direction]
 
-    // INSERT
+    // Insert
     if (!child) {
 
       const newNode: TreeNodeData = {
@@ -57,8 +54,7 @@ export const bstInsert = (
       current.children =
         current.children ?? []
 
-      current.children[direction] =
-        newNode
+      current.children[direction] = newNode
 
       insertedValues.push(value)
 
@@ -71,73 +67,70 @@ export const bstInsert = (
           `${current.id}->${newNode.id}`
         ],
 
-        linears: [
-        {
-            id: "inserted",
-            label: "Inserted Values",
-            values: [...insertedValues]
-        }
-        ]
+        linears: [{
+          id: "inserted",
+          label: "Inserted Values",
+          values: [...insertedValues]
+        }]
       })
       return
     }
-        pushStep(steps, {
-            tree: structuredClone(root),
-            activeIds: [current.id],
-            activeEdgeIds: [`${current.id}->${child.id}`],
-            linears: [
-            {
-                id: "inserted",
-                label: "Inserted Values",
-                values: [...insertedValues]
-            }]
-        })
 
-        current = child
-    }
+    pushStep(steps, {
+      tree: structuredClone(root),
+      activeIds: [current.id],
+      activeEdgeIds: [`${current.id}->${child.id}`],
+      linears: [{
+        id: "inserted",
+        label: "Inserted Values",
+        values: [...insertedValues]
+      }]
+    })
+
+    current = child
   }
+}
 
 const bstInsertion = (
   input: AlgorithmInput
 ): VisualizationStep[] => {
 
   // BST insertiopn only supports arrays
-    if (input.type !== "array") {
-        return []
-    }
-    const inputArr = input.data
-    const steps: VisualizationStep[] = []
-    const values = inputArr
+  if (input.type !== "array") {
+    return []
+  }
 
-    if (values.length === 0) return steps
+  const inputArr = input.data
+  const steps: VisualizationStep[] = []
+  const values = inputArr
 
-    const insertedValues: number[] = [values[0]]
+  if (values.length === 0) return steps
 
-    const root: TreeNodeData = {
-        id: "0",
-        value: values[0],
-        x: 0,
-        y: 0,
-        children: []
-    }
+  const insertedValues: number[] = [values[0]]
 
-    pushStep(steps, {
-        tree: root,
-        activeIds: [root.id],
-        linears: [
-        {
-            id: "inserted",
-            label: "Inserted Values",
-            values: [...insertedValues]
-        }
-    ]
-    })
+  const root: TreeNodeData = {
+    id: "0",
+    value: values[0],
+    x: 0,
+    y: 0,
+    children: []
+  }
 
-    for (let i = 1; i < values.length; i++) {
-        bstInsert(root, values[i], steps, i, insertedValues)
-    }
+  pushStep(steps, {
+    tree: root,
+    activeIds: [root.id],
+    linears: [{
+      id: "inserted",
+      label: "Inserted Values",
+      values: [...insertedValues]
+    }]
+  })
 
-    return steps
+  for (let i = 1; i < values.length; i++) {
+    bstInsert(root, values[i], steps, i, insertedValues)
+  }
+
+  return steps
 }
 
 export default bstInsertion

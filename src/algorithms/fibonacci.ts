@@ -6,27 +6,26 @@ import toId from "../utils/toId"
 
 const fibonacci = (input: AlgorithmInput): VisualizationStep[] => {
   
-  // the fibonacci sequence only supports arrays
-  if (input.type !== "array") {
-        return []
-  }
+  // The fibonacci sequence only supports arrays
+  if (input.type !== "array") return []
+  
   const inputArr = input.data
   const n = inputArr[0]
   const steps: VisualizationStep[] = []
 
   if (n <= 0) return steps
 
-  // FIXED SIZE OUTPUT ARRAY
+  // Fixed size output array
   const values = new Array(n).fill(0)
 
-  // INITIAL EMPTY STEP
+  // Initial empty step
   pushStep(steps, {
     linear: {
       values: [...values]
     }
   })
 
-  // FIRST NUMBER
+  // First number
   values[0] = 0
 
   pushStep(steps, {
@@ -40,7 +39,7 @@ const fibonacci = (input: AlgorithmInput): VisualizationStep[] => {
 
   if (n === 1) return steps
 
-  // SECOND NUMBER
+  // Second number
   values[1] = 1
 
   pushStep(steps, {
@@ -56,10 +55,10 @@ const fibonacci = (input: AlgorithmInput): VisualizationStep[] => {
     ]
   })
 
-  // BUILD SEQUENCE
+  // Build sequence
   for (let i = 2; i < n; i++) {
 
-    // SHOW COMPARISON
+    // Show comparisopn
     pushStep(steps, {
       linear: {
         values: [...values]
@@ -78,17 +77,16 @@ const fibonacci = (input: AlgorithmInput): VisualizationStep[] => {
       )
     })
 
-    // COMPUTE NEXT FIB NUMBER
+    // Compute next fib number
     values[i] = values[i - 1] + values[i - 2]
 
-    // SHOW INSERTION
+    // Show insertion
     pushStep(steps, {
       linear: {
         values: [...values]
       },
 
       activeIds: [toId(i)],
-
       sortedIds: Array.from(
         { length: i + 1 },
         (_, k) => toId(k)

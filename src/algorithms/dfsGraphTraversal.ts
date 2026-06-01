@@ -11,40 +11,34 @@ import pushStep from "../utils/pushStep"
 import toId from "../utils/toId"
 import type { AlgorithmInput } from "../types/algorithmtypes"
 
+/** Depth first graph traversal */
 const dfsGraphTraversal = (
   node: GraphNodeData,
-
   graph: GraphData,
-
   visited: Set<string>,
-
   visitedIds: string[],
-
   steps: VisualizationStep[]
 ) => {
 
-  // already visited
+  // Already visited
   if (visited.has(node.id)) {
     return
   }
 
-  // mark visited
+  // Mark visited
   visited.add(node.id)
 
   visitedIds.push(toId(node.value))
 
-  // VISIT NODE
+  // Visit node
   pushStep(steps, {
     graph,
-
     activeIds: [node.id],
-
     sortedIds: [...visited],
-
     visitedIds: [...visitedIds]
   })
 
-  // explore neighbors
+  // Explore neighbors
   node.neighbors?.forEach(edge => {
 
     const neighbor =
@@ -54,10 +48,9 @@ const dfsGraphTraversal = (
 
     if (!neighbor) return
 
-    // animate edge traversal
+    // Animate edge traversal
     pushStep(steps, {
       graph,
-
       activeIds: [node.id],
 
       activeEdgeIds: [
@@ -65,7 +58,6 @@ const dfsGraphTraversal = (
       ],
 
       sortedIds: [...visited],
-
       visitedIds: [...visitedIds]
     })
 
@@ -79,6 +71,7 @@ const dfsGraphTraversal = (
   })
 }
 
+/** The tracing of the graph traversal */
 const dfsGraphTrace = (input: AlgorithmInput): VisualizationStep[] => {
 
   // DFS only supports graphs
@@ -96,30 +89,23 @@ const dfsGraphTrace = (input: AlgorithmInput): VisualizationStep[] => {
 
   const visitedIds: string[] = []
 
-  // start at first node
+  // Start at first node
   dfsGraphTraversal(
     graph.nodes[0],
-
     graph,
-
     visited,
-
     visitedIds,
-
     steps
   )
 
-  // CONNECTED CHECK
+  // Connected check
   const isConnected =
   visited.size === graph.nodes.length
 
   pushStep(steps, {
   graph,
-
   sortedIds: [...visited],
-
   visitedIds: [...visitedIds],
-
   message: isConnected
     ? "Graph is connected"
     : "Graph is disconnected"

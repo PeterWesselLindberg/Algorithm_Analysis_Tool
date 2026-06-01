@@ -5,9 +5,10 @@ import toId from "../utils/toId"
 import buildHeapTree from "../utils/buildHeapTree"
 import type { AlgorithmInput } from "../types/algorithmtypes"
 
+/** Breadth first traversal of a search tree */
 const bfsTreeTraversal = (input: AlgorithmInput): VisualizationStep[] => {
 
-    // bfs traversal only supports arrays
+    // Bfs traversal only supports arrays
     if (input.type !== "array") {
         return []
     }
@@ -23,23 +24,21 @@ const bfsTreeTraversal = (input: AlgorithmInput): VisualizationStep[] => {
 
     while (queue.length > 0) {
 
-        // dequeue
+        // Dequeue
         const node = queue.shift()
 
         if (!node) continue
 
-        // VISIT NODE
+        // Visit node
         visitedIds.push(toId(node.value))
 
         pushStep(steps, {
         tree: tree,
-
         activeIds: [node.id],
-
         visitedIds: [...visitedIds]
         })
 
-        // enqueue children
+        // Enqueue children
         node.children?.forEach(child => {
         queue.push(child)
         })

@@ -14,14 +14,20 @@ const GraphVisualizer = ({step, graph}: GraphVisualizerProps) => {
     return (
         <svg width="100%" height="600">
 
-        <GraphEdges graph={graph}  activeEdgeIds={step.activeEdgeIds}/>
+        <GraphEdges 
+            graph={graph}  
+            activeEdgeIds={step.activeEdgeIds} 
+            mstEdgeIds={step.mstEdgeIds}
+            shortestPathEdgeIds={step.shortestPathEdgeIds}
+        />
 
         <GraphNodes
             graph={graph}
             activeIds={step.activeIds}
             compareIds={step.compareIds}
             sortedIds={step.sortedIds}
-            />
+            shortestPathIds={step.shortestPathIds}
+        />
 
         </svg>
     )

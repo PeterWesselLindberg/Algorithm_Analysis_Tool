@@ -10,29 +10,13 @@ const MSTEdgeList = ({
 }: MSTEdgeListProps) => {
 
   return (
-    <ListGroup
-      horizontal
-      className="custom-listgroup"
-    >
+    <ListGroup horizontal className="custom-listgroup">
 
       {edges.map((edge, i) => (
 
-        <div
-          key={`${edge}-${i}`}
+        <div key={`${edge}-${i}`} className="custom-listelm">
 
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center"
-          }}
-        >
-
-          <small
-            style={{
-              marginBottom: "4px",
-              color: "#888"
-            }}
-          >
+          <small className="index-label">
             {i}
           </small>
 

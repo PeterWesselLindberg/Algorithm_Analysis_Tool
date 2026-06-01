@@ -11,11 +11,9 @@ const primsAlgorithm = (
   input: AlgorithmInput
 ): VisualizationStep[] => {
 
-  if (input.type !== "graph") {
-    return []
-  }
+  if (input.type !== "graph") return []
+  
   const graph = input.data
-
   const steps: VisualizationStep[] = []
 
   if (graph.nodes.length === 0) {
@@ -23,9 +21,7 @@ const primsAlgorithm = (
   }
 
   const visited = new Set<string>()
-
   const mstEdgeIds: string[] = []
-
   const mstEdges: string[] = []
 
   let mstWeight = 0
@@ -36,19 +32,14 @@ const primsAlgorithm = (
 
   pushStep(steps, {
     graph,
-
     activeIds: [start.id],
-
     sortedIds: [...visited],
-
     mstEdges: [...mstEdges],
-
     mstWeight
   })
 
-  while (
-    visited.size < graph.nodes.length
-  ) {
+  while (visited.size < graph.nodes.length) 
+  {
 
     let bestEdge:
       | {
@@ -58,7 +49,7 @@ const primsAlgorithm = (
         }
       | undefined
 
-    // search all candidate edges
+    // Search all candidate edges
     graph.nodes.forEach(node => {
 
       if (!visited.has(node.id)) {
@@ -71,31 +62,23 @@ const primsAlgorithm = (
           return
         }
 
-        const weight =
-          edge.weight ?? 1
+        const weight =edge.weight ?? 1
 
-        // edge comparison animation
+        // Edge comparison animation
         pushStep(steps, {
           graph,
-
           activeIds: [node.id],
-
           activeEdgeIds: [
             `${node.id}->${edge.to}`
           ],
 
           mstEdgeIds: [...mstEdgeIds],
-
           mstEdges: [...mstEdges],
-
           mstWeight
         })
 
-        if (
-          !bestEdge ||
-          weight < bestEdge.weight
-        ) {
-
+        if (!bestEdge || weight < bestEdge.weight) 
+        {
           bestEdge = {
             from: node.id,
             to: edge.to,
@@ -111,49 +94,36 @@ const primsAlgorithm = (
 
     visited.add(bestEdge.to)
 
-    const edgeId =
-      `${bestEdge.from}->${bestEdge.to}`
+    const edgeId = `${bestEdge.from}->${bestEdge.to}`
 
     mstEdgeIds.push(edgeId)
 
     mstEdges.push(
-        `${bestEdge.from} → ${bestEdge.to} (${bestEdge.weight})`
+      `${bestEdge.from} → ${bestEdge.to} (${bestEdge.weight})`
     )
 
     mstWeight += bestEdge.weight
 
-    // accepted edge animation
+    // Accepted edge animation
     pushStep(steps, {
       graph,
-
       activeIds: [bestEdge.to],
-
       activeEdgeIds: [edgeId],
-
       mstEdgeIds: [...mstEdgeIds],
-
       mstEdges: [...mstEdges],
-
       mstWeight,
-
       sortedIds: [...visited],
-
       message:
         `Added edge (${bestEdge.from} → ${bestEdge.to}) weight ${bestEdge.weight}`
     })
   }
 
+  // Final step
   pushStep(steps, {
     graph,
-
     mstEdgeIds,
-
     mstEdges,
-
     mstWeight,
-
-    sortedIds: [...visited],
-
     message:
       `Prim's MST total weight: ${mstWeight}`
   })

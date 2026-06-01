@@ -46,4 +46,10 @@ export type VisualizationStep = {
 
   target?: number
 
+  start?: number
+
+  shortestPathIds?: string[] 
+
+  shortestPathEdgeIds?: string[]
+
 }

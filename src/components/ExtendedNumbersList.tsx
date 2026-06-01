@@ -35,22 +35,15 @@ const ExtendedNumberList = ({
             }
 
              return (
-                <div
-                    key={id}
-                    style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center"
-                    }}
-                >
+                <div key={id} className="custom-listelm">
                     {/* INDEX LABEL */}
-                    <small style={{ fontSize: "12px", color: "#888" }}>
-                    {index}
+                    <small className="index-label">
+                        {index}
                     </small>
 
                     {/* VALUE */}
                     <ListGroup.Item variant={variant}>
-                    {num}
+                        {num}
                     </ListGroup.Item>
                 </div>
         )

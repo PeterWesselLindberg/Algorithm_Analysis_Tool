@@ -6,7 +6,7 @@ import pushStep from "../utils/pushStep"
 import buildBST from "../utils/buildBST"
 import layoutTree from "../utils/layoutTree"
 
-
+/** Helper function to extract values when removing the node from the tree in the edge case */
 const extractValues = (node?: TreeNodeData): number[] => {
   if (!node) return []
 
@@ -17,6 +17,7 @@ const extractValues = (node?: TreeNodeData): number[] => {
   ]
 }
 
+/** Function to delete a node in a binary search tree */
 const bstDelete: AlgorithmFunction = (input) => {
 
   if (input.type !== "bst") return []
@@ -65,7 +66,7 @@ const deleteNode = (
 
   if (!node) return undefined
 
-  // VISIT NODE
+  // Visit node
   pushStep(steps, {
     tree: structuredClone(visualRoot),
     activeIds: [node.id],
@@ -73,7 +74,7 @@ const deleteNode = (
     target
   })
 
-  // GO LEFT
+  // Go left
   if (target < node.value) {
 
     const child = node.children?.[0]
@@ -94,7 +95,7 @@ const deleteNode = (
       !child.children?.[1]
     ) {
 
-      // VISIT NODE
+      // Visit node
       pushStep(steps, {
         tree: structuredClone(visualRoot),
         activeIds: [child.id],
@@ -102,7 +103,7 @@ const deleteNode = (
         target
       })
 
-      // FOUND NODE
+      // Found node
       pushStep(steps, {
         tree: structuredClone(visualRoot),
         activeIds: [child.id],
@@ -117,7 +118,7 @@ const deleteNode = (
         target
       })
 
-      // rebuild strategy for edge case
+      // Rebuild strategy for edge case
       const newValues = extractValues(node).filter(v => v !== target)
       const rebuilt = buildBST(newValues)
 
@@ -130,19 +131,21 @@ const deleteNode = (
     }
 
 
-    // normal recursion
+    // Normal recursion
     const result = deleteNode(visualRoot, child, target, steps)
 
     if (result) {
       node.children![0] = result
-    } else {
+    } 
+    
+    else {
       node.children!.splice(0, 1)
     }
 
     return node
   }
 
-  // GO RIGHT
+  // Go right
   if (target > node.value) {
 
     const child = node.children?.[1]
@@ -160,14 +163,16 @@ const deleteNode = (
 
     if (result) {
       node.children![1] = result
-    } else {
+    } 
+    
+    else {
       node.children!.splice(1, 1)
     }
 
     return node
   }
 
-  // FOUND NODE
+  // Found node
 
   pushStep(steps, {
     tree: structuredClone(visualRoot),
@@ -176,7 +181,7 @@ const deleteNode = (
     target
   })
 
-  // CASE 1: LEAF
+  // Case 1: Leaf
   if (!node.children?.[0] && !node.children?.[1]) {
 
   pushStep(steps, {
@@ -189,7 +194,7 @@ const deleteNode = (
   return undefined
 }
 
-  // CASE 2: ONLY RIGHT CHILD
+  // Case 2: Only right child
   if (!node.children?.[0]) {
 
     const child = node.children?.[1]
@@ -205,7 +210,7 @@ const deleteNode = (
     return child
   }
 
-  // CASE 3: ONLY LEFT CHILD
+  // Case 3: Only left child
   if (!node.children?.[1]) {
 
     const child = node.children?.[0]
@@ -221,11 +226,11 @@ const deleteNode = (
     return child
   }
 
-  // CASE 4: TWO CHILDREN
+  // Case 4: Two children
 
   const successor = findMin(node.children[1])
 
-  // STEP 1: highlight node + successor
+  // Step 1: Highlight node + successor
   pushStep(steps, {
     tree: structuredClone(visualRoot),
     activeIds: [node.id, successor.id],
@@ -234,7 +239,7 @@ const deleteNode = (
     target
   })
 
-  // STEP 2: mark node as being replaced
+  // Step 2: Mark node as being replaced
   pushStep(steps, {
     tree: structuredClone(visualRoot),
     deletingIds: [node.id],
@@ -245,7 +250,7 @@ const deleteNode = (
 
   node.value = successor.value
 
-  // STEP 3: replace values
+  // Step 3: Replace values
   pushStep(steps, {
     tree: structuredClone(visualRoot),
     replacementIds: [node.id],
@@ -262,11 +267,13 @@ const deleteNode = (
 
   if (result) {
     node.children![1] = result
-  } else {
+  } 
+  
+  else {
     node.children!.splice(1, 1)
   }
 
-  // STEP 4: show rebalancing
+  // Step 4: Show rebalancing
   pushStep(steps, {
     tree: structuredClone(visualRoot),
     message: `Tree rebalanced after deletion`,
@@ -277,6 +284,7 @@ const deleteNode = (
   return node
 }
 
+/** Helper function to find successor */
 const findMin = (
   node: TreeNodeData
 ): TreeNodeData => {

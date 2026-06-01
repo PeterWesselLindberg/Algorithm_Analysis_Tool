@@ -4,10 +4,12 @@ import pushStep from "../utils/pushStep"
 import toId from "../utils/toId"
 
 const selectionSort = (input : AlgorithmInput) : VisualizationStep[]  => {
-    // selection sort only supports arrays
+    
+    // Selection sort only supports arrays
     if (input.type !== "array") {
         return []
     }
+
     const inputArr = input.data
     const arr = [...inputArr]
     const steps: VisualizationStep[] = [];
@@ -17,7 +19,7 @@ const selectionSort = (input : AlgorithmInput) : VisualizationStep[]  => {
 
         let minIndex = i;
 
-        //CURRENT SORTED SECTION
+        // Current sorted section
         const sortedIds =
             Array.from(
                 { length: i },
@@ -26,7 +28,7 @@ const selectionSort = (input : AlgorithmInput) : VisualizationStep[]  => {
 
         for (let j = i + 1; j < n; j++) {
 
-            //SHOW INITIAL COMPARISON
+            // Show initial comparison
             pushStep(steps, {
                 linear: { values: [...arr] },
                 activeIds: [toId(minIndex)],
@@ -51,7 +53,7 @@ const selectionSort = (input : AlgorithmInput) : VisualizationStep[]  => {
         arr[i] = arr[minIndex];
         arr[minIndex] = temp;
 
-        //RECORD SWAPPED ARRAY
+        // Record swapped array
         pushStep(steps, {
             linear: { values: [...arr] },
             activeIds: [toId(i)],
@@ -65,7 +67,7 @@ const selectionSort = (input : AlgorithmInput) : VisualizationStep[]  => {
     }
     
 
-    // FINAL ALL-SORTED STEP
+    // Final step
     pushStep(steps, {
         linear: { values: [...arr] },
         sortedIds:

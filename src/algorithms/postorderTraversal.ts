@@ -5,6 +5,7 @@ import buildHeapTree from "../utils/buildHeapTree"
 import toId from "../utils/toId"
 import type { AlgorithmInput } from "../types/algorithmtypes"
 
+/** Postorder tree traversal */
 const postorderTraversal = (
     node: TreeNodeData | undefined,
     steps: VisualizationStep[],
@@ -16,7 +17,7 @@ const postorderTraversal = (
     const left = node.children?.[0]
     const right = node.children?.[1]
 
-    // LEFT
+    // Left
     if (left) {
         pushStep(steps, {
             tree: root,
@@ -28,7 +29,7 @@ const postorderTraversal = (
         postorderTraversal(left, steps, root, visited)
     }
 
-    // RIGHT
+    // Right
     if (right) {
         pushStep(steps, {
             tree: root,
@@ -40,7 +41,7 @@ const postorderTraversal = (
         postorderTraversal(right, steps, root, visited)
     }
 
-    // VISIT NODE
+    // Visit node
     visited.push(toId(node.value))
 
     pushStep(steps, {
@@ -51,9 +52,10 @@ const postorderTraversal = (
 
 }
 
+/** Tracing of postorder tree traversal */
 const postorderTrace = (input: AlgorithmInput) => {
     
-    // postorder traversal only supports arrays
+    // Postorder traversal only supports arrays
     if (input.type !== "array") {
         return []
     }

@@ -28,7 +28,7 @@ const BellmanFordPage = () => {
 
             { selectedTab === items[2] &&  (
                 <>
-                    <AnimationManager input={generateRandomGraph(5, true, true, true)} 
+                    <AnimationManager input={generateRandomGraph(5, true, true, true, false, true)} 
                         algorithm="bellmanFordFull" visualizationGraphics="distList/graph" />
                 </>
             )}

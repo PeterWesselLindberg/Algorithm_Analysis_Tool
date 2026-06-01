@@ -3,6 +3,7 @@ import type { VisualizationStep } from "../types/VisualizationStep";
 import pushStep from "../utils/pushStep";
 import toId from "../utils/toId";
 
+/** Helper function for quicksort to partition the list */
 const partition = (arr: number[], low : number, high : number, steps: VisualizationStep[], sortedIds: string[]) : number => {
 
     const pivotId = toId(high);
@@ -12,7 +13,7 @@ const partition = (arr: number[], low : number, high : number, steps: Visualizat
 
     for (let j = low; j <= high - 1; j++) {
 
-        //COMPARISON WITH PIVOT
+        // Comparison with pivot
         pushStep(steps, {
             linear: { values: [...arr] },
             activeIds: [toId(j)],
@@ -24,7 +25,7 @@ const partition = (arr: number[], low : number, high : number, steps: Visualizat
             i++;
             swap(arr, i, j);
 
-            //RECORD SWAP
+            // Record swap
             pushStep(steps, {
                 linear: { values: [...arr] },
                 activeIds: [toId(i)],
@@ -34,7 +35,7 @@ const partition = (arr: number[], low : number, high : number, steps: Visualizat
         }
     }
 
-    // PLACE PIVOT
+    // Place pivot
     swap(arr, i + 1, high);
 
     pushStep(steps, {
@@ -47,11 +48,11 @@ const partition = (arr: number[], low : number, high : number, steps: Visualizat
     return i + 1;
 }
 
+/** Helper function for swapping */
 const swap = (inputArr : number[], i : number, j : number) : void => {
     let temp = inputArr[i];
     inputArr[i] = inputArr[j];
     inputArr[j] = temp;
-
 }
 
 
@@ -68,10 +69,10 @@ const quickSortRecursive = (
 
         const pIndex = partition(arr, low, high, steps, sortedIds);
 
-            //PIVOT NOW SORTED
+            // Pivot now sorted
              sortedIds.push(toId(pIndex));
 
-            // RECORD SORTED PIVOT
+            // Record sorted pivot
             pushStep(steps, {
                 linear: { values: [...arr] },
                 sortedIds: [...sortedIds]
@@ -85,10 +86,12 @@ const quickSortRecursive = (
 
 
 const quickSort = (input : AlgorithmInput, low : number = 0, high : number = 0) : VisualizationStep[] => {
-    // quick sort only supports arrays
+
+    // Quick sort only supports arrays
     if (input.type !== "array") {
         return []
     }
+    
     const inputArr = input.data
     const arr = [...inputArr];
     const steps: VisualizationStep[] = [];
@@ -99,10 +102,10 @@ const quickSort = (input : AlgorithmInput, low : number = 0, high : number = 0) 
 
     quickSortRecursive(arr, low, localHigh, steps, sortedIds);
 
-    // FINAL ALL-SORTED STEP
+    // Final step
     pushStep(steps, {
-    linear: { values: [...arr] },
-    sortedIds: Array.from({ length: arr.length }, (_, i) => i.toString())
+        linear: { values: [...arr] },
+        sortedIds: Array.from({ length: arr.length }, (_, i) => i.toString())
     });
 
     return steps

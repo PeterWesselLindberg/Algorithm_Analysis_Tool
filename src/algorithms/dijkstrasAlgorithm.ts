@@ -5,6 +5,7 @@ import type { VisualizationStep } from "../types/VisualizationStep"
 
 import pushStep from "../utils/pushStep"
 import choooseRandomNodes from "../utils/chooseRandomNodes"
+import buildShortestPath from "../utils/buildShortestPath"
 
 /** Wrapper function for Dijkstra full graph traversal*/
 export const dijkstraFull : AlgorithmFunction = input => dijkstra(input, false)
@@ -18,9 +19,8 @@ const dijkstra = (
 ): VisualizationStep[] => {
 
   // Dijkstras only supports graphs
- if (input.type !== "graph") {
-    return []
-  }
+  if (input.type !== "graph") return []
+  
   const graph = input.data
 
   const steps: VisualizationStep[] = []
@@ -31,41 +31,46 @@ const dijkstra = (
 
   let start = graph.nodes[0]
   let target = graph.nodes[graph.nodes.length-1]
+  let end = undefined
+  let source = undefined
 
-    if (limitedDist) {
-        const randomNodes = choooseRandomNodes(graph)
+  if (limitedDist) {
+    const randomNodes = choooseRandomNodes(graph)
 
-        start =
-            graph.nodes[randomNodes[0]]
+    start = graph.nodes[randomNodes[0]]
 
-        target =
-            graph.nodes[randomNodes[1]]
+    target = graph.nodes[randomNodes[1]]
 
-        pushStep(steps, {
-            graph,
+    end = target.value
+    source = start.value
 
-            activeIds: [target.id],
-
-            compareIds: [start.id]
+    pushStep(steps, {
+      graph,
+      activeIds: [target.id],
+      compareIds: [start.id]
     })
-}
+  }
 
-  // distances
+  // Distances
   const distances: Record<string, number> = {}
 
-  // visited
+  // Visited
   const visited = new Set<string>()
 
-  // initialize infinity
+  // Final path storage
+  const previous: Record<string, string | undefined> = {}
+  
+  // Initialize infinity
   graph.nodes.forEach(node => {
     distances[node.id] = Infinity
+    previous[node.id] = undefined
   })
 
   distances[start.id] = 0
 
   while (visited.size < graph.nodes.length) {
 
-    // find closest unvisited node
+    // Find closest unvisited node
     let current: GraphNodeData | undefined
 
     let minDistance = Infinity
@@ -78,9 +83,7 @@ const dijkstra = (
       ) {
 
         current = node
-
-        minDistance =
-          distances[node.id]
+        minDistance = distances[node.id]
       }
     })
 
@@ -88,43 +91,43 @@ const dijkstra = (
 
     const currentNode = current
 
-    // mark visited
+    // Mark visited
     visited.add(currentNode.id)
 
 
     if (currentNode.id === target.id) {
 
+      const {shortestPathIds, shortestPathEdgeIds} = buildShortestPath(previous, target.id)
+
+      pushStep(steps, {
+        graph,
+        distances: { ...distances },
+
+        shortestPathIds,
+        shortestPathEdgeIds,
+
+        target: end,
+        start: source,
+
+        message: !limitedDist
+          ? "Dijkstras completed"
+          : `Shortest distance from ${start.value} to ${target.value} is ${distances[target.id]}`
+      })
+
+      break
+      }
+
+    // Animation step
     pushStep(steps, {
       graph,
-
-      activeIds: [start.id],
-
-      compareIds: [target.id],
-
-      sortedIds: [...visited],
-
-      distances: { ...distances },
-
-      message: !limitedDist
-        ? "Dijkstras completed"
-        : `Shortest distance from ${start.value} to ${target.value} is ${distances[target.id]}`
-    })
-
-    break
-  }
-
-    // animation step
-    pushStep(steps, {
-      graph,
-
       activeIds: [currentNode.id],
-
       sortedIds: [...visited],
-
-      distances: { ...distances }
+      distances: { ...distances },
+      target: end,
+      start: source
     })
 
-    // relax neighbors
+    // Relax neighbors
     currentNode.neighbors.forEach(edge => {
 
       const neighbor =
@@ -138,42 +141,37 @@ const dijkstra = (
         return
       }
 
-      const newDistance =
-        distances[currentNode.id] +
-        (edge.weight ?? 1)
+      const newDistance = distances[currentNode.id] + (edge.weight ?? 1)
 
-      // edge traversal animation
+      // Edge traversal animation
       pushStep(steps, {
         graph,
-
         activeIds: [currentNode.id],
-
         activeEdgeIds: [
           `${currentNode.id}->${neighbor.id}`
         ],
-
         distances: { ...distances },
-
-        sortedIds: [...visited]
+        sortedIds: [...visited],
+        target: end,
+        start: source
       })
 
-      // relaxation
-      if (
-        newDistance <
-        distances[neighbor.id]
-      ) {
+      // Relaxation
+      if (newDistance < distances[neighbor.id]) {
 
-        distances[neighbor.id] =
-          newDistance
+        distances[neighbor.id] = newDistance
+
+        // Store where we came from
+        previous[neighbor.id] = currentNode.id
+
 
         pushStep(steps, {
           graph,
-
           activeIds: [neighbor.id],
-
           distances: { ...distances },
-
-          sortedIds: [...visited]
+          sortedIds: [...visited],
+          target: end,
+          start: source
         })
       }
     })

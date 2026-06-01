@@ -5,9 +5,10 @@ interface GraphNodesProps {
     activeIds?: string[]
     compareIds?: string[]
     sortedIds?: string[]
+    shortestPathIds?: string[]
 }
 
-const GraphNodes = ({graph, activeIds = [], compareIds = [], sortedIds = []}: GraphNodesProps) => {
+const GraphNodes = ({graph, activeIds = [], compareIds = [], sortedIds = [], shortestPathIds = []}: GraphNodesProps) => {
     if (!graph) return null
     return (
         <>
@@ -15,32 +16,38 @@ const GraphNodes = ({graph, activeIds = [], compareIds = [], sortedIds = []}: Gr
 
             let fill = "#0d6efd"
 
-            if (sortedIds.includes(node.id)) {
-            fill = "#198754"
+            if (shortestPathIds.includes(node.id)) {
+                fill = "#198754"
             }
+            
+            else if (sortedIds.includes(node.id)) {
+                fill = "#198754"
+            }
+            
             else if (activeIds.includes(node.id)) {
-            fill = "#ffc107"
+                fill = "#ffc107"
             }
+            
             else if (compareIds.includes(node.id)) {
-            fill = "#dc3545"
+                fill = "#dc3545"
             }
 
             return (
             <g key={node.id}>
 
                 <circle
-                cx={node.x}
-                cy={node.y}
-                r={20}
-                fill={fill}
+                    cx={node.x}
+                    cy={node.y}
+                    r={20}
+                    fill={fill}
                 />
 
                 <text
-                x={node.x}
-                y={node.y}
-                textAnchor="middle"
-                dy={5}
-                fill="white"
+                    x={node.x}
+                    y={node.y}
+                    textAnchor="middle"
+                    dy={5}
+                    fill="white"
                 >
                 {node.value}
                 </text>

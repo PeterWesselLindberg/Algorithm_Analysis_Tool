@@ -9,27 +9,20 @@ interface TopNavBarProps {
 const TopNavBar = ({items, onSelectItem} : TopNavBarProps) => {
     const [currentIndex, setCurrentIndex] = useState(1)
     return (
-        // <Navbar className="sidebar-navbar">
-            <Nav className="sidebar-navbar" variant="tabs" defaultActiveKey={"Visualizer-" + "1"} >
-                {items.map((item, index) => (
-                    <Nav.Item> 
-                        <Nav.Link 
-                            eventKey={"Visualizer-" + index.toString()}
-                            onClick={() => {onSelectItem(item); setCurrentIndex(index)}}
-                            disabled={currentIndex === index}
-                        > {item} 
-                        </Nav.Link>
-                    </Nav.Item>
-                ))}
-                    
-            </Nav>
-        // </Navbar>
+        <Nav className="sidebar-navbar" variant="tabs" defaultActiveKey={"Visualizer-" + "1"} >
+            {items.map((item, index) => (
+                <Nav.Item> 
+                    <Nav.Link 
+                        eventKey={"Visualizer-" + index.toString()}
+                        onClick={() => {onSelectItem(item); setCurrentIndex(index)}}
+                        disabled={currentIndex === index}
+                    > {item} 
+                    </Nav.Link>
+                </Nav.Item>
+            ))}
+                
+        </Nav>
+
     )
 }
-{/* <Nav.Item>
-                    <Nav.Link eventKey="Visualizer" disabled={!isDisabled} onClick={() => {onSelectItem(); setIsDisabled(false)}}>Visualizer</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                    <Nav.Link eventKey="Readme" disabled={isDisabled} onClick={() => {onSelectItem(); setIsDisabled(true)}}>Readme.md</Nav.Link>
-                </Nav.Item> */}
 export default TopNavBar

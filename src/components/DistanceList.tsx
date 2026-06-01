@@ -9,30 +9,15 @@ const DistanceList = ({
 }: DistanceListProps) => {
 
   return (
-    <ListGroup
-      horizontal
-      className="custom-listgroup"
-    >
+    <ListGroup horizontal className="custom-listgroup">
 
       {Object.entries(distances).map(
         ([nodeId, distance], i) => (
 
-        <div
-          key={`${nodeId}-${i}`}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center"
-          }}
-        >
+        <div key={`${nodeId}-${i}`} className="custom-listelm">
 
           {/* INDEX LABEL */}
-          <small
-            style={{
-              marginBottom: "4px",
-              color: "#888"
-            }}
-          >
+          <small className="index-label">
             {nodeId}
           </small>
 

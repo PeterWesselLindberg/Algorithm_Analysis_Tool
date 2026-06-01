@@ -8,7 +8,6 @@ const binarySearch: AlgorithmFunction = (input) => {
 
   const steps: VisualizationStep[] = []
 
-  
   const values = [...input.data].sort((a, b) => a - b)
   const target = input.target
 
@@ -35,7 +34,7 @@ const binarySearch: AlgorithmFunction = (input) => {
       message: `Checking ${values[mid]}`
     })
 
-    // FOUND
+    // Found target
     if (values[mid] === target) {
 
       pushStep(steps, {
@@ -53,49 +52,49 @@ const binarySearch: AlgorithmFunction = (input) => {
       return steps
     }
 
-    // SEARCH RIGHT
+    // Search right if target is larger than the current mid value
     if (values[mid] < target) {
 
-        pushStep(steps, {
-            linear: {
-            values
-            },
+      pushStep(steps, {
+        linear: {
+        values
+        },
 
-            activeIds: [mid.toString()],
+        activeIds: [mid.toString()],
 
-            compareIds: Array.from(
-            { length: right - mid },
-            (_, i) => (mid + 1 + i).toString()
-            ),
+        compareIds: Array.from(
+        { length: right - mid },
+        (_, i) => (mid + 1 + i).toString()
+        ),
 
-            target,
+        target,
 
-            message: `${target} is larger than ${values[mid]} → search right half`
-        })
+        message: `${target} is larger than ${values[mid]} → search right half`
+      })
 
-        left = mid + 1
+      left = mid + 1
     }
 
-    // SEARCH LEFT
+    // Search left if target is less than the current mid value
     else {
-        pushStep(steps, {
-            linear: {
-            values
-            },
+      pushStep(steps, {
+        linear: {
+        values
+        },
 
-            activeIds: [mid.toString()],
+        activeIds: [mid.toString()],
 
-            compareIds: Array.from(
-            { length: mid - left },
-            (_, i) => (left + i).toString()
-            ),
+        compareIds: Array.from(
+        { length: mid - left },
+        (_, i) => (left + i).toString()
+        ),
 
-            target,
+        target,
 
-            message: `${target} is smaller than ${values[mid]} → search left half`
-        })
+        message: `${target} is smaller than ${values[mid]} → search left half`
+      })
 
-        right = mid - 1
+      right = mid - 1
     }
   }
 

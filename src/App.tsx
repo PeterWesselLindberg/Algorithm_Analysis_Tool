@@ -141,6 +141,7 @@ export default function App() {
           )
         })}
         </Route>
+        <Route path="/blank" element={<div />} />
       </Routes>
     </HashRouter>
   )

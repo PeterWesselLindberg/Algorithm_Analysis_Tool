@@ -4,9 +4,10 @@ interface GraphEdgesProps {
   graph?: GraphData
   activeEdgeIds?: string[]
   mstEdgeIds?: string[]
+  shortestPathEdgeIds?: string[]
 }
 
-const GraphEdges = ({graph, activeEdgeIds = [], mstEdgeIds = []}: GraphEdgesProps) => {
+const GraphEdges = ({graph, activeEdgeIds = [], mstEdgeIds = [], shortestPathEdgeIds = []}: GraphEdgesProps) => {
 
     if (!graph) return null
     return (
@@ -42,18 +43,40 @@ const GraphEdges = ({graph, activeEdgeIds = [], mstEdgeIds = []}: GraphEdgesProp
             const edgeId = `${node.id}->${neighbor.id}`
 
             const isMST = mstEdgeIds.includes(edgeId)
+            const isActive = activeEdgeIds.includes(edgeId)
+            const isShortestPath = shortestPathEdgeIds.includes(edgeId)
+
+            let stroke = "grey"
+            let strokeWidth = 3
+
+            if (isMST) {
+                stroke = "lime"
+                strokeWidth = 4
+            }
+
+            if (isActive) {
+                stroke = isMST
+                    ? "#00ff88"
+                    : "orange"
+
+                strokeWidth = 5
+            }
+
+            if (isShortestPath) {
+                stroke = "#00ff88"
+                strokeWidth = 4
+            }
             
-            // direction
+            // Direction
             const dx = neighbor.x - node.x
 
             const dy = neighbor.y - node.y
 
-            // angle
+            // Angle
             const angle =
                 Math.atan2(dy, dx)
 
-            // shorten edge so arrow
-            // stops at node border
+            // Shorten edge so arrow stops at node border
             const nodeRadius = 20
 
             const endX =
@@ -73,8 +96,8 @@ const GraphEdges = ({graph, activeEdgeIds = [], mstEdgeIds = []}: GraphEdgesProp
                     y1={node.y}
                     x2={endX}
                     y2={endY}
-                    stroke={activeEdgeIds.includes(edgeId) ? "orange" : isMST ? "lime" : "grey"}
-                    strokeWidth={activeEdgeIds.includes(edgeId) ? 5 : isMST ? 4 : 3}
+                    stroke={stroke}
+                    strokeWidth={strokeWidth}
                     markerEnd={graph.directed ? "url(#arrow)" : undefined}
                 />
 

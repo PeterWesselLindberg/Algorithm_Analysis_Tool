@@ -28,11 +28,11 @@ const SideBarMenu = ({ items, onSelectItem}: SideBarMenuProps) => {
             </AccordionHeader>
             <AccordionBody>
               {item.subItems?.map((subItem, subIndex) => 
-              <NavLink 
-                eventKey={"link-" + index.toString() + '.' + subIndex.toString()} 
-                onClick={() => {onSelectItem(subItem.id)}}>
-                  {subItem.id}
-              </NavLink>
+                <NavLink 
+                  eventKey={"link-" + index.toString() + '.' + subIndex.toString()} 
+                  onClick={() => {onSelectItem(subItem.id)}}>
+                    {subItem.id}
+                </NavLink>
               )}
             </AccordionBody>
           </AccordionItem>

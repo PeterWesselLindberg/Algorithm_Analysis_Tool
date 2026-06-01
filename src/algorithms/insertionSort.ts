@@ -5,7 +5,7 @@ import toId from "../utils/toId"
 
 const insertionSort = (input: AlgorithmInput): VisualizationStep[] => {
 
-  // insertion sort only supports arrays
+  // Insertion sort only supports arrays
   if (input.type !== "array") {
     return []
   }
@@ -20,10 +20,10 @@ const insertionSort = (input: AlgorithmInput): VisualizationStep[] => {
     const key = arr[i]
     let j = i - 1
 
-    // sorted portion = left side
+    // Sorted portion = left side
     let sortedIds = Array.from({ length: i }, (_, k) => toId(k))
 
-    // 🔥 initial comparison
+    // Initial comparison
     pushStep(steps, {
       linear: { values: [...arr] },
       activeIds: [toId(j)],
@@ -33,10 +33,10 @@ const insertionSort = (input: AlgorithmInput): VisualizationStep[] => {
 
     while (j >= 0 && arr[j] > key) {
 
-      // shift right
+      // Shift right
       arr[j + 1] = arr[j]
 
-      // 🔥 shift step
+      // Shift step
       pushStep(steps, {
         linear: { values: [...arr] },
         activeIds: [toId(j)],
@@ -47,10 +47,10 @@ const insertionSort = (input: AlgorithmInput): VisualizationStep[] => {
       j--
     }
 
-    // insert key
+    // Insert key
     arr[j + 1] = key
 
-    // 🔥 insertion step (important final action of this iteration)
+    // Insertion step
     pushStep(steps, {
       linear: { values: [...arr] },
       activeIds: [toId(j + 1)],
@@ -59,7 +59,7 @@ const insertionSort = (input: AlgorithmInput): VisualizationStep[] => {
     })
   }
 
-  // final fully sorted state
+  // Final fully sorted state
   pushStep(steps, {
     linear: { values: [...arr] },
     sortedIds: Array.from({ length: n }, (_, k) => toId(k))

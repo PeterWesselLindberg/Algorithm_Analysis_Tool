@@ -10,6 +10,7 @@ from "../dataStructures/GraphNodeData"
 import pushStep
 from "../utils/pushStep"
 
+/** Breadth first graph traversal */
 const bfsGraphTraversal = (
   input: AlgorithmInput
 ): VisualizationStep[] => {
@@ -34,7 +35,7 @@ const bfsGraphTraversal = (
 
   const visitedIds: string[] = []
 
-  // start node
+  // Start node
   queue.push(start)
 
   visited.add(start.id)
@@ -45,22 +46,19 @@ const bfsGraphTraversal = (
 
     if (!current) continue
 
-    // VISIT NODE
+    // Visit node
     visitedIds.push(
       current.value.toString()
     )
 
     pushStep(steps, {
       graph,
-
       activeIds: [current.id],
-
       sortedIds: [...visited],
-
       visitedIds: [...visitedIds]
     })
 
-    // EXPLORE NEIGHBORS
+    // Explore neighbors
     current.neighbors.forEach(edge => {
 
       const neighbor =
@@ -74,18 +72,14 @@ const bfsGraphTraversal = (
         return
       }
 
-      // animate edge traversal
+      // Animate edge traversal
       pushStep(steps, {
         graph,
-
         activeIds: [current.id],
-
         activeEdgeIds: [
           `${current.id}->${neighbor.id}`
         ],
-
         sortedIds: [...visited],
-
         visitedIds: [...visitedIds]
       })
 
