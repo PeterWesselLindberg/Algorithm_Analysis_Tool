@@ -1,7 +1,8 @@
+import type { RBTreeNodeData } from "../dataStructures/RBTreeNodeData"
 import type { TreeNodeData } from "../dataStructures/TreeNodedata"
 
 interface TreeNodesProps {
-  node?: TreeNodeData
+  node?: TreeNodeData | RBTreeNodeData
   numbers: number[]
 
   activeIds?: string[]
@@ -26,6 +27,11 @@ const TreeNodes = ({
 
   let fill = "#0d6efd"
 
+  // RB-tree override
+  if ("color" in node) { 
+    fill = node.color === "red" ? "#fa8072" : "rgb(95, 94, 94)"
+  } 
+  
   if (sortedIds.includes(node.id)) {
     fill = "#198754"
   } else if (activeIds.includes(node.id)) {
@@ -53,7 +59,7 @@ const TreeNodes = ({
       </text>
 
       {node.children
-      .filter((child): child is TreeNodeData => child !== undefined)
+      .filter((child): child is TreeNodeData | RBTreeNodeData => child !== undefined)
       .map(child => (
         <TreeNodes
           key={child.id}

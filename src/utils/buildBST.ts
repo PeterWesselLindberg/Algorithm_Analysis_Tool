@@ -56,11 +56,8 @@ const insertNode = (
           children: []
         }
 
-        current.children =
-          current.children ?? []
-
-        current.children[0] =
-          newNode
+        current.children = current.children ?? []
+        current.children[0] = newNode
 
         return
       }
@@ -81,11 +78,8 @@ const insertNode = (
           children: []
         }
 
-        current.children =
-          current.children ?? []
-
-        current.children[1] =
-          newNode
+        current.children = current.children ?? []
+        current.children[1] = newNode
 
         return
       }

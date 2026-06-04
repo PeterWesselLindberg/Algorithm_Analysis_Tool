@@ -22,8 +22,8 @@ import bfsGraphTraversal from "../algorithms/bfsGraphTraversal"
 import kruskalsAlgorithm from "../algorithms/kruskalAlgorithm"
 import primsAlgorithm from "../algorithms/primsAlgorithm"
 import bstInsertion from "../algorithms/bstInsertion"
-import bfsTreeSearch from "../algorithms/bfsTreeSearch"
-import dfsTreeSearch, { depthLimitedSearch } from "../algorithms/dfsTreeSearch"
+import bfsTreeSearch, { bfsRedBlackSearch } from "../algorithms/bfsTreeSearch"
+import dfsTreeSearch, { depthLimitedSearch, dfsRedBlackSearch } from "../algorithms/dfsTreeSearch"
 import binarySearch from "../algorithms/binarySearch"
 import bstDelete from "../algorithms/bstDeletion"
 
@@ -58,6 +58,8 @@ export type AlgorithmTypes =
   | "depthLimitedSearch"
   | "binarySearch"
   | "bstDeletion"
+  | "dfsRedBlackSearch"
+  | "bfsRedBlackSearch"
 
 /** The input types that the algorithms can take */
 export type AlgorithmInput = 
@@ -103,7 +105,9 @@ const algorithmTypes : Record<
     dfsTreeSearch: dfsTreeSearch,
     depthLimitedSearch: depthLimitedSearch,
     binarySearch: binarySearch,
-    bstDeletion: bstDelete
+    bstDeletion: bstDelete,
+    dfsRedBlackSearch: dfsRedBlackSearch,
+    bfsRedBlackSearch: bfsRedBlackSearch
 }
 
 export default algorithmTypes

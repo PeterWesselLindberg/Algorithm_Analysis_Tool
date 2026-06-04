@@ -1,7 +1,8 @@
+import type { RBTreeNodeData } from "../dataStructures/RBTreeNodeData"
 import type { TreeNodeData } from "../dataStructures/TreeNodedata"
 
 interface TreeEdgesProps {
-  node?: TreeNodeData
+  node?: TreeNodeData | RBTreeNodeData
   activeEdgeIds?: string[]
 }
 

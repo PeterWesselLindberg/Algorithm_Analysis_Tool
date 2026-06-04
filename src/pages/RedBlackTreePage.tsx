@@ -1,21 +1,53 @@
 import AnimationManager from "../components/AnimationManager"
-import generateRandomArray from "../randGen/generateRandomArray"
+// import generateRandomArray from "../randGen/generateRandomArray"
 import TopNavBar from "../components/TopNavBar"
 import { useState } from "react"
-import visualItems from "../utils/visualItems"
+import { oneItem,addToList } from "../utils/visualItems"
+import generateRandomBalancedValues from "../randGen/generateRandomBalancedValue"
 
 const RedBlackTreePage = () => {
+   const visualItems: string[] = addToList(oneItem, ["Insertion", "BFS search", "DFS search", "Deletion"])
+
   const [selectedTab, setSelectedTab] = useState(visualItems[1])
 
-  return (
+  const {values , target} = generateRandomBalancedValues(10, false, true)
+
+    return (
     <div>
       <TopNavBar items={visualItems} onSelectItem={setSelectedTab}/>
-      <h1>Red-black search tree</h1>
       
-      {selectedTab === visualItems[1] && (<AnimationManager input={generateRandomArray(15)} algorithm="bubble" visualizationGraphics="list/graph" />
+      { selectedTab === visualItems[1] && (
+        <>
+          <h1>Red-Black tree Insertion</h1>
+          {/* <AnimationManager input={generateRandomArray(7)} algorithm="bstInsertion" visualizationGraphics="exList/tree" /> */}
+        </>
       )}
 
-      {selectedTab === visualItems[0] && (
+      { selectedTab === visualItems[2] && (
+        <>
+          <h1>Red-Black tree breadth-first search</h1>
+          <AnimationManager input={{type: "bst", values, target}}
+            algorithm="bfsRedBlackSearch" visualizationGraphics="TVList/tree" />
+        </>
+      )}
+
+      { selectedTab === visualItems[3] && (
+        <>
+        <h1>Red-Black tree depth-first search</h1>
+        <AnimationManager input={{type: "bst", values, target}}
+          algorithm="dfsRedBlackSearch" visualizationGraphics="TVList/tree" />
+       </>
+      )}
+      { selectedTab === visualItems[4] && (
+        <>
+          <h1>Red-Black tree deletion</h1>
+
+          {/* <AnimationManager input={{type: "bst", values, target}}
+            algorithm="bstDeletion" visualizationGraphics="TVList/tree" /> */}
+        </>
+      )}
+
+      { selectedTab === visualItems[0] && (
         <p> This text was hidden all along</p>
       )}
       

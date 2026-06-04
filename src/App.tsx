@@ -28,11 +28,13 @@ import PrimsPage from './pages/PrimsPage'
 import BinarySearchTreePage from './pages/BinarySearchTreePage'
 import DepthLimitedSearchPage from './pages/DepthLimitedSearchPage'
 import BinarySearchPage from './pages/BinarySearchPage'
+import RedBlackTreePage from './pages/RedBlackTreePage'
 
  let items : MenuItem[] = [
           {label: 'Branch and Bound', subItems: [{id: 'Binary Search', comp: BinarySearchPage}, 
                                               {id: 'Depth-Limited Search', comp: DepthLimitedSearchPage}, 
-                                              {id: 'Binary Search Tree', comp: BinarySearchTreePage}
+                                              {id: 'Binary Search Tree', comp: BinarySearchTreePage},
+                                              {id: 'Red-Black Search Tree', comp: RedBlackTreePage}
                                             
                                             ]},
 
