@@ -1,20 +1,31 @@
-import { useState } from "react"
+import { useState} from "react"
 import { Nav} from "react-bootstrap"
+import { useSearchParams } from "react-router-dom"
 
 interface TopNavBarProps {
     items: string[]
-    onSelectItem: (item: string) => void
+    onSelectItem: (item: string, index: number) => void
 }
 
 const TopNavBar = ({items, onSelectItem} : TopNavBarProps) => {
-    const [currentIndex, setCurrentIndex] = useState(1)
+    const [searchParams, setSearchParams] = useSearchParams()
+
+    const initialIndex = Number(searchParams.get("tab")) || 1
+    const [currentIndex, setCurrentIndex] = useState(initialIndex)
+
+    const handleSelect = (index: number, item: string) => {
+        setCurrentIndex(index)
+        setSearchParams({ tab: index.toString() })
+        onSelectItem(item, index)
+    }
+
     return (
-        <Nav className="sidebar-navbar" variant="tabs" defaultActiveKey={"Visualizer-" + "1"} >
+        <Nav className="sidebar-navbar" variant="tabs" defaultActiveKey={"Visualizer-" + currentIndex} >
             {items.map((item, index) => (
-                <Nav.Item> 
+                <Nav.Item key={index.toString()}> 
                     <Nav.Link 
                         eventKey={"Visualizer-" + index.toString()}
-                        onClick={() => {onSelectItem(item); setCurrentIndex(index)}}
+                        onClick={() => handleSelect(index, item)}
                         disabled={currentIndex === index}
                     > {item} 
                     </Nav.Link>
