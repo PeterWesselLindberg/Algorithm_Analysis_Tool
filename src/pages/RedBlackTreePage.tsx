@@ -18,6 +18,11 @@ const RedBlackTreePage = () => {
   }
 
   const {values , target} = generateRandomBalancedValues(10, false, true)
+    const vals = [12,3,2,8,9,22,13,19,27,28]
+    const t = 13
+
+    console.log(values)
+    console.log(target)
 
     return (
     <div>
@@ -49,8 +54,8 @@ const RedBlackTreePage = () => {
         <>
           <h1>Red-Black tree deletion</h1>
 
-          {/* <AnimationManager input={{type: "bst", values, target}}
-            algorithm="bstDeletion" visualizationGraphics="TVList/tree" /> */}
+          <AnimationManager input={{type: "bst", values: vals, target: t}}
+            algorithm="redBlackDelete" visualizationGraphics="TVList/tree" />
         </>
       )}
 

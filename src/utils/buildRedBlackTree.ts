@@ -164,89 +164,57 @@ export const insertRBNode = (
     }
 }
 
-const rotateLeft = (
-    root: RBTreeNodeData,
-    x: RBTreeNodeData
+export const rotateLeft = (
+  root: RBTreeNodeData,
+  x: RBTreeNodeData
 ): RBTreeNodeData => {
 
-    const y = x.children?.[1]
+  const y = x.children?.[1]
+  if (!y) return root
 
-    if (!y) return root
+  const beta = y.children?.[0]
 
-    if (y.children?.[0]) {
-      x.children![1] = y.children[0]
-    } 
-    
-    else {
-        x.children!.splice(1, 1)
-    }
+  // rotation top
+  y.parent = x.parent
 
-    if (y.children?.[0]) {
-        y.children[0].parent = x
-    }
+  if (!x.parent) {
+    root = y
+  } else if (x === x.parent.children?.[0]) {
+    x.parent.children![0] = y
+  } else {
+    x.parent.children![1] = y
+  }
 
-    y.parent = x.parent
+  // 🔥 USE HELPER HERE
+  setChild(y, 0, x)
+  setChild(x, 1, beta)
 
-    if (!x.parent) {
-        root = y
-    }
-
-    else if (x === x.parent.children?.[0]) {
-        x.parent.children![0] = y
-    }
-  
-    else {
-      x.parent.children![1] = y
-    }
-
-    y.children = y.children ?? []
-    y.children[0] = x
-
-    x.parent = y
-
-    return root
+  return root
 }
-
-const rotateRight = (
-    root: RBTreeNodeData,
-    y: RBTreeNodeData
+export const rotateRight = (
+  root: RBTreeNodeData,
+  y: RBTreeNodeData
 ): RBTreeNodeData => {
 
-    const x = y.children?.[0]
-    if (!x) return root
+  const x = y.children?.[0]
+  if (!x) return root
 
-    // x's right subtree becomes y's left subtree
-    const xRight = x.children?.[1]
+  const beta = x.children?.[1]
 
-    if (xRight) {
-        y.children![0] = xRight
-        xRight.parent = y
-    } 
-    
-    else {
-        // Remove left slot entirely instead of assigning undefined
-        y.children!.splice(0, 1)
-    }
+  x.parent = y.parent
 
-    x.parent = y.parent
+  if (!y.parent) {
+    root = x
+  } else if (y === y.parent.children?.[0]) {
+    y.parent.children![0] = x
+  } else {
+    y.parent.children![1] = x
+  }
 
-    if (!y.parent) {
-        root = x
-    }
+  setChild(x, 1, y)
+  setChild(y, 0, beta)
 
-    else if (y === y.parent.children?.[0]) {
-        y.parent.children![0] = x
-    } 
-    
-    else {
-        y.parent.children![1] = x
-    }
-
-    // Perform rotation
-    x.children![1] = y
-    y.parent = x
-
-    return root
+  return root
 }
 
 const fixInsertion = (
@@ -422,4 +390,20 @@ const fixInsertion = (
     return root
 }
 
+
+const setChild = (
+  parent: RBTreeNodeData,
+  index: 0 | 1,
+  child?: RBTreeNodeData
+) => {
+
+  parent.children = parent.children ?? []
+
+  if (child) {
+    parent.children[index] = child
+    child.parent = parent
+  } else {
+    delete parent.children[index]
+  }
+}
 export default buildRedBlackTree

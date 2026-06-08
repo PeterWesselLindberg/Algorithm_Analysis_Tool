@@ -1,13 +1,14 @@
+import type { RBTreeNodeData } from "../dataStructures/RBTreeNodeData"
 import type { TreeNodeData } from "../dataStructures/TreeNodedata"
 
-const layoutTree = (root: TreeNodeData) => {
+const layoutTree = (root: TreeNodeData | RBTreeNodeData) => {
 
   const WIDTH = 1200
   const TOP = 60
   const LEVEL_GAP = 100
 
   const dfs = (
-    node: TreeNodeData | undefined,
+    node: TreeNodeData | RBTreeNodeData | undefined,
     depth: number,
     left: number,
     right: number

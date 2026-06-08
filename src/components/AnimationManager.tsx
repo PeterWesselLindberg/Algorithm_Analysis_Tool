@@ -61,7 +61,7 @@ const AnimationManager = ({input, algorithm, visualizationGraphics} : AnimationM
 
     setTimeout(() => {
       navigate(-1)
-    }, 10)
+    }, 50)
 }
 
   /** Start and stops the animations for the sorting algorithm */
