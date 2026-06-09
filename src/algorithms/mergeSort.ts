@@ -1,6 +1,6 @@
 import type { AlgorithmInput } from "../types/algorithmtypes";
 import type { VisualizationStep } from "../types/VisualizationStep";
-import pushStep from "../utils/pushStep";
+import { pushStep } from "../utils/pushStep";
 import toId from "../utils/toId";
 
 const merge = (arr: number[], left: number, mid: number, right: number, steps: VisualizationStep[], sortedIds: string[]) => {

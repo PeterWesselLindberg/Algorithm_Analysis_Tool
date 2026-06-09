@@ -1,15 +1,15 @@
 import type { VisualizationStep } from "../types/VisualizationStep"
-import type { TreeNodeData } from "../dataStructures/TreeNodedata"
-import pushStep from "../utils/pushStep"
-import buildHeapTree from "../utils/buildHeapTree"
+import { pushStepTree } from "../utils/pushStep"
+import { buildHeapTree } from "../utils/buildHeapTree"
 import toId from "../utils/toId"
 import type { AlgorithmInput } from "../types/algorithmtypes"
+import type { TreeNodeDataNew } from "../dataStructures/TreeNodedataNew"
 
 /** Postorder tree traversal */
 const postorderTraversal = (
-    node: TreeNodeData | undefined,
+    node: TreeNodeDataNew | null,
     steps: VisualizationStep[],
-    root: TreeNodeData | undefined,
+    root: TreeNodeDataNew | null,
     visited: string[]
 ) => {
     if (!node) return
@@ -19,7 +19,7 @@ const postorderTraversal = (
 
     // Left
     if (left) {
-        pushStep(steps, {
+        pushStepTree(steps, {
             tree: root,
             activeIds: [node.id],
             activeEdgeIds: [`${node.id}->${left.id}`],
@@ -31,7 +31,7 @@ const postorderTraversal = (
 
     // Right
     if (right) {
-        pushStep(steps, {
+        pushStepTree(steps, {
             tree: root,
             activeIds: [node.id],
             activeEdgeIds: [`${node.id}->${right.id}`],
@@ -44,7 +44,7 @@ const postorderTraversal = (
     // Visit node
     visited.push(toId(node.value))
 
-    pushStep(steps, {
+    pushStepTree(steps, {
         tree: root,
         activeIds: [node.id],
         visitedIds: [...visited]

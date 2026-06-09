@@ -3,5 +3,5 @@ export type TreeNodeData = {
   x: number
   y: number
   value: number
-  children?: TreeNodeData[]
+  children: TreeNodeData[]
 }

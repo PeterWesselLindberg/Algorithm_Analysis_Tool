@@ -1,6 +1,6 @@
 import type { TreeNodeData } from "../dataStructures/TreeNodedata"
 import type { VisualizationStep } from "../types/VisualizationStep"
-import pushStep from "../utils/pushStep"
+import pushStepTree from "../utils/pushStep"
 import type { AlgorithmFunction, AlgorithmInput } from "../types/algorithmtypes"
 import buildBST from "../utils/buildBST"
 import toId from "../utils/toId"
@@ -36,7 +36,7 @@ const dfsTreeSearch = (input: AlgorithmInput, depthLimit: number = -1, isRedBlac
 
   if (root === undefined) {return []}
 
-  pushStep(steps, {
+  pushStepTree(steps, {
     tree: root,
     activeIds: [root.id],
   })
@@ -66,7 +66,7 @@ const dfsTreeSearchCore = (
     visitedIds.push(toId(current.value))
 
     // Show visit
-    pushStep(steps, {
+    pushStepTree(steps, {
       tree: root,
       activeIds: [current.id],
       visitedIds: [...visitedIds],
@@ -74,7 +74,7 @@ const dfsTreeSearchCore = (
     })
 
     if (current.value === target) {
-      pushStep(steps, {
+      pushStepTree(steps, {
         tree: root,
         activeIds: [current.id],
         message: `Found ${target}`,
@@ -86,7 +86,7 @@ const dfsTreeSearchCore = (
 
     // Depth limit check for depth limited search
     if (depthLimit !== -1 && depth >= depthLimit) {
-      pushStep(steps, {
+      pushStepTree(steps, {
         tree: root,
         activeIds: [current.id],
         visitedIds: [...visitedIds],
@@ -102,7 +102,7 @@ const dfsTreeSearchCore = (
         const child = current.children[i]
         if (!child) continue
 
-        pushStep(steps, {
+        pushStepTree(steps, {
           tree: root,
           activeIds: [current.id, child.id],
           activeEdgeIds: [`${current.id}->${child.id}`],
@@ -119,7 +119,7 @@ const dfsTreeSearchCore = (
   }
   
 
-  pushStep(steps, {
+  pushStepTree(steps, {
     tree: root,
     message: `${target} not found`,
     visitedIds: [...visitedIds],

@@ -1,8 +1,9 @@
 import type { RBTreeNodeData } from "../dataStructures/RBTreeNodeData"
 import type { TreeNodeData } from "../dataStructures/TreeNodedata"
+import type { TreeNodeDataNew } from "../dataStructures/TreeNodedataNew"
 
 interface TreeNodesProps {
-  node?: TreeNodeData | RBTreeNodeData
+  node: TreeNodeData | RBTreeNodeData | TreeNodeDataNew | null
   numbers: number[]
 
   activeIds?: string[]
@@ -11,6 +12,8 @@ interface TreeNodesProps {
 
   deletingIds?: string[]
   replacementIds?: string[]
+
+  isHeap?: boolean
 }
 
 const TreeNodes = ({
@@ -20,7 +23,8 @@ const TreeNodes = ({
   compareIds = [],
   sortedIds = [],
   deletingIds = [],
-  replacementIds = []
+  replacementIds = [],
+  isHeap = false,
 }: TreeNodesProps) => {
   if (!node) return null
   else if (node?.children === undefined) {return null}
@@ -44,35 +48,70 @@ const TreeNodes = ({
     fill = "#9b1970"
   }
 
-  return (
-    <>
-      <circle cx={node.x} cy={node.y} r={20} fill={fill} />
+  if (isHeap) {
+    return (
+      <>
+        <circle cx={node.x} cy={node.y} r={20} fill={fill} />
 
-      <text
-        x={node.x}
-        y={node.y}
-        textAnchor="middle"
-        dy={5}
-        fill="white"
-      >
-        {node.value}
-      </text>
+        <text
+          x={node.x}
+          y={node.y}
+          textAnchor="middle"
+          dy={5}
+          fill="white"
+        >
+          {node.value}
+        </text>
 
-      {node.children
-      .filter((child): child is TreeNodeData | RBTreeNodeData => child !== undefined)
-      .map(child => (
-        <TreeNodes
-          key={child.id}
-          node={child}
-          numbers={numbers}
-          activeIds={activeIds}
-          compareIds={compareIds}
-          sortedIds={sortedIds}
-          deletingIds={deletingIds}
-          replacementIds={replacementIds}
-        />
-      ))}
-    </>
-  )
+        {node.children
+        .filter((child): child is TreeNodeData | RBTreeNodeData | TreeNodeDataNew => child !== null)
+        .map(child => (
+          <TreeNodes
+            key={child.id}
+            node={child}
+            numbers={numbers}
+            activeIds={activeIds}
+            compareIds={compareIds}
+            sortedIds={sortedIds}
+            deletingIds={deletingIds}
+            replacementIds={replacementIds}
+          />
+        ))}
+      </>
+    )
+  }
+  else {
+    return (
+      <>
+        <circle cx={node.x} cy={node.y} r={20} fill={fill} />
+
+        <text
+          x={node.x}
+          y={node.y}
+          textAnchor="middle"
+          dy={5}
+          fill="white"
+        >
+          {node.value}
+        </text>
+
+        {node.children
+        .filter((child): child is TreeNodeData | RBTreeNodeData | TreeNodeDataNew => child !== null)
+        .map(child => (
+          <TreeNodes
+            key={child.id}
+            node={child}
+            numbers={numbers}
+            activeIds={activeIds}
+            compareIds={compareIds}
+            sortedIds={sortedIds}
+            deletingIds={deletingIds}
+            replacementIds={replacementIds}
+          />
+        ))}
+      </>
+    )
+  }
+  
 }
 export default TreeNodes

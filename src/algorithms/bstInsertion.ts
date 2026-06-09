@@ -1,15 +1,14 @@
 import type { VisualizationStep }
 from "../types/VisualizationStep"
 
-import pushStep from "../utils/pushStep"
+import { pushStepTree } from "../utils/pushStep"
 
 import layoutTree from "../utils/layoutTree"
 import type { AlgorithmInput } from "../types/algorithmtypes"
+import type { TreeNodeDataNew } from "../dataStructures/TreeNodedataNew"
 
-import type { TreeNodeData } from "../dataStructures/TreeNodedata"
-
-export const bstInsert = (
-  root: TreeNodeData,
+const bstInsert = (
+  root: TreeNodeDataNew,
   value: number,
   steps: VisualizationStep[],
   index: number = 1,
@@ -23,7 +22,7 @@ export const bstInsert = (
     // Visit node
     layoutTree(root)
 
-    pushStep(steps, {
+    pushStepTree(steps, {
       tree: structuredClone(root),
       activeIds: [current.id],
 
@@ -37,22 +36,18 @@ export const bstInsert = (
     const direction =
       value < current.value ? 0 : 1
 
-    const child =
-      current.children?.[direction]
+    const child = current.children[direction]
 
     // Insert
     if (!child) {
 
-      const newNode: TreeNodeData = {
+      const newNode: TreeNodeDataNew = {
         id: index.toString(),
         value,
         x: 0,
         y: 0,
-        children: []
+        children: [null, null]
       }
-
-      current.children =
-        current.children ?? []
 
       current.children[direction] = newNode
 
@@ -60,7 +55,7 @@ export const bstInsert = (
 
       layoutTree(root)
 
-      pushStep(steps, {
+      pushStepTree(steps, {
         tree: structuredClone(root),
         activeIds: [newNode.id],
         activeEdgeIds: [
@@ -76,7 +71,7 @@ export const bstInsert = (
       return
     }
 
-    pushStep(steps, {
+    pushStepTree(steps, {
       tree: structuredClone(root),
       activeIds: [current.id],
       activeEdgeIds: [`${current.id}->${child.id}`],
@@ -108,15 +103,15 @@ const bstInsertion = (
 
   const insertedValues: number[] = [values[0]]
 
-  const root: TreeNodeData = {
+  const root: TreeNodeDataNew = {
     id: "0",
     value: values[0],
     x: 0,
     y: 0,
-    children: []
+    children: [null, null]
   }
 
-  pushStep(steps, {
+  pushStepTree(steps, {
     tree: root,
     activeIds: [root.id],
     linears: [{

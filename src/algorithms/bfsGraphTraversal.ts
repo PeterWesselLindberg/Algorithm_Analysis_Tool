@@ -7,8 +7,7 @@ from "../types/VisualizationStep"
 import type { GraphNodeData }
 from "../dataStructures/GraphNodeData"
 
-import pushStep
-from "../utils/pushStep"
+import { pushStep } from "../utils/pushStep"
 
 /** Breadth first graph traversal */
 const bfsGraphTraversal = (

@@ -5,11 +5,13 @@ import TreeEdges from "./TreeEdges"
 import { useMemo } from "react"
 import type { VisualizationStep } from "../types/VisualizationStep"
 import type { RBTreeNodeData } from "../dataStructures/RBTreeNodeData"
+import type { TreeNodeDataNew } from "../dataStructures/TreeNodedataNew"
 
 interface TreeVisualizerProps {
   step: VisualizationStep
-  tree?: TreeNodeData | RBTreeNodeData
+  tree: TreeNodeData | TreeNodeDataNew | RBTreeNodeData | null
   numbers: number[]
+  isHeap?: boolean
 }
 
 
@@ -17,16 +19,32 @@ interface TreeVisualizerProps {
 const TreeVisualizer = ({
   step,
   tree,
-  numbers
+  numbers,
+  isHeap = false
 }: TreeVisualizerProps) => {
 
   const height = useMemo(() => {
-    const getDepth = (node?: TreeNodeData | RBTreeNodeData): number => {
+    const getDepth = (
+      node: TreeNodeDataNew | TreeNodeData | RBTreeNodeData | null
+    ): number => {
       if (!node) return 0
 
+      // NEW TREE TYPE (tuple children)
+      if ("children" in node && Array.isArray(node.children) && node.children.length === 2) {
+        return 1 + Math.max(
+          getDepth(node.children[0]),
+          getDepth(node.children[1])
+        )
+      }
+
+      // OLD TREE TYPES (array children)
+      const children = (node as TreeNodeData).children
+
+      if (!children || children.length === 0) return 1
+
       return 1 + Math.max(
-        getDepth(node.children?.[0]),
-        getDepth(node.children?.[1])
+        getDepth(children?.[0] ?? null),
+        getDepth(children?.[1] ?? null)
       )
     }
 
@@ -42,6 +60,7 @@ const TreeVisualizer = ({
       <TreeEdges
         node={tree}
         activeEdgeIds={step.activeEdgeIds}
+        isHeap={isHeap}
       />
 
       <TreeNodes
@@ -53,6 +72,7 @@ const TreeVisualizer = ({
 
         deletingIds={step.deletingIds}
         replacementIds={step.replacementIds}
+        isHeap={isHeap}
       />
     </svg>
   )

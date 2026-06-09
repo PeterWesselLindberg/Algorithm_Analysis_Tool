@@ -2,7 +2,7 @@ import type { AlgorithmFunction } from "../types/algorithmtypes"
 import type { TreeNodeData } from "../dataStructures/TreeNodedata"
 import type { VisualizationStep } from "../types/VisualizationStep"
 
-import pushStep from "../utils/pushStep"
+import pushStepTree from "../utils/pushStep"
 import buildBST from "../utils/buildBST"
 import layoutTree from "../utils/layoutTree"
 
@@ -31,7 +31,7 @@ const bstDelete: AlgorithmFunction = (input) => {
 
   layoutTree(root)
 
-  pushStep(steps, {
+  pushStepTree(steps, {
     tree: structuredClone(root),
     message: "BST built",
     target
@@ -47,7 +47,7 @@ const bstDelete: AlgorithmFunction = (input) => {
   if (newRoot) {
     layoutTree(newRoot)
 
-    pushStep(steps, {
+    pushStepTree(steps, {
       tree: structuredClone(newRoot),
       message: `Deleted ${target}`,
       target
@@ -67,7 +67,7 @@ const deleteNode = (
   if (!node) return undefined
 
   // Visit node
-  pushStep(steps, {
+  pushStepTree(steps, {
     tree: structuredClone(visualRoot),
     activeIds: [node.id],
     message: `Checking ${node.value}`,
@@ -80,7 +80,7 @@ const deleteNode = (
     const child = node.children?.[0]
 
     if (child) {
-      pushStep(steps, {
+      pushStepTree(steps, {
         tree: structuredClone(visualRoot),
         activeIds: [node.id, child.id],
         activeEdgeIds: [`${node.id}->${child.id}`],
@@ -96,7 +96,7 @@ const deleteNode = (
     ) {
 
       // Visit node
-      pushStep(steps, {
+      pushStepTree(steps, {
         tree: structuredClone(visualRoot),
         activeIds: [child.id],
         message: `Checking ${child.value}`,
@@ -104,14 +104,14 @@ const deleteNode = (
       })
 
       // Found node
-      pushStep(steps, {
+      pushStepTree(steps, {
         tree: structuredClone(visualRoot),
         activeIds: [child.id],
         message: `Found ${target} for deletion`,
         target
       })
 
-      pushStep(steps, {
+      pushStepTree(steps, {
         tree: structuredClone(visualRoot),
         deletingIds: [child.id],
         message: `Deleting leaf node ${child.value}`,
@@ -151,7 +151,7 @@ const deleteNode = (
     const child = node.children?.[1]
 
     if (child) {
-      pushStep(steps, {
+      pushStepTree(steps, {
         tree: structuredClone(visualRoot),
         activeIds: [node.id, child.id],
         activeEdgeIds: [`${node.id}->${child.id}`],
@@ -174,7 +174,7 @@ const deleteNode = (
 
   // Found node
 
-  pushStep(steps, {
+  pushStepTree(steps, {
     tree: structuredClone(visualRoot),
     activeIds: [node.id],
     message: `Found ${target} for deletion`,
@@ -184,7 +184,7 @@ const deleteNode = (
   // Case 1: Leaf
   if (!node.children?.[0] && !node.children?.[1]) {
 
-  pushStep(steps, {
+  pushStepTree(steps, {
     tree: structuredClone(visualRoot),
     deletingIds: [node.id],
     message: `Deleting leaf node ${node.value}`,
@@ -199,7 +199,7 @@ const deleteNode = (
 
     const child = node.children?.[1]
 
-    pushStep(steps, {
+    pushStepTree(steps, {
       tree: structuredClone(visualRoot),
       deletingIds: [node.id],
       replacementIds: [child!.id],
@@ -215,7 +215,7 @@ const deleteNode = (
 
     const child = node.children?.[0]
 
-    pushStep(steps, {
+    pushStepTree(steps, {
       tree: structuredClone(visualRoot),
       deletingIds: [node.id],
       replacementIds: [child!.id],
@@ -231,7 +231,7 @@ const deleteNode = (
   const successor = findMin(node.children[1])
 
   // Step 1: Highlight node + successor
-  pushStep(steps, {
+  pushStepTree(steps, {
     tree: structuredClone(visualRoot),
     activeIds: [node.id, successor.id],
     message: `Found successor ${successor.value}`,
@@ -240,7 +240,7 @@ const deleteNode = (
   })
 
   // Step 2: Mark node as being replaced
-  pushStep(steps, {
+  pushStepTree(steps, {
     tree: structuredClone(visualRoot),
     deletingIds: [node.id],
     replacementIds: [successor.id],
@@ -251,7 +251,7 @@ const deleteNode = (
   node.value = successor.value
 
   // Step 3: Replace values
-  pushStep(steps, {
+  pushStepTree(steps, {
     tree: structuredClone(visualRoot),
     replacementIds: [node.id],
     message: `Value updated to ${successor.value}`,
@@ -274,7 +274,7 @@ const deleteNode = (
   }
 
   // Step 4: Show rebalancing
-  pushStep(steps, {
+  pushStepTree(steps, {
     tree: structuredClone(visualRoot),
     message: `Tree rebalanced after deletion`,
     replacementIds: [node.id],

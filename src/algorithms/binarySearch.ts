@@ -1,6 +1,6 @@
 import type { AlgorithmFunction  } from "../types/algorithmtypes"
 import type { VisualizationStep } from "../types/VisualizationStep"
-import pushStep from "../utils/pushStep"
+import { pushStep } from "../utils/pushStep"
 
 const binarySearch: AlgorithmFunction = (input) => {
 

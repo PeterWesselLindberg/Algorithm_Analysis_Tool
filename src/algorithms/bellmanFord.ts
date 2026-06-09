@@ -2,7 +2,7 @@ import type { AlgorithmInput } from "../types/algorithmtypes"
 
 import type { VisualizationStep } from "../types/VisualizationStep"
 
-import pushStep from "../utils/pushStep"
+import { pushStep } from "../utils/pushStep"
 
 import choooseRandomNodes from "../utils/chooseRandomNodes"
 import type { AlgorithmFunction } from "../types/algorithmtypes"

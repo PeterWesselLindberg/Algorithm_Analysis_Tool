@@ -6,7 +6,7 @@ export type RBTreeNodeData = {
 
   parent?: RBTreeNodeData
 
-  children?: RBTreeNodeData[]
+  children: RBTreeNodeData[]
 
   x: number
   y: number

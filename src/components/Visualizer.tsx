@@ -51,6 +51,7 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
             step={step}
             tree={step.tree}
             numbers={numbers}
+            isHeap={true}
           />
           <hr />
 
@@ -117,6 +118,7 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
             step={step}
             tree={step.tree}
             numbers={numbers}
+            isHeap={true}
           />
           <hr />
 
@@ -125,6 +127,35 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
       )
     
     case "exList/tree":
+      return (
+        <>
+          <TreeVisualizer
+            step={step}
+            tree={step.tree}
+            numbers={numbers}
+          />
+          <hr />
+
+          {linears?.map((linear) => (
+
+            <div key={linear.id}>
+              <h5>{linear.label}</h5>
+
+              <ExtendedNumberList
+                idPrefix={linear.id}
+                numbers={linear.values}
+
+                activeIds={activeIds}
+                compareIds={compareIds}
+                sortedIds={sortedIds}
+              />
+            </div>
+          ))}
+          
+        </>
+      )
+    
+    case "NewexList/tree":
       return (
         <>
           <TreeVisualizer

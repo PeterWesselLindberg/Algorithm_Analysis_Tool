@@ -1,6 +1,6 @@
 import type { VisualizationStep } from "../types/VisualizationStep"
 import type { TreeNodeData } from "../dataStructures/TreeNodedata"
-import pushStep from "../utils/pushStep"
+import pushStepTree from "../utils/pushStep"
 import toId from "../utils/toId"
 import buildHeapTree from "../utils/buildHeapTree"
 import type { AlgorithmInput } from "../types/algorithmtypes"
@@ -32,7 +32,7 @@ const bfsTreeTraversal = (input: AlgorithmInput): VisualizationStep[] => {
         // Visit node
         visitedIds.push(toId(node.value))
 
-        pushStep(steps, {
+        pushStepTree(steps, {
         tree: tree,
         activeIds: [node.id],
         visitedIds: [...visitedIds]

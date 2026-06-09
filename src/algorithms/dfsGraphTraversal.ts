@@ -7,7 +7,7 @@ from "../dataStructures/GraphData"
 import type { GraphNodeData }
 from "../dataStructures/GraphNodeData"
 
-import pushStep from "../utils/pushStep"
+import { pushStep } from "../utils/pushStep"
 import toId from "../utils/toId"
 import type { AlgorithmInput } from "../types/algorithmtypes"
 

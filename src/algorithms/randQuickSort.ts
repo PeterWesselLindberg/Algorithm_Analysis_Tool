@@ -1,7 +1,7 @@
 
 import type { AlgorithmInput } from "../types/algorithmtypes";
 import type { VisualizationStep } from "../types/VisualizationStep";
-import pushStep from "../utils/pushStep";
+import { pushStep } from "../utils/pushStep";
 import toId from "../utils/toId";
 
 /** Helper function for choosing the random pivot for the partition of the array */

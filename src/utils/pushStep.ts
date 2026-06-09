@@ -1,10 +1,30 @@
 import type { VisualizationStep } from "../types/VisualizationStep"
 
-const pushStep = (
+const pushStepCore= (
   steps: VisualizationStep[],
   step: VisualizationStep
 ) => {
   steps.push(step)
 }
 
-export default pushStep
+export const pushStepTree = (
+  steps: VisualizationStep[],
+  step: VisualizationStep
+) => {
+
+  pushStepCore(steps, step)
+}
+
+export const pushStep = (
+  steps: VisualizationStep[],
+  step: Omit<VisualizationStep, "tree">
+) => {
+  pushStepCore(steps, {
+    tree: null,
+    ...step
+  })
+}
+
+
+
+export default pushStepCore

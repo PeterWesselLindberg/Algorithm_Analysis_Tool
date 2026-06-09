@@ -1,6 +1,6 @@
 import type { AlgorithmInput } from "../types/algorithmtypes";
 import type { VisualizationStep } from "../types/VisualizationStep";
-import pushStep from "../utils/pushStep";
+import { pushStep } from "../utils/pushStep";
 import toId from "../utils/toId";
 
 /** Helper function for quicksort to partition the list */

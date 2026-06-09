@@ -1,7 +1,7 @@
 import type { AlgorithmInput } from "../types/algorithmtypes"
 import type { VisualizationStep } from "../types/VisualizationStep"
 
-import pushStep from "../utils/pushStep"
+import { pushStep } from "../utils/pushStep"
 
 const inputId = (i: number) => `input-${i}`
 const countId = (i: number) => `count-${i}`

@@ -1,6 +1,6 @@
 import type { TreeNodeData } from "../dataStructures/TreeNodedata"
 import type { VisualizationStep } from "../types/VisualizationStep"
-import pushStep from "../utils/pushStep"
+import pushStepTree from "../utils/pushStep"
 import type { AlgorithmFunction, AlgorithmInput } from "../types/algorithmtypes"
 import buildBST from "../utils/buildBST"
 import toId from "../utils/toId"
@@ -34,7 +34,7 @@ const bfsTreeSearch = (input: AlgorithmInput, isRedBlack: boolean = false) => {
 
   if (root === undefined) {return []}
 
-  pushStep(steps, {
+  pushStepTree(steps, {
     tree: root,
     activeIds: [root.id],
   })
@@ -62,7 +62,7 @@ const bfsTreeSearchCore = (
     visitedIds.push(toId(current.value))
 
     // Visit node
-    pushStep(steps, {
+    pushStepTree(steps, {
       tree: root,
       activeIds: [current.id],
       visitedIds: [...visitedIds],
@@ -71,7 +71,7 @@ const bfsTreeSearchCore = (
 
     // Found target
     if (current.value === target) {
-      pushStep(steps, {
+      pushStepTree(steps, {
         tree: root,
         activeIds: [current.id],
         message: `Found ${target}`,
@@ -87,7 +87,7 @@ const bfsTreeSearchCore = (
 
         if (!child) continue
 
-        pushStep(steps, {
+        pushStepTree(steps, {
           tree: root,
           activeIds: [current.id, child.id],
           activeEdgeIds: [`${current.id}->${child.id}`],
@@ -101,7 +101,7 @@ const bfsTreeSearchCore = (
   }
 
   // Target not found
-  pushStep(steps, {
+  pushStepTree(steps, {
     tree: root,
     message: `${target} not found`,
     visitedIds: [...visitedIds],

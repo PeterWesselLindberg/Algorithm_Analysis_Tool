@@ -1,7 +1,7 @@
 import type { VisualizationStep } from "../types/VisualizationStep"
 import type{ AlgorithmFunction} from "../types/algorithmtypes"
 import type { RBTreeNodeData } from "../dataStructures/RBTreeNodeData"
-import pushStep from "../utils/pushStep"
+import { pushStepTree } from "../utils/pushStep"
 import { insertRBNode } from "../utils/buildRedBlackTree"
 import layoutTree from "../utils/layoutTree"
 
@@ -27,7 +27,7 @@ const redBlackInsert: AlgorithmFunction = (input) => {
 
       layoutTree(root)
 
-      pushStep(steps, {
+      pushStepTree(steps, {
         tree: structuredClone(root),
         message: `Inserted root ${value}`,
       })

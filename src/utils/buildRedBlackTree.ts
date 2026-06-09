@@ -1,7 +1,7 @@
 import type { RBTreeNodeData } from "../dataStructures/RBTreeNodeData"
 import type { VisualizationStep } from "../types/VisualizationStep"
 import layoutTree from "./layoutTree"
-import pushStep from "./pushStep"
+import pushStepTree from "./pushStep"
 
 const buildRedBlackTree = (values: number[]
 ): RBTreeNodeData | undefined => {
@@ -47,7 +47,7 @@ export const insertRBNode = (
 
         if (doInsertTrace){
             if (current.id !== root.id) {
-                pushStep(steps, {
+                pushStepTree(steps, {
                     tree: structuredClone(root),
                     activeIds: [current.id],
                     activeEdgeIds: [
@@ -57,7 +57,7 @@ export const insertRBNode = (
             }
             
 
-            pushStep(steps, {
+            pushStepTree(steps, {
                 tree: structuredClone(root),
                 activeIds: [current.id],
 
@@ -86,7 +86,7 @@ export const insertRBNode = (
                 if (doInsertTrace) {
                     layoutTree(root)
 
-                    pushStep(steps, {
+                    pushStepTree(steps, {
                         tree: structuredClone(root),
                         activeIds: [newNode.id],
                         activeEdgeIds: [
@@ -102,7 +102,7 @@ export const insertRBNode = (
                 if (doInsertTrace) {
                     layoutTree(root)
 
-                    pushStep(steps, {
+                    pushStepTree(steps, {
                         tree: structuredClone(root),
                         message: "Tree rebalanced"
                     })
@@ -134,7 +134,7 @@ export const insertRBNode = (
 
                 if (doInsertTrace) {
                     layoutTree(root)
-                    pushStep(steps, {
+                    pushStepTree(steps, {
                         tree: structuredClone(root),
                         activeIds: [newNode.id],
                         activeEdgeIds: [
@@ -150,7 +150,7 @@ export const insertRBNode = (
                 if (doInsertTrace) {
                     layoutTree(root)
 
-                    pushStep(steps, {
+                    pushStepTree(steps, {
                         tree: structuredClone(root),
                         message: "Tree rebalanced"
                     })
@@ -243,7 +243,7 @@ const fixInsertion = (
         if (uncle?.color === "red") {
             
             if (doInsertTrace) {
-                pushStep(steps, {
+                pushStepTree(steps, {
                     tree: structuredClone(root),
                     activeIds: [
                         current.id,
@@ -260,7 +260,7 @@ const fixInsertion = (
             grandparent.color = "red"
             
             if (doInsertTrace) {
-                pushStep(steps, {
+                pushStepTree(steps, {
                     tree: structuredClone(root),
                     activeIds: [grandparent.id],
                     message: "Recolored parent, uncle, and grandparent"
@@ -276,7 +276,7 @@ const fixInsertion = (
 
             if (current === parent.children?.[1]) {
                 if (doInsertTrace) {
-                    pushStep(steps, {
+                    pushStepTree(steps, {
                         tree: structuredClone(root),
                         activeIds: [current.id, current.parent.id],
                         message: "Case 2: Left rotation"
@@ -289,7 +289,7 @@ const fixInsertion = (
                 if (doInsertTrace) {
                     layoutTree(root)
 
-                    pushStep(steps, {
+                    pushStepTree(steps, {
                         tree: structuredClone(root),
                         activeIds: [current.id],
                         message: "Left rotation completed"
@@ -298,7 +298,7 @@ const fixInsertion = (
             }
 
             if (doInsertTrace) {
-                pushStep(steps, {
+                pushStepTree(steps, {
                     tree: structuredClone(root),
                     activeIds: [parent.id, grandparent.id],
                     message: "Case 3: Recolor and rotate right"
@@ -313,7 +313,7 @@ const fixInsertion = (
             if (doInsertTrace) {
                 layoutTree(root)
 
-                pushStep(steps, {
+                pushStepTree(steps, {
                     tree: structuredClone(root),
                     activeIds: [parent.id],
                     message: "Right rotation completed"
@@ -327,7 +327,7 @@ const fixInsertion = (
             if (current === parent.children?.[0]) {
                 if (doInsertTrace) {
                     
-                    pushStep(steps, {
+                    pushStepTree(steps, {
                         tree: structuredClone(root),
                         activeIds: [current.id, current.parent.id],
                         message: "Case 2: Right rotation"
@@ -340,7 +340,7 @@ const fixInsertion = (
                 if (doInsertTrace) {
                     layoutTree(root)
 
-                    pushStep(steps, {
+                    pushStepTree(steps, {
                         tree: structuredClone(root),
                         activeIds: [current.id],
                         message: "Right rotation completed"
@@ -349,7 +349,7 @@ const fixInsertion = (
             }
 
             if (doInsertTrace) {
-                pushStep(steps, {
+                pushStepTree(steps, {
                     tree: structuredClone(root),
                     activeIds: [parent.id, grandparent.id],
                     message: "Case 3: Recolor and rotate left"
@@ -364,7 +364,7 @@ const fixInsertion = (
             if (doInsertTrace) {
                 layoutTree(root)
 
-                pushStep(steps, {
+                pushStepTree(steps, {
                     tree: structuredClone(root),
                     activeIds: [parent.id],
                     message: "Left rotation completed"
@@ -376,7 +376,7 @@ const fixInsertion = (
 
         root.color = "black"
 
-        pushStep(steps, {
+        pushStepTree(steps, {
             tree: structuredClone(root),
             activeIds: [root.id],
             message: "Root must always be black"
