@@ -1,9 +1,8 @@
 import type { RBTreeNodeData } from "../dataStructures/RBTreeNodeData"
-import type { TreeNodeData } from "../dataStructures/TreeNodedata"
 import type { TreeNodeDataNew } from "../dataStructures/TreeNodedataNew"
 
 interface TreeEdgesProps {
-  node: TreeNodeData | RBTreeNodeData | TreeNodeDataNew | null
+  node: RBTreeNodeData | TreeNodeDataNew | null
   activeEdgeIds?: string[]
   isHeap?: boolean
 }
@@ -14,7 +13,7 @@ const TreeEdges = ({ node, activeEdgeIds = [], isHeap = false}: TreeEdgesProps) 
   if (isHeap) {
     return (
       <>
-        {node.children.filter((child): child is TreeNodeData | RBTreeNodeData | TreeNodeDataNew => child !== null).map((child) => {
+        {node.children.filter((child): child is RBTreeNodeData | TreeNodeDataNew => child !== null).map((child) => {
 
           const edgeId = `${node.id}->${child.id}`
 
@@ -47,7 +46,7 @@ const TreeEdges = ({ node, activeEdgeIds = [], isHeap = false}: TreeEdgesProps) 
   else {
     return (
       <>
-        {node.children.filter((child): child is TreeNodeData | RBTreeNodeData | TreeNodeDataNew=> child !== null).map((child) => {
+        {node.children.filter((child): child is RBTreeNodeData | TreeNodeDataNew => child !== null).map((child) => {
 
           const edgeId = `${node.id}->${child.id}`
 

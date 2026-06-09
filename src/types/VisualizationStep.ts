@@ -1,5 +1,4 @@
 import type { LinearData } from "../dataStructures/LinearData"
-import type { TreeNodeData } from "../dataStructures/TreeNodedata"
 import type { GraphData } from "../dataStructures/GraphData"
 import type { GridData } from "../dataStructures/GridData"
 import type { RBTreeNodeData } from "../dataStructures/RBTreeNodeData"
@@ -13,7 +12,7 @@ export type VisualizationStep = {
 
   linears?: LinearData[]
 
-  tree: TreeNodeData | RBTreeNodeData | TreeNodeDataNew | null
+  tree: RBTreeNodeData | TreeNodeDataNew | null
 
   graph?: GraphData
 

@@ -1,9 +1,8 @@
 import type { RBTreeNodeData } from "../dataStructures/RBTreeNodeData"
-import type { TreeNodeData } from "../dataStructures/TreeNodedata"
 import type { TreeNodeDataNew } from "../dataStructures/TreeNodedataNew"
 
 interface TreeNodesProps {
-  node: TreeNodeData | RBTreeNodeData | TreeNodeDataNew | null
+  node: RBTreeNodeData | TreeNodeDataNew | null
   numbers: number[]
 
   activeIds?: string[]
@@ -64,7 +63,7 @@ const TreeNodes = ({
         </text>
 
         {node.children
-        .filter((child): child is TreeNodeData | RBTreeNodeData | TreeNodeDataNew => child !== null)
+        .filter((child): child is RBTreeNodeData | TreeNodeDataNew => child !== null)
         .map(child => (
           <TreeNodes
             key={child.id}
@@ -96,7 +95,7 @@ const TreeNodes = ({
         </text>
 
         {node.children
-        .filter((child): child is TreeNodeData | RBTreeNodeData | TreeNodeDataNew => child !== null)
+        .filter((child): child is RBTreeNodeData | TreeNodeDataNew => child !== null)
         .map(child => (
           <TreeNodes
             key={child.id}

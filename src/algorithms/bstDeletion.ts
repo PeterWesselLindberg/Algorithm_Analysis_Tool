@@ -1,21 +1,10 @@
 import type { AlgorithmFunction } from "../types/algorithmtypes"
-import type { TreeNodeData } from "../dataStructures/TreeNodedata"
 import type { VisualizationStep } from "../types/VisualizationStep"
 
 import pushStepTree from "../utils/pushStep"
 import buildBST from "../utils/buildBST"
 import layoutTree from "../utils/layoutTree"
-
-/** Helper function to extract values when removing the node from the tree in the edge case */
-const extractValues = (node?: TreeNodeData): number[] => {
-  if (!node) return []
-
-  return [
-    node.value,
-    ...(node.children?.[0] ? extractValues(node.children[0]) : []),
-    ...(node.children?.[1] ? extractValues(node.children[1]) : [])
-  ]
-}
+import type { TreeNodeDataNew } from "../dataStructures/TreeNodedataNew"
 
 /** Function to delete a node in a binary search tree */
 const bstDelete: AlgorithmFunction = (input) => {
@@ -58,13 +47,13 @@ const bstDelete: AlgorithmFunction = (input) => {
 }
 
 const deleteNode = (
-  visualRoot: TreeNodeData,
-  node: TreeNodeData | undefined,
+  visualRoot: TreeNodeDataNew,
+  node: TreeNodeDataNew | null,
   target: number,
   steps: VisualizationStep[]
-): TreeNodeData | undefined => {
+): TreeNodeDataNew | null => {
 
-  if (!node) return undefined
+  if (!node) return null
 
   // Visit node
   pushStepTree(steps, {
@@ -77,7 +66,7 @@ const deleteNode = (
   // Go left
   if (target < node.value) {
 
-    const child = node.children?.[0]
+    const child = node.children[0]
 
     if (child) {
       pushStepTree(steps, {
@@ -88,59 +77,10 @@ const deleteNode = (
       })
     }
 
-    if (
-      child &&
-      child.value === target &&
-      !child.children?.[0] &&
-      !child.children?.[1]
-    ) {
-
-      // Visit node
-      pushStepTree(steps, {
-        tree: structuredClone(visualRoot),
-        activeIds: [child.id],
-        message: `Checking ${child.value}`,
-        target
-      })
-
-      // Found node
-      pushStepTree(steps, {
-        tree: structuredClone(visualRoot),
-        activeIds: [child.id],
-        message: `Found ${target} for deletion`,
-        target
-      })
-
-      pushStepTree(steps, {
-        tree: structuredClone(visualRoot),
-        deletingIds: [child.id],
-        message: `Deleting leaf node ${child.value}`,
-        target
-      })
-
-      // Rebuild strategy for edge case
-      const newValues = extractValues(node).filter(v => v !== target)
-      const rebuilt = buildBST(newValues)
-
-      if (!rebuilt) return undefined
-      layoutTree(rebuilt)
-
-      
-
-      return rebuilt
-    }
-
-
     // Normal recursion
     const result = deleteNode(visualRoot, child, target, steps)
 
-    if (result) {
-      node.children![0] = result
-    } 
-    
-    else {
-      node.children!.splice(0, 1)
-    }
+    node.children[0] = result
 
     return node
   }
@@ -148,7 +88,7 @@ const deleteNode = (
   // Go right
   if (target > node.value) {
 
-    const child = node.children?.[1]
+    const child = node.children[1]
 
     if (child) {
       pushStepTree(steps, {
@@ -159,15 +99,9 @@ const deleteNode = (
       })
     }
 
-    const result = deleteNode(visualRoot, node.children?.[1], target, steps)
+    const result = deleteNode(visualRoot, child, target, steps)
 
-    if (result) {
-      node.children![1] = result
-    } 
-    
-    else {
-      node.children!.splice(1, 1)
-    }
+    node.children[1] = result
 
     return node
   }
@@ -182,22 +116,22 @@ const deleteNode = (
   })
 
   // Case 1: Leaf
-  if (!node.children?.[0] && !node.children?.[1]) {
+  if (!node.children[0] && !node.children[1]) {
 
-  pushStepTree(steps, {
-    tree: structuredClone(visualRoot),
-    deletingIds: [node.id],
-    message: `Deleting leaf node ${node.value}`,
-    target
-  })
+    pushStepTree(steps, {
+      tree: structuredClone(visualRoot),
+      deletingIds: [node.id],
+      message: `Deleting leaf node ${node.value}`,
+      target
+    })
 
-  return undefined
-}
+    return null
+  }
 
   // Case 2: Only right child
-  if (!node.children?.[0]) {
+  if (!node.children[0]) {
 
-    const child = node.children?.[1]
+    const child = node.children[1]
 
     pushStepTree(steps, {
       tree: structuredClone(visualRoot),
@@ -211,9 +145,9 @@ const deleteNode = (
   }
 
   // Case 3: Only left child
-  if (!node.children?.[1]) {
+  if (!node.children[1]) {
 
-    const child = node.children?.[0]
+    const child = node.children[0]
 
     pushStepTree(steps, {
       tree: structuredClone(visualRoot),
@@ -258,20 +192,9 @@ const deleteNode = (
     target
   })
 
-  const result = deleteNode(
-    visualRoot,
-    node.children[1],
-    successor.value,
-    steps
-  )
+  const result = deleteNode(visualRoot, node.children[1], successor.value, steps)
 
-  if (result) {
-    node.children![1] = result
-  } 
-  
-  else {
-    node.children!.splice(1, 1)
-  }
+  node.children[1] = result
 
   // Step 4: Show rebalancing
   pushStepTree(steps, {
@@ -286,8 +209,8 @@ const deleteNode = (
 
 /** Helper function to find successor */
 const findMin = (
-  node: TreeNodeData
-): TreeNodeData => {
+  node: TreeNodeDataNew
+): TreeNodeDataNew => {
 
   let current = node
 

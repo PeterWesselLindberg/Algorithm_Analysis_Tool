@@ -1,4 +1,3 @@
-import type { TreeNodeData } from "../dataStructures/TreeNodedata"
 import type { VisualizationStep } from "../types/VisualizationStep"
 import pushStepTree from "../utils/pushStep"
 import type { AlgorithmFunction, AlgorithmInput } from "../types/algorithmtypes"
@@ -6,6 +5,7 @@ import buildBST from "../utils/buildBST"
 import toId from "../utils/toId"
 import buildRedBlackTree from "../utils/buildRedBlackTree"
 import type { RBTreeNodeData } from "../dataStructures/RBTreeNodeData"
+import type { TreeNodeDataNew } from "../dataStructures/TreeNodedataNew"
 
 /** Wrapper function used for depth limited tree search */
 export const depthLimitedSearch: AlgorithmFunction = (input) =>
@@ -22,7 +22,7 @@ const dfsTreeSearch = (input: AlgorithmInput, depthLimit: number = -1, isRedBlac
   const steps: VisualizationStep[] = []
   const values = input.values
   const target = input.target
-  let root = undefined
+  let root: TreeNodeDataNew | RBTreeNodeData | null = null
 
   if (values.length === 0) return steps
 
@@ -34,7 +34,7 @@ const dfsTreeSearch = (input: AlgorithmInput, depthLimit: number = -1, isRedBlac
     root = buildRedBlackTree(values)
   }
 
-  if (root === undefined) {return []}
+  if (root === null) {return []}
 
   pushStepTree(steps, {
     tree: root,
@@ -50,13 +50,13 @@ const dfsTreeSearch = (input: AlgorithmInput, depthLimit: number = -1, isRedBlac
 
 /** The main function for depth first tree searach */
 const dfsTreeSearchCore = (
-  root: TreeNodeData | RBTreeNodeData,
+  root: TreeNodeDataNew | RBTreeNodeData,
   target: number,
   steps: VisualizationStep[],
   depthLimit: number
-): TreeNodeData | RBTreeNodeData | null => {
+): TreeNodeDataNew | RBTreeNodeData | null => {
 
-  const stack: { node: TreeNodeData | RBTreeNodeData; depth: number }[] = [{ node: root, depth: 0 }]
+  const stack: {node: TreeNodeDataNew | RBTreeNodeData; depth: number}[] = [{ node: root, depth: 0 }]
 
   const visitedIds: string[] = []
 
@@ -97,27 +97,64 @@ const dfsTreeSearchCore = (
     }
 
     // Push children 
-    if (current.children) {
-      for (let i = current.children.length - 1; i >= 0; i--) {
-        const child = current.children[i]
-        if (!child) continue
+    const children = [
+      current.children[1],
+      current.children[0]
+    ]
 
-        pushStepTree(steps, {
-          tree: root,
-          activeIds: [current.id, child.id],
-          activeEdgeIds: [`${current.id}->${child.id}`],
-          visitedIds: [...visitedIds],
-          target
-        })
+    for (const child of children) {
 
-        stack.push({
-          node: child,
-          depth: depth + 1
-        })
-      }
+      if (!child) continue
+
+      pushStepTree(steps, {
+        tree: root,
+        activeIds: [current.id, child.id],
+        activeEdgeIds: [`${current.id}->${child.id}`],
+        visitedIds: [...visitedIds],
+        target
+      })
+
+      stack.push({
+        node: child,
+        depth: depth + 1
+      })
     }
   }
-  
+//   const rightChild = current.children[1]
+// const leftChild = current.children[0]
+
+// // Push right first so left is visited first
+// if (rightChild) {
+
+//   pushStepTree(steps, {
+//     tree: root,
+//     activeIds: [current.id, rightChild.id],
+//     activeEdgeIds: [`${current.id}->${rightChild.id}`],
+//     visitedIds: [...visitedIds],
+//     target
+//   })
+
+//   stack.push({
+//     node: rightChild,
+//     depth: depth + 1
+//   })
+// }
+
+// if (leftChild) {
+
+//   pushStepTree(steps, {
+//     tree: root,
+//     activeIds: [current.id, leftChild.id],
+//     activeEdgeIds: [`${current.id}->${leftChild.id}`],
+//     visitedIds: [...visitedIds],
+//     target
+//   })
+
+//   stack.push({
+//     node: leftChild,
+//     depth: depth + 1
+//   })
+// }
 
   pushStepTree(steps, {
     tree: root,

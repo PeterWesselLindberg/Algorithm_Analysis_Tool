@@ -1,5 +1,3 @@
-import type { TreeNodeData }
-from "../dataStructures/TreeNodedata"
 import TreeNodes from "./TreeNodes"
 import TreeEdges from "./TreeEdges"
 import { useMemo } from "react"
@@ -9,7 +7,7 @@ import type { TreeNodeDataNew } from "../dataStructures/TreeNodedataNew"
 
 interface TreeVisualizerProps {
   step: VisualizationStep
-  tree: TreeNodeData | TreeNodeDataNew | RBTreeNodeData | null
+  tree: TreeNodeDataNew | RBTreeNodeData | null
   numbers: number[]
   isHeap?: boolean
 }
@@ -25,7 +23,7 @@ const TreeVisualizer = ({
 
   const height = useMemo(() => {
     const getDepth = (
-      node: TreeNodeDataNew | TreeNodeData | RBTreeNodeData | null
+      node: TreeNodeDataNew | RBTreeNodeData | null
     ): number => {
       if (!node) return 0
 
@@ -38,7 +36,7 @@ const TreeVisualizer = ({
       }
 
       // OLD TREE TYPES (array children)
-      const children = (node as TreeNodeData).children
+      const children = (node as RBTreeNodeData).children
 
       if (!children || children.length === 0) return 1
 

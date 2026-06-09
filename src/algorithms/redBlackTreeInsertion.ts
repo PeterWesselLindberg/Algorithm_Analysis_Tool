@@ -1,16 +1,16 @@
 import type { VisualizationStep } from "../types/VisualizationStep"
 import type{ AlgorithmFunction} from "../types/algorithmtypes"
-import type { RBTreeNodeData } from "../dataStructures/RBTreeNodeData"
 import { pushStepTree } from "../utils/pushStep"
 import { insertRBNode } from "../utils/buildRedBlackTree"
 import layoutTree from "../utils/layoutTree"
+import type { RBTreeNodeDataNew } from "../dataStructures/RBTreeNodeDataNew"
 
 const redBlackInsert: AlgorithmFunction = (input) => {
   if (input.type !== "bst") return []
 
   const steps: VisualizationStep[] = []
 
-  let root: RBTreeNodeData | undefined
+  let root: RBTreeNodeDataNew | null
 
   input.values.forEach((value, index) => {
 
@@ -22,7 +22,7 @@ const redBlackInsert: AlgorithmFunction = (input) => {
         color: "black",
         x: 0,
         y: 0,
-        children: []
+        children: [null, null]
       }
 
       layoutTree(root)

@@ -1,9 +1,9 @@
 import type { VisualizationStep } from "../types/VisualizationStep"
-import type { TreeNodeData } from "../dataStructures/TreeNodedata"
 import pushStepTree from "../utils/pushStep"
 import toId from "../utils/toId"
 import buildHeapTree from "../utils/buildHeapTree"
 import type { AlgorithmInput } from "../types/algorithmtypes"
+import type { TreeNodeDataNew } from "../dataStructures/TreeNodedataNew"
 
 /** Breadth first traversal of a search tree */
 const bfsTreeTraversal = (input: AlgorithmInput): VisualizationStep[] => {
@@ -18,7 +18,7 @@ const bfsTreeTraversal = (input: AlgorithmInput): VisualizationStep[] => {
 
     if (!tree) return steps
 
-    const queue: TreeNodeData[] = [tree]
+    const queue: TreeNodeDataNew[] = [tree]
 
     const visitedIds: string[] = []
 
@@ -39,9 +39,15 @@ const bfsTreeTraversal = (input: AlgorithmInput): VisualizationStep[] => {
         })
 
         // Enqueue children
-        node.children?.forEach(child => {
-        queue.push(child)
-        })
+        const [left, right] = node.children
+
+        if (left) {
+            queue.push(left)
+        }
+
+        if (right) {
+            queue.push(right)
+        }
     }
 
     return steps

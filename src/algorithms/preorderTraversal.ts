@@ -1,6 +1,6 @@
 import type { VisualizationStep } from "../types/VisualizationStep"
 import { pushStepTree } from "../utils/pushStep"
-import { buildHeapTree } from "../utils/buildHeapTree"
+import buildHeapTree from "../utils/buildHeapTree"
 import toId from "../utils/toId"
 import type { AlgorithmInput } from "../types/algorithmtypes"
 import type { TreeNodeDataNew } from "../dataStructures/TreeNodedataNew"

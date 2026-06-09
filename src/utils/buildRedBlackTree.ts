@@ -1,22 +1,22 @@
-import type { RBTreeNodeData } from "../dataStructures/RBTreeNodeData"
+import type { RBTreeNodeDataNew } from "../dataStructures/RBTreeNodeDataNew"
 import type { VisualizationStep } from "../types/VisualizationStep"
 import layoutTree from "./layoutTree"
 import pushStepTree from "./pushStep"
 
 const buildRedBlackTree = (values: number[]
-): RBTreeNodeData | undefined => {
+): RBTreeNodeDataNew | null => {
   
     if (values.length === 0) {
-        return undefined
+        return null
     }
 
-    let root: RBTreeNodeData = {
+    let root: RBTreeNodeDataNew = {
         id: "0",
         value: values[0],
         color: "black",
         x: 0,
         y: 0,
-        children: []
+        children: [null, null]
     }
 
     for (let i = 1; i < values.length; i++) {
@@ -34,7 +34,7 @@ const buildRedBlackTree = (values: number[]
 }
 
 export const insertRBNode = (
-    root: RBTreeNodeData,
+    root: RBTreeNodeDataNew,
     value: number,
     id: string,
     steps: VisualizationStep[] = [],
@@ -68,19 +68,18 @@ export const insertRBNode = (
         // Left
         if (value < current.value) {
 
-            if (!current.children?.[0]) {
+            if (current.children[0] === null) {
 
-                const newNode: RBTreeNodeData = {
+                const newNode: RBTreeNodeDataNew = {
                     id,
                     value,
                     color: "red",
                     parent: current,
                     x: 0,
                     y: 0,
-                    children: []
+                    children: [null, null]
                 }
 
-                current.children = current.children ?? []
                 current.children[0] = newNode
 
                 if (doInsertTrace) {
@@ -117,19 +116,18 @@ export const insertRBNode = (
         // Right
         else {
 
-            if (!current.children?.[1]) {
+            if (current.children[1] === null) {
 
-                const newNode: RBTreeNodeData = {
+                const newNode: RBTreeNodeDataNew = {
                     id,
                     value,
                     color: "red",
                     parent: current,
                     x: 0,
                     y: 0,
-                    children: []
+                    children: [null, null]
                 }
 
-                current.children = current.children ?? []
                 current.children[1] = newNode
 
                 if (doInsertTrace) {
@@ -165,64 +163,77 @@ export const insertRBNode = (
 }
 
 export const rotateLeft = (
-  root: RBTreeNodeData,
-  x: RBTreeNodeData
-): RBTreeNodeData => {
+    root: RBTreeNodeDataNew,
+    x: RBTreeNodeDataNew
+): RBTreeNodeDataNew => {
 
-  const y = x.children?.[1]
-  if (!y) return root
+    const y = x.children[1]
 
-  const beta = y.children?.[0]
+    if (!y) return root
 
-  // rotation top
-  y.parent = x.parent
+    const beta = y.children[0]
 
-  if (!x.parent) {
-    root = y
-  } else if (x === x.parent.children?.[0]) {
-    x.parent.children![0] = y
-  } else {
-    x.parent.children![1] = y
-  }
+    // Move y up
+    y.parent = x.parent
 
-  // 🔥 USE HELPER HERE
-  setChild(y, 0, x)
-  setChild(x, 1, beta)
+    if (!x.parent) {
+        root = y
+    }
 
-  return root
+    else if (x === x.parent.children[0]) {
+        x.parent.children[0] = y
+    }
+
+    else {
+        x.parent.children[1] = y
+    }
+
+    // Rotate
+    setChild(y, 0, x)
+    setChild(x, 1, beta)
+
+    return root
 }
+
 export const rotateRight = (
-  root: RBTreeNodeData,
-  y: RBTreeNodeData
-): RBTreeNodeData => {
+    root: RBTreeNodeDataNew,
+    y: RBTreeNodeDataNew
+): RBTreeNodeDataNew => {
 
-  const x = y.children?.[0]
-  if (!x) return root
+    const x = y.children[0]
 
-  const beta = x.children?.[1]
+    if (!x) return root
 
-  x.parent = y.parent
+    const beta = x.children[1]
 
-  if (!y.parent) {
-    root = x
-  } else if (y === y.parent.children?.[0]) {
-    y.parent.children![0] = x
-  } else {
-    y.parent.children![1] = x
-  }
+    // Move x up
+    x.parent = y.parent
 
-  setChild(x, 1, y)
-  setChild(y, 0, beta)
+    if (!y.parent) {
+        root = x
+    }
 
-  return root
+    else if (y === y.parent.children[0]) {
+        y.parent.children[0] = x
+    }
+
+    else {
+        y.parent.children[1] = x
+    }
+
+    // Rotate
+    setChild(x, 1, y)
+    setChild(y, 0, beta)
+
+    return root
 }
 
 const fixInsertion = (
-    root: RBTreeNodeData,
-    node: RBTreeNodeData,
+    root: RBTreeNodeDataNew,
+    node: RBTreeNodeDataNew,
     steps: VisualizationStep[] = [],
     doInsertTrace: boolean = false
-): RBTreeNodeData => {
+): RBTreeNodeDataNew => {
 
     let current = node
 
@@ -233,11 +244,11 @@ const fixInsertion = (
 
         if (!grandparent) break
 
-        const parentIsLeft = parent === grandparent.children?.[0]
+        const parentIsLeft = parent === grandparent.children[0]
 
         const uncle = parentIsLeft
-            ? grandparent.children?.[1]
-            : grandparent.children?.[0]
+            ? grandparent.children[1]
+            : grandparent.children[0]
 
         // Case 1: uncle is red
         if (uncle?.color === "red") {
@@ -274,7 +285,7 @@ const fixInsertion = (
         // Case 2 + 3 left side
         if (parentIsLeft) {
 
-            if (current === parent.children?.[1]) {
+            if (current === parent.children[1]) {
                 if (doInsertTrace) {
                     pushStepTree(steps, {
                         tree: structuredClone(root),
@@ -324,7 +335,7 @@ const fixInsertion = (
         // Mirror case
         else {
 
-            if (current === parent.children?.[0]) {
+            if (current === parent.children[0]) {
                 if (doInsertTrace) {
                     
                     pushStepTree(steps, {
@@ -392,18 +403,16 @@ const fixInsertion = (
 
 
 const setChild = (
-  parent: RBTreeNodeData,
+  parent: RBTreeNodeDataNew,
   index: 0 | 1,
-  child?: RBTreeNodeData
+  child: RBTreeNodeDataNew | null
 ) => {
 
-  parent.children = parent.children ?? []
+  parent.children[index] = child
 
   if (child) {
-    parent.children[index] = child
     child.parent = parent
-  } else {
-    delete parent.children[index]
   }
 }
+
 export default buildRedBlackTree
