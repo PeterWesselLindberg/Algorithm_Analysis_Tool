@@ -37,21 +37,22 @@ const bellmanFord = (
   let end = undefined
   let source = undefined
 
-    if (limitedDist) {
-      const randomNodes = choooseRandomNodes(graph)
+  if (limitedDist) {
+    const randomNodes = choooseRandomNodes(graph)
 
-      start = graph.nodes[randomNodes[0]]
-      target = graph.nodes[randomNodes[1]]
+    start = graph.nodes[randomNodes[0]]
+    target = graph.nodes[randomNodes[1]]
       
-      end = target.value
-      source = start.value
+    end = target.value
+    source = start.value
 
-      pushStep(steps, {
-        graph,
-        activeIds: [target.id],
-        compareIds: [start.id]
-      })
-}
+    pushStep(steps, {
+      graph,
+      activeIds: [target.id],
+      compareIds: [start.id]
+    })
+  }
+
   const distances: Record<string, number> = {}
 
   // Final path storage
@@ -68,11 +69,7 @@ const bellmanFord = (
   const visited = new Set<string>()
 
   // V - 1 passes
-  for (
-    let i = 0;
-    i < graph.nodes.length - 1;
-    i++
-  ) {
+  for (let i = 0; i < graph.nodes.length - 1; i++) {
 
     let updated = false
 
@@ -134,7 +131,7 @@ const bellmanFord = (
       })
     })
 
-    // Optimization:
+    
     // Stop early if no updates
     if (!updated) {
       break

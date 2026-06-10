@@ -2,12 +2,12 @@ import TreeNodes from "./TreeNodes"
 import TreeEdges from "./TreeEdges"
 import { useMemo } from "react"
 import type { VisualizationStep } from "../types/VisualizationStep"
-import type { TreeNodeDataNew } from "../dataStructures/TreeNodedataNew"
-import type { RBTreeNodeDataNew } from "../dataStructures/RBTreeNodeDataNew"
+import type { TreeNodeData } from "../dataStructures/TreeNodedata"
+import type { RBTreeNodeData } from "../dataStructures/RBTreeNodeData"
 
 interface TreeVisualizerProps {
   step: VisualizationStep
-  tree: TreeNodeDataNew | RBTreeNodeDataNew | null
+  tree: TreeNodeData | RBTreeNodeData | null
   numbers: number[]
 }
 
@@ -22,7 +22,7 @@ const TreeVisualizer = ({
   const height = useMemo(() => {
 
   const getDepth = (
-    node: TreeNodeDataNew | RBTreeNodeDataNew | null
+    node: TreeNodeData | RBTreeNodeData | null
   ): number => {
 
     if (!node) return 0

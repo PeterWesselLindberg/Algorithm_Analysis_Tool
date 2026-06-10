@@ -4,9 +4,9 @@ export type RBTreeNodeData = {
 
   color: "red" | "black"
 
-  parent?: RBTreeNodeData
+  parent: RBTreeNodeData | null
 
-  children: RBTreeNodeData[]
+  children: [RBTreeNodeData | null, RBTreeNodeData| null]
 
   x: number
   y: number

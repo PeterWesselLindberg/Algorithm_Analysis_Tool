@@ -1,8 +1,8 @@
-import type { RBTreeNodeDataNew } from "../dataStructures/RBTreeNodeDataNew"
-import type { TreeNodeDataNew } from "../dataStructures/TreeNodedataNew"
+import type { RBTreeNodeData } from "../dataStructures/RBTreeNodeData"
+import type { TreeNodeData } from "../dataStructures/TreeNodedata"
 
 interface TreeNodesProps {
-  node: RBTreeNodeDataNew | TreeNodeDataNew | null
+  node: RBTreeNodeData | TreeNodeData | null
   numbers: number[]
 
   activeIds?: string[]

@@ -11,4 +11,3 @@ export type VisualizationType =
     | "exList/tree"
     | "TVList/tree"
     | "TList/bar"
-    | "NewexList/tree"

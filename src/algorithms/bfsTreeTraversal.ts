@@ -3,7 +3,7 @@ import pushStepTree from "../utils/pushStep"
 import toId from "../utils/toId"
 import buildHeapTree from "../utils/buildHeapTree"
 import type { AlgorithmInput } from "../types/algorithmtypes"
-import type { TreeNodeDataNew } from "../dataStructures/TreeNodedataNew"
+import type { TreeNodeData } from "../dataStructures/TreeNodedata"
 
 /** Breadth first traversal of a search tree */
 const bfsTreeTraversal = (input: AlgorithmInput): VisualizationStep[] => {
@@ -18,7 +18,7 @@ const bfsTreeTraversal = (input: AlgorithmInput): VisualizationStep[] => {
 
     if (!tree) return steps
 
-    const queue: TreeNodeDataNew[] = [tree]
+    const queue: TreeNodeData[] = [tree]
 
     const visitedIds: string[] = []
 
@@ -33,9 +33,9 @@ const bfsTreeTraversal = (input: AlgorithmInput): VisualizationStep[] => {
         visitedIds.push(toId(node.value))
 
         pushStepTree(steps, {
-        tree: tree,
-        activeIds: [node.id],
-        visitedIds: [...visitedIds]
+            tree: tree,
+            activeIds: [node.id],
+            visitedIds: [...visitedIds]
         })
 
         // Enqueue children

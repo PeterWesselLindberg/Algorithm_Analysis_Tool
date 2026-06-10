@@ -4,8 +4,8 @@ import type { AlgorithmFunction, AlgorithmInput } from "../types/algorithmtypes"
 import buildBST from "../utils/buildBST"
 import toId from "../utils/toId"
 import buildRedBlackTree from "../utils/buildRedBlackTree"
-import type { TreeNodeDataNew } from "../dataStructures/TreeNodedataNew"
-import type { RBTreeNodeDataNew } from "../dataStructures/RBTreeNodeDataNew"
+import type { TreeNodeData } from "../dataStructures/TreeNodedata"
+import type { RBTreeNodeData } from "../dataStructures/RBTreeNodeData"
 
 
 /** Wrapper function used for red-black tree search */
@@ -20,7 +20,7 @@ const bfsTreeSearch = (input: AlgorithmInput, isRedBlack: boolean = false) => {
 
   const values = input.values
   const target = input.target
-  let root: TreeNodeDataNew | RBTreeNodeDataNew | null = null
+  let root: TreeNodeData | RBTreeNodeData | null = null
 
   if (values.length === 0) return steps
 
@@ -37,6 +37,7 @@ const bfsTreeSearch = (input: AlgorithmInput, isRedBlack: boolean = false) => {
   pushStepTree(steps, {
     tree: root,
     activeIds: [root.id],
+    target
   })
   
   // Search only
@@ -47,12 +48,12 @@ const bfsTreeSearch = (input: AlgorithmInput, isRedBlack: boolean = false) => {
 
 /** Main function for bfs search of a tree */
 const bfsTreeSearchCore = (
-  root: TreeNodeDataNew | RBTreeNodeDataNew,
+  root: TreeNodeData | RBTreeNodeData,
   target: number,
   steps: VisualizationStep[]
-): TreeNodeDataNew | RBTreeNodeDataNew | null => {
+): TreeNodeData | RBTreeNodeData | null => {
 
-  const queue: (TreeNodeDataNew | RBTreeNodeDataNew)[] = [root]
+  const queue: (TreeNodeData | RBTreeNodeData)[] = [root]
   const visitedIds: string[] = []
 
   while (queue.length > 0) {

@@ -4,7 +4,7 @@ import type { VisualizationStep } from "../types/VisualizationStep"
 import pushStepTree from "../utils/pushStep"
 import buildBST from "../utils/buildBST"
 import layoutTree from "../utils/layoutTree"
-import type { TreeNodeDataNew } from "../dataStructures/TreeNodedataNew"
+import type { TreeNodeData } from "../dataStructures/TreeNodedata"
 
 /** Function to delete a node in a binary search tree */
 const bstDelete: AlgorithmFunction = (input) => {
@@ -47,11 +47,11 @@ const bstDelete: AlgorithmFunction = (input) => {
 }
 
 const deleteNode = (
-  visualRoot: TreeNodeDataNew,
-  node: TreeNodeDataNew | null,
+  visualRoot: TreeNodeData,
+  node: TreeNodeData | null,
   target: number,
   steps: VisualizationStep[]
-): TreeNodeDataNew | null => {
+): TreeNodeData | null => {
 
   if (!node) return null
 
@@ -209,8 +209,8 @@ const deleteNode = (
 
 /** Helper function to find successor */
 const findMin = (
-  node: TreeNodeDataNew
-): TreeNodeDataNew => {
+  node: TreeNodeData
+): TreeNodeData => {
 
   let current = node
 

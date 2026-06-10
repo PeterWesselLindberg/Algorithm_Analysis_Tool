@@ -1,6 +1,6 @@
-import type { TreeNodeDataNew } from "../dataStructures/TreeNodedataNew"
+import type { TreeNodeData } from "../dataStructures/TreeNodedata"
 
-const buildHeapTree = (arr: number[]): TreeNodeDataNew | null => {
+const buildHeapTree = (arr: number[]): TreeNodeData | null => {
 
   const NODE_X_GAP = 30
   const TOP_PADDING = 40
@@ -11,7 +11,7 @@ const buildHeapTree = (arr: number[]): TreeNodeDataNew | null => {
     i: number,
     depth: number,
     x: number
-  ): TreeNodeDataNew | null => {
+  ): TreeNodeData | null => {
 
     if (i >= arr.length) return null
 
@@ -20,7 +20,7 @@ const buildHeapTree = (arr: number[]): TreeNodeDataNew | null => {
 
     const offset = NODE_X_GAP * Math.pow(2, Math.max(3 - depth, 0))
 
-    const node: TreeNodeDataNew = {
+    const node: TreeNodeData = {
       id: i.toString(),
       x,
       y: TOP_PADDING + depth * NODE_Y_GAP,

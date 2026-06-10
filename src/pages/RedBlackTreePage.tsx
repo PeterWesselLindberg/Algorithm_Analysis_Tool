@@ -18,7 +18,7 @@ const RedBlackTreePage = () => {
 
   const {values , target} = generateRandomBalancedValues(10, false, true)
     // const vals = [12,3,2,8,9,22,13,19,27,28]
-    // const t = 27
+    // const t = 8
 
     console.log(values)
     console.log(target)

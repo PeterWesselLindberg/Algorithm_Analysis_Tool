@@ -3,13 +3,13 @@ import { pushStepTree } from "../utils/pushStep"
 import buildHeapTree from "../utils/buildHeapTree"
 import toId from "../utils/toId"
 import type { AlgorithmInput } from "../types/algorithmtypes"
-import type { TreeNodeDataNew } from "../dataStructures/TreeNodedataNew"
+import type { TreeNodeData } from "../dataStructures/TreeNodedata"
 
 /** Postorder tree traversal */
 const postorderTraversal = (
-    node: TreeNodeDataNew | null,
+    node: TreeNodeData | null,
     steps: VisualizationStep[],
-    root: TreeNodeDataNew | null,
+    root: TreeNodeData | null,
     visited: string[]
 ) => {
     if (!node) return

@@ -1,21 +1,22 @@
-import type { RBTreeNodeDataNew } from "../dataStructures/RBTreeNodeDataNew"
+import type { RBTreeNodeData } from "../dataStructures/RBTreeNodeData"
 import type { VisualizationStep } from "../types/VisualizationStep"
 import layoutTree from "./layoutTree"
 import pushStepTree from "./pushStep"
 
 const buildRedBlackTree = (values: number[]
-): RBTreeNodeDataNew | null => {
+): RBTreeNodeData | null => {
   
     if (values.length === 0) {
         return null
     }
 
-    let root: RBTreeNodeDataNew = {
+    let root: RBTreeNodeData = {
         id: "0",
         value: values[0],
         color: "black",
         x: 0,
         y: 0,
+        parent: null,
         children: [null, null]
     }
 
@@ -34,7 +35,7 @@ const buildRedBlackTree = (values: number[]
 }
 
 export const insertRBNode = (
-    root: RBTreeNodeDataNew,
+    root: RBTreeNodeData,
     value: number,
     id: string,
     steps: VisualizationStep[] = [],
@@ -70,7 +71,7 @@ export const insertRBNode = (
 
             if (current.children[0] === null) {
 
-                const newNode: RBTreeNodeDataNew = {
+                const newNode: RBTreeNodeData = {
                     id,
                     value,
                     color: "red",
@@ -118,7 +119,7 @@ export const insertRBNode = (
 
             if (current.children[1] === null) {
 
-                const newNode: RBTreeNodeDataNew = {
+                const newNode: RBTreeNodeData = {
                     id,
                     value,
                     color: "red",
@@ -163,9 +164,9 @@ export const insertRBNode = (
 }
 
 export const rotateLeft = (
-    root: RBTreeNodeDataNew,
-    x: RBTreeNodeDataNew
-): RBTreeNodeDataNew => {
+    root: RBTreeNodeData,
+    x: RBTreeNodeData
+): RBTreeNodeData => {
 
     const y = x.children[1]
 
@@ -196,9 +197,9 @@ export const rotateLeft = (
 }
 
 export const rotateRight = (
-    root: RBTreeNodeDataNew,
-    y: RBTreeNodeDataNew
-): RBTreeNodeDataNew => {
+    root: RBTreeNodeData,
+    y: RBTreeNodeData
+): RBTreeNodeData => {
 
     const x = y.children[0]
 
@@ -229,11 +230,11 @@ export const rotateRight = (
 }
 
 const fixInsertion = (
-    root: RBTreeNodeDataNew,
-    node: RBTreeNodeDataNew,
+    root: RBTreeNodeData,
+    node: RBTreeNodeData,
     steps: VisualizationStep[] = [],
     doInsertTrace: boolean = false
-): RBTreeNodeDataNew => {
+): RBTreeNodeData => {
 
     let current = node
 
@@ -403,9 +404,9 @@ const fixInsertion = (
 
 
 export const setChild = (
-  parent: RBTreeNodeDataNew,
+  parent: RBTreeNodeData,
   index: 0 | 1,
-  child: RBTreeNodeDataNew | null
+  child: RBTreeNodeData | null
 ) => {
 
   parent.children[index] = child

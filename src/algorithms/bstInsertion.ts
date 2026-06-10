@@ -5,10 +5,10 @@ import { pushStepTree } from "../utils/pushStep"
 
 import layoutTree from "../utils/layoutTree"
 import type { AlgorithmInput } from "../types/algorithmtypes"
-import type { TreeNodeDataNew } from "../dataStructures/TreeNodedataNew"
+import type { TreeNodeData } from "../dataStructures/TreeNodedata"
 
 const bstInsert = (
-  root: TreeNodeDataNew,
+  root: TreeNodeData,
   value: number,
   steps: VisualizationStep[],
   index: number = 1,
@@ -41,7 +41,7 @@ const bstInsert = (
     // Insert
     if (!child) {
 
-      const newNode: TreeNodeDataNew = {
+      const newNode: TreeNodeData = {
         id: index.toString(),
         value,
         x: 0,
@@ -103,7 +103,7 @@ const bstInsertion = (
 
   const insertedValues: number[] = [values[0]]
 
-  const root: TreeNodeDataNew = {
+  const root: TreeNodeData = {
     id: "0",
     value: values[0],
     x: 0,

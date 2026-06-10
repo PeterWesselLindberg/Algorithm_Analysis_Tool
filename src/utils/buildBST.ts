@@ -1,16 +1,16 @@
-import type { TreeNodeDataNew } from "../dataStructures/TreeNodedataNew"
+import type { TreeNodeData } from "../dataStructures/TreeNodedata"
 
 import layoutTree from "./layoutTree"
 
 const buildBST = (
   values: number[]
-): TreeNodeDataNew | null => {
+): TreeNodeData | null => {
 
   if (values.length === 0) {
     return null
   }
 
-  const root: TreeNodeDataNew = {
+  const root: TreeNodeData = {
     id: "0",
     value: values[0],
     x: 0,
@@ -33,7 +33,7 @@ const buildBST = (
 }
 
 const insertNode = (
-  root: TreeNodeDataNew,
+  root: TreeNodeData,
   value: number,
   id: string
 ) => {
@@ -47,7 +47,7 @@ const insertNode = (
 
       if (!current.children[0]) {
 
-        const newNode: TreeNodeDataNew = {
+        const newNode: TreeNodeData = {
           id,
           value,
           x: 0,
@@ -68,7 +68,7 @@ const insertNode = (
 
       if (!current.children[1]) {
 
-        const newNode: TreeNodeDataNew = {
+        const newNode: TreeNodeData = {
           id,
           value,
           x: 0,

@@ -103,13 +103,13 @@ const dfsGraphTrace = (input: AlgorithmInput): VisualizationStep[] => {
   visited.size === graph.nodes.length
 
   pushStep(steps, {
-  graph,
-  sortedIds: [...visited],
-  visitedIds: [...visitedIds],
-  message: isConnected
-    ? "Graph is connected"
-    : "Graph is disconnected"
-})
+    graph,
+    sortedIds: [...visited],
+    visitedIds: [...visitedIds],
+    message: isConnected
+      ? "Graph is connected"
+      : "Graph is disconnected"
+  })
     
   return steps
 }
