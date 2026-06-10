@@ -1,7 +1,6 @@
 import type { LinearData } from "../dataStructures/LinearData"
 import type { GraphData } from "../dataStructures/GraphData"
-import type { GridData } from "../dataStructures/GridData"
-import type { RBTreeNodeData } from "../dataStructures/RBTreeNodeData"
+import type { RBTreeNodeDataNew } from "../dataStructures/RBTreeNodeDataNew"
 import type { TreeNodeDataNew } from "../dataStructures/TreeNodedataNew"
 
 /** The values used in pushStep for the visualizations */
@@ -12,11 +11,9 @@ export type VisualizationStep = {
 
   linears?: LinearData[]
 
-  tree: RBTreeNodeData | TreeNodeDataNew | null
+  tree: RBTreeNodeDataNew | TreeNodeDataNew | null
 
   graph?: GraphData
-
-  grid?: GridData
 
   message?: string
 

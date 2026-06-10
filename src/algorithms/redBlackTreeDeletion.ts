@@ -1,636 +1,604 @@
-// import type { VisualizationStep } from "../types/VisualizationStep"
-// import type{ AlgorithmFunction} from "../types/algorithmtypes"
-// import type { RBTreeNodeData } from "../dataStructures/RBTreeNodeData"
-// import { pushStepTree } from "../utils/pushStep"
-// import layoutTree from "../utils/layoutTree"
-// import buildRedBlackTree from "../utils/buildRedBlackTree"
-// import { rotateLeft, rotateRight } from "../utils/buildRedBlackTree"
+import type { VisualizationStep } from "../types/VisualizationStep"
+import type{ AlgorithmFunction} from "../types/algorithmtypes"
+import { pushStepTree } from "../utils/pushStep"
+import layoutTree from "../utils/layoutTree"
+import buildRedBlackTree from "../utils/buildRedBlackTree"
+import { rotateLeft, rotateRight } from "../utils/buildRedBlackTree"
+import type { RBTreeNodeDataNew } from "../dataStructures/RBTreeNodeDataNew"
 
-// /** Helper function to extract values when removing the node from the tree in the edge case */
-// const extractValues = (node?: RBTreeNodeData): number[] => {
-//   if (!node) return []
+const RBDelete: AlgorithmFunction = (input) => {
 
-//   return [
-//     node.value,
-//     ...(node.children?.[0] ? extractValues(node.children[0]) : []),
-//     ...(node.children?.[1] ? extractValues(node.children[1]) : [])
-//   ]
-// }
+    if (input.type !== "bst") return []
 
-// const RBDelete: AlgorithmFunction = (input) => {
+    const steps: VisualizationStep[] = []
 
-//     if (input.type !== "bst") return []
+    const root = buildRedBlackTree(input.values)
+    const target = input.target
 
-//     const steps: VisualizationStep[] = []
+    if (!root) return []
 
-//     const root = buildRedBlackTree(input.values)
-//     const target = input.target
+    layoutTree(root)
 
-//     if (!root) return []
+    pushStepTree(steps, {
+        tree: structuredClone(root),
+        message: "Red-Black tree built",
+        target
+    })
 
-//     layoutTree(root)
+    // Step 1: Find node
+    const node = findNode(root, target, steps)
 
-//     pushStepTree(steps, {
-//         tree: structuredClone(root),
-//         message: "Red-Black tree built",
-//         target
-//     })
+    if (!node) {
+        pushStepTree(steps, {
+            tree: structuredClone(root),
+            message: `Node ${target} not found`
+        })
+        return steps
+    }
 
-//     const newRoot = deleteRBNode(
-//         root,
-//         root,
-//         target,
-//         steps
-//     )
+    // Step 2: Delete by reference
+    const newRoot = deleteRBNode(
+        root,
+        node,
+        steps
+    )
 
-//     if (newRoot) {
-//         layoutTree(newRoot)
+    // Step 3: Final layout + step
+    if (newRoot) {
+        layoutTree(newRoot)
 
-//         pushStepTree(steps, {
-//             tree: structuredClone(newRoot),
-//             message: `Deleted ${target}`,
-//             target
-//         })
-//     }
+        pushStepTree(steps, {
+            tree: structuredClone(newRoot),
+            message: `Rebalancing tree`
+        })
+    }
 
-//     return steps
-// }
+    return steps
+}
 
-// const deleteRBNode = (
-//     visualRoot: RBTreeNodeData,
-//     node: RBTreeNodeData | undefined,
-//     target: number,
-//     steps: VisualizationStep[]
-// ): RBTreeNodeData | undefined => {
+const deleteRBNode = (
+    root: RBTreeNodeDataNew,
+    z: RBTreeNodeDataNew,
+    steps: VisualizationStep[]
+): RBTreeNodeDataNew => {
 
-//     if (!node) return undefined
+    const target = z.value
+    const left = z.children[0]
+    const right = z.children[1]
+
+    const isLeaf = !left && !right
+    const onlyLeft = left && !right
+    const onlyRight = !left && right
+    const twoChildren = left && right
+
+    let y = z
+    let yOriginalColor = y.color
+    let x: RBTreeNodeDataNew | null = null
+
+    // Case 1: Leaf
+    if (isLeaf) {
+        pushStepTree(steps, {
+            tree: structuredClone(root),
+            deletingIds: [z.id],
+            message: `Deleting leaf node ${z.value}`,
+            target
+        })
+    }
     
-//     // Visit node
-//     pushStepTree(steps, {
-//         tree: structuredClone(visualRoot),
-//         activeIds: [node.id],
-//         message: `Checking ${node.value}`,
-//         target
-//     })
+    // Case 2: Only right child
+    if (onlyRight) {
+        pushStepTree(steps, {
+            tree: structuredClone(root),
+            deletingIds: [z.id],
+            replacementIds: [right!.id],
+            message: `Replacing ${z.value} with right child`,
+            target
+        })
+    }
 
-//     // Go left
-//     if (target < node.value) {
+    // Case 3: Only left child
+    if (onlyLeft) {
+        pushStepTree(steps, {
+            tree: structuredClone(root),
+            deletingIds: [z.id],
+            replacementIds: [left!.id],
+            message: `Replacing ${z.value} with left child`,
+            target
+        })
+    }
 
-//         const child = node.children?.[0]
+    // Case 4: Two children
+    if (twoChildren) {
 
-//         if (child) {
-//             pushStepTree(steps, {
-//                 tree: structuredClone(visualRoot),
-//                 activeIds: [node.id, child.id],
-//                 activeEdgeIds: [`${node.id}->${child.id}`],
-//                 target
-//             })
-//         }
+        const successor = findMin(right)
 
-//         if (child &&
-//             child.value === target &&
-//             !child.children?.[0] &&
-//             !child.children?.[1]
-//         ) {
+       // Step 1: Highlight node + successor
+        pushStepTree(steps, {
+            tree: structuredClone(root),
+            activeIds: [z.id, successor.id],
+            message: `Found successor ${successor.value}`,
+            activeEdgeIds: [`${z.id}->${successor.id}`],
+            target
+        })
 
-//             // Visit node
-//             pushStepTree(steps, {
-//                 tree: structuredClone(visualRoot),
-//                 activeIds: [child.id],
-//                 message: `Checking ${child.value}`,
-//                 target
-//             })
-
-//             // Found node
-//             pushStepTree(steps, {
-//                 tree: structuredClone(visualRoot),
-//                 activeIds: [child.id],
-//                 message: `Found ${target} for deletion`,
-//                 target
-//             })
-
-//             pushStepTree(steps, {
-//                 tree: structuredClone(visualRoot),
-//                 deletingIds: [child.id],
-//                 message: `Deleting leasf node ${child.value}`,
-//                 target
-//             })
-
-//             // Rebuild strategy for edge case
-//             const newValues = extractValues(node).filter(v => v !== target)
-//             const rebuilt = buildRedBlackTree(newValues)
-
-//             if (!rebuilt) return undefined
-//             layoutTree(rebuilt)
-
-            
-
-//             return rebuilt
-//         }
-
-
-//         // Normal recursion
-//         const result = deleteRBNode(visualRoot, child, target, steps)
-
-//         if (result) {
-//             node.children![0] = result
-//         } 
+        // Step 2: Mark node as being replaced
+        pushStepTree(steps, {
+            tree: structuredClone(root),
+            deletingIds: [z.id],
+            replacementIds: [successor.id],
+            message: `Replacing ${z.value} with ${successor.value}`,
+            target
+        })
         
-//         else {
-//             node.children!.splice(0, 1)
-//         }
+    }
 
-//         return node
-//     }
+    // Node has 2 children
+    if (z.children[0] && z.children[1]) {
 
-//     // Go right
-//     if (target > node.value) {
+        y = findMin(z.children[1]) // successor
+        yOriginalColor = y.color
 
-//         const child = node.children?.[1]
+        // Copy value ONLY (not structure)
+        z.value = y.value
 
-//         if (child) {
-//             pushStepTree(steps, {
-//                 tree: structuredClone(visualRoot),
-//                 activeIds: [node.id, child.id],
-//                 activeEdgeIds: [`${node.id}->${child.id}`],
-//                 target
-//             })
-//         }
+        // Now we will delete successor instead
+        z = y
+    }
 
-//         const result = deleteRBNode(visualRoot, node.children?.[1], target, steps)
+    // Pick replacement child
+    x = z.children[0] ?? z.children[1]
 
-//         if (result) {
-//             node.children![1] = result
-//         } 
-        
-//         else {
-//             node.children!.splice(1, 1)
-//         }
+    if (twoChildren) {
 
-//         return node
-//     }
+        // Step 3: Remove replacing node from tree
+        pushStepTree(steps, {
+            tree: structuredClone(root),
+            deletingIds: [z.id],
+            replacementIds: x ? [x.id] : [],
+            message: `Removing node ${z.value}`,
+            target
+        })
+    }
 
-//     // Found node
+    // Transplant node out
+    root = transplant(root, z, x)
 
-//     pushStepTree(steps, {
-//         tree: structuredClone(visualRoot),
-//         activeIds: [node.id],
-//         message: `Found ${target} for deletion`,
-//         target
-//     })
+    if (x) {
+        x.parent = z.parent
+    }
 
-//     // Case 1: Leaf
-//     if (!node.children?.[0] && !node.children?.[1]) {
+    // Fix red-black properties
+    if (yOriginalColor === "black") {
+        root = fixDeletion(root, steps, x)
+    }
 
-//         pushStepTree(steps, {
-//             tree: structuredClone(visualRoot),
-//             deletingIds: [node.id],
-//             message: `Deleting leaf node ${node.value}`,
-//             target
-//         })
+    // Final step
+    pushStepTree(steps, {
+        tree: structuredClone(root),
+        message: `Deletion complete`
+    })
 
-//         if (node.color === "red") return undefined
+    return root
+}
 
-//         return fixDeletion(visualRoot, steps, node)
-//     }
 
-//     // Case 2: Only right child
-//     if (!node.children?.[0]) {
-
-//         const child = node.children?.[1]
-
-//         pushStepTree(steps, {
-//             tree: structuredClone(visualRoot),
-//             deletingIds: [node.id],
-//             replacementIds: [child!.id],
-//             message: `Replacing ${node.value} with right child`,
-//             target
-//         })
-
-//         if (node.color === "black" && child?.color === "red") {
-
-//             child.color = "black"
-
-//             pushStepTree(steps,{
-//                 tree: structuredClone(visualRoot),
-//                 replacementIds:[child.id],
-//                 message:"Child recolored black"
-//             })
-//         }
-
-//         return child
-//     }
-
-//     // Case 3: Only left child
-//     if (!node.children?.[1]) {
-
-//         const child = node.children?.[0]
-
-//         pushStepTree(steps, {
-//             tree: structuredClone(visualRoot),
-//             deletingIds: [node.id],
-//             replacementIds: [child!.id],
-//             message: `Replacing ${node.value} with left child`,
-//             target
-//         })
-
-//         if (node.color === "black" && child?.color === "red") {
-
-//             child.color = "black"
-
-//             pushStepTree(steps,{
-//                 tree: structuredClone(visualRoot),
-//                 replacementIds:[child.id],
-//                 message:"Child recolored black"
-//             })
-//         }
-
-//         return child
-//     }
-
-//     // Case 4: Two children
-
-//     const successor = findMin(node.children[1])
-
-//     // Step 1: Highlight node + successor
-//     pushStepTree(steps, {
-//         tree: structuredClone(visualRoot),
-//         activeIds: [node.id, successor.id],
-//         message: `Found successor ${successor.value}`,
-//         activeEdgeIds: [`${node.id}->${successor.id}`],
-//         target
-//     })
-
-//     // Step 2: Mark node as being replaced
-//     pushStepTree(steps, {
-//         tree: structuredClone(visualRoot),
-//         deletingIds: [node.id],
-//         replacementIds: [successor.id],
-//         message: `Replacing ${node.value} with ${successor.value}`,
-//         target
-//     })
-
-//     const successorColor = successor.color
-//     node.value = successor.value
-
-//     // Step 3: Replace values
-//     pushStepTree(steps, {
-//         tree: structuredClone(visualRoot),
-//         replacementIds: [node.id],
-//         message: `Value updated to ${successor.value}`,
-//         target
-//     })
-
-//     const deletedNode = node.children[1]
-
-//     const result = deleteRBNode(
-//         visualRoot,
-//         deletedNode,
-//         successor.value,
-//         steps
-//     )
-
-//     if (result) {
-//         node.children![1] = result
-//     } 
+const fixDeletion = (
+    root: RBTreeNodeDataNew,
+    steps: VisualizationStep[],
+    node: RBTreeNodeDataNew | null,
     
-//     else {
-//         node.children!.splice(1, 1)
-//     }
-
-//     // Step 4: Show rebalancing
-//     if(successorColor === "black") {
-
-//         pushStepTree(steps, {
-//             tree: structuredClone(visualRoot),
-//             message: `Fixing black-height violation`,
-//             replacementIds: [node.id],
-//             target
-//         })
-        
-//         visualRoot = fixDeletion(visualRoot, steps, successor)
-        
-//     }
-//     pushStepTree(steps, {
-//         tree: structuredClone(visualRoot),
-//         message: `Tree rebalanced after deletion`,
-//         replacementIds: [node.id],
-//         target
-//     })
-
-//     return node
-// }
-
-
-// const fixDeletion = (
-//     root: RBTreeNodeData,
-//     steps: VisualizationStep[],
-//     node?: RBTreeNodeData,
+): RBTreeNodeDataNew => {
     
-// ): RBTreeNodeData => {
+    let current = node
+
+    // pushStepTree(steps, {
+    //     tree: structuredClone(root),
+    //     message: `Entering fixDeletion with ${
+    //         current ? current.value : "undefined"
+    //     }`
+    // })
     
-//     let current = node
+    while (current && current.color === "black") {
 
-//     pushStepTree(steps, {
-//         tree: structuredClone(root),
-//         message: `Entering fixDeletion with ${
-//             current ? current.value : "undefined"
-//         }`
-//     })
-    
-//     while (current !== root && current?.color === "black") {
+        const parent = current.parent
 
-//         const parent = current.parent
+        if (!parent) break
 
-//         if (!parent) break
+        // Current is left child
+        if (current === parent.children[0]) {
 
-//         // Current is left child
-//         if (current === parent.children?.[0]) {
+            let sibling = parent.children[1]
 
-//             let sibling = parent.children?.[1]
+            // Case 1
+            if (sibling?.color === "red") {
 
-//             // Case 1
-//             if (sibling?.color === "red") {
+                pushStepTree(steps, {
+                    tree: structuredClone(root),
+                    activeIds: [parent.id, sibling.id],
+                    message: "Delete Fix Case 1: Red sibling"
+                })
 
-//                 pushStepTree(steps, {
-//                     tree: structuredClone(root),
-//                     activeIds: [parent.id, sibling.id],
-//                     message: "Delete Fix Case 1: Red sibling"
-//                 })
+                sibling.color = "black"
+                parent.color = "red"
 
-//                 sibling.color = "black"
-//                 parent.color = "red"
+                pushStepTree(steps, {
+                    tree: structuredClone(root),
+                    activeIds: [parent.id, sibling.id],
+                    message: "Recolor sibling black and parent red"
+                })
+                
+                root = rotateLeft(root, parent)
 
-//                 pushStepTree(steps, {
-//                     tree: structuredClone(root),
-//                     activeIds: [parent.id, sibling.id],
-//                     message: "Recolor sibling black and parent red"
-//                 })
+                layoutTree(root)
 
-//                 root = rotateLeft(root, parent)
+                pushStepTree(steps, {
+                    tree: structuredClone(root),
+                    activeIds: [parent.id],
+                    message: "Rotate left around parent"
+                })
 
-//                 layoutTree(root)
+                sibling = parent.children[1]
+            }
 
-//                 pushStepTree(steps, {
-//                     tree: structuredClone(root),
-//                     activeIds: [parent.id],
-//                     message: "Rotate left around parent"
-//                 })
+            const leftBlack = sibling?.children[0] == null || sibling.children[0].color === "black"
 
-//                 sibling = parent.children?.[1]
-//             }
+            const rightBlack = sibling?.children[1] == null || sibling.children[1].color === "black"
 
-//             const leftBlack = !sibling?.children?.[0] || sibling.children[0].color === "black"
+            // Case 2
+            if (leftBlack && rightBlack) {
 
-//             const rightBlack = !sibling?.children?.[1] || sibling.children[1].color === "black"
+                pushStepTree(steps, {
+                    tree: structuredClone(root),
+                    activeIds: [parent.id, sibling?.id ?? ""],
+                    message: "Delete Fix Case 2: Black sibling with black children"
+                })
 
-//             // Case 2
-//             if (leftBlack && rightBlack) {
+                if (sibling) sibling.color = "red"
 
-//                 pushStepTree(steps, {
-//                     tree: structuredClone(root),
-//                     activeIds: [parent.id, sibling?.id ?? ""],
-//                     message: "Delete Fix Case 2: Black sibling with black children"
-//                 })
+                pushStepTree(steps, {
+                    tree: structuredClone(root),
+                    activeIds: [parent.id],
+                    message: "Push extra blackness upward"
+                })
 
-//                 if (sibling) sibling.color = "red"
+                current = parent
+                continue
+            }
 
-//                 pushStepTree(steps, {
-//                     tree: structuredClone(root),
-//                     activeIds: [parent.id],
-//                     message: "Push extra blackness upward"
-//                 })
+            // Case 3
+            if (
+                sibling?.children[0]?.color === "red" &&
+                (sibling.children[1] == null ||
+                sibling.children[1].color === "black")
+            ) {
 
-//                 current = parent
-//                 continue
-//             }
+                pushStepTree(steps, {
+                    tree: structuredClone(root),
+                    activeIds: [sibling.id, sibling.children[0].id],
+                    message: "Delete Fix Case 3: Inner red nephew"
+                })
 
-//             // Case 3
-//             if (
-//                 sibling?.children?.[0]?.color === "red" &&
-//                 (!sibling.children?.[1] || sibling.children[1].color === "black")
-//             ) {
+                sibling.children[0].color = "black"
+                sibling.color = "red"
 
-//                 pushStepTree(steps, {
-//                     tree: structuredClone(root),
-//                     activeIds: [sibling.id, sibling.children[0].id],
-//                     message: "Delete Fix Case 3: Inner red nephew"
-//                 })
+                pushStepTree(steps, {
+                    tree: structuredClone(root),
+                    activeIds: [sibling.id],
+                    message: "Recolor before rotation"
+                })
 
-//                 sibling.children[0].color = "black"
-//                 sibling.color = "red"
+                root = rotateRight(root, sibling)
 
-//                 pushStepTree(steps, {
-//                     tree: structuredClone(root),
-//                     activeIds: [sibling.id],
-//                     message: "Recolor before rotation"
-//                 })
+                layoutTree(root)
 
-//                 root = rotateRight(root, sibling)
+                pushStepTree(steps, {
+                    tree: structuredClone(root),
+                    message: "Rotate right around sibling"
+                })
 
-//                 layoutTree(root)
+                sibling = parent.children[1]
+            }
 
-//                 pushStepTree(steps, {
-//                     tree: structuredClone(root),
-//                     message: "Rotate right around sibling"
-//                 })
+            // Case 4
+            if ( sibling && sibling.children[1]?.color === "red") {
 
-//                 sibling = parent.children?.[1]
-//             }
+                pushStepTree(steps, {
+                    tree: structuredClone(root),
+                    activeIds: [parent.id, sibling.id, sibling.children[1].id],
+                    message: "Delete Fix Case 4: Outer red nephew"
+                })
 
-//             // Case 4
-//             if ( sibling && sibling.children?.[1]?.color === "red") {
+                sibling.color = parent.color
+                parent.color = "black"
+                sibling.children[1].color = "black"
 
-//                 pushStepTree(steps, {
-//                     tree: structuredClone(root),
-//                     activeIds: [parent.id, sibling.id, sibling.children[1].id],
-//                     message: "Delete Fix Case 4: Outer red nephew"
-//                 })
+                pushStepTree(steps, {
+                    tree: structuredClone(root),
+                    activeIds: [parent.id, sibling.id],
+                    message: "Recolor before final rotation"
+                })
 
-//                 sibling.color = parent.color
-//                 parent.color = "black"
-//                 sibling.children[1].color = "black"
+                root = rotateLeft(root, parent)
 
-//                 pushStepTree(steps, {
-//                     tree: structuredClone(root),
-//                     activeIds: [parent.id, sibling.id],
-//                     message: "Recolor before final rotation"
-//                 })
+                layoutTree(root)
 
-//                 root = rotateLeft(root, parent)
+                pushStepTree(steps, {
+                    tree: structuredClone(root),
+                    message: "Rotate left and restore red-black properties"
+                })
 
-//                 layoutTree(root)
+                current = root
+                break
+            }
+        }
 
-//                 pushStepTree(steps, {
-//                     tree: structuredClone(root),
-//                     message: "Rotate left and restore red-black properties"
-//                 })
+        // Current is right child
+        else {
 
-//                 current = root
-//             }
-//         }
+            let sibling = parent.children[0]
 
-//         // Current is right child
-//         else {
+            // Case 1
+            if (sibling?.color === "red") {
 
-//             let sibling = parent.children?.[0]
+                pushStepTree(steps, {
+                    tree: structuredClone(root),
+                    activeIds: [parent.id, sibling.id],
+                    message: "Delete Fix Case 1: Red sibling"
+                })
 
-//             // Case 1
-//             if (sibling?.color === "red") {
+                sibling.color = "black"
+                parent.color = "red"
 
-//                 pushStepTree(steps, {
-//                     tree: structuredClone(root),
-//                     activeIds: [parent.id, sibling.id],
-//                     message: "Delete Fix Case 1: Red sibling"
-//                 })
+                pushStepTree(steps, {
+                    tree: structuredClone(root),
+                    activeIds: [parent.id, sibling.id],
+                    message: "Recolor sibling black and parent red"
+                })
 
-//                 sibling.color = "black"
-//                 parent.color = "red"
+                root = rotateRight(root, parent)
 
-//                 pushStepTree(steps, {
-//                     tree: structuredClone(root),
-//                     activeIds: [parent.id, sibling.id],
-//                     message: "Recolor sibling black and parent red"
-//                 })
+                layoutTree(root)
 
-//                 root = rotateRight(root, parent)
+                pushStepTree(steps, {
+                    tree: structuredClone(root),
+                    activeIds: [parent.id],
+                    message: "Rotate right around parent"
+                })
 
-//                 layoutTree(root)
+                sibling = parent.children[0]
+            }
 
-//                 pushStepTree(steps, {
-//                     tree: structuredClone(root),
-//                     activeIds: [parent.id],
-//                     message: "Rotate right around parent"
-//                 })
+            const leftBlack = sibling?.children[0] == null || sibling.children[0].color === "black"
 
-//                 sibling = parent.children?.[0]
-//             }
+            const rightBlack = sibling?.children[1] == null || sibling.children[1].color === "black"
 
-//             const leftBlack = !sibling?.children?.[0] || sibling.children[0].color === "black"
-
-//             const rightBlack = !sibling?.children?.[1] || sibling.children[1].color === "black"
-
-//             // Case 2
-//             if (leftBlack && rightBlack) {
+            // Case 2
+            if (leftBlack && rightBlack) {
 
                 
-//                 pushStepTree(steps, {
-//                     tree: structuredClone(root),
-//                     activeIds: [parent.id, sibling?.id ?? ""],
-//                     message: "Delete Fix Case 2: Black sibling with black children"
-//                 })
+                pushStepTree(steps, {
+                    tree: structuredClone(root),
+                    activeIds: [parent.id, sibling?.id ?? ""],
+                    message: "Delete Fix Case 2: Black sibling with black children"
+                })
 
-//                 if (sibling) sibling.color = "red"
+                if (sibling) sibling.color = "red"
 
-//                 pushStepTree(steps, {
-//                     tree: structuredClone(root),
-//                     activeIds: [parent.id],
-//                     message: "Push extra blackness upward"
-//                 })
+                pushStepTree(steps, {
+                    tree: structuredClone(root),
+                    activeIds: [parent.id],
+                    message: "Push extra blackness upward"
+                })
 
-//                 current = parent
-//                 continue
-//             }
+                current = parent
+                continue
+            }
 
-//             // Case 3
-//             if (
-//                 sibling?.children?.[0]?.color === "red" &&
-//                 (!sibling.children?.[1] || sibling.children[1].color === "black")
-//             ) {
+            // Case 3
+            if (
+                sibling?.children[1]?.color === "red" &&
+                (sibling.children[0] == null ||
+                sibling.children[0].color === "black")
+            ) {
 
-//                pushStepTree(steps, {
-//                     tree: structuredClone(root),
-//                     activeIds: [sibling.id, sibling.children[0].id],
-//                     message: "Delete Fix Case 3: Inner red nephew"
-//                 })
+               pushStepTree(steps, {
+                    tree: structuredClone(root),
+                    activeIds: [sibling.id, sibling.children[1].id],
+                    message: "Delete Fix Case 3: Inner red nephew"
+                })
 
-//                 sibling.children[0].color = "black"
-//                 sibling.color = "red"
+                sibling.children[1].color = "black"
+                sibling.color = "red"
 
-//                 pushStepTree(steps, {
-//                     tree: structuredClone(root),
-//                     activeIds: [sibling.id],
-//                     message: "Recolor before rotation"
-//                 })
+                pushStepTree(steps, {
+                    tree: structuredClone(root),
+                    activeIds: [sibling.id],
+                    message: "Recolor before rotation"
+                })
 
-//                 root = rotateLeft(root, sibling)
+                root = rotateLeft(root, sibling)
 
-//                 layoutTree(root)
+                layoutTree(root)
 
-//                 pushStepTree(steps, {
-//                     tree: structuredClone(root),
-//                     message: "Rotate left around sibling"
-//                 })
+                pushStepTree(steps, {
+                    tree: structuredClone(root),
+                    message: "Rotate left around sibling"
+                })
 
-//                 sibling = parent.children?.[0]
-//             }
+                sibling = parent.children[0]
+            }
 
-//             // Case 4
-//             if ( sibling && sibling.children?.[1]?.color === "red") {
+            // Case 4
+            if ( sibling && sibling.children[0]?.color === "red") {
 
-//                 pushStepTree(steps, {
-//                     tree: structuredClone(root),
-//                     activeIds: [parent.id, sibling.id, sibling.children[1].id],
-//                     message: "Delete Fix Case 4: Outer red nephew"
-//                 })
+                pushStepTree(steps, {
+                    tree: structuredClone(root),
+                    activeIds: [parent.id, sibling.id, sibling.children[0].id],
+                    message: "Delete Fix Case 4: Outer red nephew"
+                })
 
-//                 sibling.color = parent.color
-//                 parent.color = "black"
-//                 sibling.children[1].color = "black"
+                sibling.color = parent.color
+                parent.color = "black"
+                sibling.children[0].color = "black"
 
-//                 pushStepTree(steps, {
-//                     tree: structuredClone(root),
-//                     activeIds: [parent.id, sibling.id],
-//                     message: "Recolor before final rotation"
-//                 })
+                pushStepTree(steps, {
+                    tree: structuredClone(root),
+                    activeIds: [parent.id, sibling.id],
+                    message: "Recolor before final rotation"
+                })
 
-//                 root = rotateRight(root, parent)
+                root = rotateRight(root, parent)
 
-//                 layoutTree(root)
+                layoutTree(root)
 
-//                 pushStepTree(steps, {
-//                     tree: structuredClone(root),
-//                     message: "Rotate right and restore red-black properties"
-//                 })
+                pushStepTree(steps, {
+                    tree: structuredClone(root),
+                    message: "Rotate right and restore red-black properties"
+                })
 
-//                 current = root
-//             }
+                current = root
+                break
+            }
 
-//         }
-//     }
+        }
+    }
 
-//     if (current && current.color !== "black") {
+    if (current === root && current.color === "black") {
+        current.color = "black"
+    }
 
-//         pushStepTree(steps, {
-//             tree: structuredClone(root),
-//             activeIds: [current.id],
-//             message: "Color node black"
-//         })
+    if (current && current.color !== "black") {
 
-//         current.color = "black"
+        pushStepTree(steps, {
+            tree: structuredClone(root),
+            activeIds: [current.id],
+            message: "Color node black"
+        })
 
-//         pushStepTree(steps, {
-//             tree: structuredClone(root),
-//             activeIds: [current.id],
-//             message: "Deletion fix complete"
-//         })
-//     }
+        current.color = "black"
 
-//     return root
-// }
+        pushStepTree(steps, {
+            tree: structuredClone(root),
+            activeIds: [current.id],
+            message: "Deletion fix complete"
+        })
+    }
 
-// /** Helper function to find successor */
-// const findMin = (
-//     node: RBTreeNodeData
-// ): RBTreeNodeData => {
+    return root
+}
 
-//     let current = node
+/** Helper function to find node for deletion */
+const findNode = (
+    root: RBTreeNodeDataNew | null,
+    value: number,
+    steps: VisualizationStep[]
+): RBTreeNodeDataNew | null => {
 
-//     while (current.children?.[0]) {
-//         current = current.children[0]
-//     }
+    let current = root
+    const target = value
 
-//     return current
-// }
+    while (current) {
+        
+        // Visit node
+        pushStepTree(steps, {
+            tree: structuredClone(root),
+            activeIds: [current.id],
+            message: `Checking ${current.value}`,
+            target
+        })
 
-// export default RBDelete
+        // Go left
+        if (value < current.value) {
+            const next = current.children[0]
+
+            if (next) {
+                pushStepTree(steps, {
+                    tree: structuredClone(root),
+                    activeIds: [current.id, next.id],
+                    activeEdgeIds: [`${current.id}->${next.id}`],
+                    target
+                })
+            }
+
+            current = next
+            continue
+            
+        }
+
+        // Go right
+        if (value > current.value) {
+            const next = current.children[1]
+
+            if (next) {
+                pushStepTree(steps, {
+                    tree: structuredClone(root),
+                    activeIds: [current.id, next.id],
+                    activeEdgeIds: [`${current.id}->${next.id}`],
+                    target
+                })
+            }
+
+            current = next
+            continue
+        }
+         
+            // Found
+            pushStepTree(steps, {
+                tree: structuredClone(root),
+                activeIds: [current.id],
+                message: `Found ${current.value}`,
+                target
+            })
+            return current
+    }
+
+    return null
+}
+
+/** Helper function to find successor */
+const findMin = (
+    node: RBTreeNodeDataNew
+): RBTreeNodeDataNew => {
+
+    let current = node
+
+    while (current.children[0]) {
+        current = current.children[0]
+    }
+
+    return current
+}
+
+/** Helper function for transplanting */
+const transplant = (
+    root: RBTreeNodeDataNew,
+    u: RBTreeNodeDataNew,
+    v: RBTreeNodeDataNew | null
+): RBTreeNodeDataNew => {
+
+    const p = u.parent
+
+    if (!p) {
+        if (v) v.parent = null
+
+        return v as RBTreeNodeDataNew
+    }
+
+    if (p.children[0] === u) {
+        p.children[0] = v
+    } 
+    
+    else {
+        p.children[1] = v
+    }
+
+    if (v) {
+        v.parent = p
+    }
+
+    return root
+}
+
+
+
+export default RBDelete

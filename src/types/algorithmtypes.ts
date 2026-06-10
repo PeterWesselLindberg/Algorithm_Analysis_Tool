@@ -27,7 +27,7 @@ import dfsTreeSearch, { depthLimitedSearch, dfsRedBlackSearch } from "../algorit
 import binarySearch from "../algorithms/binarySearch"
 import bstDelete from "../algorithms/bstDeletion"
 import redBlackInsert from "../algorithms/redBlackTreeInsertion"
-// import RBDelete from "../algorithms/redBlackTreeDeletion"
+import RBDelete from "../algorithms/redBlackTreeDeletion"
 
 /** Different algorithms for input to AnimationManager  */
 export type AlgorithmTypes =
@@ -63,7 +63,7 @@ export type AlgorithmTypes =
   | "dfsRedBlackSearch"
   | "bfsRedBlackSearch"
   | "redBlackInsert"
-  // | "redBlackDelete"
+  | "redBlackDelete"
 
 /** The input types that the algorithms can take */
 export type AlgorithmInput = 
@@ -71,6 +71,7 @@ export type AlgorithmInput =
   | { type: "graph"; data: GraphData}
   | { type: "bst"; values: number[]; target: number }
   | { type: "search"; data: number[]; target: number }
+  | {type: "RBbst"; values: number[]; target: string }
   
 /** The type of the algorithms */
 export type AlgorithmFunction =
@@ -113,7 +114,7 @@ const algorithmTypes : Record<
     dfsRedBlackSearch: dfsRedBlackSearch,
     bfsRedBlackSearch: bfsRedBlackSearch,
     redBlackInsert: redBlackInsert,
-    // redBlackDelete: RBDelete
+    redBlackDelete: RBDelete
 }
 
 export default algorithmTypes

@@ -51,7 +51,6 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
             step={step}
             tree={step.tree}
             numbers={numbers}
-            isHeap={true}
           />
           <hr />
 
@@ -118,7 +117,6 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
             step={step}
             tree={step.tree}
             numbers={numbers}
-            isHeap={true}
           />
           <hr />
 

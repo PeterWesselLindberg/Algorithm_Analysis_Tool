@@ -402,7 +402,7 @@ const fixInsertion = (
 }
 
 
-const setChild = (
+export const setChild = (
   parent: RBTreeNodeDataNew,
   index: 0 | 1,
   child: RBTreeNodeDataNew | null

@@ -4,8 +4,8 @@ import type { AlgorithmFunction, AlgorithmInput } from "../types/algorithmtypes"
 import buildBST from "../utils/buildBST"
 import toId from "../utils/toId"
 import buildRedBlackTree from "../utils/buildRedBlackTree"
-import type { RBTreeNodeData } from "../dataStructures/RBTreeNodeData"
 import type { TreeNodeDataNew } from "../dataStructures/TreeNodedataNew"
+import type { RBTreeNodeDataNew } from "../dataStructures/RBTreeNodeDataNew"
 
 /** Wrapper function used for depth limited tree search */
 export const depthLimitedSearch: AlgorithmFunction = (input) =>
@@ -22,7 +22,7 @@ const dfsTreeSearch = (input: AlgorithmInput, depthLimit: number = -1, isRedBlac
   const steps: VisualizationStep[] = []
   const values = input.values
   const target = input.target
-  let root: TreeNodeDataNew | RBTreeNodeData | null = null
+  let root: TreeNodeDataNew | RBTreeNodeDataNew | null = null
 
   if (values.length === 0) return steps
 
@@ -50,13 +50,13 @@ const dfsTreeSearch = (input: AlgorithmInput, depthLimit: number = -1, isRedBlac
 
 /** The main function for depth first tree searach */
 const dfsTreeSearchCore = (
-  root: TreeNodeDataNew | RBTreeNodeData,
+  root: TreeNodeDataNew | RBTreeNodeDataNew,
   target: number,
   steps: VisualizationStep[],
   depthLimit: number
-): TreeNodeDataNew | RBTreeNodeData | null => {
+): TreeNodeDataNew | RBTreeNodeDataNew | null => {
 
-  const stack: {node: TreeNodeDataNew | RBTreeNodeData; depth: number}[] = [{ node: root, depth: 0 }]
+  const stack: {node: TreeNodeDataNew | RBTreeNodeDataNew; depth: number}[] = [{ node: root, depth: 0 }]
 
   const visitedIds: string[] = []
 
