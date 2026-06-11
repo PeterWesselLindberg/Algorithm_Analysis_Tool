@@ -107,3 +107,33 @@ body.light .graph-text {
   align-items: flex-start;
   gap: 2rem;
 }
+
+.dark .custom-table {
+  --bs-table-bg: rgb(95, 94, 94);
+  --bs-table-color: white;
+  --bs-table-border-color: #444;
+
+  width: auto;          /* w-auto */
+  font-size: 0.875rem;  /* small */
+}
+
+.dark .custom-table th,
+.dark .custom-table td {
+  text-align: center;
+  color: white !important;
+}
+
+.light .custom-table {
+  --bs-table-bg: rgb(217, 217, 217);
+  --bs-table-color: black;
+  --bs-table-border-color: #888;
+
+  width: auto;          /* w-auto */
+  font-size: 0.875rem;  /* small */
+}
+
+.light .custom-table th,
+.light .custom-table td {
+  text-align: center;
+  color: black !important;
+}

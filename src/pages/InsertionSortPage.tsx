@@ -3,6 +3,7 @@ import TopNavBar from "../components/TopNavBar"
 import { useSearchParams } from "react-router-dom"
 import generateRandomArray from "../randGen/generateRandomArray"
 import visualItems from "../utils/visualItems"
+import ComplexityTable from "../components/ComplexityTable"
 
 const InsertionSortPage = () => {
 
@@ -24,7 +25,10 @@ const InsertionSortPage = () => {
       )}
 
       {selectedTab === 0 && (
-        <p> This text was hidden all along</p>
+        <>
+          <p> This text was hidden all along</p>
+          <ComplexityTable name= "1" best={"2"} average={"3"} worst={"4"} memory={"5"} stable={"6"}/>
+        </>
       )}
       
     </div>
