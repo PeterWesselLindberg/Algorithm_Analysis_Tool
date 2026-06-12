@@ -3,6 +3,7 @@ import generateRandomBalancedValues from "../randGen/generateRandomBalancedValue
 import TopNavBar from "../components/TopNavBar"
 import { useSearchParams } from "react-router-dom"
 import visualItems from "../utils/visualItems"
+import Visualization from "../types/VisualizationType"
 
 const DepthLimitedSearchPage = () => {
 
@@ -22,7 +23,7 @@ const DepthLimitedSearchPage = () => {
       
       {selectedTab === 1 && (
         <AnimationManager input={{type: "bst", values, target}}
-          algorithm="depthLimitedSearch" visualizationGraphics="TVList/tree" />
+          algorithm="depthLimitedSearch" visualizationGraphics={Visualization.TVListTree} />
       )}
 
       {selectedTab === 0 && (

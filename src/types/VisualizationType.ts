@@ -1,13 +1,18 @@
 /** Visualizer types for the case statement */
-export type VisualizationType = 
-    | "list/bar"
-    | "list/bar/tree"
-    | "list/list/list"
-    | "list"
-    | "list/tree"
-    | "list/graph"
-    | "distList/graph"
-    | "mstList/graph"
-    | "exList/tree"
-    | "TVList/tree"
-    | "TList/bar"
+const Visualization = {
+    ListBar: "list/bar",
+    ListBarTree: "list/bar/tree",
+    List3: "list/list/list",
+    List: "list",
+    ListTree: "list/tree",
+    ListGraph: "list/graph",
+    DistListGraph: "distList/graph",
+    MstListGraph: "mstList/graph",
+    ExListTree: "exList/tree",
+    TVListTree: "TVList/tree",
+    TListBar: "TList/bar"
+} as const
+
+export type VisualizationType = typeof Visualization[keyof typeof Visualization]
+
+export default Visualization

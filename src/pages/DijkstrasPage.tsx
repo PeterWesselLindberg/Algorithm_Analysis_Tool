@@ -3,6 +3,7 @@ import TopNavBar from "../components/TopNavBar"
 import { useSearchParams } from "react-router-dom"
 import generateRandomGraph from "../randGen/generateRandomGraph"
 import { addToList, oneItem } from "../utils/visualItems"
+import Visualization from "../types/VisualizationType"
 
 const DijkstrasPage = () => {
 
@@ -25,14 +26,14 @@ const DijkstrasPage = () => {
             { selectedTab === 1 &&  (
                 <>      
                     <AnimationManager input={generateRandomGraph(5, true, true)} 
-                        algorithm="dijkstrasRandom" visualizationGraphics="distList/graph" />
+                        algorithm="dijkstrasRandom" visualizationGraphics={Visualization.DistListGraph} />
                 </>
             )}
 
             { selectedTab === 2 &&  (
                 <>  
                     <AnimationManager input={generateRandomGraph(5, true, true)}
-                        algorithm="dijkstrasFull" visualizationGraphics="distList/graph" />
+                        algorithm="dijkstrasFull" visualizationGraphics={Visualization.DistListGraph} />
                 </>
             )}
 

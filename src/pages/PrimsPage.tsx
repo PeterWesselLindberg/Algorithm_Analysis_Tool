@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom"
 import TopNavBar from "../components/TopNavBar"
 import AnimationManager from "../components/AnimationManager"
 import generateRandomGraph from "../randGen/generateRandomGraph"
+import Visualization from "../types/VisualizationType"
 
 const PrimsPage = () => {
 
@@ -20,7 +21,7 @@ const PrimsPage = () => {
             <TopNavBar items={visualItems} onSelectItem={(item, index) => handleSelectTab(item, index)}/>
             <h1>Prim's minimum spanning tree</h1>
             { selectedTab === 1 && (
-                <AnimationManager input={generateRandomGraph(7, true, true)} algorithm="prims" visualizationGraphics="mstList/graph" />
+                <AnimationManager input={generateRandomGraph(7, true, true)} algorithm="prims" visualizationGraphics={Visualization.MstListGraph} />
             )}
             
             {selectedTab === 0 && (

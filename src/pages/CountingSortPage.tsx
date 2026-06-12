@@ -3,6 +3,7 @@ import TopNavBar from "../components/TopNavBar"
 import { useSearchParams } from "react-router-dom"
 import generateRandomArray from "../randGen/generateRandomArray"
 import visualItems from "../utils/visualItems"
+import Visualization from "../types/VisualizationType"
 
 const CountingSortPage = () => {
 
@@ -18,7 +19,7 @@ const CountingSortPage = () => {
       <TopNavBar items={visualItems} onSelectItem={(item, index) => handleSelectTab(item, index)}/>
       <h1>Counting sort</h1>
       { selectedTab === 1 && (
-        <AnimationManager input={generateRandomArray(15)} algorithm="counting" visualizationGraphics="list/list/list" />
+        <AnimationManager input={generateRandomArray(15)} algorithm="counting" visualizationGraphics={Visualization.List3} />
       )}
     
       {selectedTab === 0 && (

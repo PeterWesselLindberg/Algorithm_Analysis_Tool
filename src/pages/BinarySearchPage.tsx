@@ -3,6 +3,7 @@ import { generateRandomArrayWithTarget } from "../randGen/generateRandomArray"
 import TopNavBar from "../components/TopNavBar"
 import { useSearchParams } from "react-router-dom"
 import visualItems from "../utils/visualItems"
+import Visualization from "../types/VisualizationType"
 
 const BinarySearchPage = () => {
   
@@ -19,7 +20,7 @@ const BinarySearchPage = () => {
       <h1>Binary search</h1>
       
       { selectedTab === 1 && (
-        <AnimationManager input={generateRandomArrayWithTarget(15)} algorithm="binarySearch" visualizationGraphics="TList/bar" />
+        <AnimationManager input={generateRandomArrayWithTarget(15)} algorithm="binarySearch" visualizationGraphics={Visualization.TListBar} />
       )}
 
       { selectedTab === 0 && (

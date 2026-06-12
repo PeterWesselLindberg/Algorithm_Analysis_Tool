@@ -9,6 +9,7 @@ import GraphVisualizer from "./GraphVisualizer"
 import DistanceList from "./DistanceList"
 import MSTEdgeList from "./MSTEdgeList"
 import { ListGroup } from "react-bootstrap"
+import Visualization from "../types/VisualizationType"
 
 interface VisualizerProps {
   step: VisualizationStep
@@ -23,7 +24,7 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
   const compareIds = step.compareIds ?? []
   const sortedIds = step.sortedIds ?? []
   switch(visualizationType) {
-    case "list/bar": 
+    case Visualization.ListBar: 
       return (
          <>
           <BarsList
@@ -44,7 +45,7 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
         </>
       )
 
-    case "list/bar/tree": 
+    case Visualization.ListBarTree: 
         return (
          <>
           <TreeVisualizer
@@ -72,7 +73,7 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
         </>
       )
 
-    case "list/list/list":
+    case Visualization.List3: 
       return (
         <>
           {linears?.map((linear) => (
@@ -96,7 +97,7 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
         </>
       )
     
-    case "list":
+    case Visualization.List:
       return (
         <>
             <NumberList
@@ -110,7 +111,7 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
         </>
       )
     
-    case "list/tree":
+    case Visualization.ListTree: 
       return (
         <>
           <TreeVisualizer
@@ -125,7 +126,7 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
         </>
       )
     
-    case "exList/tree":
+    case Visualization.ExListTree:
       return (
         <>
           <TreeVisualizer
@@ -154,7 +155,7 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
         </>
       )
 
-    case "TVList/tree":
+    case Visualization.TVListTree: 
       return (
         <>
           <TreeVisualizer
@@ -227,7 +228,7 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
         </>
       )
 
-    case "list/graph":
+    case Visualization.ListGraph: 
       return (
         <>
           <GraphVisualizer
@@ -246,7 +247,7 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
         </>
       )
 
-    case "TList/bar":
+    case Visualization.TListBar: 
       return (
         <>
           <BarsList
@@ -314,7 +315,7 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
         </>
       )
     
-    case "distList/graph":
+    case Visualization.DistListGraph: 
       return (
         <>
           <GraphVisualizer
@@ -410,7 +411,7 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
         </>
       )
 
-    case "mstList/graph":
+    case Visualization.MstListGraph: 
       return (
         <>
           <GraphVisualizer

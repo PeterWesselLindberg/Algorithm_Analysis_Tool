@@ -4,6 +4,7 @@ import { useSearchParams } from "react-router-dom"
 import generateRandomArray from "../randGen/generateRandomArray"
 import generateRandomGraph from "../randGen/generateRandomGraph"
 import { addToList, oneItem } from "../utils/visualItems"
+import Visualization from "../types/VisualizationType"
 
 const BFSTraversalPage = () => {
     
@@ -23,14 +24,14 @@ const BFSTraversalPage = () => {
             { selectedTab === 1 &&  (
                 <>
                     <h1>{items[1]}</h1>
-                    <AnimationManager input={generateRandomArray(15)} algorithm="bfsTreeTraversal" visualizationGraphics="list/tree" />
+                    <AnimationManager input={generateRandomArray(15)} algorithm="bfsTreeTraversal" visualizationGraphics={Visualization.ListTree} />
                 </>
             )} 
 
             { selectedTab === 2 &&  (
                 <>
                     <h1>{items[2]}</h1>
-                    <AnimationManager input={generateRandomGraph(5, true)} algorithm="bfsGraphTraversal" visualizationGraphics="list/graph" />
+                    <AnimationManager input={generateRandomGraph(5, true)} algorithm="bfsGraphTraversal" visualizationGraphics={Visualization.ListGraph} />
                 </>
             )} 
 

@@ -1,7 +1,9 @@
 import { Table } from "react-bootstrap"
+import type { AlgoType } from "../types/algoType"
+import type { DataType } from "../types/dataType"
 interface ComplexityTableProps {
-    algoType?: string
-    dataType?: string
+    algoType?: AlgoType
+    dataType?: DataType
     name?: string
     best?: string
     average?: string

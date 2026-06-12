@@ -71,7 +71,6 @@ export type AlgorithmInput =
   | { type: "graph"; data: GraphData}
   | { type: "bst"; values: number[]; target: number }
   | { type: "search"; data: number[]; target: number }
-  | {type: "RBbst"; values: number[]; target: string }
   
 /** The type of the algorithms */
 export type AlgorithmFunction =

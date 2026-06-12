@@ -3,6 +3,7 @@ import TopNavBar from "../components/TopNavBar"
 import { useSearchParams } from "react-router-dom"
 import generateRandomArray from "../randGen/generateRandomArray"
 import visualItems from "../utils/visualItems"
+import Visualization from "../types/VisualizationType"
 
 
 const QuickSortPage = () => {
@@ -21,7 +22,7 @@ const QuickSortPage = () => {
       <h1>Quick sort</h1>
       
       {selectedTab === 1 && (
-        <AnimationManager input={generateRandomArray(15)} algorithm="quick" visualizationGraphics="list/bar" />
+        <AnimationManager input={generateRandomArray(15)} algorithm="quick" visualizationGraphics={Visualization.ListBar} />
       )}
 
       {selectedTab === 0 && (

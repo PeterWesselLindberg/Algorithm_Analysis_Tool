@@ -3,6 +3,7 @@ import generateRandomArray from "../randGen/generateRandomArray"
 import TopNavBar from "../components/TopNavBar"
 import { useSearchParams } from "react-router-dom"
 import visualItems from "../utils/visualItems"
+import Visualization from "../types/VisualizationType"
 
 const BubbleSortPage = () => {
   
@@ -20,7 +21,7 @@ const BubbleSortPage = () => {
       
       {selectedTab === 1 && (
         <AnimationManager input={generateRandomArray(15)}
-          algorithm="bubble" visualizationGraphics="list/bar" />
+          algorithm="bubble" visualizationGraphics={Visualization.ListBar} />
       )}
 
       {selectedTab === 0 && (

@@ -3,6 +3,7 @@ import TopNavBar from "../components/TopNavBar"
 import { useSearchParams } from "react-router-dom"
 import generateRandomArray from "../randGen/generateRandomArray"
 import visualItems, { addToList } from "../utils/visualItems"
+import Visualization from "../types/VisualizationType"
 
 
 
@@ -24,11 +25,11 @@ const HeapSortPage = () => {
       <TopNavBar items={items} onSelectItem={(item, index) => handleSelectTab(item, index)}/>
       <h1>Heap sort</h1>
       { selectedTab === 1 &&  (
-        <AnimationManager input={generateRandomArray(15)} algorithm="heap" visualizationGraphics="list/bar/tree" />
+        <AnimationManager input={generateRandomArray(15)} algorithm="heap" visualizationGraphics={Visualization.ListBarTree} />
       )} 
       
       { selectedTab === 2 &&  (
-        <AnimationManager input={generateRandomArray(15)} algorithm="heap" visualizationGraphics="list/bar" />
+        <AnimationManager input={generateRandomArray(15)} algorithm="heap" visualizationGraphics={Visualization.ListBar} />
       )}
 
       {selectedTab === 0 && (

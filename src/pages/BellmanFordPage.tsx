@@ -3,6 +3,7 @@ import TopNavBar from "../components/TopNavBar"
 import generateRandomGraph from "../randGen/generateRandomGraph"
 import { addToList, oneItem } from "../utils/visualItems"
 import { useSearchParams } from "react-router-dom"
+import Visualization from "../types/VisualizationType"
 
 const BellmanFordPage = () => {
     
@@ -31,28 +32,28 @@ const BellmanFordPage = () => {
             { selectedTab === 1 &&  (
                 <>
                     <AnimationManager input={generateRandomGraph(5, true, true, true)}
-                        algorithm="bellmanFordRandom" visualizationGraphics="distList/graph" />
+                        algorithm="bellmanFordRandom" visualizationGraphics={Visualization.DistListGraph}/>
                 </>
             )}
 
             { selectedTab === 2 &&  (
                 <>
                     <AnimationManager input={generateRandomGraph(5, true, true, true, false, true)} 
-                        algorithm="bellmanFordFull" visualizationGraphics="distList/graph" />
+                        algorithm="bellmanFordFull" visualizationGraphics={Visualization.DistListGraph} />
                 </>
             )}
 
             { selectedTab === 3 &&  (
                 <>
                     <AnimationManager input={generateRandomGraph(5, true, true, true, true)} 
-                        algorithm="bellmanFordRandom" visualizationGraphics="distList/graph" />
+                        algorithm="bellmanFordRandom" visualizationGraphics={Visualization.DistListGraph} />
                 </>
             )}
 
             { selectedTab === 4 &&  (
                 <>
                     <AnimationManager input={generateRandomGraph(5, true, true, true, true)} 
-                        algorithm="bellmanFordFull" visualizationGraphics="distList/graph" />
+                        algorithm="bellmanFordFull" visualizationGraphics={Visualization.DistListGraph} />
                 </>
             )}
 

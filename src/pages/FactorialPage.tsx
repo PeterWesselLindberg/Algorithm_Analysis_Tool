@@ -2,6 +2,7 @@ import AnimationManager from "../components/AnimationManager"
 import TopNavBar from "../components/TopNavBar"
 import { useSearchParams } from "react-router-dom"
 import visualItems from "../utils/visualItems"
+import Visualization from "../types/VisualizationType"
 
 const FactorialPage = () => {
 
@@ -17,7 +18,7 @@ const FactorialPage = () => {
       <TopNavBar items={visualItems} onSelectItem={(item, index) => handleSelectTab(item, index)}/>
       <h1>Nth factorial</h1>
       { selectedTab === 1 && (
-        <AnimationManager input={{type: "array", data: [15]}} algorithm="factorial" visualizationGraphics="list" />
+        <AnimationManager input={{type: "array", data: [15]}} algorithm="factorial" visualizationGraphics={Visualization.List} />
       )}
     
       {selectedTab === 0 && (

@@ -3,6 +3,7 @@ import TopNavBar from "../components/TopNavBar"
 import { useSearchParams } from "react-router-dom"
 import { oneItem,addToList } from "../utils/visualItems"
 import generateRandomBalancedValues from "../randGen/generateRandomBalancedValue"
+import Visualization from "../types/VisualizationType"
 
 const RedBlackTreePage = () => {
 
@@ -30,7 +31,7 @@ const RedBlackTreePage = () => {
       { selectedTab === 1 && (
         <>
           <h1>Red-Black tree Insertion</h1>
-          <AnimationManager input={{type: "bst", values, target}} algorithm="redBlackInsert" visualizationGraphics="TVList/tree" />
+          <AnimationManager input={{type: "bst", values, target}} algorithm="redBlackInsert" visualizationGraphics={Visualization.TVListTree} />
         </>
       )}
 
@@ -38,7 +39,7 @@ const RedBlackTreePage = () => {
         <>
           <h1>Red-Black tree breadth-first search</h1>
           <AnimationManager input={{type: "bst", values, target}}
-            algorithm="bfsRedBlackSearch" visualizationGraphics="TVList/tree" />
+            algorithm="bfsRedBlackSearch" visualizationGraphics={Visualization.TVListTree} />
         </>
       )}
 

@@ -2,6 +2,7 @@ import AnimationManager from "../components/AnimationManager"
 import TopNavBar from "../components/TopNavBar"
 import { useSearchParams } from "react-router-dom"
 import visualItems from "../utils/visualItems"
+import Visualization from "../types/VisualizationType"
 
 const FibonacciPage = () => {
 
@@ -18,7 +19,7 @@ const FibonacciPage = () => {
       <TopNavBar items={visualItems} onSelectItem={(item, index) => handleSelectTab(item, index)}/>
       <h1>The fibonacci sequence</h1>
       { selectedTab === 1 && (
-        <AnimationManager input={{type: "array", data: [16]}} algorithm="fibonacci" visualizationGraphics="list" />
+        <AnimationManager input={{type: "array", data: [16]}} algorithm="fibonacci" visualizationGraphics={Visualization.List} />
       )}
     
       {selectedTab === 0 && (
