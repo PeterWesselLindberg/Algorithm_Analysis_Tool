@@ -4,6 +4,7 @@ import { useSearchParams } from "react-router-dom"
 import generateRandomGraph from "../randGen/generateRandomGraph"
 import { addToList, oneItem } from "../utils/visualItems"
 import Visualization from "../types/VisualizationType"
+import { Algorithm } from "../types/algorithmtypes"
 
 const DijkstrasPage = () => {
 
@@ -26,14 +27,14 @@ const DijkstrasPage = () => {
             { selectedTab === 1 &&  (
                 <>      
                     <AnimationManager input={generateRandomGraph(5, true, true)} 
-                        algorithm="dijkstrasRandom" visualizationGraphics={Visualization.DistListGraph} />
+                        algorithm={Algorithm.DijkstrasRand} visualizationGraphics={Visualization.DistListGraph} />
                 </>
             )}
 
             { selectedTab === 2 &&  (
                 <>  
                     <AnimationManager input={generateRandomGraph(5, true, true)}
-                        algorithm="dijkstrasFull" visualizationGraphics={Visualization.DistListGraph} />
+                        algorithm={Algorithm.DijkstrasFull} visualizationGraphics={Visualization.DistListGraph} />
                 </>
             )}
 

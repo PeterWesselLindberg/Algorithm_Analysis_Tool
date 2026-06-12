@@ -4,6 +4,7 @@ import { useSearchParams } from "react-router-dom"
 import generateRandomArray from "../randGen/generateRandomArray"
 import visualItems from "../utils/visualItems"
 import Visualization from "../types/VisualizationType"
+import { Algorithm } from "../types/algorithmtypes"
 
 const RandQuickSortPage = () => {
 
@@ -21,7 +22,7 @@ const RandQuickSortPage = () => {
       <h1>Randomized quick sort</h1>
       
       {selectedTab === 1 && (
-        <AnimationManager input={generateRandomArray(15)} algorithm="rQuick" visualizationGraphics={Visualization.ListBar} />
+        <AnimationManager input={generateRandomArray(15)} algorithm={Algorithm.RQuickSort} visualizationGraphics={Visualization.ListBar} />
       )}
 
       {selectedTab === 0 && (

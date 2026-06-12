@@ -1,6 +1,8 @@
 import { Table } from "react-bootstrap"
 import type { AlgoType } from "../types/algoType"
 import type { DataType } from "../types/dataType"
+import formatMathText from "../utils/formatMathText"
+import type { StableType } from "../types/stableType"
 interface ComplexityTableProps {
     algoType?: AlgoType
     dataType?: DataType
@@ -9,7 +11,7 @@ interface ComplexityTableProps {
     average?: string
     worst?: string
     memory?: string
-    stable?: string
+    stable?: StableType
 }
 
 const ComplexityTable = ({
@@ -28,7 +30,7 @@ const ComplexityTable = ({
             <thead>
                 <tr>
                     {algoType ? <th>Class</th> : undefined}
-                    {dataType ? <th>Data structure</th> : undefined}
+                    {dataType ? <th>Data structure(s)</th> : undefined}
                     {name ? <th>Name</th> : undefined}
                     {best ? <th>Best-case <br/> performance</th> : undefined}
                     {average ? <th>Average-case <br/> performance</th> : undefined}
@@ -43,10 +45,10 @@ const ComplexityTable = ({
                     {algoType ? <td>{algoType}</td> : undefined}
                     {dataType ? <td>{dataType}</td> : undefined}
                     {name ? <td>{name}</td> : undefined}
-                    {best ? <td>{best}</td> : undefined}
-                    {average ? <td>{average}</td> : undefined}
-                    {worst ? <td>{worst}</td> : undefined}
-                    {memory ? <td>{memory}</td> : undefined}
+                    {best ? <td>{formatMathText(best)}</td> : undefined}
+                    {average ? <td>{formatMathText(average)}</td> : undefined}
+                    {worst ? <td>{formatMathText(worst)}</td> : undefined}
+                    {memory ? <td>{formatMathText(memory)}</td> : undefined}
                     {stable ? <td>{stable}</td> : undefined}
                 </tr>
             </tbody>

@@ -30,40 +30,43 @@ import redBlackInsert from "../algorithms/redBlackTreeInsertion"
 import RBDelete from "../algorithms/redBlackTreeDeletion"
 
 /** Different algorithms for input to AnimationManager  */
-export type AlgorithmTypes =
-  | "insertion"
-  | "bubble"
-  | "selection"
-  | "quick"
-  | "rQuick"
-  | "heap"
-  | "merge"
-  | "counting"
-  | "radix"
-  | "factorial"
-  | "fibonacci"
-  | "inorderTraversal"
-  | "postorderTraversal"
-  | "preorderTraversal"
-  | "bfsTreeTraversal"
-  | "dfsGraphTraversal"
-  | "dijkstrasFull"
-  | "dijkstrasRandom"
-  | "bellmanFordRandom"
-  | "bellmanFordFull"
-  | "bfsGraphTraversal"
-  | "kruskals"
-  | "prims"
-  | "bstInsertion"
-  | "bfsTreeSearch"
-  | "dfsTreeSearch"
-  | "depthLimitedSearch"
-  | "binarySearch"
-  | "bstDeletion"
-  | "dfsRedBlackSearch"
-  | "bfsRedBlackSearch"
-  | "redBlackInsert"
-  | "redBlackDelete"
+export const Algorithm = {
+  InsertionSort: "insertion",
+  BubbleSort: "bubble",
+  SelectionSort: "selection",
+  QuickSort: "quick",
+  RQuickSort: "rQuick",
+  HeapSort: "heap",
+  MergeSort: "merge",
+  CountingSort: "counting",
+  RadixSort: "radix",
+  Factorial: "factorial",
+  Fibonacci: "fibonacci",
+  Inorder: "inorderTraversal",
+  PostOrder: "postorderTraversal",
+  PreOrder: "preorderTraversal",
+  BFSTreeTraversal: "bfsTreeTraversal",
+  DFSGraphTraversal: "dfsGraphTraversal",
+  DijkstrasFull: "dijkstrasFull",
+  DijkstrasRand: "dijkstrasRandom",
+  BellmanFordRand: "bellmanFordRandom",
+  BellmanFordFull: "bellmanFordFull",
+  BFSGraph: "bfsGraphTraversal",
+  Kruskals: "kruskals",
+  Prims: "prims",
+  BSTinsert: "bstInsertion",
+  BFSTreeSearch: "bfsTreeSearch",
+  DFSTreeSearch: "dfsTreeSearch",
+  DepthLimitedSearch: "depthLimitedSearch",
+  BinarySearch: "binarySearch",
+  BSTDelete: "bstDeletion",
+  DFSRBSearch: "dfsRedBlackSearch",
+  BFSRBSearch: "bfsRedBlackSearch",
+  RBInsert: "redBlackInsert",
+  RBDelete: "redBlackDelete"
+  } as const
+
+export type AlgorithmTypes = typeof Algorithm[keyof typeof Algorithm]
 
 /** The input types that the algorithms can take */
 export type AlgorithmInput = 

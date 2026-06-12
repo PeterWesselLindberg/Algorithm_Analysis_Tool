@@ -27,6 +27,7 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
     case Visualization.ListBar: 
       return (
          <>
+         <hr />
           <BarsList
             numbers={numbers}
             activeIds={activeIds}

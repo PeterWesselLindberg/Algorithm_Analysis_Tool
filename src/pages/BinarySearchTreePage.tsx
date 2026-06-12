@@ -5,6 +5,7 @@ import TopNavBar from "../components/TopNavBar"
 import { useSearchParams } from "react-router-dom"
 import {oneItem, addToList} from "../utils/visualItems"
 import Visualization from "../types/VisualizationType"
+import { Algorithm } from "../types/algorithmtypes"
 
 const BinarySearchTreePage = () => {
   
@@ -26,7 +27,7 @@ const BinarySearchTreePage = () => {
       { selectedTab === 1 && (
         <>
           <h1>Binary search tree Insertion</h1>
-          <AnimationManager input={generateRandomArray(7)} algorithm="bstInsertion" visualizationGraphics={Visualization.ExListTree} />
+          <AnimationManager input={generateRandomArray(7)} algorithm={Algorithm.BSTinsert} visualizationGraphics={Visualization.ExListTree} />
         </>
       )}
 
@@ -34,7 +35,7 @@ const BinarySearchTreePage = () => {
         <>
           <h1>Binary search tree breadth-first search</h1>
           <AnimationManager input={{type: "bst", values, target}}
-            algorithm="bfsTreeSearch" visualizationGraphics={Visualization.TVListTree} />
+            algorithm={Algorithm.BFSTreeSearch} visualizationGraphics={Visualization.TVListTree} />
         </>
       )}
 
@@ -42,7 +43,7 @@ const BinarySearchTreePage = () => {
         <>
         <h1>Binary search tree depth-first search</h1>
         <AnimationManager input={{type: "bst", values, target}}
-          algorithm="dfsTreeSearch" visualizationGraphics={Visualization.TVListTree} />
+          algorithm={Algorithm.DFSTreeSearch} visualizationGraphics={Visualization.TVListTree} />
        </>
       )}
       { selectedTab === 4 && (
@@ -50,7 +51,7 @@ const BinarySearchTreePage = () => {
           <h1>Binary search tree deletion</h1>
 
           <AnimationManager input={{type: "bst", values, target}}
-            algorithm="bstDeletion" visualizationGraphics={Visualization.TVListTree} />
+            algorithm={Algorithm.BSTDelete} visualizationGraphics={Visualization.TVListTree} />
         </>
       )}
 

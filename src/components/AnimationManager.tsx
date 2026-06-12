@@ -7,14 +7,16 @@ import { FaSquare, FaChevronLeft, FaChevronRight, FaPlay, FaPause } from "react-
 import Visualizer from "./Visualizer"
 import type { VisualizationStep } from "../types/VisualizationStep"
 import { useNavigate } from "react-router-dom"
+import ColorExplain from "./ColorExplain"
 
 interface AnimationManagerProps {
   input: AlgorithmInput,
   algorithm: AlgorithmTypes,
   visualizationGraphics: VisualizationType
+  isInAbout?: boolean
 }
 
-const AnimationManager = ({input, algorithm, visualizationGraphics} : AnimationManagerProps) => {
+const AnimationManager = ({input, algorithm, visualizationGraphics, isInAbout = false} : AnimationManagerProps) => {
   const selectedAlgorithm = algorithmTypes[algorithm] // Initialises the given algoritmhtype for the limited types
   const initialSteps = selectedAlgorithm(input) // Initialises the the input list with the selected algoritm
 
@@ -24,6 +26,7 @@ const AnimationManager = ({input, algorithm, visualizationGraphics} : AnimationM
   const [isSorting, setIsSorting] = useState(false) 
   const [isPaused, setIsPaused] = useState(false)
   const [isFinished, setIsFinished] = useState(false)
+  const [isHidden, _setIsHidden] = useState(isInAbout)
 
   // The steps used in the algorithm animation
   const [step, setStep] = useState<VisualizationStep>(initialSteps[0])
@@ -199,9 +202,11 @@ const AnimationManager = ({input, algorithm, visualizationGraphics} : AnimationM
             <FaChevronRight />
           </Button>
 
-          <Button onClick={generateNewData} style={{ marginLeft: "10rem" }}>
+          {!isHidden &&
+          <Button onClick={generateNewData} style={{ marginLeft: "10rem" }} disabled={isInAbout}>
             Generate new data
           </Button>
+          }
 
           <div style={{ marginTop: "1rem"}}>
             <label>
@@ -235,6 +240,9 @@ const AnimationManager = ({input, algorithm, visualizationGraphics} : AnimationM
               }}
               style={{ width: "400px"}}
             />
+            
+            {!isHidden && <ColorExplain/>}
+
           </div>
         </div>
     </div>

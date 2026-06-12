@@ -4,6 +4,7 @@ import TopNavBar from "../components/TopNavBar"
 import { useSearchParams } from "react-router-dom"
 import visualItems from "../utils/visualItems"
 import Visualization from "../types/VisualizationType"
+import { Algorithm } from "../types/algorithmtypes"
 
 const DepthLimitedSearchPage = () => {
 
@@ -23,7 +24,7 @@ const DepthLimitedSearchPage = () => {
       
       {selectedTab === 1 && (
         <AnimationManager input={{type: "bst", values, target}}
-          algorithm="depthLimitedSearch" visualizationGraphics={Visualization.TVListTree} />
+          algorithm={Algorithm.DepthLimitedSearch} visualizationGraphics={Visualization.TVListTree} />
       )}
 
       {selectedTab === 0 && (

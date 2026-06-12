@@ -137,3 +137,44 @@ body.light .graph-text {
   text-align: center;
   color: black !important;
 }
+
+.v-space{
+  margin-top: 1cm;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.legend-item-v-space {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1cm;
+}
+
+.red-square {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-color: #dc3545;
+  flex-shrink: 0;
+}
+
+.yellow-square {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-color: #ffc107;
+  flex-shrink: 0;
+}
+
+.green-square {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-color: #198754;
+  flex-shrink: 0;
+}

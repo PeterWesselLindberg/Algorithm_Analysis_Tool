@@ -1,6 +1,6 @@
 /** DataStructure types for the complexity table */
 const DataStructure = {
-    Arr: "Array",
+    Arr: "Array/List",
     Graph: "Graph",
 } as const
 

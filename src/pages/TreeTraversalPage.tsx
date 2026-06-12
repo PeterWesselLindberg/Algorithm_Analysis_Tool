@@ -4,6 +4,7 @@ import { useSearchParams } from "react-router-dom"
 import generateRandomArray from "../randGen/generateRandomArray"
 import { addToList, oneItem } from "../utils/visualItems"
 import Visualization from "../types/VisualizationType"
+import { Algorithm } from "../types/algorithmtypes"
 
 
 const TreeTraversalPage = () => {
@@ -25,21 +26,21 @@ const TreeTraversalPage = () => {
       { selectedTab === 1 &&  (
         <>
           <h1>Inorder tree traversal</h1>
-          <AnimationManager input={generateRandomArray(15)} algorithm="inorderTraversal" visualizationGraphics={Visualization.ListTree} />
+          <AnimationManager input={generateRandomArray(15)} algorithm={Algorithm.Inorder} visualizationGraphics={Visualization.ListTree} />
         </>
       )} 
 
       { selectedTab === 2 &&  (
         <>
           <h1>Postorder tree traversal</h1>
-          <AnimationManager input={generateRandomArray(15)} algorithm="postorderTraversal" visualizationGraphics={Visualization.ListTree} />
+          <AnimationManager input={generateRandomArray(15)} algorithm={Algorithm.PostOrder} visualizationGraphics={Visualization.ListTree} />
         </>
       )} 
 
       { selectedTab === 3 &&  (
         <>
           <h1>Preorder tree traversal</h1>
-          <AnimationManager input={generateRandomArray(15)} algorithm="preorderTraversal" visualizationGraphics={Visualization.ListTree} />
+          <AnimationManager input={generateRandomArray(15)} algorithm={Algorithm.PreOrder} visualizationGraphics={Visualization.ListTree} />
         </>
       )} 
 

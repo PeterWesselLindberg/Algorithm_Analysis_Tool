@@ -5,6 +5,7 @@ import generateRandomArray from "../randGen/generateRandomArray"
 import generateRandomGraph from "../randGen/generateRandomGraph"
 import { addToList, oneItem } from "../utils/visualItems"
 import Visualization from "../types/VisualizationType"
+import { Algorithm } from "../types/algorithmtypes"
 
 const BFSTraversalPage = () => {
     
@@ -24,14 +25,14 @@ const BFSTraversalPage = () => {
             { selectedTab === 1 &&  (
                 <>
                     <h1>{items[1]}</h1>
-                    <AnimationManager input={generateRandomArray(15)} algorithm="bfsTreeTraversal" visualizationGraphics={Visualization.ListTree} />
+                    <AnimationManager input={generateRandomArray(15)} algorithm={Algorithm.BFSTreeTraversal} visualizationGraphics={Visualization.ListTree} />
                 </>
             )} 
 
             { selectedTab === 2 &&  (
                 <>
                     <h1>{items[2]}</h1>
-                    <AnimationManager input={generateRandomGraph(5, true)} algorithm="bfsGraphTraversal" visualizationGraphics={Visualization.ListGraph} />
+                    <AnimationManager input={generateRandomGraph(5, true)} algorithm={Algorithm.BFSGraph} visualizationGraphics={Visualization.ListGraph} />
                 </>
             )} 
 

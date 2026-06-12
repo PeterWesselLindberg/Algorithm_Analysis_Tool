@@ -4,6 +4,7 @@ import generateRandomGraph from "../randGen/generateRandomGraph"
 import { addToList, oneItem } from "../utils/visualItems"
 import { useSearchParams } from "react-router-dom"
 import Visualization from "../types/VisualizationType"
+import { Algorithm } from "../types/algorithmtypes"
 
 const BellmanFordPage = () => {
     
@@ -32,28 +33,28 @@ const BellmanFordPage = () => {
             { selectedTab === 1 &&  (
                 <>
                     <AnimationManager input={generateRandomGraph(5, true, true, true)}
-                        algorithm="bellmanFordRandom" visualizationGraphics={Visualization.DistListGraph}/>
+                        algorithm={Algorithm.BellmanFordRand} visualizationGraphics={Visualization.DistListGraph}/>
                 </>
             )}
 
             { selectedTab === 2 &&  (
                 <>
                     <AnimationManager input={generateRandomGraph(5, true, true, true, false, true)} 
-                        algorithm="bellmanFordFull" visualizationGraphics={Visualization.DistListGraph} />
+                        algorithm={Algorithm.BellmanFordFull} visualizationGraphics={Visualization.DistListGraph} />
                 </>
             )}
 
             { selectedTab === 3 &&  (
                 <>
                     <AnimationManager input={generateRandomGraph(5, true, true, true, true)} 
-                        algorithm="bellmanFordRandom" visualizationGraphics={Visualization.DistListGraph} />
+                        algorithm={Algorithm.BellmanFordRand} visualizationGraphics={Visualization.DistListGraph} />
                 </>
             )}
 
             { selectedTab === 4 &&  (
                 <>
                     <AnimationManager input={generateRandomGraph(5, true, true, true, true)} 
-                        algorithm="bellmanFordFull" visualizationGraphics={Visualization.DistListGraph} />
+                        algorithm={Algorithm.BellmanFordFull} visualizationGraphics={Visualization.DistListGraph} />
                 </>
             )}
 
