@@ -5,6 +5,7 @@ import generateRandomArray from "../randGen/generateRandomArray"
 import visualItems from "../utils/visualItems"
 import Visualization from "../types/VisualizationType"
 import { Algorithm } from "../types/algorithmtypes"
+import StructureColor from "../types/structureColor"
 
 
 const QuickSortPage = () => {
@@ -23,7 +24,8 @@ const QuickSortPage = () => {
       <h1>Quick sort</h1>
       
       {selectedTab === 1 && (
-        <AnimationManager input={generateRandomArray(15)} algorithm={Algorithm.QuickSort} visualizationGraphics={Visualization.ListBar} />
+        <AnimationManager input={generateRandomArray(15)} algorithm={Algorithm.QuickSort} visualizationGraphics={Visualization.ListBar}
+        structure={StructureColor.ArrColor} />
       )}
 
       {selectedTab === 0 && (

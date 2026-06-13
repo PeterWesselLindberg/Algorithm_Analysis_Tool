@@ -5,6 +5,7 @@ import generateRandomArray from "../randGen/generateRandomArray"
 import visualItems, { addToList } from "../utils/visualItems"
 import Visualization from "../types/VisualizationType"
 import { Algorithm } from "../types/algorithmtypes"
+import StructureColor from "../types/structureColor"
 
 
 
@@ -26,11 +27,13 @@ const HeapSortPage = () => {
       <TopNavBar items={items} onSelectItem={(item, index) => handleSelectTab(item, index)}/>
       <h1>Heap sort</h1>
       { selectedTab === 1 &&  (
-        <AnimationManager input={generateRandomArray(15)} algorithm={Algorithm.HeapSort} visualizationGraphics={Visualization.ListBarTree} />
+        <AnimationManager input={generateRandomArray(15)} algorithm={Algorithm.HeapSort} visualizationGraphics={Visualization.ListBarTree}
+        structure={StructureColor.ArrColor} />
       )} 
       
       { selectedTab === 2 &&  (
-        <AnimationManager input={generateRandomArray(15)} algorithm={Algorithm.HeapSort} visualizationGraphics={Visualization.ListBar} />
+        <AnimationManager input={generateRandomArray(15)} algorithm={Algorithm.HeapSort} visualizationGraphics={Visualization.ListBar}
+        structure={StructureColor.ArrColor}/>
       )}
 
       {selectedTab === 0 && (

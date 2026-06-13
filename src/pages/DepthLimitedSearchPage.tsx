@@ -5,6 +5,7 @@ import { useSearchParams } from "react-router-dom"
 import visualItems from "../utils/visualItems"
 import Visualization from "../types/VisualizationType"
 import { Algorithm } from "../types/algorithmtypes"
+import StructureColor from "../types/structureColor"
 
 const DepthLimitedSearchPage = () => {
 
@@ -24,7 +25,8 @@ const DepthLimitedSearchPage = () => {
       
       {selectedTab === 1 && (
         <AnimationManager input={{type: "bst", values, target}}
-          algorithm={Algorithm.DepthLimitedSearch} visualizationGraphics={Visualization.TVListTree} />
+          algorithm={Algorithm.DepthLimitedSearch} visualizationGraphics={Visualization.TVListTree}
+          structure={StructureColor.TraversalColor} />
       )}
 
       {selectedTab === 0 && (

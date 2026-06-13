@@ -5,6 +5,7 @@ import { useSearchParams } from "react-router-dom"
 import visualItems from "../utils/visualItems"
 import Visualization from "../types/VisualizationType"
 import { Algorithm } from "../types/algorithmtypes"
+import StructureColor from "../types/structureColor"
 
 const BinarySearchPage = () => {
   
@@ -21,7 +22,8 @@ const BinarySearchPage = () => {
       <h1>Binary search</h1>
       
       { selectedTab === 1 && (
-        <AnimationManager input={generateRandomArrayWithTarget(15)} algorithm={Algorithm.BinarySearch} visualizationGraphics={Visualization.TListBar} />
+        <AnimationManager input={generateRandomArrayWithTarget(15)} algorithm={Algorithm.BinarySearch} visualizationGraphics={Visualization.TListBar}
+        structure={StructureColor.ArrColor}/>
       )}
 
       { selectedTab === 0 && (

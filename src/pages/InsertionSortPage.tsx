@@ -9,6 +9,7 @@ import Algo from "../types/algoType"
 import DataStructure from "../types/dataType"
 import Stable from "../types/stableType"
 import { Algorithm } from "../types/algorithmtypes"
+import StructureColor from "../types/structureColor"
 
 const InsertionSortPage = () => {
 
@@ -31,14 +32,15 @@ const InsertionSortPage = () => {
       
       {selectedTab === 1 && (
         <>
-          <AnimationManager input={generateRandomArray(15)} algorithm={Algorithm.InsertionSort} visualizationGraphics={Visualization.ListBar} />
+          <AnimationManager input={generateRandomArray(15)} algorithm={Algorithm.InsertionSort} visualizationGraphics={Visualization.ListBar}
+          structure={StructureColor.ArrColor} />
         </>
       )}
 
       {selectedTab === 0 && (
         <>
           <p>
-            Insertion sort is a sorting algorithm, that builds the final sorted array/list one item at a time. 
+            Insertion sort is a sorting algorithm, that builds the final sorted array/list one item at a time.<br/>
             It is not as efficient on large lists as more advanced sorting algorithms such as quicksort, heapsort or mergesort.
           </p>
 

@@ -5,6 +5,7 @@ import { addToList, oneItem } from "../utils/visualItems"
 import { useSearchParams } from "react-router-dom"
 import Visualization from "../types/VisualizationType"
 import { Algorithm } from "../types/algorithmtypes"
+import StructureColor from "../types/structureColor"
 
 const BellmanFordPage = () => {
     
@@ -33,28 +34,32 @@ const BellmanFordPage = () => {
             { selectedTab === 1 &&  (
                 <>
                     <AnimationManager input={generateRandomGraph(5, true, true, true)}
-                        algorithm={Algorithm.BellmanFordRand} visualizationGraphics={Visualization.DistListGraph}/>
+                        algorithm={Algorithm.BellmanFordRand} visualizationGraphics={Visualization.DistListGraph}
+                        structure={StructureColor.ShortestPathColor}/>
                 </>
             )}
 
             { selectedTab === 2 &&  (
                 <>
                     <AnimationManager input={generateRandomGraph(5, true, true, true, false, true)} 
-                        algorithm={Algorithm.BellmanFordFull} visualizationGraphics={Visualization.DistListGraph} />
+                        algorithm={Algorithm.BellmanFordFull} visualizationGraphics={Visualization.DistListGraph}
+                        structure={StructureColor.ShortestPathColor} />
                 </>
             )}
 
             { selectedTab === 3 &&  (
                 <>
                     <AnimationManager input={generateRandomGraph(5, true, true, true, true)} 
-                        algorithm={Algorithm.BellmanFordRand} visualizationGraphics={Visualization.DistListGraph} />
+                        algorithm={Algorithm.BellmanFordRand} visualizationGraphics={Visualization.DistListGraph}
+                        structure={StructureColor.ShortestPathColor} />
                 </>
             )}
 
             { selectedTab === 4 &&  (
                 <>
                     <AnimationManager input={generateRandomGraph(5, true, true, true, true)} 
-                        algorithm={Algorithm.BellmanFordFull} visualizationGraphics={Visualization.DistListGraph} />
+                        algorithm={Algorithm.BellmanFordFull} visualizationGraphics={Visualization.DistListGraph}
+                        structure={StructureColor.ShortestPathColor} />
                 </>
             )}
 

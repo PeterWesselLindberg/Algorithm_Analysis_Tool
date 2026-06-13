@@ -9,6 +9,7 @@ import ComplexityTable from "../components/ComplexityTable"
 import Algo from "../types/algoType"
 import DataStructure from "../types/dataType"
 import Stable from "../types/stableType"
+import StructureColor from "../types/structureColor"
 
 const BubbleSortPage = () => {
   
@@ -30,15 +31,16 @@ const BubbleSortPage = () => {
       
       {selectedTab === 1 && (
         <AnimationManager input={generateRandomArray(15)}
-          algorithm={Algorithm.BubbleSort} visualizationGraphics={Visualization.ListBar} />
+          algorithm={Algorithm.BubbleSort} visualizationGraphics={Visualization.ListBar}
+          structure={StructureColor.ArrColor} />
       )}
 
       {selectedTab === 0 && (
         <>
           <p>
             Bubble sort is a sorting algorithm, that builds the final sorted array/list by repeatedly stepping through the list,
-            comparing each pair of adjacent items to each other and swapping them if they are in the wrong order. 
-            The stepping through the list repeated until no swaps are needed. It is not as efficient on large lists as more advanced sorting algorithms 
+            comparing each pair of adjacent items to each other<br/> and swapping them if they are in the wrong order. 
+            The stepping through the list repeated until no swaps are needed. <br/>It is not as efficient on large lists as more advanced sorting algorithms 
             such as quicksort, heapsort or mergesort.
           </p>
 

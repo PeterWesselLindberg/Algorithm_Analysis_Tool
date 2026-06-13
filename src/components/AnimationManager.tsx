@@ -8,15 +8,17 @@ import Visualizer from "./Visualizer"
 import type { VisualizationStep } from "../types/VisualizationStep"
 import { useNavigate } from "react-router-dom"
 import ColorExplain from "./ColorExplain"
+import StructureColor, { type ColorExplainer } from "../types/structureColor"
 
 interface AnimationManagerProps {
   input: AlgorithmInput,
   algorithm: AlgorithmTypes,
   visualizationGraphics: VisualizationType
   isInAbout?: boolean
+  structure?: ColorExplainer 
 }
 
-const AnimationManager = ({input, algorithm, visualizationGraphics, isInAbout = false} : AnimationManagerProps) => {
+const AnimationManager = ({input, algorithm, visualizationGraphics, isInAbout = false, structure = StructureColor.ArrColor} : AnimationManagerProps) => {
   const selectedAlgorithm = algorithmTypes[algorithm] // Initialises the given algoritmhtype for the limited types
   const initialSteps = selectedAlgorithm(input) // Initialises the the input list with the selected algoritm
 
@@ -241,7 +243,8 @@ const AnimationManager = ({input, algorithm, visualizationGraphics, isInAbout = 
               style={{ width: "400px"}}
             />
             
-            {!isHidden && <ColorExplain/>}
+            {!isHidden && <ColorExplain structure={structure}/>}
+            
 
           </div>
         </div>

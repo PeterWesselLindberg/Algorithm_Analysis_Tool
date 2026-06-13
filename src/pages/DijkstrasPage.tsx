@@ -5,6 +5,7 @@ import generateRandomGraph from "../randGen/generateRandomGraph"
 import { addToList, oneItem } from "../utils/visualItems"
 import Visualization from "../types/VisualizationType"
 import { Algorithm } from "../types/algorithmtypes"
+import StructureColor from "../types/structureColor"
 
 const DijkstrasPage = () => {
 
@@ -27,14 +28,16 @@ const DijkstrasPage = () => {
             { selectedTab === 1 &&  (
                 <>      
                     <AnimationManager input={generateRandomGraph(5, true, true)} 
-                        algorithm={Algorithm.DijkstrasRand} visualizationGraphics={Visualization.DistListGraph} />
+                        algorithm={Algorithm.DijkstrasRand} visualizationGraphics={Visualization.DistListGraph}
+                        structure={StructureColor.ShortestPathColor} />
                 </>
             )}
 
             { selectedTab === 2 &&  (
                 <>  
                     <AnimationManager input={generateRandomGraph(5, true, true)}
-                        algorithm={Algorithm.DijkstrasFull} visualizationGraphics={Visualization.DistListGraph} />
+                        algorithm={Algorithm.DijkstrasFull} visualizationGraphics={Visualization.DistListGraph}
+                        structure={StructureColor.ShortestPathColor} />
                 </>
             )}
 

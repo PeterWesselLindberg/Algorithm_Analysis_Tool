@@ -5,6 +5,7 @@ import generateRandomArray from "../randGen/generateRandomArray"
 import visualItems from "../utils/visualItems"
 import Visualization from "../types/VisualizationType"
 import { Algorithm } from "../types/algorithmtypes"
+import StructureColor from "../types/structureColor"
 
 
 const MergeSortPage = () => {
@@ -23,7 +24,8 @@ const MergeSortPage = () => {
       <h1>Merge sort</h1>
       
       {selectedTab === 1 && (
-        <AnimationManager input={generateRandomArray(15)} algorithm={Algorithm.MergeSort} visualizationGraphics={Visualization.ListBar} />
+        <AnimationManager input={generateRandomArray(15)} algorithm={Algorithm.MergeSort} visualizationGraphics={Visualization.ListBar}
+        structure={StructureColor.ArrColor} />
       )}
 
       {selectedTab === 0 && (

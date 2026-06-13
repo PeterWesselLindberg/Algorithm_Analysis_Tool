@@ -9,6 +9,7 @@ import Algo from "../types/algoType"
 import DataStructure from "../types/dataType"
 import Stable from "../types/stableType"
 import ComplexityTable from "../components/ComplexityTable"
+import StructureColor from "../types/structureColor"
 
 const SelectionSortPage = () => {
 
@@ -32,15 +33,16 @@ const SelectionSortPage = () => {
       <h1>{header}</h1>
       
       {selectedTab === 1 && (
-        <AnimationManager input={generateRandomArray(15)} algorithm={Algorithm.SelectionSort} visualizationGraphics={Visualization.ListBar} />
+        <AnimationManager input={generateRandomArray(15)} algorithm={Algorithm.SelectionSort} visualizationGraphics={Visualization.ListBar}
+        structure={StructureColor.ArrColor} />
       )}
 
       {selectedTab === 0 && (
         <>
           <p>
             Selection sort is a comparison-based sorting algorithm, that builds the final sorted array/list by repeatedly stepping through the list,
-            comparing the smallest (or largest) element from the unsorted portion and swapping it with the first unsorted element.
-            It is not as efficient on large lists as more advanced sorting algorithms such as quicksort, heapsort or mergesort.
+            <br/>comparing the smallest (or largest) element from the unsorted portion and swapping it with the first unsorted element.
+            <br/>It is not as efficient on large lists as more advanced sorting algorithms such as quicksort, heapsort or mergesort.
           </p>
 
           <h2>Complexity</h2>

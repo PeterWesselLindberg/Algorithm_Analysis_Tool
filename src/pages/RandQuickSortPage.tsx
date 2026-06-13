@@ -5,6 +5,7 @@ import generateRandomArray from "../randGen/generateRandomArray"
 import visualItems from "../utils/visualItems"
 import Visualization from "../types/VisualizationType"
 import { Algorithm } from "../types/algorithmtypes"
+import StructureColor from "../types/structureColor"
 
 const RandQuickSortPage = () => {
 
@@ -22,7 +23,8 @@ const RandQuickSortPage = () => {
       <h1>Randomized quick sort</h1>
       
       {selectedTab === 1 && (
-        <AnimationManager input={generateRandomArray(15)} algorithm={Algorithm.RQuickSort} visualizationGraphics={Visualization.ListBar} />
+        <AnimationManager input={generateRandomArray(15)} algorithm={Algorithm.RQuickSort} visualizationGraphics={Visualization.ListBar}
+        structure={StructureColor.ArrColor} />
       )}
 
       {selectedTab === 0 && (

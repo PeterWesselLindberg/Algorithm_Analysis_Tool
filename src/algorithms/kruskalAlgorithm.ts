@@ -154,6 +154,7 @@ const kruskalsAlgorithm = (
     mstEdgeIds,
     mstEdges,
     mstWeight,
+    sortedIds: [...connectedNodes],
     message:
       `MST total weight: ${mstWeight}`
   })

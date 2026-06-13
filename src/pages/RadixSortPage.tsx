@@ -5,6 +5,7 @@ import generateRandomArray from "../randGen/generateRandomArray"
 import visualItems from "../utils/visualItems"
 import Visualization from "../types/VisualizationType"
 import { Algorithm } from "../types/algorithmtypes"
+import StructureColor from "../types/structureColor"
 
 const RadixSortPage = () => {
 
@@ -21,7 +22,8 @@ const RadixSortPage = () => {
       <TopNavBar items={visualItems} onSelectItem={(item, index) => handleSelectTab(item, index)}/> 
       <h1>Radix sort</h1>
       { selectedTab === 1 &&  (
-        <AnimationManager input={generateRandomArray(15, 1, 999)} algorithm={Algorithm.RadixSort} visualizationGraphics={Visualization.List3} />
+        <AnimationManager input={generateRandomArray(15, 1, 999)} algorithm={Algorithm.RadixSort} visualizationGraphics={Visualization.List3}
+        structure={StructureColor.ArrColor} />
       )}
 
       { selectedTab === 0 && (

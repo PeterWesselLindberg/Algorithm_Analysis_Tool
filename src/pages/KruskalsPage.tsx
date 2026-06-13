@@ -5,6 +5,7 @@ import AnimationManager from "../components/AnimationManager"
 import generateRandomGraph from "../randGen/generateRandomGraph"
 import Visualization from "../types/VisualizationType"
 import { Algorithm } from "../types/algorithmtypes"
+import StructureColor from "../types/structureColor"
 
 const KruskalsPage = () => {
 
@@ -22,7 +23,8 @@ const KruskalsPage = () => {
             <TopNavBar items={visualItems} onSelectItem={(item, index) => handleSelectTab(item, index)}/>
             <h1>Kruskal's minimum spanning tree</h1>
             { selectedTab === 1 && (
-                <AnimationManager input={generateRandomGraph(7, true, true)} algorithm={Algorithm.Kruskals} visualizationGraphics={Visualization.MstListGraph}/>
+                <AnimationManager input={generateRandomGraph(7, true, true)} algorithm={Algorithm.Kruskals} visualizationGraphics={Visualization.MstListGraph}
+                structure={StructureColor.MSTColor}/>
             )}
             
             {selectedTab === 0 && (

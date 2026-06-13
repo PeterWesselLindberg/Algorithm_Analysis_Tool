@@ -6,6 +6,7 @@ import { useSearchParams } from "react-router-dom"
 import {oneItem, addToList} from "../utils/visualItems"
 import Visualization from "../types/VisualizationType"
 import { Algorithm } from "../types/algorithmtypes"
+import StructureColor from "../types/structureColor"
 
 const BinarySearchTreePage = () => {
   
@@ -27,7 +28,8 @@ const BinarySearchTreePage = () => {
       { selectedTab === 1 && (
         <>
           <h1>Binary search tree Insertion</h1>
-          <AnimationManager input={generateRandomArray(7)} algorithm={Algorithm.BSTinsert} visualizationGraphics={Visualization.ExListTree} />
+          <AnimationManager input={generateRandomArray(7)} algorithm={Algorithm.BSTinsert} visualizationGraphics={Visualization.ExListTree}
+          structure={StructureColor.BSTColor} />
         </>
       )}
 
@@ -35,7 +37,8 @@ const BinarySearchTreePage = () => {
         <>
           <h1>Binary search tree breadth-first search</h1>
           <AnimationManager input={{type: "bst", values, target}}
-            algorithm={Algorithm.BFSTreeSearch} visualizationGraphics={Visualization.TVListTree} />
+            algorithm={Algorithm.BFSTreeSearch} visualizationGraphics={Visualization.TVListTree}
+            structure={StructureColor.BSTColor} />
         </>
       )}
 
@@ -43,7 +46,8 @@ const BinarySearchTreePage = () => {
         <>
         <h1>Binary search tree depth-first search</h1>
         <AnimationManager input={{type: "bst", values, target}}
-          algorithm={Algorithm.DFSTreeSearch} visualizationGraphics={Visualization.TVListTree} />
+          algorithm={Algorithm.DFSTreeSearch} visualizationGraphics={Visualization.TVListTree}
+          structure={StructureColor.BSTColor} />
        </>
       )}
       { selectedTab === 4 && (
@@ -51,7 +55,8 @@ const BinarySearchTreePage = () => {
           <h1>Binary search tree deletion</h1>
 
           <AnimationManager input={{type: "bst", values, target}}
-            algorithm={Algorithm.BSTDelete} visualizationGraphics={Visualization.TVListTree} />
+            algorithm={Algorithm.BSTDelete} visualizationGraphics={Visualization.TVListTree}
+            structure={StructureColor.BSTColor} />
         </>
       )}
 

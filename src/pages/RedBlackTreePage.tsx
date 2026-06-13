@@ -5,6 +5,7 @@ import { oneItem,addToList } from "../utils/visualItems"
 import generateRandomBalancedValues from "../randGen/generateRandomBalancedValue"
 import Visualization from "../types/VisualizationType"
 import { Algorithm } from "../types/algorithmtypes"
+import StructureColor from "../types/structureColor"
 
 const RedBlackTreePage = () => {
 
@@ -32,7 +33,8 @@ const RedBlackTreePage = () => {
       { selectedTab === 1 && (
         <>
           <h1>Red-Black tree Insertion</h1>
-          <AnimationManager input={{type: "bst", values, target}} algorithm={Algorithm.RBInsert} visualizationGraphics={Visualization.TVListTree} />
+          <AnimationManager input={{type: "bst", values, target}} algorithm={Algorithm.RBInsert} visualizationGraphics={Visualization.TVListTree}
+          structure={StructureColor.BSTColor} />
         </>
       )}
 
@@ -40,7 +42,8 @@ const RedBlackTreePage = () => {
         <>
           <h1>Red-Black tree breadth-first search</h1>
           <AnimationManager input={{type: "bst", values, target}}
-            algorithm={Algorithm.BFSRBSearch} visualizationGraphics={Visualization.TVListTree} />
+            algorithm={Algorithm.BFSRBSearch} visualizationGraphics={Visualization.TVListTree}
+            structure={StructureColor.BSTColor} />
         </>
       )}
 
@@ -48,7 +51,8 @@ const RedBlackTreePage = () => {
         <>
         <h1>Red-Black tree depth-first search</h1>
         <AnimationManager input={{type: "bst", values, target}}
-          algorithm={Algorithm.DFSRBSearch} visualizationGraphics="TVList/tree" />
+          algorithm={Algorithm.DFSRBSearch} visualizationGraphics={Visualization.TVListTree}
+          structure={StructureColor.BSTColor} />
        </>
       )}
       { selectedTab === 4 && (
@@ -56,7 +60,8 @@ const RedBlackTreePage = () => {
           <h1>Red-Black tree deletion</h1>
 
           <AnimationManager input={{type: "bst", values, target}}
-            algorithm={Algorithm.RBDelete} visualizationGraphics="TVList/tree" />
+            algorithm={Algorithm.RBDelete} visualizationGraphics={Visualization.TVListTree}
+            structure={StructureColor.BSTColor} />
         </>
       )}
 

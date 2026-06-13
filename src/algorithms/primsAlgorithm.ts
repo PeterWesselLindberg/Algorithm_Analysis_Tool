@@ -123,6 +123,7 @@ const primsAlgorithm = (
     mstEdgeIds,
     mstEdges,
     mstWeight,
+    sortedIds: [...visited],
     message:
       `Prim's MST total weight: ${mstWeight}`
   })

@@ -178,3 +178,19 @@ body.light .graph-text {
   background-color: #198754;
   flex-shrink: 0;
 }
+
+.lime-square {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-color: #c3e211;
+  flex-shrink: 0;
+}
+
+.purple-square {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-color: #9b1970;
+  flex-shrink: 0;
+}
