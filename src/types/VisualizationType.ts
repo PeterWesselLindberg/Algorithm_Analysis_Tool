@@ -1,7 +1,7 @@
 /** Visualizer types for the case statement */
 const Visualization = {
     ListBar: "list/bar",
-    ListBarTree: "list/bar/tree",
+    ListHeap: "list/heap",
     List3: "list/list/list",
     List: "list",
     ListTree: "list/tree",

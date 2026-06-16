@@ -2,6 +2,7 @@
 const DataStructure = {
     Arr: "Array/List",
     Graph: "Graph",
+    Tree: "Tree"
 } as const
 
 export type DataType = typeof DataStructure[keyof typeof DataStructure]

@@ -27,7 +27,6 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
     case Visualization.ListBar: 
       return (
          <>
-         <hr />
           <BarsList
             numbers={numbers}
             activeIds={activeIds}
@@ -46,7 +45,7 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
         </>
       )
 
-    case Visualization.ListBarTree: 
+    case Visualization.ListHeap: 
         return (
          <>
           <TreeVisualizer
@@ -54,15 +53,6 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
             tree={step.tree}
             numbers={numbers}
           />
-          <hr />
-
-          <BarsList
-            numbers={numbers}
-            activeIds={activeIds}
-            compareIds={compareIds}
-            sortedIds={sortedIds}
-          />
-
           <hr />
 
           <NumberList
