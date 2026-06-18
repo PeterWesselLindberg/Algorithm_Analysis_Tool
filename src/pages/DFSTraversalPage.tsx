@@ -77,7 +77,7 @@ const DFSTraversalPage = () => {
                     <p>The time complexity for a DFS is O(|V|+|E|), where V is total amount vertices(nodes) present in the graph and E is the amount of edges present in the graph.</p>
                     
                     <h2>Space complexity</h2>
-                    <p>The space complexity for a DFS is O(|V|), where V is total amount vertices(nodes) present in the graph.</p>
+                    <p>The space complexity for a DFS is O(|V|).</p>
                     
                     <h4 className="v-space">Complexity table</h4>
                     <ComplexityTable algoType={Algo.SearchTraversal} dataType={DataStructure.Graph} name={header} worst={"O(|V| + |E|)"} memory={"O(|V|)"}/>
