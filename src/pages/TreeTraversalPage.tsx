@@ -15,7 +15,7 @@ import DataStructure from "../types/dataType"
 const TreeTraversalPage = () => {
   
   const items: string[] = addToList(oneItem, ["Inorder tree traversal", "Postorder tree traversal", "Preorder tree traversal"])
-  const header: string = "Depth first search (DFS)"
+  const header: string = "Tree traversal"
 
   const [searchParams, setSearchParams] = useSearchParams()
 

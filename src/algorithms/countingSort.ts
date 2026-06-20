@@ -145,11 +145,17 @@ const countingSort = (input: AlgorithmInput): VisualizationStep[] => {
 
   // Final step
   pushStep(steps, {
-    linears: buildLinears(),
+    linears: [
+      {
+        id: "input",
+        label: "Sorted Array",
+        values: [...ans]
+      }
+    ],
 
     sortedIds: Array.from(
       { length: n },
-      (_, i) => outputId(i)
+      (_, i) => inputId(i)
     )
   })
 
