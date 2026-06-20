@@ -9,7 +9,7 @@ import StructureColor from "../types/structureColor"
 
 const RedBlackTreePage = () => {
 
-  const visualItems: string[] = addToList(oneItem, ["Insertion", "BFS search", "DFS search", "Deletion"])
+  const visualItems: string[] = addToList(oneItem, ["Insertion", "BFS search", "DFS search", "BST search", "Deletion"])
 
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -55,7 +55,18 @@ const RedBlackTreePage = () => {
           structure={StructureColor.BSTColor} />
        </>
       )}
+
       { selectedTab === 4 && (
+        <>
+          <h1>Red-Black tree binary search</h1>
+
+          <AnimationManager input={{type: "bst", values, target}}
+            algorithm={Algorithm.RBTreeSearch} visualizationGraphics={Visualization.TVListTree}
+            structure={StructureColor.BSTColor} />
+        </>
+      )}
+
+      { selectedTab === 5 && (
         <>
           <h1>Red-Black tree deletion</h1>
 

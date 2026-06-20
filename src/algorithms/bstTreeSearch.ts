@@ -2,17 +2,21 @@ import type { VisualizationStep } from "../types/VisualizationStep"
 import pushStepTree from "../utils/pushStep"
 import type { AlgorithmFunction, AlgorithmInput } from "../types/algorithmtypes"
 import buildBST from "../utils/buildBST"
-import toId from "../utils/toId"
 import buildRedBlackTree from "../utils/buildRedBlackTree"
 import type { TreeNodeData } from "../dataStructures/TreeNodedata"
 import type { RBTreeNodeData } from "../dataStructures/RBTreeNodeData"
+import toId from "../utils/toId"
+
+/** Wrapper function used for depth limited tree search */
+export const depthLimitedSearch: AlgorithmFunction = (input) =>
+  bstTreeSearch(input, 2, false)
 
 /** Wrapper function used for red-black tree search */
-export const dfsRedBlackSearch: AlgorithmFunction = (input) =>
-  dfsTreeSearch(input, true)
+export const bstRedBlackSearch: AlgorithmFunction = (input) =>
+  bstTreeSearch(input, -1, true)
 
 /** Wrapper for depth first tree search */
-const dfsTreeSearch = (input: AlgorithmInput, isRedBlack: boolean = false) => {
+const bstTreeSearch = (input: AlgorithmInput, depthLimit: number = -1, isRedBlack: boolean = false) => {
   if (input.type !== "bst") return []
 
   const steps: VisualizationStep[] = []
@@ -40,28 +44,41 @@ const dfsTreeSearch = (input: AlgorithmInput, isRedBlack: boolean = false) => {
 
   
   // Search only
-  dfsTreeSearchCore(root, target, steps)
+  bstTreeSearchCore(root, target, steps, depthLimit)
 
   return steps
 }
 
-/** The main function for depth first tree search */
-const dfsTreeSearchCore = (
+/** The main function for binary search tree search */
+
+const bstTreeSearchCore = (
   root: TreeNodeData | RBTreeNodeData,
   target: number,
   steps: VisualizationStep[],
+  depthLimit: number
 ): TreeNodeData | RBTreeNodeData | null => {
 
-  const stack: {node: TreeNodeData | RBTreeNodeData}[] = [{ node: root}]
-
+  let current: TreeNodeData | RBTreeNodeData | null = root
+  let depth = 0
   const visitedIds: string[] = []
 
-  while (stack.length > 0) {
+  while (current) {
 
-    const { node: current} = stack.pop()!
+    // Depth limit check for depth limited search
+    if (depthLimit !== -1 && depth >= depthLimit) {
+      pushStepTree(steps, {
+        tree: root,
+        activeIds: [current.id],
+        visitedIds: [...visitedIds],
+        message: `Depth limit reached at ${current.value}`,
+        target
+      })
+      continue
+    }
+
     visitedIds.push(toId(current.value))
 
-    // Show visit
+    // Visit current node
     pushStepTree(steps, {
       tree: root,
       activeIds: [current.id],
@@ -69,50 +86,52 @@ const dfsTreeSearchCore = (
       target
     })
 
+    // Found
     if (current.value === target) {
       pushStepTree(steps, {
         tree: root,
         activeIds: [current.id],
-        message: `Found ${target}`,
         visitedIds: [...visitedIds],
+        message: `Found ${target}`,
         target
       })
+
       return current
     }
 
-    // Push children 
-    const children = [
-      current.children[1],
-      current.children[0]
-    ]
+    // Decide direction
+    const next: TreeNodeData | RBTreeNodeData | null  =
+      target < current.value
+        ? current.children[0]
+        : current.children[1]
 
-    for (const child of children) {
-
-      if (!child) continue
-
+    // Show comparison/traversal
+    if (next) {
       pushStepTree(steps, {
         tree: root,
-        activeIds: [current.id, child.id],
-        activeEdgeIds: [`${current.id}->${child.id}`],
+        activeIds: [current.id, next.id],
+        activeEdgeIds: [`${current.id}->${next.id}`],
         visitedIds: [...visitedIds],
+        message:
+          target < current.value
+            ? `${target} < ${current.value}, go left`
+            : `${target} > ${current.value}, go right`,
         target
       })
-
-      stack.push({
-        node: child,
-      })
     }
+
+    current = next
   }
 
   pushStepTree(steps, {
     tree: root,
+    visitedIds,
     message: `${target} not found`,
-    visitedIds: [...visitedIds],
     target
   })
 
   return null
 }
 
-export default dfsTreeSearch
+export default bstTreeSearch
 

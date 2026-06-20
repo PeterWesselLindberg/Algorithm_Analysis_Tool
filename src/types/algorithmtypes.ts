@@ -23,11 +23,12 @@ import kruskalsAlgorithm from "../algorithms/kruskalAlgorithm"
 import primsAlgorithm from "../algorithms/primsAlgorithm"
 import bstInsertion from "../algorithms/bstInsertion"
 import bfsTreeSearch, { bfsRedBlackSearch } from "../algorithms/bfsTreeSearch"
-import dfsTreeSearch, { depthLimitedSearch, dfsRedBlackSearch } from "../algorithms/dfsTreeSearch"
+import dfsTreeSearch, { dfsRedBlackSearch } from "../algorithms/dfsTreeSearch"
 import binarySearch from "../algorithms/binarySearch"
 import bstDelete from "../algorithms/bstDeletion"
 import redBlackInsert from "../algorithms/redBlackTreeInsertion"
 import RBDelete from "../algorithms/redBlackTreeDeletion"
+import bstTreeSearch, { depthLimitedSearch, bstRedBlackSearch }  from "../algorithms/bstTreeSearch"
 
 /** Different algorithms for input to AnimationManager  */
 export const Algorithm = {
@@ -63,7 +64,9 @@ export const Algorithm = {
   DFSRBSearch: "dfsRedBlackSearch",
   BFSRBSearch: "bfsRedBlackSearch",
   RBInsert: "redBlackInsert",
-  RBDelete: "redBlackDelete"
+  RBDelete: "redBlackDelete",
+  BSTTreeSearch: "bstSearch",
+  RBTreeSearch: "redBlackSearch"
   } as const
 
 export type AlgorithmTypes = typeof Algorithm[keyof typeof Algorithm]
@@ -116,7 +119,9 @@ const algorithmTypes : Record<
     dfsRedBlackSearch: dfsRedBlackSearch,
     bfsRedBlackSearch: bfsRedBlackSearch,
     redBlackInsert: redBlackInsert,
-    redBlackDelete: RBDelete
+    redBlackDelete: RBDelete,
+    bstSearch: bstTreeSearch,
+    redBlackSearch: bstRedBlackSearch
 }
 
 export default algorithmTypes
