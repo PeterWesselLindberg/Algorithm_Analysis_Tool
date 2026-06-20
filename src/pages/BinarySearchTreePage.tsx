@@ -92,25 +92,41 @@ const BinarySearchTreePage = () => {
               We do this until we hit a leaf after, which we compare the new value to the leaf value and then insert the node in either the right of left subtree of the compared leaf.
           </p>
 
-          <h3>Time Complexity of Insertion</h3>
+          <h3>Time Complexity of insertion</h3>
           <p>
-            The time it takes to insert a new node in a BST is O(h), where h is the height of the tree:
+            The time it takes to insert a new node in a BST is O(h), where h is the height of the tree.
+          </p>
+
+          <h3>Space complexity of insertion</h3>
+          <p>
+            The space complexity for a BST insertion is O(1).
           </p>
 
           <AnimationManager input={{type: "array", data: exampleArr}} algorithm={Algorithm.BSTinsert} visualizationGraphics={Visualization.ExListTree} isInAbout={true}/>
           
+          <h4 className="v-space">Complexity table for BST insertion</h4>
+          <ComplexityTable algoType={Algo.Search} dataType={DataStructure.Tree} name={"BST insertion"} best={"O(h)"} average={"O(h)"} worst={"O(h)"} memory={"O(1)"}/>
+
+          <h4 className="v-space">References</h4>
+          <a href="https://en.wikipedia.org/wiki/Binary_search_tree" target="_blank">Wikipedia</a>
+          <br/>
+          <a 
+            href="https://github.com/PeterWesselLindberg/Algorithm_Analysis_Tool/blob/main/src/algorithms/bstInsertion.ts" target="_blank">
+            PeterWesselLindberg/Algorithm_Analysis_Tool/
+          </a>
+          
           <h2 className="v-space">Binary search tree breadth-first search</h2>
           <p>
             Breadth-first search sometimes called level order traversal is method to traverse a BST, such that all nodes present on the same depth level is traversed fully<br/>
-            before traversing the next level. This is done until the targeted nodes position is found.
+            before traversing the next level. This is done until the targeted node's position is found.
           </p>
 
-          <h3>Time complexity of BFS search</h3>
+          <h3>Time complexity of a BFS search</h3>
           <p>
-            The running time of a BFS search on a BST is O(1), in the best case where the root is the target. Otherwise it has running time of O(n):
+            The running time of a BFS search on a BST is O(1), in the best case where the root is the target. Otherwise it has running time of O(n).
           </p>
           
-          <h3>Space complexity of BFS search</h3>
+          <h3>Space complexity of a BFS search</h3>
           <p>
             The space complexity for a BFS search is O(w), where w is the width of the tree.
           </p>
@@ -128,22 +144,108 @@ const BinarySearchTreePage = () => {
             PeterWesselLindberg/Algorithm_Analysis_Tool/
           </a>
 
-          <h2>Binary search tree depth-first search</h2>
+          <h2 className="v-space">Binary search tree depth-first search</h2>
           <p>
-            Breadth-first search sometimes called level order traversal is method to traverse a BST, such that all nodes present on the same depth level is traversed fully<br/>
-            before traversing the next level. This is done until the targeted nodes position is found.
+            Depth-first search is a method of traversing a BST by going as deep as possible along each branch before moving to the next branch.<br/>
+            It starts at the root and visits every node in a tree until the targeted node's position is found.
           </p>
 
-          <h3>Time complexity of DFS search</h3>
+          <h3>Time complexity of a DFS search</h3>
           <p>
-            The running time of a BFS search on a BST is O(1), in the best case where the root is the target. Otherwise it has running time of O(n):
+            The running time of a DFS search on a BST is O(1), in the best case where the root is the target. Otherwise it has running time of O(n).
           </p>
           
-          <h3>Space complexity of DFS search</h3>
+          <h3>Space complexity of a DFS search</h3>
           <p>
-            The space complexity for a BFS search is O(w), where w is the width of the tree.
+            The space complexity for a DFS search is O(log(n)).
           </p>
 
+          <AnimationManager input={{type: "bst", values: exampleArr, target: 29}} algorithm={Algorithm.DFSTreeSearch} visualizationGraphics={Visualization.TVListTree} isInAbout={true}/>
+          
+          <h4 className="v-space">Complexity table for DFS search</h4>
+          <ComplexityTable algoType={Algo.Search} dataType={DataStructure.Tree} name={"Depth-first search of BST"} best={"O(1)"} average={"O(n)"} worst={"O(n)"} memory={"O(log(n))"}/>
+
+          <h4 className="v-space">References</h4>
+          <a href="https://en.wikipedia.org/wiki/Depth-first_search" target="_blank">Wikipedia</a>
+          <br/>
+          <a 
+            href="https://github.com/PeterWesselLindberg/Algorithm_Analysis_Tool/blob/main/src/algorithms/dfsTreeSearch.ts" target="_blank">
+            PeterWesselLindberg/Algorithm_Analysis_Tool/
+          </a>
+
+          <h2 className="v-space">Binary search tree search</h2>
+          <p>
+            BST search is a method of traversing a BST and finding a value in it by walking through the tree and comparing node values with target value and<br/>
+            depending on the comparison of the values either moving down the left or right subtree in the search of the targeted value.<br/>
+            This is done continously until the value is found or there aren't any nodes left to visit.
+          </p>
+
+          <h3>Time complexity of a BST search</h3>
+          <p>
+            The running time of a BST search on a BST is O(h) in the worst case, where h is the height of the tree. O(1) in the best case where the target is the root node and<br/>
+            O(log(n)) in the average case.
+          </p>
+          
+          <h3>Space complexity of a BST search</h3>
+          <p>
+            The space complexity for a BST search is O(1).
+          </p>
+
+          <AnimationManager input={{type: "bst", values: exampleArr, target: 29}} algorithm={Algorithm.BSTTreeSearch} visualizationGraphics={Visualization.TVListTree} isInAbout={true}/>
+          
+          <h4 className="v-space">Complexity table for DFS search</h4>
+          <ComplexityTable algoType={Algo.Search} dataType={DataStructure.Tree} name={"BST search of BST"} best={"O(1)"} average={"O(log(n))"} worst={"O(h)"} memory={"O(1)"}/>
+
+          <h4 className="v-space">References</h4>
+          <a href="https://en.wikipedia.org/wiki/Binary_search_tree" target="_blank">Wikipedia</a>
+          <br/>
+          <a 
+            href="https://github.com/PeterWesselLindberg/Algorithm_Analysis_Tool/blob/main/src/algorithms/bstTreeSearch.ts" target="_blank">
+            PeterWesselLindberg/Algorithm_Analysis_Tool/
+          </a>
+
+          <h2 className="v-space">Binary search tree deletion</h2>
+          <p>
+            BST deletion is a method of deleting a node from a BST by first travesring the tree to find the targeted value and then depending on the type of node to delete<br/>
+            it will rebalance the tree.
+          </p>
+
+          <ol>
+            <li>If the target node is a leaf, it is deleted by replacing it with null</li>
+            <li>If the target node only has one child, the target node is deleted and the child gets elevated becoming the new child of its' grandparent.</li>
+            <li>If the target node has two children, the target node's in-order successor (the smallest value in the right subtree) replaces the target node's value<br/>
+              with the successor's value and then we delete the succesor node, which will now fall under either case 1 or 2.</li>
+          </ol>
+
+          <h3>Time complexity of a BST deletion</h3>
+          <p>
+            The running time of a BST search on a BST is O(h), where h is the height of the tree:
+          </p>
+          
+          <h3>Space complexity of a BST search</h3>
+          <p>
+            The space complexity for a BST search is O(1).
+          </p>
+
+          <h4>Case 1 (Leaf Node):</h4>
+          <AnimationManager input={{type: "bst", values: exampleArr, target: 29}} algorithm={Algorithm.BSTDelete} visualizationGraphics={Visualization.TVListTree} isInAbout={true}/>
+
+          <h4 className="v-space">Case 2 (One Child):</h4>
+          <AnimationManager input={{type: "bst", values: exampleArr, target: 19}} algorithm={Algorithm.BSTDelete} visualizationGraphics={Visualization.TVListTree} isInAbout={true}/>
+
+          <h4 className="v-space">Case 3 (Two Children):</h4>
+          <AnimationManager input={{type: "bst", values: exampleArr, target: 27}} algorithm={Algorithm.BSTDelete} visualizationGraphics={Visualization.TVListTree} isInAbout={true}/>
+          
+          <h4 className="v-space">Complexity table for BST deletion</h4>
+          <ComplexityTable algoType={Algo.Search} dataType={DataStructure.Tree} name={"BST deletion"} best={"O(h)"} average={"O(h)"} worst={"O(h)"} memory={"O(1)"}/>
+
+          <h4 className="v-space">References</h4>
+          <a href="https://en.wikipedia.org/wiki/Binary_search_tree" target="_blank">Wikipedia</a>
+          <br/>
+          <a 
+            href="https://github.com/PeterWesselLindberg/Algorithm_Analysis_Tool/blob/main/src/algorithms/bstDeletion.ts" target="_blank">
+            PeterWesselLindberg/Algorithm_Analysis_Tool/
+          </a>
         </>
       )}
       
