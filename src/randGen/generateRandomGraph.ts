@@ -21,7 +21,8 @@ const addEdge = (
   to: GraphNodeData,
   weighted: boolean, // If the edges are weighted
   directed: boolean, // If the edges are directed
-  negWeights: boolean // If the negative weights are allowed
+  negWeights: boolean, // If the negative weights are allowed
+  weightRange: number = 20 // Specify weight range
 ) => {
 
     // Prevent duplicate edge
@@ -45,16 +46,17 @@ const addEdge = (
     let weight
 
     if (negWeights) {
+        weightRange = 21
         weight =
             weighted
-            ? Math.floor(Math.random() * 21) - 10
+            ? Math.floor(Math.random() * weightRange) - 10
             : undefined
 
     }
     else {
          weight =
             weighted
-            ? Math.floor(Math.random() * 20) + 1
+            ? Math.floor(Math.random() * weightRange) + 1
             : undefined
     }    
 
