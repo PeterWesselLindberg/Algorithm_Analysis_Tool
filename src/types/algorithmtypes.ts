@@ -23,12 +23,12 @@ import kruskalsAlgorithm from "../algorithms/kruskalAlgorithm"
 import primsAlgorithm from "../algorithms/primsAlgorithm"
 import bstInsertion from "../algorithms/bstInsertion"
 import bfsTreeSearch, { bfsRedBlackSearch } from "../algorithms/bfsTreeSearch"
-import dfsTreeSearch, { dfsRedBlackSearch } from "../algorithms/dfsTreeSearch"
+import dfsTreeSearch, { depthLimitedSearch, dfsRedBlackSearch } from "../algorithms/dfsTreeSearch"
 import binarySearch from "../algorithms/binarySearch"
 import bstDelete from "../algorithms/bstDeletion"
 import redBlackInsert from "../algorithms/redBlackTreeInsertion"
 import RBDelete from "../algorithms/redBlackTreeDeletion"
-import bstTreeSearch, { depthLimitedSearch, bstRedBlackSearch }  from "../algorithms/bstTreeSearch"
+import bstTreeSearch, { bstRedBlackSearch }  from "../algorithms/bstTreeSearch"
 
 /** Different algorithms for input to AnimationManager  */
 export const Algorithm = {

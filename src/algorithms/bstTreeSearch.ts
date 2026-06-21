@@ -7,16 +7,12 @@ import type { TreeNodeData } from "../dataStructures/TreeNodedata"
 import type { RBTreeNodeData } from "../dataStructures/RBTreeNodeData"
 import toId from "../utils/toId"
 
-/** Wrapper function used for depth limited tree search */
-export const depthLimitedSearch: AlgorithmFunction = (input) =>
-  bstTreeSearch(input, 2, false)
-
 /** Wrapper function used for red-black tree search */
 export const bstRedBlackSearch: AlgorithmFunction = (input) =>
-  bstTreeSearch(input, -1, true)
+  bstTreeSearch(input, true)
 
 /** Wrapper for depth first tree search */
-const bstTreeSearch = (input: AlgorithmInput, depthLimit: number = -1, isRedBlack: boolean = false) => {
+const bstTreeSearch = (input: AlgorithmInput, isRedBlack: boolean = false) => {
   if (input.type !== "bst") return []
 
   const steps: VisualizationStep[] = []
@@ -44,7 +40,7 @@ const bstTreeSearch = (input: AlgorithmInput, depthLimit: number = -1, isRedBlac
 
   
   // Search only
-  bstTreeSearchCore(root, target, steps, depthLimit)
+  bstTreeSearchCore(root, target, steps)
 
   return steps
 }
@@ -54,27 +50,13 @@ const bstTreeSearch = (input: AlgorithmInput, depthLimit: number = -1, isRedBlac
 const bstTreeSearchCore = (
   root: TreeNodeData | RBTreeNodeData,
   target: number,
-  steps: VisualizationStep[],
-  depthLimit: number
+  steps: VisualizationStep[]
 ): TreeNodeData | RBTreeNodeData | null => {
 
   let current: TreeNodeData | RBTreeNodeData | null = root
-  let depth = 0
   const visitedIds: string[] = []
 
   while (current) {
-
-    // Depth limit check for depth limited search
-    if (depthLimit !== -1 && depth >= depthLimit) {
-      pushStepTree(steps, {
-        tree: root,
-        activeIds: [current.id],
-        visitedIds: [...visitedIds],
-        message: `Depth limit reached at ${current.value}`,
-        target
-      })
-      continue
-    }
 
     visitedIds.push(toId(current.value))
 

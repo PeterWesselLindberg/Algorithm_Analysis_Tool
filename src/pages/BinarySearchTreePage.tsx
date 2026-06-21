@@ -19,7 +19,7 @@ const BinarySearchTreePage = () => {
   const selectedTab = Number(searchParams.get("tab") ?? 1)
 
   const header: string = "Binary Search Tree"
-  const exampleArr: number[] = [21,19,17,27,23,21,29]
+  const exampleArr: number[] = [21,19,17,27,23,22,29]
 
   const handleSelectTab = (_item: string, index: number) => {
     setSearchParams({ tab: index.toString() })
@@ -182,7 +182,7 @@ const BinarySearchTreePage = () => {
 
           <h3>Time complexity of a BST search</h3>
           <p>
-            The running time of a BST search on a BST is O(n) in the worst case, where h is the height of the tree. O(1) in the best case where the target is the root node and<br/>
+            The running time of a BST search on a BST is O(n) in the worst case and O(1) in the best case, where the target is the root node and<br/>
             O(log(n)) in the average case.
           </p>
           
