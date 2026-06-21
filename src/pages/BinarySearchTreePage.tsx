@@ -193,7 +193,7 @@ const BinarySearchTreePage = () => {
 
           <AnimationManager input={{type: "bst", values: exampleArr, target: 29}} algorithm={Algorithm.BSTTreeSearch} visualizationGraphics={Visualization.TVListTree} isInAbout={true}/>
           
-          <h4 className="v-space">Complexity table for DFS search</h4>
+          <h4 className="v-space">Complexity table for BST search</h4>
           <ComplexityTable algoType={Algo.Search} dataType={DataStructure.Tree} name={"BST search of BST"} best={"O(1)"} average={"O(log(n))"} worst={"O(n)"} memory={"O(1)"}/>
 
           <h4 className="v-space">References</h4>
@@ -219,7 +219,7 @@ const BinarySearchTreePage = () => {
 
           <h3>Time complexity of a BST deletion</h3>
           <p>
-            The running time of a BST deletion on a BST is O(h), where h is the height of the tree:
+            The running time of a BST deletion on a BST is O(h), where h is the height of the tree.
           </p>
           
           <h3>Space complexity of a BST search</h3>
