@@ -29,6 +29,7 @@ import bstDelete from "../algorithms/bstDeletion"
 import redBlackInsert from "../algorithms/redBlackTreeInsertion"
 import RBDelete from "../algorithms/redBlackTreeDeletion"
 import bstTreeSearch, { bstRedBlackSearch }  from "../algorithms/bstTreeSearch"
+import fordFulkerson from "../algorithms/fordFulkerson"
 
 /** Different algorithms for input to AnimationManager  */
 export const Algorithm = {
@@ -66,7 +67,8 @@ export const Algorithm = {
   RBInsert: "redBlackInsert",
   RBDelete: "redBlackDelete",
   BSTTreeSearch: "bstSearch",
-  RBTreeSearch: "redBlackSearch"
+  RBTreeSearch: "redBlackSearch",
+  FordFulkerson: "fordFulkerson"
   } as const
 
 export type AlgorithmTypes = typeof Algorithm[keyof typeof Algorithm]
@@ -121,7 +123,8 @@ const algorithmTypes : Record<
     redBlackInsert: redBlackInsert,
     redBlackDelete: RBDelete,
     bstSearch: bstTreeSearch,
-    redBlackSearch: bstRedBlackSearch
+    redBlackSearch: bstRedBlackSearch,
+    fordFulkerson: fordFulkerson
 }
 
 export default algorithmTypes

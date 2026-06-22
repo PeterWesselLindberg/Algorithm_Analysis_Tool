@@ -6,9 +6,10 @@ import GraphNodes from "./GraphNodes"
 interface GraphVisualizerProps {
     step: VisualizationStep
     graph?: GraphData
+    isMaxFlow?: boolean
 }
 
-const GraphVisualizer = ({step, graph}: GraphVisualizerProps) => {
+const GraphVisualizer = ({step, graph, isMaxFlow}: GraphVisualizerProps) => {
 
     if (!graph) return null
     return (
@@ -19,6 +20,7 @@ const GraphVisualizer = ({step, graph}: GraphVisualizerProps) => {
             activeEdgeIds={step.activeEdgeIds} 
             mstEdgeIds={step.mstEdgeIds}
             shortestPathEdgeIds={step.shortestPathEdgeIds}
+            isMaxFlow={isMaxFlow}
         />
 
         <GraphNodes

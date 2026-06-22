@@ -472,6 +472,78 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
 
         </>
       )
+    
+    case Visualization.MaxFlowListGraph: 
+      return (
+        <>
+          <GraphVisualizer
+            step={step}
+            graph={step.graph}
+            isMaxFlow={true}
+          />
+          {step.message && (
+          <p className="custom-msg">
+            {step.message}
+          </p>
+          )}
+          <hr />
+
+          <div className="custom-listlayout">
+
+            <div
+              style={{
+                minWidth: "180px"
+              }}
+            >
+
+              {step.mstWeight !== undefined && (
+                <>
+                  <h5>Max Flow:</h5>
+
+                  <ListGroup horizontal className="custom-listgroup">
+
+                    <div className="custom-listelm">
+
+                      <small className="index-label">
+                        Total
+                      </small>
+
+                      <ListGroup.Item
+                        style={{
+                          fontWeight: "bold",
+                          minWidth: "100px",
+                          textAlign: "center"
+                        }}
+                      >
+                        {step.mstWeight}
+                      </ListGroup.Item>
+
+                    </div>
+
+                  </ListGroup>
+                </>
+              )}
+
+            </div>
+
+            <div style={{ flex: 1 }}>
+
+              {step.mstEdges && (
+                <>
+                  <h5>Augmenting Paths:</h5>
+
+                  <MSTEdgeList
+                    edges={step.mstEdges}
+                  />
+                </>
+              )}
+
+            </div>
+
+          </div>
+
+        </>
+      )
 
   } 
   

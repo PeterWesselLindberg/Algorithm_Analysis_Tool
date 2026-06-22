@@ -41,6 +41,12 @@ const ColorExplain = ({structure}: ColorExplainProps)  => {
           Green are the visited nodes: <span className="green-square"></span>
         </p>)}
       
+      {structure === StructureColor.MaxFlowColor && (
+        <p className="legend-item-v-space" > 
+          Yellow is the current active nodes and edge: <span className="yellow-square"></span>
+          Lime are the current edges, which are a part of the max flow <span className="lime-square"></span>
+        </p>)}
+      
     </div>
   )
 }

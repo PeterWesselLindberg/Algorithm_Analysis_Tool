@@ -29,6 +29,7 @@ import BinarySearchTreePage from './pages/BinarySearchTreePage'
 import DepthLimitedSearchPage from './pages/DepthLimitedSearchPage'
 import BinarySearchPage from './pages/BinarySearchPage'
 import RedBlackTreePage from './pages/RedBlackTreePage'
+import MaxFlowPage from './pages/MaxFlowPage'
 
  let items : MenuItem[] = [
           {label: 'Branch and Bound', subItems: [{id: 'Binary Search', comp: BinarySearchPage}, 
@@ -65,6 +66,9 @@ import RedBlackTreePage from './pages/RedBlackTreePage'
                                                     ]},
 
           {label: 'Randomized Algorithms', subItems: [{id: 'Randomized Quick Sort', comp: RandQuickSortPage}
+                                                     ]},
+
+          {label: 'Augmenting Path Algorithms', subItems: [{id: 'Max Flow', comp: MaxFlowPage}
                                                      ]}
       ]
 

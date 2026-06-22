@@ -1,13 +1,15 @@
 import type { GraphData } from "../dataStructures/GraphData"
+import getEdgeLabel from "../utils/getEdgeLabel"
 
 interface GraphEdgesProps {
   graph?: GraphData
   activeEdgeIds?: string[]
   mstEdgeIds?: string[]
   shortestPathEdgeIds?: string[]
+  isMaxFlow?: boolean
 }
 
-const GraphEdges = ({graph, activeEdgeIds = [], mstEdgeIds = [], shortestPathEdgeIds = []}: GraphEdgesProps) => {
+const GraphEdges = ({graph, activeEdgeIds = [], mstEdgeIds = [], shortestPathEdgeIds = [], isMaxFlow = false}: GraphEdgesProps) => {
 
     if (!graph) return null
     return (
@@ -110,7 +112,7 @@ const GraphEdges = ({graph, activeEdgeIds = [], mstEdgeIds = [], shortestPathEdg
                         fill="white"
                         fontSize="12"
                     >
-                        {edge.weight}
+                        {isMaxFlow ? getEdgeLabel(edge) : edge.weight}
                     </text>
                 )}
 
