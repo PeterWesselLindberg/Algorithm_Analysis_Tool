@@ -397,8 +397,6 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
 
           </div>
 
-          {/* <DistanceList distances={step.distances }/> */}
-
         </>
       )
 
@@ -538,6 +536,100 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
                 </>
               )}
 
+            </div>
+
+          </div>
+
+        </>
+      )
+    
+    case Visualization.RandMinCutListGraph: 
+      return (
+        <>
+          <GraphVisualizer
+            step={step}
+            graph={step.graph}
+          />
+          {step.message && (
+          <p className="custom-msg">
+            {step.message}
+          </p>
+          )}
+          <hr />
+
+          <div className="custom-listlayout">
+            <div>
+              {step.mstEdges !== undefined && (
+                <>
+                  <h5>Best min cut edges:</h5>
+
+                  <MSTEdgeList edges={step.mstEdges}/>
+                </>
+              )}
+            </div>
+            
+            <div className="custom-listlayout-without-margin">
+              <div style={{ minWidth: "180px"}}>
+                {step.mstWeight !== undefined && (
+                  <>
+                    <h5>Best min cut:</h5>
+
+                    <ListGroup horizontal className="custom-listgroup">
+
+                      <div className="custom-listelm">
+
+                        <small className="index-label">
+                          Best min cut
+                        </small>
+
+                        <ListGroup.Item
+                          style={{
+                            fontWeight: "bold",
+                            minWidth: "100px",
+                            textAlign: "center"
+                          }}
+                        >
+                          {step.mstWeight}
+                        </ListGroup.Item>
+
+                      </div>
+
+                    </ListGroup>
+                  </>
+                )}
+              </div>
+            
+
+              <div style={{ minWidth: "180px"}}>
+                {step.target !== undefined && (
+                  <>
+                    <h5>Min cut:</h5>
+
+                    <ListGroup horizontal className="custom-listgroup">
+
+                      <div className="custom-listelm">
+
+                        <small className="index-label">
+                          Min cut
+                        </small>
+
+                        <ListGroup.Item
+                          style={{
+                            fontWeight: "bold",
+                            minWidth: "100px",
+                            textAlign: "center"
+                          }}
+                        >
+                          {step.target}
+                        </ListGroup.Item>
+
+                      </div>
+
+                    </ListGroup>
+                  </>
+                )}
+              </div>
+           
             </div>
 
           </div>

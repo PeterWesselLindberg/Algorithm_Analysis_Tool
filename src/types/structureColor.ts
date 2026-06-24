@@ -5,7 +5,8 @@ const StructureColor = {
     TraversalColor: "TraversalColor",
     MSTColor: "MSTColor",
     BSTColor: "BSTColor",
-    MaxFlowColor: "MaxFlowColor"
+    MaxFlowColor: "MaxFlowColor",
+    JustYellow: "JustYellow"
 } as const
 
 export type ColorExplainer = typeof StructureColor[keyof typeof StructureColor]

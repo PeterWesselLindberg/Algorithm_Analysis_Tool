@@ -30,10 +30,7 @@ const dfs = (
         const residualCapacity =
             edge.capacity- edge.flow
 
-        if (
-            residualCapacity > 0 &&
-            !visited.has(edge.to)
-        ) {
+        if (residualCapacity > 0 && !visited.has(edge.to)) {
             pushStep(steps, {
                 graph: structuredClone(graph),
                 visitedIds: [...visited],
@@ -313,7 +310,7 @@ export const fordFulkersonCore = (
     return steps
 }
 
-/** Wrapper for the the Ford-Fulkerson */
+/** Wrapper for Ford-Fulkerson */
 const fordFulkerson: AlgorithmFunction = (input) => {
 return fordFulkersonCore(input, false)
 }

@@ -97,20 +97,15 @@ const generateRandomGraphCore = (
 
         const angle =  (-Math.PI / 2) + (2 * Math.PI * i) / nodeCount
 
-        const x =
-            centerX + radius * Math.cos(angle)
+        const x = centerX + radius * Math.cos(angle)
 
-        const y =
-            centerY + radius * Math.sin(angle)
+        const y = centerY + radius * Math.sin(angle)
 
         nodes.push({
             id: i.toString(),
-
             value: i,
-
             x,
             y,
-
             neighbors: []
         })
     }

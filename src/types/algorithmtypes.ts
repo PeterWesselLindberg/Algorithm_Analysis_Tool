@@ -30,6 +30,7 @@ import redBlackInsert from "../algorithms/redBlackTreeInsertion"
 import RBDelete from "../algorithms/redBlackTreeDeletion"
 import bstTreeSearch, { bstRedBlackSearch }  from "../algorithms/bstTreeSearch"
 import fordFulkerson, { edmondsKarp } from "../algorithms/fordFulkerson"
+import randomMinCut from "../algorithms/randMinCut"
 
 /** Different algorithms for input to AnimationManager  */
 export const Algorithm = {
@@ -69,7 +70,8 @@ export const Algorithm = {
   BSTTreeSearch: "bstSearch",
   RBTreeSearch: "redBlackSearch",
   FordFulkerson: "fordFulkerson",
-  EdmondsKarp: "edmondsKarp"
+  EdmondsKarp: "edmondsKarp",
+  RMinCut: "rMinCut"
   } as const
 
 export type AlgorithmTypes = typeof Algorithm[keyof typeof Algorithm]
@@ -126,7 +128,8 @@ const algorithmTypes : Record<
     bstSearch: bstTreeSearch,
     redBlackSearch: bstRedBlackSearch,
     fordFulkerson: fordFulkerson,
-    edmondsKarp: edmondsKarp
+    edmondsKarp: edmondsKarp,
+    rMinCut: randomMinCut
 }
 
 export default algorithmTypes

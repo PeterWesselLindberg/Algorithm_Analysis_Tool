@@ -11,7 +11,8 @@ const Visualization = {
     ExListTree: "exList/tree",
     TVListTree: "TVList/tree",
     TListBar: "TList/bar",
-    MaxFlowListGraph: "maxFlowList/graph"
+    MaxFlowListGraph: "maxFlowList/graph",
+    RandMinCutListGraph: "randMinCutList/graph"
 } as const
 
 export type VisualizationType = typeof Visualization[keyof typeof Visualization]

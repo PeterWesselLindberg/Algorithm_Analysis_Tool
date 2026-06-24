@@ -8,4 +8,5 @@ export type GraphNodeData = {
   y: number
 
   neighbors: GraphEdge[]
+  members?: string[]
 }
