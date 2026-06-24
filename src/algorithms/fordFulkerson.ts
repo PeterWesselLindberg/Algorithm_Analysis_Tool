@@ -3,14 +3,19 @@ import type { ResidualNode } from "../dataStructures/ResidualNode"
 import type { AlgorithmInput } from "../types/algorithmtypes"
 import type { VisualizationStep } from "../types/VisualizationStep"
 import { pushStep } from "../utils/pushStep"
-import buildResidualGraph from "../utils/buildResidualGraph"
+import buildResidualGraph, {reconstructPath} from "../utils/buildResidualGraph"
+import bfsEdmondsKarp from "./edmondsKarp"
+import type { AlgorithmFunction } from "../types/algorithmtypes"
+import type { GraphData } from "../dataStructures/GraphData"
 
 const dfs = (
     current: string,
     sink: string,
     nodeMap: Map<string, ResidualNode>,
     visited: Set<string>,
-    parent: Map<string, string>
+    parent: Map<string, string>,
+    graph: GraphData,
+    steps: VisualizationStep[]
 ): boolean => {
 
     if (current === sink)
@@ -29,15 +34,30 @@ const dfs = (
             residualCapacity > 0 &&
             !visited.has(edge.to)
         ) {
+            pushStep(steps, {
+                graph: structuredClone(graph),
+                visitedIds: [...visited],
+                activeIds: [edge.to],
+                activeEdgeIds: [`${current}->${edge.to}`],
+                message: `Visited ${edge.to}`
+            })
             parent.set(edge.to, current)
 
+            pushStep(steps, {
+                graph: structuredClone(graph),
+                visitedIds: [...visited],
+                activeIds: [edge.to],
+                message: `Visited ${edge.to}`
+            })
             if (
                 dfs(
                     edge.to,
                     sink,
                     nodeMap,
                     visited,
-                    parent
+                    parent,
+                    graph,
+                    steps
                 )
             ) {
                 return true
@@ -48,33 +68,13 @@ const dfs = (
     return false
 }
 
-const reconstructPath = (
-    source: string,
-    sink: string,
-    parent: Map<string, string>
-): string[] => {
-
-    const path: string[] = []
-
-    let current = sink
-
-    while (current !== source) {
-
-        path.push(current)
-
-        current = parent.get(current)!
-
-    }
-
-    path.push(source)
-
-    return path.reverse()
-}
-
 const findAugmentingPath = (
     residual: ResidualNode[],
     source: string,
-    sink: string
+    sink: string,
+    graph: GraphData,
+    steps: VisualizationStep[],
+    isEdmonsKarp: boolean = false
 ): string[] | null => {
 
     const nodeMap = new Map(
@@ -85,13 +85,27 @@ const findAugmentingPath = (
 
     const parent = new Map<string, string>()
 
-    const found = dfs(
+    let found: Boolean
+
+    if (isEdmonsKarp) {
+        found = bfsEdmondsKarp(
+            source,
+            sink,
+            nodeMap,
+            parent,
+            graph,
+            steps
+        )
+    }
+    else {found = dfs(
         source,
         sink,
         nodeMap,
         visited,
-        parent
-    )
+        parent,
+        graph,
+        steps
+    )}
 
     if (!found)
         return null
@@ -192,8 +206,9 @@ const updateActiveEdges = (path: string[]) => {
     return (path.slice(0, -1).map((_, i) => `${path[i]}->${path[i + 1]}`))
 }
 
-const fordFulkerson = (
-    input: AlgorithmInput
+export const fordFulkersonCore = (
+    input: AlgorithmInput, 
+    isEdmonsKarp: boolean = false
 ): VisualizationStep[] => {
 
     if (input.type !== "graph") {
@@ -224,7 +239,10 @@ const fordFulkerson = (
         const path = findAugmentingPath(
             residual,
             sourceId,
-            sinkId
+            sinkId,
+            graph,
+            steps,
+            isEdmonsKarp
         )
 
         if (!path) {
@@ -236,7 +254,7 @@ const fordFulkerson = (
             graph: structuredClone(graph),
             activeIds: path,
             activeEdgeIds: updateActiveEdges(path),
-            message: "Augmenting path found",
+            message: isEdmonsKarp ? "Shortest augmenting path found" : "Augmenting path found",
             mstEdges: [...augmentingPaths],
             mstEdgeIds: [...augmentingPathsIds],
             mstWeight: maxFlow
@@ -295,4 +313,15 @@ const fordFulkerson = (
     return steps
 }
 
+/** Wrapper for the the Ford-Fulkerson */
+const fordFulkerson: AlgorithmFunction = (input) => {
+return fordFulkersonCore(input, false)
+}
+
+/** Wrapper function used for Edmonds-Karp */
+export const edmondsKarp: AlgorithmFunction = (input) =>
+  fordFulkersonCore(input, true)
+
+
+  
 export default fordFulkerson

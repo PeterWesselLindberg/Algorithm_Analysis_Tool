@@ -68,7 +68,7 @@ import MaxFlowPage from './pages/MaxFlowPage'
           {label: 'Randomized Algorithms', subItems: [{id: 'Randomized Quick Sort', comp: RandQuickSortPage}
                                                      ]},
 
-          {label: 'Augmenting Path Algorithms', subItems: [{id: 'Max Flow', comp: MaxFlowPage}
+          {label: 'Augmenting Path Algorithms', subItems: [{id: 'Max Flow Algorithms', comp: MaxFlowPage}
                                                      ]}
       ]
 

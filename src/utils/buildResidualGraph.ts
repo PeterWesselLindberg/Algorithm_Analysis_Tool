@@ -47,4 +47,27 @@ const buildResidualGraph = (
     return residual
 }
 
+export const reconstructPath = (
+    source: string,
+    sink: string,
+    parent: Map<string, string>
+): string[] => {
+
+    const path: string[] = []
+
+    let current = sink
+
+    while (current !== source) {
+
+        path.push(current)
+
+        current = parent.get(current)!
+
+    }
+
+    path.push(source)
+
+    return path.reverse()
+}
+
 export default buildResidualGraph

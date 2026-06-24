@@ -67,9 +67,9 @@ const MaxFlowPage = () => {
             { selectedTab === 2 &&  (
                 <>
                     <h1>{additionalItems[1]}</h1>
-                    {/* <AnimationManager input={generateRandomGraph(5, true, true, true, false, true)} 
-                        algorithm={Algorithm.BellmanFordFull} visualizationGraphics={Visualization.DistListGraph}
-                        structure={StructureColor.ShortestPathColor} /> */}
+                    <AnimationManager input={generateRandomFlowNetwork()}
+                        algorithm={Algorithm.EdmondsKarp} visualizationGraphics={Visualization.MaxFlowListGraph}
+                        structure={StructureColor.MaxFlowColor}/>
                 </>
             )}
 
