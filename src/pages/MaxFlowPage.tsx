@@ -5,12 +5,14 @@ import { useSearchParams } from "react-router-dom"
 import Visualization from "../types/VisualizationType"
 import { Algorithm } from "../types/algorithmtypes"
 import StructureColor from "../types/structureColor"
-// import type { GraphNodeData } from "../dataStructures/GraphNodeData"
-// import type { GraphData } from "../dataStructures/GraphData"
+import type { GraphNodeData } from "../dataStructures/GraphNodeData"
+import type { GraphData } from "../dataStructures/GraphData"
 import generateRandomFlowNetwork from "../randGen/generateRandomFlowNetwork"
 // import Algo from "../types/algoType"
 // import ComplexityTable from "../components/ComplexityTable"
 // import DataStructure from "../types/dataType"
+import darkImage from "../assets/max_flow_cut_dark.png";
+import lightImage from "../assets/max_flow_cut_light.png";
 
 const MaxFlowPage = () => {
     
@@ -21,30 +23,22 @@ const MaxFlowPage = () => {
 
     const items: string[] = addToList(oneItem, additionalItems)
 
-    // const header: string = "Max flow"
+    const header: string = "Max flow"
 
     const [searchParams, setSearchParams] = useSearchParams()
     const selectedTab = Number(searchParams.get("tab") ?? 1)
 
-    // const nodes: GraphNodeData[] = [
-    //             {id: "0", value: 0, x: 400, y: 70, neighbors: [{to: "1", weight:2}]},
-    //             {id: "1", value: 1, x: 571, y: 194, neighbors: [{to: "2", weight:1}]},
-    //             {id: "2", value: 2, x: 505, y: 395, neighbors: [{to: "3", weight:3}]},
-    //             {id: "3", value: 3, x: 294, y: 395, neighbors: [{to: "4", weight:4}]},
-    //             {id: "4", value: 4, x: 228, y: 194, neighbors: []}
-    //         ]
+    const nodes: GraphNodeData[] = [
+        {id: "0", value: 0, x: 295, y: 194, neighbors: [{to: "1", weight:6}, {to: "2", weight:7}]},
+        {id: "1", value: 1, x: 505, y: 305, neighbors: [{to: "4", weight:2},{to: "2", weight:9}]},
+        {id: "2", value: 2, x: 505, y: 90, neighbors: [{to: "3", weight:8}]},
+        {id: "3", value: 3, x: 705, y: 90, neighbors: [{to: "5", weight:9}, {to: "1", weight:6}]},
+        {id: "4", value: 4, x: 705, y: 305, neighbors: [{to: "5", weight:8}]},
+        {id: "5", value: 5, x: 905, y: 194, neighbors: []}
+    ]
 
-    // const exampleGraph: GraphData = {nodes, directed: true}
+    const exampleGraph: GraphData = {nodes, directed: true}
 
-    // const bestNodes: GraphNodeData[] = [
-    //             {id: "0", value: 0, x: 400, y: 70, neighbors: [{to: "1", weight:2}, {to: "2", weight:1}, {to: "3", weight:3}, {to: "4", weight:4}]},
-    //             {id: "1", value: 1, x: 571, y: 194, neighbors: []},
-    //             {id: "2", value: 2, x: 505, y: 395, neighbors: []},
-    //             {id: "3", value: 3, x: 294, y: 395, neighbors: []},
-    //             {id: "4", value: 4, x: 228, y: 194, neighbors: []}
-    //         ]
-
-    // const bestExampleGraph: GraphData = {nodes: bestNodes, directed: true}
 
     const handleSelectTab = (_item: string, index: number) => {
         setSearchParams({ tab: index.toString() })
@@ -74,46 +68,111 @@ const MaxFlowPage = () => {
             )}
 
             { selectedTab === 0 && (
-                <p>This is hidden</p>
-                // <>
-                //     <p>
-                //         The Bellman-Ford algoritmh is an algorithm, which computes the shortest from a single source vertex to all other vertices in a directed weighted graph.<br/>
-                //         If a vertex in the graph is unreachable from the source it is marked as having an infinite distance between the source and itself.<br/>
-                //         Even though Bellman-Ford has a worse time complexity than many other shortest path algorithms. <br/>
-                //         It has the benefit of being able to handle edges with negative weights.
+                <>
+                    <h1>{header}</h1>
+                    <p>
+                        The max flow problem is the problem of finding the greatest rate at which we can ship materials from a source (0) to a sink (5) in a given directed non-negative weighted graph,<br/>
+                        without violating any capacity constraints. There are 2 core concepts, which needs to be understood in order to understand flow networks.
 
-                //     </p>
+                    </p>
 
-                //     <h2>Time Complexity</h2>
-                //     <h4>Best case performance</h4>
-                //     <p>
-                //         The best case scenario for Bellman-Ford is the case where the source vertex is connected to all other vertices and the algorithm uses the early stopping optimization strategy<br/>
-                //         This case can have a running time of Θ(|E|), where E is the amount of edges in the graph:
-                //     </p>
+                    <h3>Core concept 1: The capacity constraint.</h3>
+                    <p>
+                        The capacity constraints is a constraint, which states that for all vertices u,v in the set of all vertices V, we require that the flow allowed across any directed edge f(u,v)<br/>
+                        must be between 0 and the maxmimum of the capacity c(u,v) of that edge i.e, 0 ≤ f(u,v) ≤ c(u,v).
+                    </p>
 
-                //     <AnimationManager input={{type: "graph", data: bestExampleGraph}} algorithm={Algorithm.BellmanFordFull} visualizationGraphics={Visualization.DistListGraph} isInAbout={true}/>
+                    <h3>Core concept 2: Flow conservation</h3>
+                    <p>
+                        Flow conservation is a property of flow networks, which states that for all vertices u in the set of all vertices V-{"{0,5}"}, we require that the amount of flow, which enters the vertex u,<br/>
+                        ∑<sub>v∈V</sub> f(v,u) must be the same amount of flow which exits the vertex u, ∑<sub>v∈V</sub> f(u,v) i.e, ∑<sub>v∈V</sub> f(v,u) = ∑<sub>v∈V</sub> f(u,v).
+                    </p>
+
+                    <h3>Example flow network</h3>
+                    <AnimationManager input={{type: "graph", data: exampleGraph}} algorithm={Algorithm.EdmondsKarp} visualizationGraphics={Visualization.MaxFlowListGraph} isInAbout={true} hasAnimationOverlay={false}/>
+
+                    <h2>Max flow algorithms, core concepts</h2>
+                    <p>Before getting into the algorithms we need to introduce 3 more concepts and a theorem.</p>
                     
-                //     <h4 className="v-space">Worst case performance</h4>
-                //     <p>
-                //         The worst case scenario for Bellman-Ford has a running time of Θ(|V||E|), V is the amount of vertices in the graph:
-                //     </p>
+                    <h3>Core concept 1 of max flow algorithms: Residual networks.</h3>
+                    <p>
+                        The residual network of a flow network is a graph used in the max flow problem algoritmhs, which shows the current flow sent through the flow network using 2 types of edges called.<br/>
+                        Forward edges i.e, the remaining capacity available in the original flow direction so the flow from the source to the sink and the capacity, which have not yet been used on the edges.<br/>
+                        Then there is the backwards edges i.e, the flow, which can be pushed back to free up capacity somewhere else. These edge values are often shown using a slash (/) in max flow networks,<br/>
+                        where the left side of the slash are the current flow sent through the edge (the backwards edge) and the right side is the total capacity of that edge,<br/> 
+                        making the remaining capacity of that edge c<sub>f</sub>(u,v) = c(u,v) - f(u,v) (the forward edge), where c<sub>f</sub>(u,v) is the remaining capacity.
+                        
+                    </p>
 
-                //     <AnimationManager input={{type: "graph", data: exampleGraph}} algorithm={Algorithm.BellmanFordFull} visualizationGraphics={Visualization.DistListGraph} isInAbout={true}/>
-                    
-                //     <h2 className="v-space">Space complexity</h2>
-                //     <p>The space complexity for Bellman-Ford is O(|V|), where V is total amount vertices present in the graph.</p>
-                    
-                //     <h4>Complexity table</h4>
-                //     <ComplexityTable algoType={Algo.SPath} dataType={DataStructure.Graph} name={header} best={"Θ(|E|)"} average={"Θ(|V||E|)"} worst={"Θ(|V||E|)"} memory={"O(|V|)"}/>
+                    <h3>Core concept 2 of max flow algorithms: Augmenting paths.</h3>
+                    <p>
+                        An augmenting path p is a simple path from the source to the sink in the residual network.<br/>
+                        We may by the definition of a residual network increase the flow of an edge of an augmenting path by c<sub>f</sub>(u,v)<br/>
+                        without violating the capacity constraint of an edge in the original network.
+                    </p>
 
-                //     <h4 className="v-space">References</h4>
-                //     <a href="https://en.wikipedia.org/wiki/Bellman%E2%80%93Ford_algorithm" target="_blank">Wikipedia</a>
-                //     <br/>
-                //     <a 
-                //         href="https://github.com/PeterWesselLindberg/Algorithm_Analysis_Tool/blob/main/src/algorithms/bellmanFord.ts" target="_blank">
-                //         PeterWesselLindberg/Algorithm_Analysis_Tool/
-                //     </a>
-                // </>
+                    <h3>Core concept 3 of max flow algorithms: Cuts of flow networks.</h3>
+                    <p>
+                        A cut of a flow network is a partition of the vertices V into 2 sets called S and T, where T = V-S, such that vertex 0 ∈ S (the source) and vertex 5 ∈ T (the sink).
+                    </p>
+
+                    <h4>Example cut:</h4>
+                    <img src={lightImage} className="img img-light" alt="img" />
+                    <img src={darkImage} className="img img-dark" alt="img" />
+
+                    <h4 className="v-space">Minimum cut</h4>
+                    <p>
+                        The cut shown above happens to be, what is called the minimum cut, which is a cut that partitions the graph into T and S, with the edges that it cuts through having the smallest possible total capacity, 
+                        when summed and only looking at the edges that goes in the forward direction (towards the sink).
+                    </p>
+
+                    <h4>The max flow min cut theorem</h4>
+                    <p>The max-flow min-cut theorem is a theorem, which states that the maximum amount of flow that can be sent through a flow netwrok from the source to the sink is equal to the value of the minimum cut.</p>
+
+                    <h2>The Ford-Fulkerson method</h2>
+                    <p>
+
+                    </p>
+
+                    <h3>Time complexity of the Ford-Fukerson method</h3>
+                    <p>
+
+                    </p>
+
+                    <h3>Space complexity of the Ford-Fukerson method</h3>
+                    <p>
+
+                    </p>
+
+                    {/* <AnimationManager input={{type: "array", data: exampleArr}} algorithm={Algorithm.BSTinsert} visualizationGraphics={Visualization.ExListTree} isInAbout={true}/>
+          
+                    <h4 className="v-space">Complexity table for BST insertion</h4>
+                    <ComplexityTable algoType={Algo.Search} dataType={DataStructure.Tree} name={"BST insertion"} best={"O(h)"} average={"O(h)"} worst={"O(h)"} memory={"O(1)"}/>
+
+                    <h4 className="v-space">References</h4>
+                    <a href="https://en.wikipedia.org/wiki/Binary_search_tree" target="_blank">Wikipedia</a>
+                    <br/>
+                    <a 
+                        href="https://github.com/PeterWesselLindberg/Algorithm_Analysis_Tool/blob/main/src/algorithms/bstInsertion.ts" target="_blank">
+                        PeterWesselLindberg/Algorithm_Analysis_Tool/
+                    </a> */}
+
+                    <h2>The Edmonds-Karp algorithm</h2>
+                    <p>
+
+                    </p>
+
+                    <h3>Time complexity of Edmonds-Karp</h3>
+                    <p>
+
+                    </p>
+
+                    <h3>Space complexity of Edmonds-Karp</h3>
+                    <p>
+
+                    </p>
+                    
+                </>
             )}
         </div>
     )

@@ -194,3 +194,16 @@ body.light .graph-text {
   background-color: #9b1970;
   flex-shrink: 0;
 }
+
+.img-light,
+.img-dark {
+  display: none;
+}
+
+body.light .img-light {
+  display: block;
+}
+
+body.dark .img-dark {
+  display: block;
+}

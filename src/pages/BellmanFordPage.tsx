@@ -93,7 +93,7 @@ const BellmanFordPage = () => {
             { selectedTab === 0 && (
                 <>
                     <p>
-                        The Bellman-Ford algoritmh is an algorithm, which computes the shortest from a single source vertex to all other vertices in a directed weighted graph.<br/>
+                        The Bellman-Ford algorithm is an algorithm, which computes the shortest from a single source vertex to all other vertices in a directed weighted graph.<br/>
                         If a vertex in the graph is unreachable from the source it is marked as having an infinite distance between the source and itself.<br/>
                         Even though Bellman-Ford has a worse time complexity than many other shortest path algorithms. <br/>
                         It has the benefit of being able to handle edges with negative weights.

@@ -13,12 +13,13 @@ import StructureColor, { type ColorExplainer } from "../types/structureColor"
 interface AnimationManagerProps {
   input: AlgorithmInput,
   algorithm: AlgorithmTypes,
-  visualizationGraphics: VisualizationType
-  isInAbout?: boolean
-  structure?: ColorExplainer 
+  visualizationGraphics: VisualizationType,
+  isInAbout?: boolean,
+  structure?: ColorExplainer,
+  hasAnimationOverlay?: boolean
 }
 
-const AnimationManager = ({input, algorithm, visualizationGraphics, isInAbout = false, structure = StructureColor.ArrColor} : AnimationManagerProps) => {
+const AnimationManager = ({input, algorithm, visualizationGraphics, isInAbout = false, structure = StructureColor.ArrColor, hasAnimationOverlay = true} : AnimationManagerProps) => {
   const selectedAlgorithm = algorithmTypes[algorithm] // Initialises the given algoritmhtype for the limited types
   const initialSteps = selectedAlgorithm(input) // Initialises the the input list with the selected algoritm
 
@@ -29,6 +30,7 @@ const AnimationManager = ({input, algorithm, visualizationGraphics, isInAbout = 
   const [isPaused, setIsPaused] = useState(false)
   const [isFinished, setIsFinished] = useState(false)
   const [isHidden, _setIsHidden] = useState(isInAbout)
+  const [isControlsHidden, _setIsControlsHidden] = useState(hasAnimationOverlay)
 
   // The steps used in the algorithm animation
   const [step, setStep] = useState<VisualizationStep>(initialSteps[0])
@@ -186,67 +188,74 @@ const AnimationManager = ({input, algorithm, visualizationGraphics, isInAbout = 
     <div>
       <Visualizer step={step} visualizationType={visualizationGraphics}/>
         <div style={{ marginTop: "1rem" }}>
-          <Button onClick={() => restartSort()}>
-            <FaSquare/>
-          </Button>
 
-          <Button onClick={() => {handleButtonValue(); startStopSort(btnValue)}} disabled={isFinished || currentStep >= steps.length - 1}>
-            {btnText}
-          </Button>
-          
-          <Button onClick={() => stepSort("prev")}
-            disabled={currentStep === 0}>
-            <FaChevronLeft />
-          </Button>
+          {isControlsHidden &&
+          <>
+            <Button onClick={() => restartSort()}>
+              <FaSquare/>
+            </Button>
 
-          <Button onClick={() => stepSort("next")}
-            disabled={isFinished || currentStep >= steps.length - 1}>
-            <FaChevronRight />
-          </Button>
+            <Button onClick={() => {handleButtonValue(); startStopSort(btnValue)}} disabled={isFinished || currentStep >= steps.length - 1}>
+              {btnText}
+            </Button>
+            
+            <Button onClick={() => stepSort("prev")}
+              disabled={currentStep === 0}>
+              <FaChevronLeft />
+            </Button>
 
-          {!isHidden &&
+            <Button onClick={() => stepSort("next")}
+              disabled={isFinished || currentStep >= steps.length - 1}>
+              <FaChevronRight />
+            </Button>
+          </>
+          }
+
+          {!isHidden && isControlsHidden &&
           <Button onClick={generateNewData} style={{ marginLeft: "10rem" }} disabled={isInAbout}>
             Generate new data
           </Button>
           }
 
-          <div style={{ marginTop: "1rem"}}>
-            <label>
-              Speed: {speed}ms
-            </label>
+          {isControlsHidden &&
+            <div style={{ marginTop: "1rem"}}>
+              <label>
+                Speed: {speed}ms
+              </label>
 
-            <input
-              type="range"
-              min="1"
-              max="10"
-              value={speed}
-              onChange={(e) => setSpeed(Number(e.target.value))}
-              style={{ marginRight: "1rem"}}
-            />
+              <input
+                type="range"
+                min="1"
+                max="10"
+                value={speed}
+                onChange={(e) => setSpeed(Number(e.target.value))}
+                style={{ marginRight: "1rem"}}
+              />
 
-            <label>
-              Step: {currentStep >= steps.length ? currentStep-1 : currentStep} / {Math.max(steps.length - 1, 0)}
-              {" "}({progress}%)
+              <label>
+                Step: {currentStep >= steps.length ? currentStep-1 : currentStep} / {Math.max(steps.length - 1, 0)}
+                {" "}({progress}%)
+                
+              </label>
+
+              <input
+                type="range"
+                min="0"
+                max={Math.max(steps.length - 1, 0)}
+                value={currentStep}
+                onChange={(e) => {
+                  const stepIndex = Number(e.target.value)
+
+                  goToStep(stepIndex)
+                }}
+                style={{ width: "400px"}}
+              />
               
-            </label>
+              {!isHidden && <ColorExplain structure={structure}/>}
+              
 
-            <input
-              type="range"
-              min="0"
-              max={Math.max(steps.length - 1, 0)}
-              value={currentStep}
-              onChange={(e) => {
-                const stepIndex = Number(e.target.value)
-
-                goToStep(stepIndex)
-              }}
-              style={{ width: "400px"}}
-            />
-            
-            {!isHidden && <ColorExplain structure={structure}/>}
-            
-
-          </div>
+            </div>
+          }
         </div>
     </div>
   )
