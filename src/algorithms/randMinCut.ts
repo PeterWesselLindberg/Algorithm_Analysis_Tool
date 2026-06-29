@@ -1,4 +1,4 @@
-import type { AlgorithmInput } from "../types/algorithmtypes"
+import type { AlgorithmInput} from "../types/algorithmtypes"
 import type { VisualizationStep } from "../types/VisualizationStep"
 import { pushStep } from "../utils/pushStep"
 import type { GraphNodeData } from "../dataStructures/GraphNodeData"
@@ -53,7 +53,9 @@ const randomMinCut = (
     let bestCombinedNodes: string[] = []
     let minCut = Infinity
 
-    const trials = graph.nodes.length
+    const edgeCount = graph.nodes.reduce((sum, node) => sum + node.neighbors.length, 0) / 2
+
+    const trials = edgeCount * 2
 
     for (let trial = 0; trial < trials; trial++) {
 
@@ -162,6 +164,7 @@ const randomMinCut = (
             )
         
         minCut = cutSize
+        
         // Step 3: Show resulting cut
         pushStep(steps, {
             graph: { nodes: structuredClone(collapseEdges(nodes)) },

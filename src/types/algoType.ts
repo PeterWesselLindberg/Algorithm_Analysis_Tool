@@ -6,7 +6,8 @@ const Algo = {
     Traversal: "Traversal algorithm",
     MaxFlow: "Maximum flow algorithm",
     MinSpan: "Minimum spanning tree algorithm",
-    SearchTraversal: "Search/Traversal algorithm"
+    SearchTraversal: "Search/Traversal algorithm",
+    MinCut: "Min cut algorithm"
 } as const
 
 export type AlgoType = typeof Algo[keyof typeof Algo]

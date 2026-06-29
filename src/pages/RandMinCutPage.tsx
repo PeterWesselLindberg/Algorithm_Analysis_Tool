@@ -4,13 +4,13 @@ import { useSearchParams } from "react-router-dom"
 import Visualization from "../types/VisualizationType"
 import { Algorithm } from "../types/algorithmtypes"
 import StructureColor from "../types/structureColor"
-// import type { GraphNodeData } from "../dataStructures/GraphNodeData"
-// import type { GraphData } from "../dataStructures/GraphData"
+import type { GraphNodeData } from "../dataStructures/GraphNodeData"
+import type { GraphData } from "../dataStructures/GraphData"
 import generateRandomGraph from "../randGen/generateRandomGraph"
 import visualItems from "../utils/visualItems"
-// import Algo from "../types/algoType"
-// import ComplexityTable from "../components/ComplexityTable"
-// import DataStructure from "../types/dataType"
+import Algo from "../types/algoType"
+import ComplexityTable from "../components/ComplexityTable"
+import DataStructure from "../types/dataType"
 
 const RandMinCutPage = () => {
     
@@ -20,25 +20,16 @@ const RandMinCutPage = () => {
     const [searchParams, setSearchParams] = useSearchParams()
     const selectedTab = Number(searchParams.get("tab") ?? 1)
 
-    // const nodes: GraphNodeData[] = [
-    //             {id: "0", value: 0, x: 400, y: 70, neighbors: [{to: "1", weight:2}]},
-    //             {id: "1", value: 1, x: 571, y: 194, neighbors: [{to: "2", weight:1}]},
-    //             {id: "2", value: 2, x: 505, y: 395, neighbors: [{to: "3", weight:3}]},
-    //             {id: "3", value: 3, x: 294, y: 395, neighbors: [{to: "4", weight:4}]},
-    //             {id: "4", value: 4, x: 228, y: 194, neighbors: []}
-    //         ]
 
-    // const exampleGraph: GraphData = {nodes, directed: true}
+    const nodes: GraphNodeData[] = [
+                {id: "0", value: 0, x: 400, y: 70, neighbors: [{to: "1", weight:2}]},
+                {id: "1", value: 1, x: 571, y: 194, neighbors: [{to: "2", weight:5}]},
+                {id: "2", value: 2, x: 505, y: 395, neighbors: [{to: "3", weight:6}]},
+                {id: "3", value: 3, x: 294, y: 395, neighbors: [{to: "4", weight:4}]},
+                {id: "4", value: 4, x: 228, y: 194, neighbors: [{to: "0", weight:8}]}
+            ]
 
-    // const bestNodes: GraphNodeData[] = [
-    //             {id: "0", value: 0, x: 400, y: 70, neighbors: [{to: "1", weight:2}, {to: "2", weight:1}, {to: "3", weight:3}, {to: "4", weight:4}]},
-    //             {id: "1", value: 1, x: 571, y: 194, neighbors: []},
-    //             {id: "2", value: 2, x: 505, y: 395, neighbors: []},
-    //             {id: "3", value: 3, x: 294, y: 395, neighbors: []},
-    //             {id: "4", value: 4, x: 228, y: 194, neighbors: []}
-    //         ]
-
-    // const bestExampleGraph: GraphData = {nodes: bestNodes, directed: true}
+    const exampleGraph: GraphData = {nodes: nodes, directed: false}
 
     const handleSelectTab = (_item: string, index: number) => {
         setSearchParams({ tab: index.toString() })
@@ -59,46 +50,47 @@ const RandMinCutPage = () => {
             )}
 
             { selectedTab === 0 && (
-                <p>This is hidden</p>
-                // <>
-                //     <p>
-                //         The Bellman-Ford algoritmh is an algorithm, which computes the shortest from a single source vertex to all other vertices in a directed weighted graph.<br/>
-                //         If a vertex in the graph is unreachable from the source it is marked as having an infinite distance between the source and itself.<br/>
-                //         Even though Bellman-Ford has a worse time complexity than many other shortest path algorithms. <br/>
-                //         It has the benefit of being able to handle edges with negative weights.
+                <>
+                    <p>
+                        The Randomized min-cut algorithm often also called Karger's algorithm is an algorithm, which finds the minimum cut of a connected undirected graph.<br/>
+                        It does this by randomly contracting 2 edges together until there is only 1 edge and 2 nodes left or it isn't possible to contract anymore edges.
+                    </p>
 
-                //     </p>
+                    <h2>Monte Carlo vs Las Vegas randomized algorithms</h2>
+                    <p>
+                        The randomized min cut algorithm is what is called a monte carlo randomied algorithm meaning that it is an algorithm, which does not guarantee a correct result.<br/>
+                        It does however guarantee a certain amount of tries to find the corrcet min cut. Another type of randomized algorithms are Las Vegas randomized algorithms,<br/>
+                        which are algorithms, that guarantee a correct result no matter how long it takes meaning that it could potentially run infinitely.
+                    </p>
 
-                //     <h2>Time Complexity</h2>
-                //     <h4>Best case performance</h4>
-                //     <p>
-                //         The best case scenario for Bellman-Ford is the case where the source vertex is connected to all other vertices and the algorithm uses the early stopping optimization strategy<br/>
-                //         This case can have a running time of Θ(|E|), where E is the amount of edges in the graph:
-                //     </p>
+                    <h2>Time complexity</h2>
+                    <p>
+                        The running time of the randomized min cut algorithm in one execution is O(V<sup>2</sup>), where V is the number of vertices in the graph. The reasoning behind this running time is that<br/>
+                        there are V-2 edge contractions doing the run of the randomized min cut, where each contraction takes up to O(V) time to update the graph. In the case where the algorithm is repeated<br/>
+                        for higher accuracy the running time is O(V<sup>4</sup> log(V)).
+                    </p>
 
-                //     <AnimationManager input={{type: "graph", data: bestExampleGraph}} algorithm={Algorithm.BellmanFordFull} visualizationGraphics={Visualization.DistListGraph} isInAbout={true}/>
-                    
-                //     <h4 className="v-space">Worst case performance</h4>
-                //     <p>
-                //         The worst case scenario for Bellman-Ford has a running time of Θ(|V||E|), V is the amount of vertices in the graph:
-                //     </p>
+                    <h2>Space complexity</h2>
+                    <p>
+                       The space complexity of randomized min cut is O(V+E), where E is the amount of edges in the graph.
+                    </p>
 
-                //     <AnimationManager input={{type: "graph", data: exampleGraph}} algorithm={Algorithm.BellmanFordFull} visualizationGraphics={Visualization.DistListGraph} isInAbout={true}/>
-                    
-                //     <h2 className="v-space">Space complexity</h2>
-                //     <p>The space complexity for Bellman-Ford is O(|V|), where V is total amount vertices present in the graph.</p>
-                    
-                //     <h4>Complexity table</h4>
-                //     <ComplexityTable algoType={Algo.SPath} dataType={DataStructure.Graph} name={header} best={"Θ(|E|)"} average={"Θ(|V||E|)"} worst={"Θ(|V||E|)"} memory={"O(|V|)"}/>
+                    <AnimationManager input={{type: "graph", data: exampleGraph}} algorithm={Algorithm.RMinCut} visualizationGraphics={Visualization.RandMinCutListGraph} isInAbout={true}/>
 
-                //     <h4 className="v-space">References</h4>
-                //     <a href="https://en.wikipedia.org/wiki/Bellman%E2%80%93Ford_algorithm" target="_blank">Wikipedia</a>
-                //     <br/>
-                //     <a 
-                //         href="https://github.com/PeterWesselLindberg/Algorithm_Analysis_Tool/blob/main/src/algorithms/bellmanFord.ts" target="_blank">
-                //         PeterWesselLindberg/Algorithm_Analysis_Tool/
-                //     </a>
-                // </>
+                    <h4 className="v-space">Complexity table for one execution</h4>
+                    <ComplexityTable algoType={Algo.MinCut} dataType={DataStructure.Graph} name={header} best={"O(V^{2})"} average={"O(V^{2})"} worst={"O(V^{2})"} memory={"O(V+E)"}/>
+
+                    <h4 className="v-space">Complexity table for multiple executions</h4>
+                    <ComplexityTable algoType={Algo.MinCut} dataType={DataStructure.Graph} name={header} best={"O(V^{4} log(V))"} average={"O(V^{4} log(V))"} worst={"O(V^{4} log(V))"} memory={"O(V+E)"}/>
+
+                    <h4 className="v-space">References</h4>
+                    <a href="https://en.wikipedia.org/wiki/Karger%27s_algorithm" target="_blank">Wikipedia</a>
+                    <br/>
+                    <a 
+                        href="https://github.com/PeterWesselLindberg/Algorithm_Analysis_Tool/blob/main/src/algorithms/randMinCut.ts" target="_blank">
+                        PeterWesselLindberg/Algorithm_Analysis_Tool/
+                    </a>
+                </>
             )}
         </div>
     )
