@@ -8,9 +8,9 @@ import StructureColor from "../types/structureColor"
 import type { GraphNodeData } from "../dataStructures/GraphNodeData"
 import type { GraphData } from "../dataStructures/GraphData"
 import generateRandomFlowNetwork from "../randGen/generateRandomFlowNetwork"
-// import Algo from "../types/algoType"
-// import ComplexityTable from "../components/ComplexityTable"
-// import DataStructure from "../types/dataType"
+import Algo from "../types/algoType"
+import ComplexityTable from "../components/ComplexityTable"
+import DataStructure from "../types/dataType"
 import darkImage from "../assets/max_flow_cut_dark.png";
 import lightImage from "../assets/max_flow_cut_light.png";
 
@@ -127,50 +127,69 @@ const MaxFlowPage = () => {
                     </p>
 
                     <h4>The max flow min cut theorem</h4>
-                    <p>The max-flow min-cut theorem is a theorem, which states that the maximum amount of flow that can be sent through a flow netwrok from the source to the sink is equal to the value of the minimum cut.</p>
+                    <p>
+                        The max-flow min-cut theorem is a theorem, which states that the maximum amount of flow that can be sent through a flow network from the source to the sink is equal to the value of the minimum cut.<br/>
+                        The minimum cut seen in the example cut above is 10 meaning that by the max-flow min-cut theorem, that the max flow should also be 10.
+                    </p>
 
                     <h2>The Ford-Fulkerson method</h2>
                     <p>
-
+                        The Ford-Fulkerson method is a greedy algorithm, which computes the maximum flow from the source to the sink in a flow network by iteratively finding augmenting paths in the network.<br/>
+                        The algorithm then increases the flow along this path by as much as possible, so by the max capacity of the edge with the smallest capacity along the path.
                     </p>
 
                     <h3>Time complexity of the Ford-Fukerson method</h3>
                     <p>
-
+                        The running time of the Ford-Fulkerson method when all edge capacities are integers is O(E×f), where E is the number of edges and f is the maximum flow.
                     </p>
 
                     <h3>Space complexity of the Ford-Fukerson method</h3>
                     <p>
-
+                        The space complexity of the Ford-Fulkerson method is O(V+E).
                     </p>
 
-                    {/* <AnimationManager input={{type: "array", data: exampleArr}} algorithm={Algorithm.BSTinsert} visualizationGraphics={Visualization.ExListTree} isInAbout={true}/>
+                    <AnimationManager input={{type: "graph", data: exampleGraph}} algorithm={Algorithm.FordFulkerson} visualizationGraphics={Visualization.MaxFlowListGraph} isInAbout={true}/>
           
-                    <h4 className="v-space">Complexity table for BST insertion</h4>
-                    <ComplexityTable algoType={Algo.Search} dataType={DataStructure.Tree} name={"BST insertion"} best={"O(h)"} average={"O(h)"} worst={"O(h)"} memory={"O(1)"}/>
+                    <h4 className="v-space">Complexity table for the Ford-Fulkerson method</h4>
+                    <ComplexityTable algoType={Algo.MaxFlow} dataType={DataStructure.Graph} name={"The Ford-Fulkerson method"} best={"O(E×f)"} average={"O(E×f)"} worst={"O(E×f)"} memory={"O(V+E)"}/>
 
                     <h4 className="v-space">References</h4>
-                    <a href="https://en.wikipedia.org/wiki/Binary_search_tree" target="_blank">Wikipedia</a>
+                    <a href="https://en.wikipedia.org/wiki/Ford%E2%80%93Fulkerson_algorithm" target="_blank">Wikipedia</a>
                     <br/>
                     <a 
-                        href="https://github.com/PeterWesselLindberg/Algorithm_Analysis_Tool/blob/main/src/algorithms/bstInsertion.ts" target="_blank">
+                        href="https://github.com/PeterWesselLindberg/Algorithm_Analysis_Tool/blob/main/src/algorithms/fordFulkerson.ts" target="_blank">
                         PeterWesselLindberg/Algorithm_Analysis_Tool/
-                    </a> */}
+                    </a>
 
-                    <h2>The Edmonds-Karp algorithm</h2>
+                    <h2 className="v-space">The Edmonds-Karp algorithm</h2>
                     <p>
-
+                       The Edmonds-Karp algorithm is an implementation of the Ford-Fulkerson method, which finds the shortest augmenting path instead of any augmenting path in the flow network.<br/>
+                       The other main difference between Edmonds-Karp and Ford-Fulkerson is that Edmonds-Karp uses BFS instead of DFS to find the augmenting paths.
                     </p>
 
                     <h3>Time complexity of Edmonds-Karp</h3>
                     <p>
-
+                        The running time of Edmonds-Karp's algorithm is O(V×E<sup>2</sup>), where E is the number of edges and V is the number of vertices.
                     </p>
 
                     <h3>Space complexity of Edmonds-Karp</h3>
                     <p>
-
+                        The space complexity of Edmonds-Karp's algoritmh is O(V+E).
                     </p>
+
+                    <AnimationManager input={{type: "graph", data: exampleGraph}} algorithm={Algorithm.EdmondsKarp} visualizationGraphics={Visualization.MaxFlowListGraph} isInAbout={true}/>
+          
+                    <h4 className="v-space">Complexity table for Edmonds-Karp's algorithm</h4>
+                    <ComplexityTable algoType={Algo.MaxFlow} dataType={DataStructure.Graph} name={"Edmonds-Karp's algorithm"} best={"O(V×E^{2})"} average={"O(V×E^{2})"} worst={"O(V×E^{2})"} memory={"O(V+E)"}/>
+
+                    <h4 className="v-space">References</h4>
+                    <a href="https://en.wikipedia.org/wiki/Edmonds%E2%80%93Karp_algorithm" target="_blank">Wikipedia</a>
+                    <br/>
+                    <a 
+                        href="https://github.com/PeterWesselLindberg/Algorithm_Analysis_Tool/blob/main/src/algorithms/edmondsKarp.ts" target="_blank">
+                        PeterWesselLindberg/Algorithm_Analysis_Tool/
+                    </a>
+
                     
                 </>
             )}

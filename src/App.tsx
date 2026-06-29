@@ -64,13 +64,11 @@ import RandMinCutPage from './pages/RandMinCutPage'
           {label: 'Greedy Algorithms', subItems: [{id: 'Dijkstra\'s Shortest Path', comp: DijkstrasPage},
                                                   {id: 'Kruskal\'s Minimum Spanning Tree', comp: KruskalsPage},
                                                   {id: 'Prim\'s Minimum Spanning Tree', comp: PrimsPage},
+                                                  {id: 'Max Flow Algorithms', comp: MaxFlowPage}
                                                     ]},
 
           {label: 'Randomized Algorithms', subItems: [{id: 'Randomized Quick Sort', comp: RandQuickSortPage},
                                                       {id: 'Randomized Min Cut', comp: RandMinCutPage}
-                                                     ]},
-
-          {label: 'Augmenting Path Algorithms', subItems: [{id: 'Max Flow Algorithms', comp: MaxFlowPage}
                                                      ]}
       ]
 
