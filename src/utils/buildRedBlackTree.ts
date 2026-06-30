@@ -404,16 +404,16 @@ const fixInsertion = (
 
 
 export const setChild = (
-  parent: RBTreeNodeData,
-  index: 0 | 1,
-  child: RBTreeNodeData | null
+    parent: RBTreeNodeData,
+    index: 0 | 1,
+    child: RBTreeNodeData | null
 ) => {
 
-  parent.children[index] = child
+    parent.children[index] = child
 
-  if (child) {
-    child.parent = parent
-  }
+    if (child) {
+        child.parent = parent
+    }
 }
 
 export default buildRedBlackTree

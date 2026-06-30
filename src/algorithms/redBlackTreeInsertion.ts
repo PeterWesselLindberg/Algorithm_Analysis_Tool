@@ -6,46 +6,46 @@ import layoutTree from "../utils/layoutTree"
 import type { RBTreeNodeData } from "../dataStructures/RBTreeNodeData"
 
 const redBlackInsert: AlgorithmFunction = (input) => {
-  if (input.type !== "bst") return []
+    if (input.type !== "bst") return []
 
-  const steps: VisualizationStep[] = []
+    const steps: VisualizationStep[] = []
 
-  let root: RBTreeNodeData | null
+    let root: RBTreeNodeData | null
 
-  input.values.forEach((value, index) => {
+    input.values.forEach((value, index) => {
 
-    if (!root) {
+        if (!root) {
 
-      root = {
-        id: index.toString(),
-        value,
-        color: "black",
-        x: 0,
-        y: 0,
-        parent: null,
-        children: [null, null]
-      }
+            root = {
+                id: index.toString(),
+                value,
+                color: "black",
+                x: 0,
+                y: 0,
+                parent: null,
+                children: [null, null]
+            }
 
-      layoutTree(root)
+            layoutTree(root)
 
-      pushStepTree(steps, {
-        tree: structuredClone(root),
-        message: `Inserted root ${value}`,
-      })
+            pushStepTree(steps, {
+                tree: structuredClone(root),
+                message: `Inserted root ${value}`,
+            })
 
-      return
-    }
+            return
+        }
 
-    root = insertRBNode(
-      root,
-      value,
-      index.toString(),
-      steps,
-      true
-    )
-  })
+        root = insertRBNode(
+            root,
+            value,
+            index.toString(),
+            steps,
+            true
+        )
+    })
 
-  return steps
+    return steps
 }
 
 export default redBlackInsert

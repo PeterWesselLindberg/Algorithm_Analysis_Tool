@@ -10,107 +10,109 @@ import type { RBTreeNodeData } from "../dataStructures/RBTreeNodeData"
 
 /** Wrapper function used for red-black tree search */
 export const bfsRedBlackSearch: AlgorithmFunction = (input) =>
-  bfsTreeSearch(input, true)
+    bfsTreeSearch(input, true)
 
 /** Wrapper for the the breadth first search algorith */
 const bfsTreeSearch = (input: AlgorithmInput, isRedBlack: boolean = false) => {
-  if (input.type !== "bst") return []
+    if (input.type !== "bst") return []
 
-  const steps: VisualizationStep[] = []
+    const steps: VisualizationStep[] = []
 
-  const values = input.values
-  const target = input.target
-  let root: TreeNodeData | RBTreeNodeData | null = null
+    const values = input.values
+    const target = input.target
+    let root: TreeNodeData | RBTreeNodeData | null = null
 
-  if (values.length === 0) return steps
+    if (values.length === 0) return steps
 
-  // Build tree
-  if (!isRedBlack) {
-    root = buildBST(values)
-  }
-  else {
-    root = buildRedBlackTree(values)
-  }
+    // Build tree
+    if (!isRedBlack) {
+        root = buildBST(values)
+    }
 
-  if (root === null) {return []}
+    else {
+        root = buildRedBlackTree(values)
+    }
 
-  pushStepTree(steps, {
-    tree: root,
-    activeIds: [root.id],
-    target
-  })
+    if (root === null) {return []}
+
+    pushStepTree(steps, {
+        tree: root,
+        activeIds: [root.id],
+        target
+    })
   
-  // Search only
-  bfsTreeSearchCore(root, target, steps)
+    // Search only
+    bfsTreeSearchCore(root, target, steps)
 
-  return steps
+    return steps
 }
 
 /** Main function for bfs search of a tree */
 const bfsTreeSearchCore = (
-  root: TreeNodeData | RBTreeNodeData,
-  target: number,
-  steps: VisualizationStep[]
+    root: TreeNodeData | RBTreeNodeData,
+    target: number,
+    steps: VisualizationStep[]
 ): TreeNodeData | RBTreeNodeData | null => {
 
-  const queue: (TreeNodeData | RBTreeNodeData)[] = [root]
-  const visitedIds: string[] = []
+    const queue: (TreeNodeData | RBTreeNodeData)[] = [root]
+    const visitedIds: string[] = []
 
-  while (queue.length > 0) {
+    while (queue.length > 0) {
 
-    const current = queue.shift()!
+        const current = queue.shift()!
     
-    visitedIds.push(toId(current.value))
+        visitedIds.push(toId(current.value))
 
-    // Visit node
-    pushStepTree(steps, {
-      tree: root,
-      activeIds: [current.id],
-      visitedIds: [...visitedIds],
-      target
-    })
-
-    // Found target
-    if (current.value === target) {
-      
-      pushStepTree(steps, {
-        tree: root,
-        activeIds: [current.id],
-        message: `Found ${target}`,
-        visitedIds: [...visitedIds],
-        target
-      })
-      return current
-    }
-
-    // Add children to queue
-    if (current.children) {
-      for (const child of current.children) {
-
-        if (!child) continue
-
+        // Visit node
         pushStepTree(steps, {
-          tree: root,
-          activeIds: [current.id, child.id],
-          activeEdgeIds: [`${current.id}->${child.id}`],
-          visitedIds: [...visitedIds],
-          target
+            tree: root,
+            activeIds: [current.id],
+            visitedIds: [...visitedIds],
+            target
         })
 
-        queue.push(child)
-      }
+        // Found target
+        if (current.value === target) {
+      
+            pushStepTree(steps, {
+                tree: root,
+                activeIds: [current.id],
+                message: `Found ${target}`,
+                visitedIds: [...visitedIds],
+                target
+            })
+
+            return current
+        }
+
+        // Add children to queue
+        if (current.children) {
+            for (const child of current.children) {
+
+                if (!child) continue
+
+                pushStepTree(steps, {
+                    tree: root,
+                    activeIds: [current.id, child.id],
+                    activeEdgeIds: [`${current.id}->${child.id}`],
+                    visitedIds: [...visitedIds],
+                    target
+                })
+
+                queue.push(child)
+            }
+        }
     }
-  }
 
-  // Target not found
-  pushStepTree(steps, {
-    tree: root,
-    message: `${target} not found`,
-    visitedIds: [...visitedIds],
-    target
-  })
+    // Target not found
+    pushStepTree(steps, {
+        tree: root,
+        message: `${target} not found`,
+        visitedIds: [...visitedIds],
+        target
+    })
 
-  return null
+    return null
 }
 
 export default bfsTreeSearch

@@ -1,13 +1,13 @@
 export type RBTreeNodeData = {
-  id: string
-  value: number
+    id: string
+    value: number
 
-  color: "red" | "black"
+    color: "red" | "black"
 
-  parent: RBTreeNodeData | null
+    parent: RBTreeNodeData | null
 
-  children: [RBTreeNodeData | null, RBTreeNodeData| null]
+    children: [RBTreeNodeData | null, RBTreeNodeData| null]
 
-  x: number
-  y: number
+    x: number
+    y: number
 }

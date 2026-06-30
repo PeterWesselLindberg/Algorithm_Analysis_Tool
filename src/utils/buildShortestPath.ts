@@ -2,36 +2,36 @@ const buildShortestPath = (
   previous: Record<string, string | undefined>,
   targetId: string
 ) => {
-  const shortestPathIds: string[] = []
-  const shortestPathEdgeIds: string[] = []
+    const shortestPathIds: string[] = []
+    const shortestPathEdgeIds: string[] = []
 
-  let currentId: string | null = targetId
+    let currentId: string | null = targetId
 
-  const visited = new Set<string>() // 🔥 prevents infinite loops
+    const visited = new Set<string>() //Prevents infinite loops
 
-  while (currentId !== null && !visited.has(currentId)) {
-    visited.add(currentId)
+    while (currentId !== null && !visited.has(currentId)) {
+        visited.add(currentId)
 
-    shortestPathIds.push(currentId)
+        shortestPathIds.push(currentId)
 
-    const prev: string | undefined = previous[currentId]
+        const prev: string | undefined = previous[currentId]
 
-    if (prev === null || prev === undefined) {
-      break
+        if (prev === null || prev === undefined) {
+            break
+        }
+
+        shortestPathEdgeIds.push(`${prev}->${currentId}`)
+
+        currentId = prev
     }
 
-    shortestPathEdgeIds.push(`${prev}->${currentId}`)
+    shortestPathIds.reverse()
+    shortestPathEdgeIds.reverse()
 
-    currentId = prev
-  }
-
-  shortestPathIds.reverse()
-  shortestPathEdgeIds.reverse()
-
-  return {
-    shortestPathIds,
-    shortestPathEdgeIds
-  }
+    return {
+        shortestPathIds,
+        shortestPathEdgeIds
+    }
 }
 
 export default buildShortestPath

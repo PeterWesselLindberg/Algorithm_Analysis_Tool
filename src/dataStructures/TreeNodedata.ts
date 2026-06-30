@@ -1,7 +1,7 @@
 export type TreeNodeData = {
-  id: string
-  x: number
-  y: number
-  value: number
-  children: [TreeNodeData | null, TreeNodeData | null]
+    id: string
+    x: number
+    y: number
+    value: number
+    children: [TreeNodeData | null, TreeNodeData | null]
 }

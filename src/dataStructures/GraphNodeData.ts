@@ -1,12 +1,12 @@
 import type { GraphEdge } from "./GraphEdge"
 
 export type GraphNodeData = {
-  id: string
-  value: number
+    id: string
+    value: number
 
-  x: number
-  y: number
+   x: number
+   y: number
 
-  neighbors: GraphEdge[]
-  members?: string[]
+    neighbors: GraphEdge[]
+    members?: string[]
 }

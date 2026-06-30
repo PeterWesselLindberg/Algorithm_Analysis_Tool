@@ -196,13 +196,6 @@ const fixDeletion = (
     
     let current = x
     let currentParent = parent
-
-    // pushStepTree(steps, {
-    //     tree: structuredClone(root),
-    //     message: `Entering fixDeletion with ${
-    //         current ? current.value : "undefined"
-    //     }`
-    // })
     
     while (current !== root && (current === null || current.color === "black")) {
 

@@ -1,6 +1,6 @@
 export type ResidualGraphEdge = {
-  to: string
-  capacity: number
-  flow: number
+    to: string
+    capacity: number
+    flow: number
 
 }

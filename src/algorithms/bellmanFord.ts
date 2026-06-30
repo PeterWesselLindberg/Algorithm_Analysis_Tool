@@ -1,9 +1,6 @@
 import type { AlgorithmInput } from "../types/algorithmtypes"
-
 import type { VisualizationStep } from "../types/VisualizationStep"
-
 import { pushStep } from "../utils/pushStep"
-
 import choooseRandomNodes from "../utils/chooseRandomNodes"
 import type { AlgorithmFunction } from "../types/algorithmtypes"
 import buildShortestPath from "../utils/buildShortestPath"
@@ -15,210 +12,195 @@ export const bellmanFordFull: AlgorithmFunction = input => bellmanFord(input, fa
 export const bellmanFordRandom: AlgorithmFunction = input => bellmanFord(input, true)
 
 const bellmanFord = (
-  input: AlgorithmInput,
-  limitedDist: boolean = true // Set to true if using distance between 2 random nodes
+    input: AlgorithmInput,
+    limitedDist: boolean = true // Set to true if using distance between 2 random nodes
 ): VisualizationStep[] => {
 
-  // Only graphs supported
-  if (input.type !== "graph") {
-    return []
-  }
+    // Only graphs supported
+    if (input.type !== "graph") {
+        return []
+    }
 
-  const graph = input.data
-  const steps: VisualizationStep[] = []
+    const graph = input.data
+    const steps: VisualizationStep[] = []
 
-  if (graph.nodes.length === 0) {
-    return steps
-  }
+    if (graph.nodes.length === 0) {
+        return steps
+    }
 
-  let start = graph.nodes[0]
-  let target = graph.nodes[graph.nodes.length-1]
+    let start = graph.nodes[0]
+    let target = graph.nodes[graph.nodes.length-1]
 
-  let end = undefined
-  let source = undefined
+    let end = undefined
+    let source = undefined
 
-  if (limitedDist) {
-    const randomNodes = choooseRandomNodes(graph)
+    if (limitedDist) {
+        const randomNodes = choooseRandomNodes(graph)
 
-    start = graph.nodes[randomNodes[0]]
-    target = graph.nodes[randomNodes[1]]
+        start = graph.nodes[randomNodes[0]]
+        target = graph.nodes[randomNodes[1]]
       
-    end = target.value
-    source = start.value
+        end = target.value
+        source = start.value
 
-    pushStep(steps, {
-      graph,
-      activeIds: [target.id],
-      compareIds: [start.id]
-    })
-  }
+        pushStep(steps, {
+            graph,
+            activeIds: [target.id],
+            compareIds: [start.id]
+        })
+    }
 
-  const distances: Record<string, number> = {}
+    const distances: Record<string, number> = {}
 
-  // Final path storage
-  const previous: Record<string, string | undefined> = {}
+    // Final path storage
+    const previous: Record<string, string | undefined> = {}
   
-  // Initialize infinity
-  graph.nodes.forEach(node => {
-    distances[node.id] = Infinity
-    previous[node.id] = undefined
-  })
+    // Initialize infinity
+    graph.nodes.forEach(node => {
+        distances[node.id] = Infinity
+        previous[node.id] = undefined
+    })
 
-  distances[start.id] = 0
+    distances[start.id] = 0
 
-  const visited = new Set<string>()
+    const visited = new Set<string>()
 
-  // V - 1 passes
-  for (let i = 0; i < graph.nodes.length - 1; i++) {
+    // V - 1 passes
+    for (let i = 0; i < graph.nodes.length - 1; i++) {
 
-    let updated = false
+        let updated = false
+
+        graph.nodes.forEach(node => {
+
+            node.neighbors.forEach(edge => {
+
+                const neighbor = graph.nodes.find(n => n.id === edge.to)
+
+                if (!neighbor) return
+
+                // Edge animation
+                pushStep(steps, {
+                    graph,
+                    activeIds: [node.id],
+                    activeEdgeIds: [`${node.id}->${neighbor.id}`],
+                    distances: { ...distances },
+                    sortedIds: [...visited],
+                    target: end,
+                    start: source
+                })
+
+                // Unreachable
+                if (distances[node.id] === Infinity) {
+                    return
+                }
+
+                const newDistance = distances[node.id] + (edge.weight ?? 1)
+
+                // Relax edge
+                if (newDistance < distances[neighbor.id]) {
+
+                    distances[neighbor.id] = newDistance
+          
+                    // Store shortest path parent
+                    previous[neighbor.id] = node.id
+          
+                    updated = true
+
+                    visited.add(neighbor.id)
+
+                    pushStep(steps, {
+                        graph,
+                        activeIds: [neighbor.id],
+                        activeEdgeIds: [`${node.id}->${neighbor.id}`],
+                        distances: { ...distances },
+                        sortedIds: [...visited],
+                        target: end,
+                        start: source
+                    })
+                }
+            })
+        })
+
+    
+        // Stop early if no updates
+        if (!updated) {
+            break
+        }
+    }
+
+    // Negative cycle detection
+    let hasNegativeCycle = false
 
     graph.nodes.forEach(node => {
 
-      node.neighbors.forEach(edge => {
+        node.neighbors.forEach(edge => {
 
-        const neighbor =
-          graph.nodes.find(
-            n => n.id === edge.to
-          )
+            const neighbor = graph.nodes.find(n => n.id === edge.to)
 
-        if (!neighbor) return
+            if (!neighbor) return
 
-        // Edge animation
-        pushStep(steps, {
-          graph,
-          activeIds: [node.id],
-          activeEdgeIds: [
-            `${node.id}->${neighbor.id}`
-          ],
-          distances: { ...distances },
-          sortedIds: [...visited],
-          target: end,
-          start: source
+            if (distances[node.id] + (edge.weight ?? 1) < distances[neighbor.id]) {
+                hasNegativeCycle = true
+            }
         })
-
-        // Unreachable
-        if (distances[node.id] === Infinity) {
-          return
-        }
-
-        const newDistance = distances[node.id] + (edge.weight ?? 1)
-
-        // Relax edge
-        if (newDistance < distances[neighbor.id]) {
-
-          distances[neighbor.id] = newDistance
-          
-          // Store shortest path parent
-          previous[neighbor.id] = node.id
-          
-          updated = true
-
-          visited.add(neighbor.id)
-
-          pushStep(steps, {
-            graph,
-            activeIds: [neighbor.id],
-            activeEdgeIds: [
-              `${node.id}->${neighbor.id}`
-            ],
-            distances: { ...distances },
-            sortedIds: [...visited],
-            target: end,
-            start: source
-          })
-        }
-      })
     })
-
-    
-    // Stop early if no updates
-    if (!updated) {
-      break
+  
+    let localShortestPathIds: string[] = []
+    let localShortestPathEdgeIds: string[] = []
+  
+    if (distances[target.id] !== Infinity) {
+        const {shortestPathIds, shortestPathEdgeIds} = buildShortestPath(previous, target.id)  
+        localShortestPathEdgeIds = shortestPathEdgeIds
+        localShortestPathIds = shortestPathIds
     }
-  }
 
-  // Negative cycle detection
-  let hasNegativeCycle = false
-
-  graph.nodes.forEach(node => {
-
-    node.neighbors.forEach(edge => {
-
-      const neighbor =
-        graph.nodes.find(
-          n => n.id === edge.to
-        )
-
-      if (!neighbor) return
-
-      if (
-        distances[node.id] +
-        (edge.weight ?? 1)
-        <
-        distances[neighbor.id]
-      ) {
-        hasNegativeCycle = true
-      }
-    })
-  })
-  
-  let localShortestPathIds: string[] = []
-  let localShortestPathEdgeIds: string[] = []
-  if (distances[target.id] !== Infinity) {
-    const {shortestPathIds, shortestPathEdgeIds} = buildShortestPath(previous, target.id)  
-    localShortestPathEdgeIds = shortestPathEdgeIds
-    localShortestPathIds = shortestPathIds
-
-  }
-
-  
-  if (!limitedDist) {
-    // Final step
-    pushStep(steps, {
-      graph,
-      distances: { ...distances },
-      target: end,
-      start: source,
-      sortedIds: [...visited],
-      shortestPathEdgeIds: localShortestPathEdgeIds,
+    if (!limitedDist) {
+        // Final step
+      pushStep(steps, {
+          graph,
+          distances: { ...distances },
+          target: end,
+          start: source,
+          sortedIds: [...visited],
+          shortestPathEdgeIds: localShortestPathEdgeIds,
     
-      message: hasNegativeCycle
-        ? "Negative cycle detected"
-        : limitedDist && target
-            ? distances[target.id] === Infinity
-              ? `No path exists from ${start.value} to ${target.value}`
-              : `Shortest distance from ${start.value} to ${target.value} is ${
-                distances[target.id]
-              }`
+          message: hasNegativeCycle
+          ? "Negative cycle detected"
+          : limitedDist && target
+              ? distances[target.id] === Infinity
+                  ? `No path exists from ${start.value} to ${target.value}`
+                  : `Shortest distance from ${start.value} to ${target.value} is ${
+                      distances[target.id]
+                  }`
 
-        : "Bellman-Ford completed"
+          : "Bellman-Ford completed"
       })
-  }
-  else {
-    // Final step
-    pushStep(steps, {
-      graph,
-      distances: { ...distances },
-      target: end,
-      start: source,
-      shortestPathEdgeIds: localShortestPathEdgeIds,
-      shortestPathIds: localShortestPathIds,
+    }
+    
+    else {
+        // Final step
+        pushStep(steps, {
+            graph,
+            distances: { ...distances },
+            target: end,
+            start: source,
+            shortestPathEdgeIds: localShortestPathEdgeIds,
+            shortestPathIds: localShortestPathIds,
 
-      message: hasNegativeCycle
-        ? "Negative cycle detected"
-        : limitedDist && target
-            ? distances[target.id] === Infinity
-              ? `No path exists from ${start.value} to ${target.value}`
-              : `Shortest distance from ${start.value} to ${target.value} is ${
-                distances[target.id]
-              }`
+            message: hasNegativeCycle
+            ? "Negative cycle detected"
+            : limitedDist && target
+                ? distances[target.id] === Infinity
+                    ? `No path exists from ${start.value} to ${target.value}`
+                    : `Shortest distance from ${start.value} to ${target.value} is ${
+                        distances[target.id]
+                    }`
 
-        : "Bellman-Ford completed"
-    })
-  }
+            : "Bellman-Ford completed"
+        })
+    }
 
-  return steps
+    return steps
 }
 
 export default bellmanFord

@@ -56,7 +56,7 @@ const swap = (inputArr : number[], i : number, j : number) : void => {
 }
 
 
-// Helper function for tracing
+/** Helper function for tracing */
 const quickSortRecursive = (
     arr: number[],
     low: number,

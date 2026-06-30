@@ -1,6 +1,5 @@
 import type { AlgorithmInput } from "../types/algorithmtypes"
 import type { VisualizationStep } from "../types/VisualizationStep"
-
 import { pushStep } from "../utils/pushStep"
 
 const inputId = (i: number) => `input-${i}`
@@ -8,164 +7,158 @@ const countId = (i: number) => `count-${i}`
 const outputId = (i: number) => `output-${i}`
 
 const getMax = (arr: number[]) => {
-  let max = arr[0]
+    let max = arr[0]
 
-  for (let i = 1; i < arr.length; i++) {
-    if (arr[i] > max) {
-      max = arr[i]
+    for (let i = 1; i < arr.length; i++) {
+        if (arr[i] > max) {
+            max = arr[i]
+        }
     }
-  }
 
-  return max
+    return max
 }
 
 /** Helper function for counting sort of arr[]*/
 const countSortByDigit = (
-  arr: number[],
-  exp: number,
-  steps: VisualizationStep[]
+    arr: number[],
+    exp: number,
+    steps: VisualizationStep[]
 ) => {
 
-  const n = arr.length
-  const output = new Array(n).fill(0)
-  const count = new Array(10).fill(0)
+    const n = arr.length
+    const output = new Array(n).fill(0)
+    const count = new Array(10).fill(0)
 
-  const buildLinears = () => [
-    {
-      id: "input",
-      label: `Working Array (exp=${exp})`,
-      values: [...arr]
-    },
+    const buildLinears = () => [
+        {
+            id: "input",
+            label: `Working Array (exp=${exp})`,
+            values: [...arr]
+        },
 
-    {
-      id: "count",
-      label: "Digit Count",
-      values: [...count]
-    },
+        {
+            id: "count",
+            label: "Digit Count",
+            values: [...count]
+        },
 
-    {
-      id: "output",
-      label: "Output Array",
-      values: [...output]
+        {
+            id: "output",
+            label: "Output Array",
+            values: [...output]
+        }
+    ]
+
+    // Count digits
+    for (let i = 0; i < n; i++) {
+
+        const digit = Math.floor(arr[i] / exp) % 10
+
+        // Show digit access
+        pushStep(steps, {
+            linears: buildLinears(),
+            activeIds: [inputId(i), countId(digit)]
+        })
+
+        count[digit]++
+
+        // Show updated count
+        pushStep(steps, {
+            linears: buildLinears(),
+            sortedIds: [countId(digit)]
+        })
     }
-  ]
 
-  // Count digits
-  for (let i = 0; i < n; i++) {
+    // Prefix sum
+    for (let i = 1; i < 10; i++) {
 
-    const digit =
-      Math.floor(arr[i] / exp) % 10
+        pushStep(steps, {
+            linears: buildLinears(),
+            activeIds: [countId(i)],
+            compareIds: [countId(i - 1)]
+        })
 
-    // Show digit access
-    pushStep(steps, {
-      linears: buildLinears(),
-      activeIds: [inputId(i), countId(digit)]
-    })
+        count[i] += count[i - 1]
 
-    count[digit]++
+        pushStep(steps, {
+            linears: buildLinears(),
+            sortedIds: [countId(i)]
+        })
+    }
 
-    // Show updated count
-    pushStep(steps, {
-      linears: buildLinears(),
+    // Build output
+    for (let i = n - 1; i >= 0; i--) {
 
-      sortedIds: [
-        countId(digit)
-      ]
-    })
-  }
+        const digit = Math.floor(arr[i] / exp) % 10
+        const pos = count[digit] - 1
 
-  // Prefix sum
-  for (let i = 1; i < 10; i++) {
+        // Show target position
+        pushStep(steps, {
+            linears: buildLinears(),
+            activeIds: [inputId(i), countId(digit), outputId(pos)]
+        })
 
-    pushStep(steps, {
-      linears: buildLinears(),
-      activeIds: [countId(i)],
-      compareIds: [countId(i - 1)]
-    })
+        output[pos] = arr[i]
+        
+        count[digit]--
 
-    count[i] += count[i - 1]
+        // Show inserted value
+        pushStep(steps, {
+            linears: buildLinears(),
+            sortedIds: [outputId(pos)],
+            activeIds: [countId(digit)]
+        })
+    }
 
-    pushStep(steps, {
-      linears: buildLinears(),
-      sortedIds: [countId(i)]
-    })
-  }
+    // Copy back
+    for (let i = 0; i < n; i++) {
 
-  // Build output
-  for (let i = n - 1; i >= 0; i--) {
+        pushStep(steps, {
+            linears: buildLinears(),
+            activeIds: [outputId(i), inputId(i)]
+        })
 
-    const digit = Math.floor(arr[i] / exp) % 10
+        arr[i] = output[i]
 
-    const pos = count[digit] - 1
-
-    // Show target position
-    pushStep(steps, {
-      linears: buildLinears(),
-      activeIds: [inputId(i), countId(digit), outputId(pos)]
-    })
-
-    output[pos] = arr[i]
-
-    count[digit]--
-
-    // Show inserted value
-    pushStep(steps, {
-      linears: buildLinears(),
-      sortedIds: [outputId(pos)],
-      activeIds: [countId(digit)]
-    })
-  }
-
-  // Copy back
-  for (let i = 0; i < n; i++) {
-
-    pushStep(steps, {
-      linears: buildLinears(),
-      activeIds: [outputId(i), inputId(i)]
-    })
-
-    arr[i] = output[i]
-
-    pushStep(steps, {
-      linears: buildLinears(),
-      sortedIds: [inputId(i)]
-    })
-  }
+        pushStep(steps, {
+            linears: buildLinears(),
+            sortedIds: [inputId(i)]
+        })
+    }
 }
 
 const radixSort = (input: AlgorithmInput): VisualizationStep[] => {
 
-  // Radix sort only supports arrays
-  if (input.type !== "array") {
-    return []
-  }
-  const inputArr = input.data
-  const arr = [...inputArr]
-  const steps: VisualizationStep[] = []
-  const maxNumber = getMax(arr)
+    // Radix sort only supports arrays
+    if (input.type !== "array") {
+        return []
+    }
+  
+    const inputArr = input.data
+    const arr = [...inputArr]
+    const steps: VisualizationStep[] = []
+    const maxNumber = getMax(arr)
 
-  // Process each digit
-  for (let exp = 1; Math.floor(maxNumber / exp) > 0; exp *= 10) {
-    countSortByDigit(arr, exp, steps)
-  }
+    // Process each digit
+    for (let exp = 1; Math.floor(maxNumber / exp) > 0; exp *= 10) {
+        countSortByDigit(arr, exp, steps)
+    }
 
-  // Final step
-  pushStep(steps, {
-    linears: [
-      {
-        id: "input",
-        label: "Sorted Array",
-        values: [...arr]
-      }
-    ],
+    // Final step
+    pushStep(steps, {
+        linears: [{
+            id: "input",
+            label: "Sorted Array",
+            values: [...arr]
+        }],
 
-    sortedIds: Array.from(
-      { length: arr.length },
-      (_, i) => inputId(i)
-    )
-  })
+        sortedIds: Array.from(
+            { length: arr.length },
+            (_, i) => inputId(i)
+        )
+    })
 
-  return steps
+    return steps
 }
 
 export default radixSort

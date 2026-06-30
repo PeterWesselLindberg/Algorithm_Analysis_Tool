@@ -9,127 +9,125 @@ import type { RBTreeNodeData } from "../dataStructures/RBTreeNodeData"
 
 /** Wrapper function used for depth limited tree search */
 export const depthLimitedSearch: AlgorithmFunction = (input) =>
-  dfsTreeSearch(input, 2, false)
+    dfsTreeSearch(input, 2, false)
 
 /** Wrapper function used for red-black tree search */
 export const dfsRedBlackSearch: AlgorithmFunction = (input) =>
-  dfsTreeSearch(input, -1, true)
+    dfsTreeSearch(input, -1, true)
 
 /** Wrapper for depth first tree search */
 const dfsTreeSearch = (input: AlgorithmInput, depthLimit: number = -1, isRedBlack: boolean = false) => {
-  if (input.type !== "bst") return []
+    if (input.type !== "bst") return []
 
-  const steps: VisualizationStep[] = []
-  const values = input.values
-  const target = input.target
-  let root: TreeNodeData | RBTreeNodeData | null = null
+    const steps: VisualizationStep[] = []
+    const values = input.values
+    const target = input.target
+    let root: TreeNodeData | RBTreeNodeData | null = null
 
-  if (values.length === 0) return steps
+    if (values.length === 0) return steps
 
-  // Build tree
-  if (!isRedBlack) {
-    root = buildBST(values)
-  }
-  else {
-    root = buildRedBlackTree(values)
-  }
+    // Build tree
+    if (!isRedBlack) {
+        root = buildBST(values)
+    }
+  
+    else {
+        root = buildRedBlackTree(values)
+    }
 
-  if (root === null) {return []}
+    if (root === null) {return []}
 
-  pushStepTree(steps, {
-    tree: root,
-    activeIds: [root.id],
-    target
-  })
+    pushStepTree(steps, {
+        tree: root,
+        activeIds: [root.id],
+        target
+    })
 
   
-  // Search only
-  dfsTreeSearchCore(root, target, steps, depthLimit)
+    // Search only
+    dfsTreeSearchCore(root, target, steps, depthLimit)
 
-  return steps
+    return steps
 }
 
 /** The main function for depth first tree search */
 const dfsTreeSearchCore = (
-  root: TreeNodeData | RBTreeNodeData,
-  target: number,
-  steps: VisualizationStep[],
-  depthLimit: number
+    root: TreeNodeData | RBTreeNodeData,
+    target: number,
+    steps: VisualizationStep[],
+    depthLimit: number
 ): TreeNodeData | RBTreeNodeData | null => {
 
-  const stack: {node: TreeNodeData | RBTreeNodeData; depth: number}[] = [{ node: root, depth: 0}]
+    const stack: {node: TreeNodeData | RBTreeNodeData; depth: number}[] = [{ node: root, depth: 0}]
 
-  const visitedIds: string[] = []
+    const visitedIds: string[] = []
 
-  while (stack.length > 0) {
+    while (stack.length > 0) {
 
-    const { node: current, depth} = stack.pop()!
-    visitedIds.push(toId(current.value))
+        const { node: current, depth} = stack.pop()!
+        visitedIds.push(toId(current.value))
 
-    // Show visit
+        // Show visit
+        pushStepTree(steps, {
+            tree: root,
+            activeIds: [current.id],
+            visitedIds: [...visitedIds],
+            target
+        })
+
+        if (current.value === target) {
+            pushStepTree(steps, {
+                tree: root,
+                activeIds: [current.id],
+                message: `Found ${target}`,
+                visitedIds: [...visitedIds],
+                target
+            })
+            return current
+        }
+
+        // Depth limit check for depth limited search
+        if (depthLimit !== -1 && depth >= depthLimit) {
+            pushStepTree(steps, {
+                tree: root,
+                activeIds: [current.id],
+                visitedIds: [...visitedIds],
+                message: `Depth limit reached at ${current.value}`,
+                target
+            })
+            continue
+        }
+
+        // Push children 
+        const children = [current.children[1], current.children[0]]
+
+        for (const child of children) {
+
+            if (!child) continue
+
+            pushStepTree(steps, {
+                tree: root,
+                activeIds: [current.id, child.id],
+                activeEdgeIds: [`${current.id}->${child.id}`],
+                visitedIds: [...visitedIds],
+                target
+            })
+
+            stack.push({
+                node: child,
+                depth: depth + 1
+            })
+        }
+    }
+
     pushStepTree(steps, {
-      tree: root,
-      activeIds: [current.id],
-      visitedIds: [...visitedIds],
-      target
+        tree: root,
+        message: `${target} not found`,
+        visitedIds: [...visitedIds],
+        target
     })
 
-    if (current.value === target) {
-      pushStepTree(steps, {
-        tree: root,
-        activeIds: [current.id],
-        message: `Found ${target}`,
-        visitedIds: [...visitedIds],
-        target
-      })
-      return current
-    }
-
-    // Depth limit check for depth limited search
-    if (depthLimit !== -1 && depth >= depthLimit) {
-      pushStepTree(steps, {
-        tree: root,
-        activeIds: [current.id],
-        visitedIds: [...visitedIds],
-        message: `Depth limit reached at ${current.value}`,
-        target
-      })
-      continue
-    }
-
-    // Push children 
-    const children = [
-      current.children[1],
-      current.children[0]
-    ]
-
-    for (const child of children) {
-
-      if (!child) continue
-
-      pushStepTree(steps, {
-        tree: root,
-        activeIds: [current.id, child.id],
-        activeEdgeIds: [`${current.id}->${child.id}`],
-        visitedIds: [...visitedIds],
-        target
-      })
-
-      stack.push({
-        node: child,
-        depth: depth + 1
-      })
-    }
-  }
-
-  pushStepTree(steps, {
-    tree: root,
-    message: `${target} not found`,
-    visitedIds: [...visitedIds],
-    target
-  })
-
-  return null
+    return null
 }
 
 export default dfsTreeSearch

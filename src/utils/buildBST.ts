@@ -3,87 +3,87 @@ import type { TreeNodeData } from "../dataStructures/TreeNodedata"
 import layoutTree from "./layoutTree"
 
 const buildBST = (
-  values: number[]
+    values: number[]
 ): TreeNodeData | null => {
 
-  if (values.length === 0) {
-    return null
-  }
+    if (values.length === 0) {
+        return null
+    }
 
-  const root: TreeNodeData = {
-    id: "0",
-    value: values[0],
-    x: 0,
-    y: 0,
-    children: [null, null]
-  }
+    const root: TreeNodeData = {
+        id: "0",
+        value: values[0],
+        x: 0,
+        y: 0,
+        children: [null, null]
+    }
 
-  for (let i = 1; i < values.length; i++) {
+    for (let i = 1; i < values.length; i++) {
 
-    insertNode(
-      root,
-      values[i],
-      i.toString()
-    )
-  }
+        insertNode(
+            root,
+            values[i],
+            i.toString()
+        )
+    }
 
-  layoutTree(root)
+    layoutTree(root)
 
-  return root
+    return root
 }
 
 const insertNode = (
-  root: TreeNodeData,
-  value: number,
-  id: string
+    root: TreeNodeData,
+    value: number,
+    id: string
 ) => {
 
-  let current = root
+    let current = root
 
-  while (true) {
+    while (true) {
 
-    // LEFT
-    if (value < current.value) {
+        // Left
+        if (value < current.value) {
 
-      if (!current.children[0]) {
+            if (!current.children[0]) {
 
-        const newNode: TreeNodeData = {
-          id,
-          value,
-          x: 0,
-          y: 0,
-          children: [null, null]
+                const newNode: TreeNodeData = {
+                    id,
+                    value,
+                    x: 0,
+                    y: 0,
+                    children: [null, null]
+                }
+
+                current.children[0] = newNode
+
+                return
+            }
+
+          current = current.children[0]
         }
 
-        current.children[0] = newNode
+        // Right
+        else {
 
-        return
-      }
+            if (!current.children[1]) {
 
-      current = current.children[0]
-    }
+                const newNode: TreeNodeData = {
+                    id,
+                    value,
+                    x: 0,
+                    y: 0,
+                    children: [null, null]
+                }
 
-    // RIGHT
-    else {
+                current.children[1] = newNode
 
-      if (!current.children[1]) {
+                return
+            }
 
-        const newNode: TreeNodeData = {
-          id,
-          value,
-          x: 0,
-          y: 0,
-          children: [null, null]
+            current = current.children[1]
         }
-
-        current.children[1] = newNode
-
-        return
-      }
-
-      current = current.children[1]
     }
-  }
 }
 
 export default buildBST

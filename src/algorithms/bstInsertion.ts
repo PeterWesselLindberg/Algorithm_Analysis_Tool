@@ -8,82 +8,79 @@ import type { AlgorithmInput } from "../types/algorithmtypes"
 import type { TreeNodeData } from "../dataStructures/TreeNodedata"
 
 const bstInsert = (
-  root: TreeNodeData,
-  value: number,
-  steps: VisualizationStep[],
-  index: number = 1,
-  insertedValues: number[] = []
+    root: TreeNodeData,
+    value: number,
+    steps: VisualizationStep[],
+    index: number = 1,
+    insertedValues: number[] = []
 ) => {
 
-  let current = root
+    let current = root
 
-  while (true) {
+    while (true) {
 
-    // Visit node
-    layoutTree(root)
+        // Visit node
+        layoutTree(root)
 
-    pushStepTree(steps, {
-      tree: structuredClone(root),
-      activeIds: [current.id],
+        pushStepTree(steps, {
+            tree: structuredClone(root),
+            activeIds: [current.id],
 
-      linears: [{
-        id: "inserted",
-        label: "Inserted Values",
-        values: [...insertedValues]
-      }]
-    })
+            linears: [{
+                id: "inserted",
+                label: "Inserted Values",
+                values: [...insertedValues]
+            }]
+        })
 
-    const direction =
-      value < current.value ? 0 : 1
+        const direction = value < current.value ? 0 : 1
 
-    const child = current.children[direction]
+        const child = current.children[direction]
 
-    // Insert
-    if (!child) {
+        // Insert
+        if (!child) {
 
-      const newNode: TreeNodeData = {
-        id: index.toString(),
-        value,
-        x: 0,
-        y: 0,
-        children: [null, null]
-      }
+            const newNode: TreeNodeData = {
+                id: index.toString(),
+                value,
+                x: 0,
+                y: 0,
+                children: [null, null]
+            }
 
-      current.children[direction] = newNode
+            current.children[direction] = newNode
 
-      insertedValues.push(value)
+            insertedValues.push(value)
 
-      layoutTree(root)
+            layoutTree(root)
 
-      pushStepTree(steps, {
-        tree: structuredClone(root),
-        activeIds: [newNode.id],
-        activeEdgeIds: [
-          `${current.id}->${newNode.id}`
-        ],
+            pushStepTree(steps, {
+                tree: structuredClone(root),
+                activeIds: [newNode.id],
+                activeEdgeIds: [`${current.id}->${newNode.id}`],
 
-        linears: [{
-          id: "inserted",
-          label: "Inserted Values",
-          values: [...insertedValues]
-        }]
-      })
-      return
+                linears: [{
+                    id: "inserted",
+                    label: "Inserted Values",
+                    values: [...insertedValues]
+                }]
+            })
+            return
+        }
+
+        pushStepTree(steps, {
+            tree: structuredClone(root),
+            activeIds: [current.id],
+            activeEdgeIds: [`${current.id}->${child.id}`],
+            linears: [{
+                id: "inserted",
+                label: "Inserted Values",
+                values: [...insertedValues]
+            }]
+        })
+
+        current = child
     }
-
-    pushStepTree(steps, {
-      tree: structuredClone(root),
-      activeIds: [current.id],
-      activeEdgeIds: [`${current.id}->${child.id}`],
-      linears: [{
-        id: "inserted",
-        label: "Inserted Values",
-        values: [...insertedValues]
-      }]
-    })
-
-    current = child
-  }
 }
 
 const bstInsertion = (
