@@ -34,58 +34,57 @@ import randomMinCut from "../algorithms/randMinCut"
 
 /** Different algorithms for input to AnimationManager  */
 export const Algorithm = {
-  InsertionSort: "insertion",
-  BubbleSort: "bubble",
-  SelectionSort: "selection",
-  QuickSort: "quick",
-  RQuickSort: "rQuick",
-  HeapSort: "heap",
-  MergeSort: "merge",
-  CountingSort: "counting",
-  RadixSort: "radix",
-  Factorial: "factorial",
-  Fibonacci: "fibonacci",
-  Inorder: "inorderTraversal",
-  PostOrder: "postorderTraversal",
-  PreOrder: "preorderTraversal",
-  BFSTreeTraversal: "bfsTreeTraversal",
-  DFSGraphTraversal: "dfsGraphTraversal",
-  DijkstrasFull: "dijkstrasFull",
-  DijkstrasRand: "dijkstrasRandom",
-  BellmanFordRand: "bellmanFordRandom",
-  BellmanFordFull: "bellmanFordFull",
-  BFSGraph: "bfsGraphTraversal",
-  Kruskals: "kruskals",
-  Prims: "prims",
-  BSTinsert: "bstInsertion",
-  BFSTreeSearch: "bfsTreeSearch",
-  DFSTreeSearch: "dfsTreeSearch",
-  DepthLimitedSearch: "depthLimitedSearch",
-  BinarySearch: "binarySearch",
-  BSTDelete: "bstDeletion",
-  DFSRBSearch: "dfsRedBlackSearch",
-  BFSRBSearch: "bfsRedBlackSearch",
-  RBInsert: "redBlackInsert",
-  RBDelete: "redBlackDelete",
-  BSTTreeSearch: "bstSearch",
-  RBTreeSearch: "redBlackSearch",
-  FordFulkerson: "fordFulkerson",
-  EdmondsKarp: "edmondsKarp",
-  RMinCut: "rMinCut"
-  } as const
+    InsertionSort: "insertion",
+    BubbleSort: "bubble",
+    SelectionSort: "selection",
+    QuickSort: "quick",
+    RQuickSort: "rQuick",
+    HeapSort: "heap",
+    MergeSort: "merge",
+    CountingSort: "counting",
+    RadixSort: "radix",
+    Factorial: "factorial",
+    Fibonacci: "fibonacci",
+    Inorder: "inorderTraversal",
+    PostOrder: "postorderTraversal",
+    PreOrder: "preorderTraversal",
+    BFSTreeTraversal: "bfsTreeTraversal",
+    DFSGraphTraversal: "dfsGraphTraversal",
+    DijkstrasFull: "dijkstrasFull",
+    DijkstrasRand: "dijkstrasRandom",
+    BellmanFordRand: "bellmanFordRandom",
+    BellmanFordFull: "bellmanFordFull",
+    BFSGraph: "bfsGraphTraversal",
+    Kruskals: "kruskals",
+    Prims: "prims",
+    BSTinsert: "bstInsertion",
+    BFSTreeSearch: "bfsTreeSearch",
+    DFSTreeSearch: "dfsTreeSearch",
+    DepthLimitedSearch: "depthLimitedSearch",
+    BinarySearch: "binarySearch",
+    BSTDelete: "bstDeletion",
+    DFSRBSearch: "dfsRedBlackSearch",
+    BFSRBSearch: "bfsRedBlackSearch",
+    RBInsert: "redBlackInsert",
+    RBDelete: "redBlackDelete",
+    BSTTreeSearch: "bstSearch",
+    RBTreeSearch: "redBlackSearch",
+    FordFulkerson: "fordFulkerson",
+    EdmondsKarp: "edmondsKarp",
+    RMinCut: "rMinCut"
+} as const
 
 export type AlgorithmTypes = typeof Algorithm[keyof typeof Algorithm]
 
 /** The input types that the algorithms can take */
 export type AlgorithmInput = 
-  | { type: "array"; data: number[]}
-  | { type: "graph"; data: GraphData}
-  | { type: "bst"; values: number[]; target: number }
-  | { type: "search"; data: number[]; target: number }
+    | { type: "array"; data: number[]}
+    | { type: "graph"; data: GraphData}
+    | { type: "bst"; values: number[]; target: number }
+    | { type: "search"; data: number[]; target: number }
   
 /** The type of the algorithms */
-export type AlgorithmFunction =
-  (input: AlgorithmInput) => VisualizationStep[]
+export type AlgorithmFunction = (input: AlgorithmInput) => VisualizationStep[]
 
 /**  Translates the algorithm string into an actual function using records */
 const algorithmTypes : Record<

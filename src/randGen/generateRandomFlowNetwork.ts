@@ -4,12 +4,12 @@ import type { AlgorithmInput } from "../types/algorithmtypes"
 
 /** Helper function, which adds edges and ensure no bidirectional or duplicate edges occur */
 export const addEdge = (
-  from: GraphNodeData,
-  to: GraphNodeData,
-  directed: boolean, // If the edges are directed
-  sinkId: string = "5",
-  sourceId: string = "0",
-  intermediateIds: string[] = ["1", "2"]
+    from: GraphNodeData,
+    to: GraphNodeData,
+    directed: boolean, // If the edges are directed
+    sinkId: string = "5",
+    sourceId: string = "0",
+    intermediateIds: string[] = ["1", "2"]
 ) => {
 
     // No direct source → sink

@@ -8,9 +8,9 @@ interface ButtonProps {
 
 const Button = ({children, color = 'primary', onClick} : ButtonProps) => {
     
-  return (
-    <button className={'btn btn-' + color} onClick={onClick}>{children}</button>
-  )
+    return (
+        <button className={'btn btn-' + color} onClick={onClick}>{children}</button>
+    )
 }
 
 export default Button

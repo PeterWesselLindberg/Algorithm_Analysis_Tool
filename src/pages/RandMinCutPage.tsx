@@ -22,12 +22,12 @@ const RandMinCutPage = () => {
 
 
     const nodes: GraphNodeData[] = [
-                {id: "0", value: 0, x: 400, y: 70, neighbors: [{to: "1", weight:2}]},
-                {id: "1", value: 1, x: 571, y: 194, neighbors: [{to: "2", weight:5}]},
-                {id: "2", value: 2, x: 505, y: 395, neighbors: [{to: "3", weight:6}]},
-                {id: "3", value: 3, x: 294, y: 395, neighbors: [{to: "4", weight:4}]},
-                {id: "4", value: 4, x: 228, y: 194, neighbors: [{to: "0", weight:8}]}
-            ]
+        {id: "0", value: 0, x: 400, y: 70, neighbors: [{to: "1", weight:2}]},
+        {id: "1", value: 1, x: 571, y: 194, neighbors: [{to: "2", weight:5}]},
+        {id: "2", value: 2, x: 505, y: 395, neighbors: [{to: "3", weight:6}]},
+        {id: "3", value: 3, x: 294, y: 395, neighbors: [{to: "4", weight:4}]},
+        {id: "4", value: 4, x: 228, y: 194, neighbors: [{to: "0", weight:8}]}
+    ]
 
     const exampleGraph: GraphData = {nodes: nodes, directed: false}
 

@@ -4,45 +4,37 @@ import type { AlgorithmInput } from "../types/algorithmtypes"
 
 /** Helper function for generateRandomGraphCore, which creates a path to the last node from any node */
 const forceGuaranteedPath = (
-  nodes: GraphNodeData[],
-  from: number,
-  to: number,
-  negWeights: boolean,
+    nodes: GraphNodeData[],
+    from: number,
+    to: number,
+    negWeights: boolean,
 ) => {
 
-  for (let i = from; i < to; i++) {
-    addEdge(nodes[i], nodes[i + 1], true, true, negWeights)
-  }
+    for (let i = from; i < to; i++) {
+        addEdge(nodes[i], nodes[i + 1], true, true, negWeights)
+    }
 }
 
 /** Helper function, which adds edges and ensure no bidirectional or duplicate edges occur */
 const addEdge = (
-  from: GraphNodeData,
-  to: GraphNodeData,
-  weighted: boolean, // If the edges are weighted
-  directed: boolean, // If the edges are directed
-  negWeights: boolean, // If the negative weights are allowed
-  weightRange: number = 20 // Specify weight range
+    from: GraphNodeData,
+    to: GraphNodeData,
+    weighted: boolean, // If the edges are weighted
+    directed: boolean, // If the edges are directed
+    negWeights: boolean, // If the negative weights are allowed
+    weightRange: number = 20 // Specify weight range
 ) => {
 
     // Prevent duplicate edge
-    if (
-        from.neighbors.some(
-        edge => edge.to === to.id
-        )
-    ) {
+    if (from.neighbors.some(edge => edge.to === to.id)) {
         return
     }
 
     // Prevent reverse edge in directed graph
-    if (
-        directed &&
-        to.neighbors.some(
-        edge => edge.to === from.id
-        )
-    ) {
+    if (directed && to.neighbors.some(edge => edge.to === from.id)) {
         return
     }
+
     let weight
 
     if (negWeights) {
@@ -53,6 +45,7 @@ const addEdge = (
             : undefined
 
     }
+
     else {
          weight =
             weighted
@@ -60,17 +53,11 @@ const addEdge = (
             : undefined
     }    
 
-    from.neighbors.push({
-        to: to.id,
-        weight
-    })
+    from.neighbors.push({to: to.id, weight})
 
     if (!directed) {
 
-        to.neighbors.push({
-        to: from.id,
-        weight
-        })
+        to.neighbors.push({to: from.id, weight})
     }
 }
 

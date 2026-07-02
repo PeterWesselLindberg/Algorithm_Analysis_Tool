@@ -207,3 +207,7 @@ body.light .img-light {
 body.dark .img-dark {
   display: block;
 }
+
+.min-v-space{
+  min-width: 180px;
+}

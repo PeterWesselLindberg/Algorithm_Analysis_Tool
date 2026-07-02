@@ -5,25 +5,26 @@ interface VisitedListProps{
 }
 
 const VisitedList = ({ visitedIds }: VisitedListProps) => {
-  return (
-    <ListGroup horizontal className="custom-listgroup">
-        {visitedIds.map((id, i) => (
-        <div key={`${id}-${i}`} className="custom-listelm">
-            {/* INDEX LABEL */}
-            <small className="index-label">
-                {i}
-            </small>
-            
-            {/* VALUE */}
-            <ListGroup.Item>
-                {id}
-            </ListGroup.Item>
-        </div>
-            
-        ))}
+    return (
+        <ListGroup horizontal className="custom-listgroup">
+            {visitedIds.map((id, i) => (
 
-    </ListGroup>
-  )
+                <div key={`${id}-${i}`} className="custom-listelm">
+                    {/* Index label */}
+                    <small className="index-label">
+                        {i}
+                    </small>
+                    
+                    {/* Value */}
+                    <ListGroup.Item>
+                        {id}
+                    </ListGroup.Item>
+                </div>
+                
+            ))}
+
+        </ListGroup>
+    )
 }
 
 export default VisitedList

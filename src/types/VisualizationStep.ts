@@ -6,48 +6,48 @@ import type { TreeNodeData } from "../dataStructures/TreeNodedata"
 /** The values used in pushStep for the visualizations */
 export type VisualizationStep = {
 
-  // Visual structures
-  linear?: LinearData
+    // Visual structures
+    linear?: LinearData
 
-  linears?: LinearData[]
+    linears?: LinearData[]
 
-  tree: RBTreeNodeData | TreeNodeData | null
+    tree: RBTreeNodeData | TreeNodeData | null
 
-  graph?: GraphData
+    graph?: GraphData
 
-  message?: string
+    message?: string
 
-  // Highlights
-  activeIds?: string[]
+    // Highlights
+    activeIds?: string[]
 
-  compareIds?: string[]
+    compareIds?: string[]
 
-  sortedIds?: string[]
+    sortedIds?: string[]
 
-  mstEdgeIds?: string[]
+    mstEdgeIds?: string[]
 
-  deletingIds?: string[]
+    deletingIds?: string[]
 
-  visitedIds?: string[]
+    visitedIds?: string[]
 
-  replacementIds?: string[]
+    replacementIds?: string[]
 
-  activeEdgeIds?: string[]
+    activeEdgeIds?: string[]
 
-  // Saved values
-  
-  distances?: Record<string, number> 
-  
-  mstEdges?: string[]
+    // Saved values
+    
+    distances?: Record<string, number> 
+    
+    mstEdges?: string[]
 
-  mstWeight?: number
+    mstWeight?: number
 
-  target?: number
+    target?: number
 
-  start?: number
+    start?: number
 
-  shortestPathIds?: string[] 
+    shortestPathIds?: string[] 
 
-  shortestPathEdgeIds?: string[]
+    shortestPathEdgeIds?: string[]
 
 }

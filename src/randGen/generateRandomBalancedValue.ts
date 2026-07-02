@@ -1,60 +1,60 @@
 /** Randomly generates the node values and the target to be used with BST trees of a given length*/
 const generateRandomBalancedValues = (
-  length: number = 10, // Length of tree
-  hasDuplicates: boolean = true, // Set to true if duplicates are allowed
-  targetExists: boolean = false // Set to true if target has to exists in the tree
+    length: number = 10, // Length of tree
+    hasDuplicates: boolean = true, // Set to true if duplicates are allowed
+    targetExists: boolean = false // Set to true if target has to exists in the tree
 ) => {
-  const min = 0
-  const max = 30
+    const min = 0
+    const max = 30
 
-  const used = new Set<number>()
-  const values: number[] = []
+    const used = new Set<number>()
+    const values: number[] = []
 
  
-  // Generates base pool
-  while (values.length < length) {
-    const value = Math.floor(Math.random() * (max - min + 1)) + min
+    // Generates base pool
+    while (values.length < length) {
+        const value = Math.floor(Math.random() * (max - min + 1)) + min
 
-    if (!hasDuplicates && used.has(value)) continue
+        if (!hasDuplicates && used.has(value)) continue
 
-    values.push(value)
-    used.add(value)
-  }
-  
-  // Handle target existence
-  let target = Math.floor(Math.random() * (max - min + 1)) + min
-
-  if (targetExists) {
-    
-    // Ensures target is in list
-    if (!values.includes(target)) {
-      values[Math.floor(Math.random() * values.length)] = target
+        values.push(value)
+        used.add(value)
     }
-  }
+  
+    // Handle target existence
+    let target = Math.floor(Math.random() * (max - min + 1)) + min
 
-  // Balanced BST order
-  const sorted = [...values].sort((a, b) => a - b)
+    if (targetExists) {
+    
+        // Ensures target is in list
+        if (!values.includes(target)) {
+            values[Math.floor(Math.random() * values.length)] = target
+        } 
+    }
 
-  const result: number[] = []
+    // Balanced BST order
+    const sorted = [...values].sort((a, b) => a - b)
 
-  // Builds the balanced order
-  const buildBalanced = (left: number, right: number) => {
-    if (left > right) return
+    const result: number[] = []
 
-    const mid = Math.floor((left + right) / 2)
+    // Builds the balanced order
+    const buildBalanced = (left: number, right: number) => {
+        if (left > right) return
 
-    result.push(sorted[mid])
+        const mid = Math.floor((left + right) / 2)
 
-    buildBalanced(left, mid - 1)
-    buildBalanced(mid + 1, right)
-  }
+        result.push(sorted[mid])
 
-  buildBalanced(0, sorted.length - 1)
+        buildBalanced(left, mid - 1)
+        buildBalanced(mid + 1, right)
+    }
 
-  return {
-    values: result,
-    target
-  }
+    buildBalanced(0, sorted.length - 1)
+
+    return {
+        values: result,
+        target
+    }
 }
 
 export default generateRandomBalancedValues

@@ -2,32 +2,32 @@ import { ListGroup }
 from "react-bootstrap"
 
 interface MSTEdgeListProps {
-  edges: string[]
+    edges: string[]
 }
 
 const MSTEdgeList = ({
-  edges
+    edges
 }: MSTEdgeListProps) => {
 
-  return (
-    <ListGroup horizontal className="custom-listgroup">
+    return (
+        <ListGroup horizontal className="custom-listgroup">
 
-      {edges.map((edge, i) => (
+            {edges.map((edge, i) => (
 
-        <div key={`${edge}-${i}`} className="custom-listelm">
+                <div key={`${edge}-${i}`} className="custom-listelm">
 
-          <small className="index-label">
-            {i}
-          </small>
+                    <small className="index-label">
+                        {i}
+                    </small>
 
-          <ListGroup.Item>
-            {edge}
-          </ListGroup.Item>
+                  <ListGroup.Item>
+                      {edge}
+                  </ListGroup.Item>
 
-        </div>
-      ))}
-    </ListGroup>
-  )
+              </div>
+            ))}
+        </ListGroup>
+    )
 }
 
 export default MSTEdgeList

@@ -1,53 +1,55 @@
 import { ListGroup } from "react-bootstrap"
 
 interface ExtendedNumberListProps {
-  idPrefix: string | undefined
-  numbers: number[]
-  activeIds?: string[]
-  compareIds?: string[]
-  sortedIds?: string[]
+    idPrefix: string | undefined
+    numbers: number[]
+    activeIds?: string[]
+    compareIds?: string[]
+    sortedIds?: string[]
 }
 
 const ExtendedNumberList = ({
-  idPrefix,
-  numbers,
-  activeIds = [],
-  compareIds = [],
-  sortedIds = []
+    idPrefix,
+    numbers,
+    activeIds = [],
+    compareIds = [],
+    sortedIds = []
 }: ExtendedNumberListProps) => {
     return (
         <ListGroup horizontal className="custom-listgroup">
 
-        {numbers.map((num, index) => {
+            {numbers.map((num, index) => {
 
-            const id = `${idPrefix}-${index}`
+                const id = `${idPrefix}-${index}`
 
-            let variant
+                let variant
 
-            if (sortedIds.includes(id)) {
-            variant = "success"
-            }
-            else if (activeIds.includes(id)) {
-            variant = "warning"
-            }
-            else if (compareIds.includes(id)) {
-            variant = "danger"
-            }
+                if (sortedIds.includes(id)) {
+                    variant = "success"
+                }
 
-             return (
-                <div key={id} className="custom-listelm">
-                    {/* INDEX LABEL */}
-                    <small className="index-label">
-                        {index}
-                    </small>
+                else if (activeIds.includes(id)) {
+                    variant = "warning"
+                }
+                
+                else if (compareIds.includes(id)) {
+                    variant = "danger"
+                }
 
-                    {/* VALUE */}
-                    <ListGroup.Item variant={variant}>
-                        {num}
-                    </ListGroup.Item>
-                </div>
-        )
-        })}
+                return (
+                    <div key={id} className="custom-listelm">
+                        {/* Index label*/}
+                        <small className="index-label">
+                            {index}
+                        </small>
+
+                        {/* Value*/}
+                        <ListGroup.Item variant={variant}>
+                            {num}
+                        </ListGroup.Item>
+                    </div>
+            )
+            })}
 
         </ListGroup>
     )

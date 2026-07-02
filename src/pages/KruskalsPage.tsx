@@ -21,14 +21,14 @@ const KruskalsPage = () => {
     const header: string = "Kruskal's minimum spanning tree"
 
     const nodes: GraphNodeData[] = [
-                    {id: "A", value: 0, x: 400, y: 70, neighbors: [{to: "B", weight:2}, {to: "C", weight:4}]},
-                    {id: "B", value: 1, x: 540, y: 137, neighbors: [{to: "C", weight:1}, {to: "D", weight:7}]},
-                    {id: "C", value: 2, x: 575, y: 290, neighbors: [{to: "D", weight:3}, {to: "E", weight:5}]},
-                    {id: "D", value: 3, x: 478, y: 412, neighbors: [{to: "E", weight:2}, {to: "F", weight:6}]},
-                    {id: "E", value: 4, x: 321, y: 412, neighbors: [{to: "F", weight:4}, {to: "G", weight:8}]},
-                    {id: "F", value: 5, x: 224, y: 290, neighbors: [{to: "G", weight:3}]},
-                    {id: "G", value: 6, x: 259, y: 137, neighbors: []}
-                ]
+        {id: "A", value: 0, x: 400, y: 70, neighbors: [{to: "B", weight:2}, {to: "C", weight:4}]},
+        {id: "B", value: 1, x: 540, y: 137, neighbors: [{to: "C", weight:1}, {to: "D", weight:7}]},
+        {id: "C", value: 2, x: 575, y: 290, neighbors: [{to: "D", weight:3}, {to: "E", weight:5}]},
+        {id: "D", value: 3, x: 478, y: 412, neighbors: [{to: "E", weight:2}, {to: "F", weight:6}]},
+        {id: "E", value: 4, x: 321, y: 412, neighbors: [{to: "F", weight:4}, {to: "G", weight:8}]},
+        {id: "F", value: 5, x: 224, y: 290, neighbors: [{to: "G", weight:3}]},
+        {id: "G", value: 6, x: 259, y: 137, neighbors: []}
+    ]
     
     const exampleGraph: GraphData = {nodes, directed: false}
 

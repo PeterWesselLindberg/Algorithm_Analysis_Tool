@@ -12,574 +12,428 @@ import { ListGroup } from "react-bootstrap"
 import Visualization from "../types/VisualizationType"
 
 interface VisualizerProps {
-  step: VisualizationStep
-  visualizationType: VisualizationType
+    step: VisualizationStep
+    visualizationType: VisualizationType
 }
 
 /** Decides, which sorting graphic to use for which algoritm based on limited input strings */
 const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
-  const numbers = step.linear?.values ?? []
-  const linears = step.linears ?? []
-  const activeIds = step.activeIds ?? []
-  const compareIds = step.compareIds ?? []
-  const sortedIds = step.sortedIds ?? []
-  switch(visualizationType) {
-    case Visualization.ListBar: 
-      return (
-         <>
-          <BarsList
-            numbers={numbers}
-            activeIds={activeIds}
-            compareIds={compareIds}
-            sortedIds={sortedIds}
-          />
+    const numbers = step.linear?.values ?? []
+    const linears = step.linears ?? []
+    const activeIds = step.activeIds ?? []
+    const compareIds = step.compareIds ?? []
+    const sortedIds = step.sortedIds ?? []
+    switch(visualizationType) {
+        case Visualization.ListBar: 
+            return (
+                <>
+                    <BarsList
+                        numbers={numbers}
+                        activeIds={activeIds}
+                        compareIds={compareIds}
+                        sortedIds={sortedIds}
+                    />
 
-          <hr />
+                    <hr />
 
-          <NumberList
-            numbers={numbers}
-            activeIds={activeIds}
-            compareIds={compareIds}
-            sortedIds={sortedIds}
-          />
-        </>
-      )
+                    <NumberList
+                        numbers={numbers}
+                        activeIds={activeIds}
+                        compareIds={compareIds}
+                        sortedIds={sortedIds}
+                    />
+                </>
+            )
 
-    case Visualization.ListHeap: 
+        case Visualization.ListHeap: 
+            return (
+                <>
+                    <TreeVisualizer
+                        step={step}
+                        tree={step.tree}
+                        numbers={numbers}
+                    />
+                    
+                    <hr />
+
+                    <NumberList
+                        numbers={numbers}
+                        activeIds={activeIds}
+                        compareIds={compareIds}
+                        sortedIds={sortedIds}
+                    />
+                </>
+            )
+
+        case Visualization.List3: 
+            return (
+                <>
+                    {linears?.map((linear) => (
+
+                        <div key={linear.id}>
+                            <h5>{linear.label}</h5>
+
+                            <ExtendedNumberList
+                                idPrefix={linear.id}
+                                numbers={linear.values}
+
+                                activeIds={activeIds}
+                                compareIds={compareIds}
+                                sortedIds={sortedIds}
+                            />
+
+                            <hr/>
+                        </div>
+
+                    ))}
+                </>
+            )
+      
+        case Visualization.List:
+            return (
+                <>
+                    <NumberList
+                        numbers={numbers}
+                        activeIds={activeIds}
+                        compareIds={compareIds}
+                        sortedIds={sortedIds}
+                    />
+                    
+                    <hr />
+                </>
+            )
+      
+        case Visualization.ListTree: 
+            return (
+                <>
+                    <TreeVisualizer
+                        step={step}
+                        tree={step.tree}
+                        numbers={numbers}
+                    />
+
+                    <hr/>
+
+                    <h5>Visited list:</h5>
+                    <VisitedList visitedIds={step.visitedIds ?? []} />        
+                </>
+            )
+      
+        case Visualization.ExListTree:
+            return (
+                <>
+                    <TreeVisualizer
+                        step={step}
+                        tree={step.tree}
+                        numbers={numbers}
+                    />
+
+                    <hr/>
+
+                    {linears?.map((linear) => (
+
+                        <div key={linear.id}>
+                            <h5>{linear.label}</h5>
+
+                            <ExtendedNumberList
+                                idPrefix={linear.id}
+                                numbers={linear.values}
+
+                                activeIds={activeIds}
+                                compareIds={compareIds}
+                                sortedIds={sortedIds}
+                            />
+                        </div>
+                    ))}
+                  
+                </>
+            )
+
+        case Visualization.TVListTree: 
+            return (
+                <>
+                    <TreeVisualizer
+                        step={step}
+                        tree={step.tree}
+                        numbers={numbers}
+                    />
+
+                    {step.message && (
+                        <p className="custom-msg">
+                            {step.message}
+                        </p>
+                    )}
+                  
+                    <hr/>
+
+                    <div className="custom-listlayout">
+
+                        <div style={{minWidth: "180px"}}>
+
+                            {step.target !== undefined && (
+                                <>
+                                    <h5>Target:</h5>
+
+                                    <ListGroup horizontal className="custom-listgroup">
+
+                                        <div className="custom-listelm">
+
+                                            <small className="index-label">
+                                                Target
+                                            </small>
+
+                                            <ListGroup.Item
+                                                style={{
+                                                    fontWeight: "bold",
+                                                    minWidth: "100px",
+                                                    textAlign: "center"
+                                                }}
+                                            >
+                                                {step.target}
+                                            </ListGroup.Item>
+
+                                        </div>
+
+                                    </ListGroup>
+                                </>
+                            )}
+
+                        </div>
+
+                        <div style={{ flex: 1 }}>
+
+                            {step.visitedIds && (
+                                <>
+                                    <h5>Visited list:</h5>
+
+                                    <VisitedList visitedIds={step.visitedIds ?? []}/>
+                                </>
+                            )}
+
+                        </div>
+
+                    </div>
+
+                </>
+            )
+
+        case Visualization.ListGraph: 
+            return (
+                <>
+                    <GraphVisualizer
+                        step={step}
+                        graph={step.graph}
+                    />
+
+                    {step.message && (
+                        <p className="custom-msg">
+                            {step.message}
+                        </p>
+                    )}
+
+                    <hr />
+
+                    <h5>Visited list:</h5>
+                    <VisitedList visitedIds={step.visitedIds ?? []} />
+
+                </>
+            )
+
+        case Visualization.TListBar: 
+          return (
+              <>
+                  <BarsList
+                      numbers={numbers}
+                      activeIds={activeIds}
+                      compareIds={compareIds}
+                      sortedIds={sortedIds}
+                  />
+
+                  {step.message && (
+                      <p className="custom-msg">
+                          {step.message}
+                      </p>
+                  )}
+
+                  <hr />
+
+                  <div className="custom-listlayout">
+
+                      <div style={{minWidth: "180px"}}>
+
+                          {step.target !== undefined && (
+                              <>
+                                  <ListGroup horizontal className="custom-listgroup">
+
+                                  <div className="custom-listelm">
+
+                                      <small className="index-label">
+                                          Target
+                                      </small>
+
+                                      <ListGroup.Item
+                                          style={{
+                                              fontWeight: "bold",
+                                              minWidth: "100px",
+                                              textAlign: "center"
+                                          }}
+                                      >
+                                          {step.target}
+                                      </ListGroup.Item>
+
+                                  </div>
+
+                                  </ListGroup>
+                              </>
+                          )}
+
+                      </div>
+
+                      <div style={{ flex: 1 }}>
+
+                          <NumberList
+                              numbers={numbers}
+                              activeIds={activeIds}
+                              compareIds={compareIds}
+                              sortedIds={sortedIds}
+                          />
+
+                      </div>
+                          
+                  </div>
+
+              </>
+          )
+      
+        case Visualization.DistListGraph: 
+            return (
+                <>
+                    <GraphVisualizer
+                        step={step}
+                        graph={step.graph}
+                    />
+
+                    {step.message && (
+                        <p className="custom-msg">
+                            {step.message}
+                        </p>
+                    )}
+
+                    <hr />
+
+                    <div className="custom-listlayout">
+                        <div>
+                            {step.distances !== undefined && (
+                                <>
+                                    <h5>Distance list:</h5>
+
+                                    <DistanceList distances={step.distances }/>
+                                </>
+                            )}
+                        </div>
+                      
+                        <div className="custom-listlayout-without-margin">
+                            <div className="min-v-space">
+                                {step.start !== undefined && (
+                                    <>
+                                        <h5>Start:</h5>
+
+                                        <ListGroup horizontal className="custom-listgroup">
+
+                                        <div className="custom-listelm">
+
+                                            <small className="index-label">
+                                                Start
+                                            </small>
+
+                                            <ListGroup.Item
+                                                style={{
+                                                    fontWeight: "bold",
+                                                    minWidth: "100px",
+                                                    textAlign: "center"
+                                                }}
+                                            >
+                                                {step.start}
+                                            </ListGroup.Item>
+
+                                        </div>
+
+                                        </ListGroup>
+                                    </>
+                                )}
+                            </div>
+                      
+
+                            <div className="min-v-space">
+                                {step.target !== undefined && (
+                                    <>
+                                        <h5>Target:</h5>
+
+                                        <ListGroup horizontal className="custom-listgroup">
+
+                                        <div className="custom-listelm">
+
+                                            <small className="index-label">
+                                                Target
+                                            </small>
+
+                                            <ListGroup.Item
+                                                style={{
+                                                    fontWeight: "bold",
+                                                    minWidth: "100px",
+                                                    textAlign: "center"
+                                                }}
+                                            >
+
+                                                {step.target}
+                                            </ListGroup.Item>
+
+                                        </div>
+
+                                        </ListGroup>
+                                    </>
+                                )}
+                            </div>
+                                
+                        </div>
+                      
+                    </div>
+                
+                </>
+            )
+
+      case Visualization.MstListGraph: 
         return (
-         <>
-          <TreeVisualizer
-            step={step}
-            tree={step.tree}
-            numbers={numbers}
-          />
-          <hr />
-
-          <NumberList
-            numbers={numbers}
-            activeIds={activeIds}
-            compareIds={compareIds}
-            sortedIds={sortedIds}
-          />
-        </>
-      )
-
-    case Visualization.List3: 
-      return (
-        <>
-          {linears?.map((linear) => (
-
-          <div key={linear.id}>
-            <h5>{linear.label}</h5>
-
-            <ExtendedNumberList
-              idPrefix={linear.id}
-              numbers={linear.values}
-
-              activeIds={activeIds}
-              compareIds={compareIds}
-              sortedIds={sortedIds}
+          <>
+            <GraphVisualizer
+              step={step}
+              graph={step.graph}
             />
-
+            {step.message && (
+            <p className="custom-msg">
+              {step.message}
+            </p>
+            )}
             <hr />
-          </div>
 
-        ))}
-        </>
-      )
-    
-    case Visualization.List:
-      return (
-        <>
-            <NumberList
-              numbers={numbers}
-              activeIds={activeIds}
-              compareIds={compareIds}
-              sortedIds={sortedIds}
-            />
-            
-            <hr />
-        </>
-      )
-    
-    case Visualization.ListTree: 
-      return (
-        <>
-          <TreeVisualizer
-            step={step}
-            tree={step.tree}
-            numbers={numbers}
-          />
-          <hr />
+            <div className="custom-listlayout">
 
-          <h5>Visited list:</h5>
-          <VisitedList visitedIds={step.visitedIds ?? []} />        
-        </>
-      )
-    
-    case Visualization.ExListTree:
-      return (
-        <>
-          <TreeVisualizer
-            step={step}
-            tree={step.tree}
-            numbers={numbers}
-          />
-          <hr />
+              <div
+                style={{
+                  minWidth: "180px"
+                }}
+              >
 
-          {linears?.map((linear) => (
-
-            <div key={linear.id}>
-              <h5>{linear.label}</h5>
-
-              <ExtendedNumberList
-                idPrefix={linear.id}
-                numbers={linear.values}
-
-                activeIds={activeIds}
-                compareIds={compareIds}
-                sortedIds={sortedIds}
-              />
-            </div>
-          ))}
-          
-        </>
-      )
-
-    case Visualization.TVListTree: 
-      return (
-        <>
-          <TreeVisualizer
-            step={step}
-            tree={step.tree}
-            numbers={numbers}
-          />
-
-          {step.message && (
-          <p className="custom-msg">
-            {step.message}
-          </p>
-          )}
-          <hr />
-
-          <div className="custom-listlayout">
-
-            <div
-              style={{
-                minWidth: "180px"
-              }}
-            >
-
-              {step.target !== undefined && (
-                <>
-                  <h5>Target:</h5>
-
-                  <ListGroup horizontal className="custom-listgroup">
-
-                    <div className="custom-listelm">
-
-                      <small className="index-label">
-                        Target
-                      </small>
-
-                      <ListGroup.Item
-                        style={{
-                          fontWeight: "bold",
-                          minWidth: "100px",
-                          textAlign: "center"
-                        }}
-                      >
-                        {step.target}
-                      </ListGroup.Item>
-
-                    </div>
-
-                  </ListGroup>
-                </>
-              )}
-
-            </div>
-
-            <div style={{ flex: 1 }}>
-
-              {step.visitedIds && (
-                <>
-                  <h5>Visited list:</h5>
-
-                  <VisitedList
-                    visitedIds={step.visitedIds ?? []}
-                  />
-                </>
-              )}
-
-            </div>
-
-          </div>
-
-        </>
-      )
-
-    case Visualization.ListGraph: 
-      return (
-        <>
-          <GraphVisualizer
-            step={step}
-            graph={step.graph}
-          />
-          {step.message && (
-          <p className="custom-msg">
-            {step.message}
-          </p>
-          )}
-          <hr />
-          <h5>Visited list:</h5>
-          <VisitedList visitedIds={step.visitedIds ?? []} />
-
-        </>
-      )
-
-    case Visualization.TListBar: 
-      return (
-        <>
-          <BarsList
-            numbers={numbers}
-            activeIds={activeIds}
-            compareIds={compareIds}
-            sortedIds={sortedIds}
-          />
-          {step.message && (
-          <p className="custom-msg">
-            {step.message}
-          </p>
-          )}
-          <hr />
-
-          <div className="custom-listlayout">
-
-            <div
-              style={{
-                minWidth: "180px"
-              }}
-            >
-
-              {step.target !== undefined && (
-                <>
-                  <ListGroup horizontal className="custom-listgroup">
-
-                    <div className="custom-listelm">
-
-                      <small className="index-label">
-                        Target
-                      </small>
-
-                      <ListGroup.Item
-                        style={{
-                          fontWeight: "bold",
-                          minWidth: "100px",
-                          textAlign: "center"
-                        }}
-                      >
-                        {step.target}
-                      </ListGroup.Item>
-
-                    </div>
-
-                  </ListGroup>
-                </>
-              )}
-
-            </div>
-
-            <div style={{ flex: 1 }}>
-
-            <NumberList
-              numbers={numbers}
-              activeIds={activeIds}
-              compareIds={compareIds}
-              sortedIds={sortedIds}
-            />
-
-            </div>
-
-          </div>
-
-        </>
-      )
-    
-    case Visualization.DistListGraph: 
-      return (
-        <>
-          <GraphVisualizer
-            step={step}
-            graph={step.graph}
-          />
-          {step.message && (
-          <p className="custom-msg">
-            {step.message}
-          </p>
-          )}
-          <hr />
-
-          <div className="custom-listlayout">
-            <div>
-              {step.distances !== undefined && (
-                <>
-                  <h5>Distance list:</h5>
-
-                  <DistanceList distances={step.distances }/>
-                </>
-              )}
-            </div>
-            
-            <div className="custom-listlayout-without-margin">
-              <div style={{ minWidth: "180px"}}>
-                {step.start !== undefined && (
-                  <>
-                    <h5>Start:</h5>
-
-                    <ListGroup horizontal className="custom-listgroup">
-
-                      <div className="custom-listelm">
-
-                        <small className="index-label">
-                          Start
-                        </small>
-
-                        <ListGroup.Item
-                          style={{
-                            fontWeight: "bold",
-                            minWidth: "100px",
-                            textAlign: "center"
-                          }}
-                        >
-                          {step.start}
-                        </ListGroup.Item>
-
-                      </div>
-
-                    </ListGroup>
-                  </>
-                )}
-              </div>
-            
-
-              <div style={{ minWidth: "180px"}}>
-                {step.target !== undefined && (
-                  <>
-                    <h5>Target:</h5>
-
-                    <ListGroup horizontal className="custom-listgroup">
-
-                      <div className="custom-listelm">
-
-                        <small className="index-label">
-                          Target
-                        </small>
-
-                        <ListGroup.Item
-                          style={{
-                            fontWeight: "bold",
-                            minWidth: "100px",
-                            textAlign: "center"
-                          }}
-                        >
-                          {step.target}
-                        </ListGroup.Item>
-
-                      </div>
-
-                    </ListGroup>
-                  </>
-                )}
-              </div>
-           
-            </div>
-
-          </div>
-
-        </>
-      )
-
-    case Visualization.MstListGraph: 
-      return (
-        <>
-          <GraphVisualizer
-            step={step}
-            graph={step.graph}
-          />
-          {step.message && (
-          <p className="custom-msg">
-            {step.message}
-          </p>
-          )}
-          <hr />
-
-          <div className="custom-listlayout">
-
-            <div
-              style={{
-                minWidth: "180px"
-              }}
-            >
-
-              {step.mstWeight !== undefined && (
-                <>
-                  <h5>Total Weight:</h5>
-
-                  <ListGroup horizontal className="custom-listgroup">
-
-                    <div className="custom-listelm">
-
-                      <small className="index-label">
-                        Total
-                      </small>
-
-                      <ListGroup.Item
-                        style={{
-                          fontWeight: "bold",
-                          minWidth: "100px",
-                          textAlign: "center"
-                        }}
-                      >
-                        {step.mstWeight}
-                      </ListGroup.Item>
-
-                    </div>
-
-                  </ListGroup>
-                </>
-              )}
-
-            </div>
-
-            <div style={{ flex: 1 }}>
-
-              {step.mstEdges && (
-                <>
-                  <h5>MST Edges:</h5>
-
-                  <MSTEdgeList
-                    edges={step.mstEdges}
-                  />
-                </>
-              )}
-
-            </div>
-
-          </div>
-
-        </>
-      )
-    
-    case Visualization.MaxFlowListGraph: 
-      return (
-        <>
-          <GraphVisualizer
-            step={step}
-            graph={step.graph}
-            isMaxFlow={true}
-          />
-          {step.message && (
-          <p className="custom-msg">
-            {step.message}
-          </p>
-          )}
-          <hr />
-
-          <div className="custom-listlayout">
-
-            <div
-              style={{
-                minWidth: "180px"
-              }}
-            >
-
-              {step.mstWeight !== undefined && (
-                <>
-                  <h5>Max Flow:</h5>
-
-                  <ListGroup horizontal className="custom-listgroup">
-
-                    <div className="custom-listelm">
-
-                      <small className="index-label">
-                        Total
-                      </small>
-
-                      <ListGroup.Item
-                        style={{
-                          fontWeight: "bold",
-                          minWidth: "100px",
-                          textAlign: "center"
-                        }}
-                      >
-                        {step.mstWeight}
-                      </ListGroup.Item>
-
-                    </div>
-
-                  </ListGroup>
-                </>
-              )}
-
-            </div>
-
-            <div style={{ flex: 1 }}>
-
-              {step.mstEdges && (
-                <>
-                  <h5>Augmenting Paths:</h5>
-
-                  <MSTEdgeList
-                    edges={step.mstEdges}
-                  />
-                </>
-              )}
-
-            </div>
-
-          </div>
-
-        </>
-      )
-    
-    case Visualization.RandMinCutListGraph: 
-      return (
-        <>
-          <GraphVisualizer
-            step={step}
-            graph={step.graph}
-          />
-          {step.message && (
-          <p className="custom-msg">
-            {step.message}
-          </p>
-          )}
-          <hr />
-
-          <div className="custom-listlayout">
-            <div>
-              {step.mstEdges !== undefined && (
-                <>
-                  <h5>Best min cut edges:</h5>
-
-                  <MSTEdgeList edges={step.mstEdges}/>
-                </>
-              )}
-            </div>
-            
-            <div className="custom-listlayout-without-margin">
-              <div style={{ minWidth: "180px"}}>
                 {step.mstWeight !== undefined && (
                   <>
-                    <h5>Best min cut:</h5>
+                    <h5>Total Weight:</h5>
 
                     <ListGroup horizontal className="custom-listgroup">
 
                       <div className="custom-listelm">
 
                         <small className="index-label">
-                          Best min cut
+                          Total
                         </small>
 
                         <ListGroup.Item
@@ -597,47 +451,192 @@ const Visualizer = ( {step, visualizationType} : VisualizerProps ) => {
                     </ListGroup>
                   </>
                 )}
+
               </div>
-            
 
-              <div style={{ minWidth: "180px"}}>
-                {step.target !== undefined && (
+              <div style={{ flex: 1 }}>
+
+                {step.mstEdges && (
                   <>
-                    <h5>Min cut:</h5>
+                    <h5>MST Edges:</h5>
 
-                    <ListGroup horizontal className="custom-listgroup">
-
-                      <div className="custom-listelm">
-
-                        <small className="index-label">
-                          Min cut
-                        </small>
-
-                        <ListGroup.Item
-                          style={{
-                            fontWeight: "bold",
-                            minWidth: "100px",
-                            textAlign: "center"
-                          }}
-                        >
-                          {step.target}
-                        </ListGroup.Item>
-
-                      </div>
-
-                    </ListGroup>
+                    <MSTEdgeList
+                      edges={step.mstEdges}
+                    />
                   </>
                 )}
+
               </div>
-           
+
             </div>
 
-          </div>
+          </>
+        )
+      
+        case Visualization.MaxFlowListGraph: 
+            return (
+                <>
+                    <GraphVisualizer
+                        step={step}
+                        graph={step.graph}
+                        isMaxFlow={true}
+                    />
 
-        </>
-      )
+                    {step.message && (
+                        <p className="custom-msg">
+                            {step.message}
+                        </p>
+                    )}
+                    
+                    <hr />
 
-  } 
+                    <div className="custom-listlayout">
+
+                        <div style={{minWidth: "180px"}}>
+
+                            {step.mstWeight !== undefined && (
+                                <>
+                                    <h5>Max Flow:</h5>
+
+                                    <ListGroup horizontal className="custom-listgroup">
+
+                                    <div className="custom-listelm">
+
+                                        <small className="index-label">
+                                            Total
+                                        </small>
+
+                                        <ListGroup.Item
+                                            style={{
+                                                fontWeight: "bold",
+                                                minWidth: "100px",
+                                                textAlign: "center"
+                                            }}
+                                        >
+                                            {step.mstWeight}
+                                        </ListGroup.Item>
+
+                                    </div>
+
+                                    </ListGroup>
+                                </>
+                            )}
+
+                        </div>
+
+                        <div style={{ flex: 1 }}>
+
+                            {step.mstEdges && (
+                                <>
+                                    <h5>Augmenting Paths:</h5>
+
+                                    <MSTEdgeList edges={step.mstEdges}/>
+                                </>
+                            )}
+
+                        </div>
+
+                    </div>
+
+                </>
+            )
+      
+        case Visualization.RandMinCutListGraph: 
+            return (
+                <>
+                    <GraphVisualizer
+                        step={step}
+                        graph={step.graph}
+                    />
+                        {step.message && (
+                            <p className="custom-msg">
+                                {step.message}
+                            </p>
+                        )}
+
+                    <hr />
+
+                    <div className="custom-listlayout">
+                        <div>
+                            {step.mstEdges !== undefined && (
+                                <>
+                                    <h5>Best min cut edges:</h5>
+
+                                    <MSTEdgeList edges={step.mstEdges}/>
+                                </>
+                            )}
+                        </div>
+              
+                        <div className="custom-listlayout-without-margin">
+                            <div className="min-v-space">
+                                {step.mstWeight !== undefined && (
+                                    <>
+                                        <h5>Best min cut:</h5>
+
+                                        <ListGroup horizontal className="custom-listgroup">
+
+                                            <div className="custom-listelm">
+
+                                                <small className="index-label">
+                                                    Best min cut
+                                                </small>
+
+                                                <ListGroup.Item
+                                                    style={{
+                                                        fontWeight: "bold",
+                                                        minWidth: "100px",
+                                                        textAlign: "center"
+                                                    }}
+                                                >
+                                                    {step.mstWeight}
+                                                </ListGroup.Item>
+
+                                            </div>
+
+                                        </ListGroup>
+                                    </>
+                                )}
+                            </div>
+              
+
+                            <div className="min-v-space">
+                                {step.target !== undefined && (
+                                    <>
+                                        <h5>Min cut:</h5>
+
+                                            <ListGroup horizontal className="custom-listgroup">
+
+                                            <div className="custom-listelm">
+
+                                                <small className="index-label">
+                                                    Min cut
+                                                </small>
+
+                                                <ListGroup.Item
+                                                    style={{
+                                                        fontWeight: "bold",
+                                                        minWidth: "100px",
+                                                        textAlign: "center"
+                                                    }}
+                                                >
+                                                    {step.target}
+                                                </ListGroup.Item>
+
+                                            </div>
+
+                                            </ListGroup>
+                                    </>
+                                )}
+                            </div>
+            
+                        </div>
+
+                    </div>
+
+                </>
+            )
+
+    } 
   
     
 }

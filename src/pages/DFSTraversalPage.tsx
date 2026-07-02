@@ -23,16 +23,17 @@ const DFSTraversalPage = () => {
     const [searchParams, setSearchParams] = useSearchParams()
     const selectedTab = Number(searchParams.get("tab") ?? 1)
 
-     const nodes: GraphNodeData[] = [
-            {id: "0", value: 0, x: 400, y: 70, neighbors: [{to: "1"}]},
-            {id: "1", value: 1, x: 571, y: 194, neighbors: [{to: "2"}, {to: "3"}]},
-            {id: "2", value: 2, x: 505, y: 395, neighbors: [{to: "3"}]},
-            {id: "3", value: 3, x: 294, y: 395, neighbors: [{to: "4"}]},
-            {id: "4", value: 4, x: 228, y: 194, neighbors: []}
-        ]
-        const exampleGraph: GraphData = {nodes, directed: false}
+    const nodes: GraphNodeData[] = [
+        {id: "0", value: 0, x: 400, y: 70, neighbors: [{to: "1"}]},
+        {id: "1", value: 1, x: 571, y: 194, neighbors: [{to: "2"}, {to: "3"}]},
+        {id: "2", value: 2, x: 505, y: 395, neighbors: [{to: "3"}]},
+        {id: "3", value: 3, x: 294, y: 395, neighbors: [{to: "4"}]},
+        {id: "4", value: 4, x: 228, y: 194, neighbors: []}
+    ]
     
-        const exampleTree: AlgorithmInput = { type: "array", data: [1,2,3,4,5,6,7]} 
+    const exampleGraph: GraphData = {nodes, directed: false}
+    
+    const exampleTree: AlgorithmInput = { type: "array", data: [1,2,3,4,5,6,7]} 
 
     const handleSelectTab = (_item: string, index: number) => {
         setSearchParams({ tab: index.toString() })
