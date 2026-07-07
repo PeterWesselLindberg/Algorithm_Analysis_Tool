@@ -11,254 +11,250 @@ import ColorExplain from "./ColorExplain"
 import StructureColor, { type ColorExplainer } from "../types/structureColor"
 
 interface AnimationManagerProps {
-  input: AlgorithmInput,
-  algorithm: AlgorithmTypes,
-  visualizationGraphics: VisualizationType,
-  isInAbout?: boolean,
-  structure?: ColorExplainer,
-  hasAnimationOverlay?: boolean
+    input: AlgorithmInput,
+    algorithm: AlgorithmTypes,
+    visualizationGraphics: VisualizationType,
+    isInAbout?: boolean,
+    structure?: ColorExplainer,
+    hasAnimationOverlay?: boolean
 }
 
 const AnimationManager = ({input, algorithm, visualizationGraphics, isInAbout = false, structure = StructureColor.ArrColor, hasAnimationOverlay = true} : AnimationManagerProps) => {
-  const selectedAlgorithm = algorithmTypes[algorithm] // Initialises the given algoritmhtype for the limited types
-  const initialSteps = selectedAlgorithm(input) // Initialises the the input list with the selected algoritm
+    const selectedAlgorithm = algorithmTypes[algorithm] // Initialises the given algoritmhtype for the limited types
+    const initialSteps = selectedAlgorithm(input) // Initialises the the input list with the selected algoritm
 
-  const [speed, setSpeed] = useState(5) // The speed stat used for speeding up and slowing down the algorithm animation
+    const [speed, setSpeed] = useState(5) // The speed stat used for speeding up and slowing down the algorithm animation
   
-  // The booleans used for determining when the animation is starting, stopping or finished 
-  const [isSorting, setIsSorting] = useState(false) 
-  const [isPaused, setIsPaused] = useState(false)
-  const [isFinished, setIsFinished] = useState(false)
-  const [isHidden, _setIsHidden] = useState(isInAbout)
-  const [isControlsHidden, _setIsControlsHidden] = useState(hasAnimationOverlay)
+    // The booleans used for determining when the animation is starting, stopping or finished 
+    const [isSorting, setIsSorting] = useState(false) 
+    const [isPaused, setIsPaused] = useState(false)
+    const [isFinished, setIsFinished] = useState(false)
+    const [isHidden, _setIsHidden] = useState(isInAbout)
+    const [isControlsHidden, _setIsControlsHidden] = useState(hasAnimationOverlay)
 
-  // The steps used in the algorithm animation
-  const [step, setStep] = useState<VisualizationStep>(initialSteps[0])
-  const [steps, _setSteps] = useState<VisualizationStep[]>(initialSteps)
-  const [currentStep, setCurrentStep] = useState(0)
+    // The steps used in the algorithm animation
+    const [step, setStep] = useState<VisualizationStep>(initialSteps[0])
+    const [steps, _setSteps] = useState<VisualizationStep[]>(initialSteps)
+    const [currentStep, setCurrentStep] = useState(0)
 
-  const [btnText, setBtnText] = useState(<FaPlay/>) // Changes the text on the buttons
-  const [btnValue, setBtnvalue] = useState("start") // changes the current state of the buttons in order to update the symbols
+    const [btnText, setBtnText] = useState(<FaPlay/>) // Changes the text on the buttons
+    const [btnValue, setBtnvalue] = useState("start") // changes the current state of the buttons in order to update the symbols
   
-  const animationDelay = 1100 - speed * 100
-  const navigate = useNavigate()
+    const animationDelay = 1100 - speed * 100
+    const navigate = useNavigate()
 
-  useEffect(() => {
-  if (!isSorting || isPaused) return
+    useEffect(() => {
+        if (!isSorting || isPaused) return
 
-  if (currentStep >= steps.length) {
-    setIsSorting(false)
-    setIsPaused(false)
-    setIsFinished(true)
-    setBtnText(<FaPlay />)
-    return
-  }
+        if (currentStep >= steps.length) {
+            setIsSorting(false)
+            setIsPaused(false)
+            setIsFinished(true)
+            setBtnText(<FaPlay />)
+            return
+        }
 
-  const timeout = setTimeout(() => {
-    setStep(steps[currentStep])
-    setCurrentStep((prev) => prev + 1)
-  }, animationDelay)
+        const timeout = setTimeout(() => {
+            setStep(steps[currentStep])
+            setCurrentStep((prev) => prev + 1)
+        }, animationDelay)
 
-  return () => clearTimeout(timeout)
-}, [currentStep, isSorting, isPaused, steps, speed])
+        return () => clearTimeout(timeout)
+    }, [currentStep, isSorting, isPaused, steps, speed])
 
-  /** Reroutes the page momentarily to reset it*/
-  const generateNewData = () => {
-    navigate("/blank")
+    /** Reroutes the page momentarily to reset it*/
+    const generateNewData = () => {
+        navigate("/blank")
 
-    setTimeout(() => {
-      navigate(-1)
-    }, 50)
-}
+        setTimeout(() => {navigate(-1)}, 50)
+    }
 
-  /** Start and stops the animations for the sorting algorithm */
-  const startStopSort = (btnState: string) => {
+    /** Start and stops the animations for the sorting algorithm */
+    const startStopSort = (btnState: string) => {
 
-    switch(btnState) {
-      case "start":
-        setIsPaused(false)
-        setIsSorting(true)
-        setIsFinished(false)
-        setBtnText(<FaPause/>)
-        break
+        switch(btnState) {
+            case "start":
+                setIsPaused(false)
+                setIsSorting(true)
+                setIsFinished(false)
+                setBtnText(<FaPause/>)
+                break
 
-      case "stop":
-        setIsPaused(true)
+            case "stop":
+                setIsPaused(true)
+                setBtnText(<FaPlay/>)
+                break
+        
+            case "resume":
+                setIsPaused(false)
+                setIsSorting(true)
+                setBtnText(<FaPause/>)
+                break
+        
+            default:
+                console.log("Error: You shouldn't be here")
+                break
+        }
+    
+    }
+
+    /** Changes the current state and text of the start/resume button*/
+    const handleButtonValue = () => {
+        if (!isFinished) {
+            if (btnValue === "start") {setBtnvalue("stop")}
+      
+            else if (btnValue === "stop") {setBtnvalue("resume")}
+
+            else if (btnValue === "resume") {setBtnvalue("stop")}
+        }
+
+        else if (isFinished) {}
+    }
+  
+    /** The function responsible for restarting the algorithm and it's animation when the reset button is pressed */
+    const restartSort = () => {
         setBtnText(<FaPlay/>)
-        break
-      
-      case "resume":
-        setIsPaused(false)
-        setIsSorting(true)
-        setBtnText(<FaPause/>)
-        break
-      
-      default:
-        console.log("Error: You shouldn't be here")
-        break
-    }
-    
-  }
-
-  /** Changes the current state and text of the start/resume button*/
-  const handleButtonValue = () => {
-    if (!isFinished) {
-      if (btnValue === "start") {setBtnvalue("stop")}
-      
-      else if (btnValue === "stop") {setBtnvalue("resume")}
-
-      else if (btnValue === "resume") {setBtnvalue("stop")}
-    }
-
-    else if (isFinished) {}
-  }
-  
-  /** The function responsible for restarting the algorithm and it's animation when the reset button is pressed */
-  const restartSort = () => {
-    setBtnText(<FaPlay/>)
-    setBtnvalue("start")
-    setIsFinished(false)
-    setIsSorting(false)
-    startStopSort("stop")
-    goToStep(0)
-  }
-
-  /** Goes the current step when sliding the steps slider */
-  const goToStep = (stepIndex: number) => {
-  if (stepIndex < 0 || stepIndex >= steps.length) return
-
-  setIsPaused(true)
-  setIsSorting(false)
-
-  if (stepIndex < steps.length - 1) {
-    setIsFinished(false)
-  }
-
-  setBtnText(<FaPlay />)
-  setBtnvalue("resume")
-
-  setCurrentStep(stepIndex)
-  setStep(steps[stepIndex])
-}
-
-  /** Determines what happens when you press the next or previous step buttons */
-  const stepSort = (direction: "prev" | "next") => {
-    
-    let newStep = currentStep
-
-    switch(direction) {
-      case "prev":
-        if (currentStep === 0 ) return
-
+        setBtnvalue("start")
+        setIsFinished(false)
+        setIsSorting(false)
         startStopSort("stop")
-  
-        if (currentStep >= steps.length - 1) {
-          setIsFinished(false)
-          setIsSorting(true)
-        }
-        
-        newStep = currentStep - 1
-        break
-      
-      case "next":
-        if (currentStep === 0) {
-          goToStep(1)
-          startStopSort("stop")
+        goToStep(0)
+    }
+
+    /** Goes the current step when sliding the steps slider */
+    const goToStep = (stepIndex: number) => {
+        if (stepIndex < 0 || stepIndex >= steps.length) return
+
+        setIsPaused(true)
+        setIsSorting(false)
+
+        if (stepIndex < steps.length - 1) {
+            setIsFinished(false)
         }
 
-        if (currentStep >= steps.length - 1) return
-        startStopSort("stop")
-        
-        newStep = currentStep + 1
-        break
+        setBtnText(<FaPlay />)
+        setBtnvalue("resume")
+
+        setCurrentStep(stepIndex)
+        setStep(steps[stepIndex])
     }
+
+    /** Determines what happens when you press the next or previous step buttons */
+    const stepSort = (direction: "prev" | "next") => {
     
-      goToStep(newStep)
-    
-  }
+        let newStep = currentStep
+
+        switch(direction) {
+            case "prev":
+                if (currentStep === 0 ) return
+
+                startStopSort("stop")
   
-  // Shows the progress of the sorting in percentage
-  const progress =
-  steps.length > 1
-    ? Math.round((currentStep / (steps.length)) * 100)
-    : 0
+                if (currentStep >= steps.length - 1) {
+                    setIsFinished(false)
+                    setIsSorting(true)
+                }
+        
+                newStep = currentStep - 1
+                break
+      
+            case "next":
+                if (currentStep === 0) {
+                    goToStep(1)
+                    startStopSort("stop")
+                }
 
-  return (
+                if (currentStep >= steps.length - 1) return
+                startStopSort("stop")
+        
+                newStep = currentStep + 1
+                break
+        }
     
-    <div>
-      <Visualizer step={step} visualizationType={visualizationGraphics}/>
-        <div style={{ marginTop: "1rem" }}>
+        goToStep(newStep)
+    }
+  
+    // Shows the progress of the sorting in percentage
+    const progress =
+        steps.length > 1
+        ? Math.round((currentStep / (steps.length)) * 100)
+        : 0
 
-          {isControlsHidden &&
-          <>
-            <Button onClick={() => restartSort()}>
-              <FaSquare/>
-            </Button>
+    return (
+    
+        <div>
+            <Visualizer step={step} visualizationType={visualizationGraphics}/>
+            <div style={{ marginTop: "1rem" }}>
 
-            <Button onClick={() => {handleButtonValue(); startStopSort(btnValue)}} disabled={isFinished || currentStep >= steps.length - 1}>
-              {btnText}
-            </Button>
-            
-            <Button onClick={() => stepSort("prev")}
-              disabled={currentStep === 0}>
-              <FaChevronLeft />
-            </Button>
+                {isControlsHidden &&
+                    <>
+                        <Button onClick={() => restartSort()}>
+                            <FaSquare/>
+                        </Button>
 
-            <Button onClick={() => stepSort("next")}
-              disabled={isFinished || currentStep >= steps.length - 1}>
-              <FaChevronRight />
-            </Button>
-          </>
-          }
-
-          {!isHidden && isControlsHidden &&
-          <Button onClick={generateNewData} style={{ marginLeft: "10rem" }} disabled={isInAbout}>
-            Generate new data
-          </Button>
-          }
-
-          {isControlsHidden &&
-            <div style={{ marginTop: "1rem"}}>
-              <label>
-                Speed: {speed}ms
-              </label>
-
-              <input
-                type="range"
-                min="1"
-                max="10"
-                value={speed}
-                onChange={(e) => setSpeed(Number(e.target.value))}
-                style={{ marginRight: "1rem"}}
-              />
-
-              <label>
-                Step: {currentStep >= steps.length ? currentStep-1 : currentStep} / {Math.max(steps.length - 1, 0)}
-                {" "}({progress}%)
+                        <Button onClick={() => {handleButtonValue(); startStopSort(btnValue)}} disabled={isFinished || currentStep >= steps.length - 1}>
+                            {btnText}
+                        </Button>
                 
-              </label>
+                        <Button onClick={() => stepSort("prev")}
+                            disabled={currentStep === 0}>
+                            <FaChevronLeft />
+                        </Button>
 
-              <input
-                type="range"
-                min="0"
-                max={Math.max(steps.length - 1, 0)}
-                value={currentStep}
-                onChange={(e) => {
-                  const stepIndex = Number(e.target.value)
+                        <Button onClick={() => stepSort("next")}
+                            disabled={isFinished || currentStep >= steps.length - 1}>
+                            <FaChevronRight />
+                        </Button>
+                    </>
+                }
 
-                  goToStep(stepIndex)
-                }}
-                style={{ width: "400px"}}
-              />
+                {!isHidden && isControlsHidden &&
+                    <Button onClick={generateNewData} style={{ marginLeft: "10rem" }} disabled={isInAbout}>
+                        Generate new data
+                    </Button>
+                }
+
+                {isControlsHidden &&
+                    <div style={{ marginTop: "1rem"}}>
+                        <label>
+                            Speed: {speed}ms
+                        </label>
+
+                        <input
+                            type="range"
+                            min="1"
+                            max="10"
+                            value={speed}
+                            onChange={(e) => setSpeed(Number(e.target.value))}
+                            style={{ marginRight: "1rem"}}
+                        />
+
+                        <label>
+                            Step: {currentStep >= steps.length ? currentStep-1 : currentStep} / {Math.max(steps.length - 1, 0)}
+                            {" "}({progress}%)
+                          
+                        </label>
+
+                        <input
+                            type="range"
+                            min="0"
+                            max={Math.max(steps.length - 1, 0)}
+                            value={currentStep}
+                            onChange={(e) => {
+                                const stepIndex = Number(e.target.value)
+
+                                goToStep(stepIndex)
+                            }}
+                            style={{ width: "400px"}}
+                        />
               
-              {!isHidden && <ColorExplain structure={structure}/>}
-              
+                        {!isHidden && <ColorExplain structure={structure}/>}  
 
+                    </div>
+                }
             </div>
-          }
         </div>
-    </div>
-  )
+    )
 }
 
 export default AnimationManager

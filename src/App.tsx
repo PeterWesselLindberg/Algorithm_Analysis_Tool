@@ -32,123 +32,121 @@ import RedBlackTreePage from './pages/RedBlackTreePage'
 import MaxFlowPage from './pages/MaxFlowPage'
 import RandMinCutPage from './pages/RandMinCutPage'
 
- let items : MenuItem[] = [
-          {label: 'Branch and Bound', subItems: [{id: 'Binary Search', comp: BinarySearchPage}, 
-                                              {id: 'Depth-Limited Search', comp: DepthLimitedSearchPage}, 
-                                              {id: 'Binary Search Tree', comp: BinarySearchTreePage},
-                                              {id: 'Red-Black Search Tree', comp: RedBlackTreePage}
-                                            
+  let items : MenuItem[] = [
+      {label: 'Branch and Bound', subItems: [{id: 'Binary Search', comp: BinarySearchPage}, 
+                                             {id: 'Depth-Limited Search', comp: DepthLimitedSearchPage}, 
+                                             {id: 'Binary Search Tree', comp: BinarySearchTreePage},
+                                             {id: 'Red-Black Search Tree', comp: RedBlackTreePage}
+                                        
                                             ]},
 
-          {label: 'Brute Force', subItems: [{id: 'Insertion Sort', comp: InsertionSortPage}, 
-                                              {id: 'Bubble Sort', comp: BubbleSortPage}, 
-                                              {id: 'Selection Sort', comp: SelectionSortPage},
-                                              {id: 'Heap Sort', comp: HeapSortPage},
-                                              {id: 'Binary Tree Traversal', comp: TreeTraversalPage},
-                                              {id: 'Breadth-First Search', comp: BFSTraversalPage},
-                                              {id: 'Depth-First Search', comp: DFSTraversalPage}
-                                            
-                                            ]},
-                                              
-          {label: 'Divide and Conquer', subItems: [{id: 'Quick Sort', comp: QuickSortPage},
-                                                     {id: 'Counting Sort', comp: CountingSortPage}, 
-                                                     {id: 'Merge Sort', comp: MergeSortPage},
-                                                     {id: 'Radix Sort', comp: RadixSortPage}, 
-                                                    ]},
+      {label: 'Brute Force', subItems: [{id: 'Insertion Sort', comp: InsertionSortPage}, 
+                                        {id: 'Bubble Sort', comp: BubbleSortPage}, 
+                                        {id: 'Selection Sort', comp: SelectionSortPage},
+                                        {id: 'Heap Sort', comp: HeapSortPage},
+                                        {id: 'Binary Tree Traversal', comp: TreeTraversalPage},
+                                        {id: 'Breadth-First Search', comp: BFSTraversalPage},
+                                        {id: 'Depth-First Search', comp: DFSTraversalPage}
+                                        
+                                       ]},
+                                          
+      {label: 'Divide and Conquer', subItems: [{id: 'Quick Sort', comp: QuickSortPage},
+                                               {id: 'Counting Sort', comp: CountingSortPage}, 
+                                               {id: 'Merge Sort', comp: MergeSortPage},
+                                               {id: 'Radix Sort', comp: RadixSortPage}, 
+                                              ]},
 
-          {label: 'Dynamic Programming', subItems: [{id: 'Nth Factorial', comp: FactorialPage},
-                                                      {id: 'Fibonacci Sequence', comp: FibonacciPage},
-                                                      {id: 'Bellman-Ford\'s Shortest Path', comp: BellmanFordPage}
-                                                    ]},
-          
-          {label: 'Greedy Algorithms', subItems: [{id: 'Dijkstra\'s Shortest Path', comp: DijkstrasPage},
-                                                  {id: 'Kruskal\'s Minimum Spanning Tree', comp: KruskalsPage},
-                                                  {id: 'Prim\'s Minimum Spanning Tree', comp: PrimsPage},
-                                                  {id: 'Max Flow Algorithms', comp: MaxFlowPage}
-                                                    ]},
+      {label: 'Dynamic Programming', subItems: [{id: 'Nth Factorial', comp: FactorialPage},
+                                                {id: 'Fibonacci Sequence', comp: FibonacciPage},
+                                                {id: 'Bellman-Ford\'s Shortest Path', comp: BellmanFordPage}
+                                               ]},
+      
+      {label: 'Greedy Algorithms', subItems: [{id: 'Dijkstra\'s Shortest Path', comp: DijkstrasPage},
+                                              {id: 'Kruskal\'s Minimum Spanning Tree', comp: KruskalsPage},
+                                              {id: 'Prim\'s Minimum Spanning Tree', comp: PrimsPage},
+                                              {id: 'Max Flow Algorithms', comp: MaxFlowPage}
+                                             ]},
 
-          {label: 'Randomized Algorithms', subItems: [{id: 'Randomized Quick Sort', comp: RandQuickSortPage},
-                                                      {id: 'Randomized Min Cut', comp: RandMinCutPage}
-                                                     ]}
-      ]
+      {label: 'Randomized Algorithms', subItems: [{id: 'Randomized Quick Sort', comp: RandQuickSortPage},
+                                                  {id: 'Randomized Min Cut', comp: RandMinCutPage}
+                                                 ]}
+  ]
 
 items.forEach((item) => {
-  item.subItems.sort((a, b) =>
-    a.id.localeCompare(b.id)
-  )
+    item.subItems.sort((a, b) =>
+        a.id.localeCompare(b.id)
+    )
 })
 
 
 
 function Layout({theme, toggleTheme} : {theme: "dark" | "light"; toggleTheme: () => void}) {
-  const navigate = useNavigate()
+    const navigate = useNavigate()
 
-  const handleSelectItem = (item: string) => {
-    navigate(`/${item}`)
-  }
+    const handleSelectItem = (item: string) => {
+        navigate(`/${item}`)
+    }
  
   return (
-    <div className={theme}>
-    <Container fluid>
-      <Row>
-          <Col xs={3}>
-          <SideBarMenu items={items} onSelectItem={handleSelectItem}/>
-          </Col>
+      <div className={theme}>
+          <Container fluid>
+              <Row>
+                  <Col xs={3}>
+                      <SideBarMenu items={items} onSelectItem={handleSelectItem}/>
+                  </Col>
           
-          <Col>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "flex-end",
-                marginBottom: "1rem"
-              }}
-            >
-              <Button variant={theme === "dark" ? "outline.light" : "outline.dark"}
-                onClick={toggleTheme}
-                style={{ color: theme === "dark" ? "white" : "black" }}
-              >
-                {theme === "dark" ? <div>Light <FaLightbulb/> </div>: <div> Dark <FaLightbulb/> </div>}
-              </Button>
-            </div>
-            <Outlet />
-          </Col>
-      </Row>
-    </Container>
-    </div>
+                  <Col>
+                      <div
+                          style={{
+                              display: "flex",
+                              justifyContent: "flex-end",
+                              marginBottom: "1rem"
+                          }}
+                      >
+                          <Button variant={theme === "dark" ? "outline.light" : "outline.dark"}
+                              onClick={toggleTheme}
+                              style={{ color: theme === "dark" ? "white" : "black" }}
+                          >
+                              {theme === "dark" ? <div>Light <FaLightbulb/> </div>: <div> Dark <FaLightbulb/> </div>}
+                          </Button>
+                      </div>
+                      <Outlet />
+                  </Col>
+              </Row>
+          </Container>
+      </div>
   )
 }
 
 export default function App() {
-  const subRoutes = items.flatMap(item => item.subItems)
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
+    const subRoutes = items.flatMap(item => item.subItems)
+    const [theme, setTheme] = useState<"dark" | "light">("dark")
 
-  const toggleTheme = () => {
-    setTheme(prev => (prev === "dark" ? "light" : "dark"));
-  };
+    const toggleTheme = () => {setTheme(prev => (prev === "dark" ? "light" : "dark"))}
 
-  useEffect(() => {
-    document.body.classList.remove("dark", "light");
-    document.body.classList.add(theme);
-  }, [theme]);
+    useEffect(() => {
+        document.body.classList.remove("dark", "light")
+        document.body.classList.add(theme)
+    }, [theme])
 
   return (
-    <HashRouter>
-      <Routes>
-        <Route path="/" element={<Layout theme={theme} toggleTheme={toggleTheme} />}>
-        {subRoutes.map((sub, index) => {
-          const Component = sub.comp ?? ErrorPage
+      <HashRouter>
+          <Routes>
+              <Route path="/" element={<Layout theme={theme} toggleTheme={toggleTheme} />}>
+                  {subRoutes.map((sub, index) => {
+                      const Component = sub.comp ?? ErrorPage
 
-          return (
-            <Route
-              key={`${sub.id}-${index}`}
-              path={sub.id}
-              element={<Component />}
-            />
-          )
-        })}
-        </Route>
-        <Route path="/blank" element={<div />} />
-      </Routes>
-    </HashRouter>
+                      return (
+                          <Route
+                              key={`${sub.id}-${index}`}
+                              path={sub.id}
+                              element={<Component />}
+                          />
+                      )
+                  })}
+              </Route>
+              <Route path="/blank" element={<div />} />
+          </Routes>
+      </HashRouter>
   )
 }
